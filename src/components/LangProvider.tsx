@@ -1,0 +1,49 @@
+"use client";
+
+import { createContext, useContext, useEffect, useState } from "react";
+import { dict, type Lang } from "@/i18n";
+
+interface LangCtx {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  t: (key: string) => string;
+}
+
+const ctx = createContext<LangCtx>({
+  lang: "it",
+  setLang: () => {},
+  t: (k: string) => k,
+});
+
+export const useLang = () => useContext(ctx);
+
+export default function LangProvider({ children }: { children: React.ReactNode }) {
+  const [lang, setLangState] = useState<Lang>("it");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("lang") as Lang | null;
+    if (saved && ["it", "en", "sv"].includes(saved)) {
+      setLangState(saved);
+    } else {
+      const browser = navigator.language.slice(0, 2);
+      if (["it", "en", "sv"].includes(browser)) {
+        setLangState(browser as Lang);
+      }
+    }
+    setMounted(true);
+  }, []);
+
+  const setLang = (l: Lang) => {
+    setLangState(l);
+    localStorage.setItem("lang", l);
+  };
+
+  const t = (key: string) => dict[lang][key] ?? key;
+
+  if (!mounted) {
+    return <div style={{ visibility: "hidden" }}>{children}</div>;
+  }
+
+  return <ctx.Provider value={{ lang, setLang, t }}>{children}</ctx.Provider>;
+}
