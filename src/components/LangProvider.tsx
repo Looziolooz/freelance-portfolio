@@ -6,7 +6,7 @@ import { dict, type Lang } from "@/i18n";
 interface LangCtx {
   lang: Lang;
   setLang: (l: Lang) => void;
-  t: (key: string) => string;
+  t: (key: string, vars?: Record<string, string>) => string;
 }
 
 const ctx = createContext<LangCtx>({
@@ -39,7 +39,15 @@ export default function LangProvider({ children }: { children: React.ReactNode }
     localStorage.setItem("lang", l);
   };
 
-  const t = (key: string) => dict[lang][key] ?? key;
+  const t = (key: string, vars?: Record<string, string>) => {
+    let val = dict[lang][key] ?? key;
+    if (vars) {
+      for (const [k, v] of Object.entries(vars)) {
+        val = val.replace(`{${k}}`, v);
+      }
+    }
+    return val;
+  };
 
   if (!mounted) {
     return <div style={{ visibility: "hidden" }}>{children}</div>;

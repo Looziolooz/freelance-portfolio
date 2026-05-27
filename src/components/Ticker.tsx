@@ -11,8 +11,8 @@ export default function Ticker() {
     <div
       style={{
         overflow: "hidden",
-        borderTop: "1px solid var(--line)",
-        borderBottom: "1px solid var(--line)",
+        borderTop: "3px solid var(--ink-border)",
+        borderBottom: "3px solid var(--ink-border)",
         padding: "14px 0",
         background: "var(--bg)",
       }}

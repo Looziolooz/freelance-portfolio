@@ -1,9 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import { useLang } from "./LangProvider";
+import ParallaxIndex from "./ParallaxIndex";
+import CursorTrack from "./CursorTrack";
+import Typewriter from "./Typewriter";
 
 export default function Contact() {
   const { t } = useLang();
+  const [typed, setTyped] = useState(false);
 
   const channels = [
     { l: t("contact.channel.email"), v: "lorenzo.dastoli@mail.com", h: "mailto:lorenzo.dastoli@mail.com" },
@@ -15,12 +20,14 @@ export default function Contact() {
   return (
     <section
       id="contact"
+      className="section-indexed"
       style={{
-        padding: "clamp(100px, 10vw, 160px) clamp(24px, 4vw, 60px) 120px",
+        padding: "clamp(100px, 10vw, 160px) 0 120px",
         borderTop: "1px solid var(--line)",
         position: "relative",
       }}
     >
+      <ParallaxIndex>06</ParallaxIndex>
       <div
         style={{
           display: "grid",
@@ -28,7 +35,7 @@ export default function Contact() {
           gap: 24,
           alignItems: "flex-end",
           paddingBottom: 28,
-          borderBottom: "1px solid var(--fg)",
+          borderBottom: "3px solid var(--ink-border)",
           marginBottom: 60,
         }}
       >
@@ -47,17 +54,25 @@ export default function Contact() {
             hyphens: "auto",
           }}
         >
-          {t("contact.title.p1")}{" "}
-          <span
-            style={{
-              background: "var(--accent)",
-              color: "var(--accentInk)",
+          {typed ? (
+            <>
+              <CursorTrack strength={12}>
+                {t("contact.title.p1")}{" "}
+              </CursorTrack>
+              <span
+                style={{
+              background: "var(--accent-coral)",
+              color: "#ffffff",
               padding: "0 0.08em",
-            }}
-          >
-            {t("contact.title.highlight")}
-          </span>
-          {t("contact.title.p2")}
+                }}
+              >
+                {t("contact.title.highlight")}
+              </span>
+              {t("contact.title.p2")}
+            </>
+          ) : (
+            <Typewriter text={t("contact.title.p1") + " " + t("contact.title.highlight") + t("contact.title.p2")} speed={40} onDone={() => setTyped(true)} />
+          )}
         </h2>
         <div
           style={{
@@ -82,13 +97,14 @@ export default function Contact() {
       >
         <div
           style={{
-            width: "min(300px, 100%)",
-            aspectRatio: "1/1",
-            borderRadius: "50%",
-            background: "var(--bg)",
+            width: "min(240px, 100%)",
+            aspectRatio: "3/4",
+            borderRadius: "var(--radius-lg)",
+            background: "var(--canvas-page)",
             position: "relative",
             overflow: "hidden",
-            border: "2px solid var(--fg)",
+            border: "3px solid var(--ink-border)",
+            boxShadow: "8px 8px 0 var(--ink-shadow)",
           }}
         >
           <img
@@ -100,21 +116,33 @@ export default function Contact() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              filter: "grayscale(100%) contrast(1.08) brightness(1.04)",
+              zIndex: 1,
+              filter: "grayscale(100%) contrast(1.1)",
             }}
           />
           <div
             style={{
               position: "absolute",
               inset: 0,
-              opacity: 0.5,
-              mixBlendMode: "overlay",
               pointerEvents: "none",
-              borderRadius: "50%",
+              zIndex: 3,
               backgroundImage:
-                "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+                "repeating-linear-gradient(0deg, transparent, transparent 10px, color-mix(in oklch, var(--fg) 5%, transparent) 10px, color-mix(in oklch, var(--fg) 5%, transparent) 11px), repeating-linear-gradient(90deg, transparent, transparent 10px, color-mix(in oklch, var(--fg) 5%, transparent) 10px, color-mix(in oklch, var(--fg) 5%, transparent) 11px)",
             }}
           />
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: 0.3,
+              mixBlendMode: "overlay",
+              pointerEvents: "none",
+              zIndex: 4,
+              backgroundImage:
+                "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='cn'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0'/></filter><rect width='100%' height='100%' filter='url(%23cn)'/></svg>\")",
+            }}
+          />
+          <span className="reticule-corners" aria-hidden="true" style={{ zIndex: 5, color: "var(--accent)" }}><span /><span /><span /><span /></span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
           <p
@@ -147,7 +175,7 @@ export default function Contact() {
                   display: "grid",
                   gridTemplateColumns: "140px 1fr auto",
                   padding: "22px 0",
-                  borderBottom: "1px solid var(--line)",
+                  borderBottom: "3px solid var(--ink-border)",
                   alignItems: "center",
                   textDecoration: "none",
                   color: "var(--fg)",
@@ -168,8 +196,9 @@ export default function Contact() {
                 <div style={{ fontSize: "clamp(18px, 1.5vw, 22px)", fontWeight: 500, letterSpacing: -0.3 }}>
                   {c.v}
                 </div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--muted)" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--muted)" }}>
                   {t("contact.open")}
+                  <span className="arrow-blink" aria-hidden="true" style={{ marginLeft: 0 }}>→</span>
                 </div>
               </a>
             ))}

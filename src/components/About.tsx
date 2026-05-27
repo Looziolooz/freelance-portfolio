@@ -2,6 +2,7 @@
 
 import { useLang } from "./LangProvider";
 import SectionHeader from "./SectionHeader";
+import ParallaxIndex from "./ParallaxIndex";
 
 const metaItems = (t: (k: string) => string) => [
   { label: t("about.meta.location"), value: t("about.meta.location.val") },
@@ -16,11 +17,14 @@ export default function About() {
   return (
     <section
       id="about"
+      className="section-indexed"
       style={{
-        padding: "clamp(80px, 8vw, 140px) clamp(24px, 4vw, 60px)",
+        padding: "clamp(80px, 8vw, 140px) 0",
         borderTop: "1px solid var(--line)",
+        position: "relative",
       }}
     >
+      <ParallaxIndex>02</ParallaxIndex>
       <SectionHeader
         num={t("about.num")}
         title={t("about.title")}
@@ -48,8 +52,8 @@ export default function About() {
             {t("about.lede.p1")}{" "}
             <span
               style={{
-                background: "var(--accent)",
-                color: "var(--accentInk)",
+                background: "var(--accent-coral)",
+                color: "#ffffff",
                 padding: "0 0.08em",
               }}
             >
@@ -66,7 +70,7 @@ export default function About() {
               gridTemplateColumns: "repeat(2, 1fr)",
               gap: 24,
               paddingTop: 24,
-              borderTop: "1px solid var(--line)",
+              borderTop: "3px solid var(--ink-border)",
             }}
           >
             {metaItems(t).map((m) => (
