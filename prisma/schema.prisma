@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Tier {
+  FREE
+  SUPPORTER
+  PRO
+}
+
+enum Lang {
+  IT
+  EN
+  SV
+}
+
+model User {
+  id               String         @id @default(cuid())
+  email            String         @unique
+  passwordHash     String
+  name             String?
+  stripeCustomerId String?
+  tier             Tier           @default(FREE)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  subscriptions    Subscription[]
+}
+
+model Subscription {
+  id                 String    @id @default(cuid())
+  userId             String
+  user               User      @relation(fields: [userId], references: [id])
+  stripePriceId      String
+  stripeSessionId    String?
+  stripeSubId        String?   @unique
+  tier               Tier
+  status             String    @default("active")
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
+
+model Content {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String
+  description String
+  body        String
+  category    String   @default("blog")
+  lang        Lang     @default(IT)
+  tier        Tier     @default(FREE)
+  imageUrl    String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([slug, lang])
+}

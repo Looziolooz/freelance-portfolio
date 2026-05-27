@@ -3,18 +3,16 @@
 import { useState } from "react";
 import { useLang } from "./LangProvider";
 import SectionHeader from "./SectionHeader";
+import ParallaxIndex from "./ParallaxIndex";
 
 const PROJECTS = [
-  { id: "01", key: "01", href: "https://lexicon-ecommerce-group-project.vercel.app/", featured: true, swatch: "#eee9d9" },
-  { id: "02", key: "02", href: "https://tragardhobby.netlify.app/", featured: true, swatch: "#ddeace" },
-  { id: "03", key: "03", href: "https://loozio-pokedex.netlify.app/", featured: true, swatch: "#eee3cd" },
-  { id: "04", key: "04", href: "https://planetchatbot.netlify.app/", featured: true, swatch: "#dfe6ee" },
   { id: "05", key: "05", href: "https://lorenzospizzaria.netlify.app/" },
-  { id: "06", key: "06", href: "https://loozlibrary.netlify.app/" },
   { id: "07", key: "07", href: "https://weather-se.netlify.app/" },
-  { id: "08", key: "08", href: "https://basketball-scoreboard-looz.netlify.app/" },
-  { id: "09", key: "09", href: "https://traincounterpassenger.netlify.app/" },
-  { id: "10", key: "10", href: "https://plannedplanthoodcss.netlify.app/" },
+  { id: "11", key: "11", href: "https://github.com/Looziolooz/fotografo", featured: true, swatch: "#f0e6d8" },
+  { id: "12", key: "12", href: "https://github.com/Looziolooz/real-estate", featured: true, swatch: "#dce8f0" },
+  { id: "13", key: "13", href: "https://github.com/Looziolooz/aurelia", featured: true, swatch: "#e8d8d8" },
+  { id: "14", key: "14", href: "https://github.com/Looziolooz/couffer" },
+  { id: "15", key: "15", href: "https://github.com/Looziolooz/pizzeria-restaurant" },
 ];
 
 function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => string }) {
@@ -31,17 +29,17 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
     >
       <div
         style={{
-          border: "1px solid var(--line)",
-          borderRadius: 4,
+          border: "3px solid var(--ink-border)",
+          borderRadius: "var(--radius-lg)",
           overflow: "hidden",
-          background: "var(--panel)",
+          background: "var(--canvas-panel-yellow)",
           display: "flex",
           flexDirection: "column",
-          transition: "transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s",
-          transform: hover ? "translateY(-4px)" : "translateY(0)",
+          transition: "transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s cubic-bezier(.16,1,.3,1)",
+          transform: hover ? "translate(-2px, -2px)" : "translateY(0)",
           boxShadow: hover
-            ? "0 20px 40px -20px color-mix(in oklch, var(--fg) 25%, transparent)"
-            : "0 0 0 transparent",
+            ? "8px 8px 0 var(--ink-shadow)"
+            : "6px 6px 0 var(--ink-shadow)",
         }}
       >
         <div
@@ -87,7 +85,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
               letterSpacing: 1,
             }}
           >
-            {t(`work.proj.${p.key}`) === `work.proj.${p.key}` ? "2024" : ""}
+            {["01","02","03","04","11","12","13","14","15"].includes(p.id) ? "2026" : "2024"}
           </div>
           <div
             style={{
@@ -129,17 +127,17 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
             >
               {t(`work.proj.${p.key}`)}
             </h3>
-            <span
-              style={{
-                fontSize: 20,
-                color: "var(--fg)",
-                transition: "transform .3s",
-                transform: hover ? "translate(4px,-4px)" : "translate(0,0)",
-                display: "inline-block",
-              }}
-            >
-              ↗
-            </span>
+          <span
+                className="arrow-blink"
+                style={{
+                  fontSize: 20,
+                  color: "var(--fg)",
+                  display: "inline-block",
+                  marginLeft: 0,
+                }}
+              >
+                ↗
+              </span>
           </div>
           <div
             style={{
@@ -182,12 +180,12 @@ function IndexRow({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => stri
         gridTemplateColumns: "60px 1fr 100px 280px 80px",
         alignItems: "center",
         padding: "24px 16px",
-        borderBottom: "1px solid var(--line)",
+        borderBottom: "3px solid var(--ink-border)",
         fontSize: 18,
         textDecoration: "none",
-        color: "var(--fg)",
+        color: "var(--ink-body)",
         transition: "background .2s, padding .2s",
-        background: hover ? "var(--panel)" : "transparent",
+        background: hover ? "var(--canvas-panel-yellow)" : "transparent",
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -199,22 +197,25 @@ function IndexRow({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => stri
         {t(`work.proj.${p.key}`)}
       </div>
       <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted)" }}>
-        {p.id === "01" || p.id === "02" ? "2024" : p.id === "03" || p.id === "04" ? "2024" : "2023"}
+        {["01","02","03","04","11","12","13","14","15"].includes(p.id) ? "2026" : "2023"}
       </div>
       <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted)", letterSpacing: 0.5 }}>
         {t(`work.proj.${p.key}.tags`)}
       </div>
       <div
         style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          gap: 6,
           fontFamily: "var(--font-mono)",
           fontSize: 14,
           color: "var(--fg)",
           textAlign: "right",
-          transition: "transform .2s",
-          transform: hover ? "translateX(4px)" : "translateX(0)",
         }}
       >
         {t("work.go")}
+        <span className="arrow-blink" aria-hidden="true" style={{ marginLeft: 0 }}>→</span>
       </div>
     </a>
   );
@@ -228,11 +229,14 @@ export default function Work() {
   return (
     <section
       id="work"
+      className="section-indexed"
       style={{
-        padding: "clamp(80px, 8vw, 140px) clamp(24px, 4vw, 60px)",
+        padding: "clamp(80px, 8vw, 140px) 0",
         borderTop: "1px solid var(--line)",
+        position: "relative",
       }}
     >
+      <ParallaxIndex>03</ParallaxIndex>
       <SectionHeader
         num={t("work.num")}
         title={t("work.title")}
@@ -255,7 +259,7 @@ export default function Work() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-end",
-          borderBottom: "1px solid var(--fg)",
+          borderBottom: "3px solid var(--ink-border)",
           paddingBottom: 14,
           marginBottom: 8,
         }}

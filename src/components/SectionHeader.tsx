@@ -1,3 +1,9 @@
+"use client";
+
+import { useState } from "react";
+import CursorTrack from "./CursorTrack";
+import Typewriter from "./Typewriter";
+
 export default function SectionHeader({
   num,
   title,
@@ -7,6 +13,8 @@ export default function SectionHeader({
   title: string;
   meta?: string;
 }) {
+  const [typed, setTyped] = useState(false);
+
   return (
     <div
       style={{
@@ -15,24 +23,17 @@ export default function SectionHeader({
         alignItems: "flex-end",
         gap: 24,
         padding: "0 0 28px",
-        borderBottom: "1px solid var(--fg)",
+        borderBottom: "3px solid var(--ink-border)",
         marginBottom: 56,
       }}
     >
-      <div
-        style={{
-          fontFamily: "var(--font-mono)",
-          fontSize: 13,
-          color: "var(--muted)",
-          letterSpacing: 1,
-        }}
-      >
+      <div className="label" style={{ fontWeight: 400 }}>
         {num}
       </div>
       <h2
         style={{
           margin: 0,
-          fontSize: "clamp(32px, 5.5vw, 88px)",
+          fontSize: "clamp(28px, 5.5vw, 88px)",
           letterSpacing: -2,
           fontWeight: 500,
           lineHeight: 0.98,
@@ -40,19 +41,14 @@ export default function SectionHeader({
           hyphens: "auto",
         }}
       >
-        {title}
+        {typed ? (
+          <CursorTrack strength={10}>{title}</CursorTrack>
+        ) : (
+          <Typewriter text={title} speed={35} onDone={() => setTyped(true)} />
+        )}
       </h2>
       {meta && (
-        <div
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            color: "var(--muted)",
-            textTransform: "uppercase",
-            letterSpacing: 1.4,
-            textAlign: "right",
-          }}
-        >
+        <div className="label" style={{ textAlign: "right", fontSize: 10 }}>
           {meta}
         </div>
       )}

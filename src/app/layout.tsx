@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter_Tight, JetBrains_Mono } from "next/font/google";
 import ThemeProvider from "@/components/ThemeProvider";
 import LangProvider from "@/components/LangProvider";
+import ClientLayout from "./ClientLayout";
 import "./globals.css";
 
 const interTight = Inter_Tight({
@@ -33,7 +34,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="antialiased" style={{ margin: 0, WebkitFontSmoothing: "antialiased" }}>
         <ThemeProvider>
-          <LangProvider>{children}</LangProvider>
+          <LangProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </LangProvider>
         </ThemeProvider>
       </body>
     </html>
