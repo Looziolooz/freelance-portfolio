@@ -9,28 +9,28 @@ import { useLang } from "@/components/LangProvider";
 const SERVICES = [
   {
     name: "AI Workflow Automation",
-    price: "€2,000 – €15,000",
+    price: "Su preventivo",
     timeline: "2–8 weeks",
     desc: "n8n pipelines, GPT routers, data orchestration, and custom automation that ships real work — not demos.",
     tech: ["n8n", "OpenAI", "Claude", "Python"],
   },
   {
     name: "Web Scraping & Data",
-    price: "€1,500 – €10,000",
+    price: "Su preventivo",
     timeline: "1–6 weeks",
     desc: "Scraper networks, pricing dashboards, PDF processing, and structured data extraction at scale.",
     tech: ["Python", "Playwright", "Puppeteer", "APIs"],
   },
   {
     name: "Web Development",
-    price: "€3,000 – €25,000",
+    price: "Su preventivo",
     timeline: "3–12 weeks",
     desc: "Full-stack web applications with Next.js, React, and modern architecture. From landing pages to platforms.",
     tech: ["Next.js", "React", "TypeScript", "Tailwind"],
   },
   {
     name: "Technical Consulting",
-    price: "€100 – €200/hr",
+    price: "Su preventivo",
     timeline: "Ongoing",
     desc: "System architecture, tech stack advice, code review, and automation strategy for teams that ship.",
     tech: ["Architecture", "DevOps", "Security"],

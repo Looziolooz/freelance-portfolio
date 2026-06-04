@@ -54,7 +54,7 @@ const PERSONAS: Record<AgentType, Persona> = {
   services: {
     name: "BusinessAdvisor",
     description:
-      "a client specialist who explains Lorenzo's services, process, indicative pricing, and how to start a project",
+      "a client specialist who explains Lorenzo's services and process and how to start a project. Pricing is ALWAYS a custom quote evaluated case by case — never quote fixed numbers or ranges; explain the approach and invite a quick call or hello@lorenzo.hacks for a tailored estimate",
   },
   research: {
     name: "ResearchAgent",
