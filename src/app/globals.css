@@ -4,7 +4,7 @@
   /* ============================================================
      COLOR — Canvas (warm neutrals)
      ============================================================ */
-  --canvas-page:        #FFFDF8;
+  --canvas-page:        #FFFCF7;
   --canvas-panel-yellow:#fff4da;
   --canvas-panel-grey:  #fafafa;
   --canvas-slider-track:#ebdbb7;
@@ -12,21 +12,22 @@
   /* ============================================================
      COLOR — Accents
      ============================================================ */
-  --accent-coral:       #FE4A60;
+  --accent-coral:       #FB4D5C;
+  --accent-coral-deep:  #D6313F;
   --accent-peach:       #ffc480;
-  --accent-peach-deep:  #FCA847;
+  --accent-peach-deep:  #F6A623;
   --accent-input-blue:  #E8F0FE;
   --accent-pattern-grey:#e6e8eb;
-  --accent-decor-green: #4FB286;
+  --accent-decor-green: #2F8F7A;
 
   /* ============================================================
      COLOR — Ink (does all structural work)
      ============================================================ */
-  --ink-border:         #111827;
-  --ink-shadow:         #111827;
-  --ink-shadow-soft:    #1F2937;
-  --ink-body:           #111827;
-  --ink-muted:          #4B5563;
+  --ink-border:         #14110D;
+  --ink-shadow:         #14110D;
+  --ink-shadow-soft:    #2B241B;
+  --ink-body:           #14110D;
+  --ink-muted:          #5C5349;
 
   /* ============================================================
      SEMANTIC COLOR
@@ -46,6 +47,7 @@
 
   --border:             var(--ink-border);
   --border-width:       3px;
+  --rule:               var(--ink-border);
 
   /* legacy aliases for existing inline styles */
   --page-bg:            var(--canvas-page);
@@ -68,7 +70,7 @@
   /* ============================================================
      TYPOGRAPHY — Families
      ============================================================ */
-  --font-ui:   'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-ui:   var(--font-sans), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* ============================================================
@@ -160,13 +162,13 @@
 
 body.theme-dark,
 [data-theme="dark"] {
-  --canvas-page: #1A1B1F;
-  --canvas-panel-yellow: #2A2620;
-  --canvas-panel-grey: #232428;
+  --canvas-page: #16140F;
+  --canvas-panel-yellow: #241F17;
+  --canvas-panel-grey: #1E1B16;
   --ink-body: #F4F1EA;
   --ink-border: #F4F1EA;
-  --ink-shadow: #FE4A60;
-  --ink-shadow-soft: #FE4A60;
+  --ink-shadow: #FB4D5C;
+  --ink-shadow-soft: #FB4D5C;
   --ink-muted: #A8A6A0;
 }
 
@@ -866,6 +868,18 @@ a { color: var(--ink-body); text-decoration: underline; text-underline-offset: 3
 a:hover { color: var(--accent-coral); }
 button, input, select, textarea { font-family: inherit; }
 hr { border: none; border-top: 3px solid var(--ink-border); margin: 2rem 0; }
+
+/* ─── Focus ring (consistent keyboard a11y) ─── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--accent-coral);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
 
 /* ─── Responsive nav ─── */
 
