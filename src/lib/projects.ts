@@ -75,7 +75,11 @@ export const PROJECTS: Project[] = [
     id: "15",
     key: "15",
     slug: "pizzeria-restaurant",
+    demo: "https://pizzeria-restaurant.vercel.app/",
     repo: "https://github.com/Looziolooz/pizzeria-restaurant",
+    image: "/projects/pizzeria-restaurant.png",
+    featured: true,
+    swatch: "#e8c4a0",
   },
 ];
 
