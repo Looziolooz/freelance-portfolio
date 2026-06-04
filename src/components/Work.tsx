@@ -5,9 +5,19 @@ import { useLang } from "./LangProvider";
 import SectionHeader from "./SectionHeader";
 import ParallaxIndex from "./ParallaxIndex";
 
-const PROJECTS = [
+type Project = {
+  id: string;
+  key: string;
+  href: string;
+  featured?: boolean;
+  swatch?: string;
+  image?: string;
+};
+
+const PROJECTS: Project[] = [
   { id: "05", key: "05", href: "https://lorenzospizzaria.netlify.app/" },
   { id: "07", key: "07", href: "https://weather-se.netlify.app/" },
+  { id: "16", key: "16", href: "https://github.com/Looziolooz/brasilena-website", featured: true, swatch: "#FFD21E", image: "/projects/brasilena.png" },
   { id: "11", key: "11", href: "https://github.com/Looziolooz/fotografo", featured: true, swatch: "#f0e6d8" },
   { id: "12", key: "12", href: "https://github.com/Looziolooz/real-estate", featured: true, swatch: "#dce8f0" },
   { id: "13", key: "13", href: "https://github.com/Looziolooz/aurelia", featured: true, swatch: "#e8d8d8" },
@@ -45,7 +55,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
         <div
           style={{
             aspectRatio: "16/10",
-            background: p.swatch,
+            background: p.swatch ?? "var(--canvas-panel-grey)",
             position: "relative",
             overflow: "hidden",
             display: "flex",
@@ -53,14 +63,32 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
             justifyContent: "center",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage:
-                "repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in oklch, var(--fg) 6%, transparent) 14px 15px)",
-            }}
-          />
+          {p.image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={p.image}
+              alt={t(`work.proj.${p.key}`)}
+              loading="lazy"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                transform: hover ? "scale(1.03)" : "scale(1)",
+                transition: "transform .4s cubic-bezier(.16,1,.3,1)",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                backgroundImage:
+                  "repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in oklch, var(--fg) 6%, transparent) 14px 15px)",
+              }}
+            />
+          )}
           <div
             style={{
               position: "absolute",
@@ -85,20 +113,22 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
               letterSpacing: 1,
             }}
           >
-            {["01","02","03","04","11","12","13","14","15"].includes(p.id) ? "2026" : "2024"}
+            {["01","02","03","04","11","12","13","14","15","16"].includes(p.id) ? "2026" : "2024"}
           </div>
-          <div
-            style={{
-              position: "relative",
-              fontFamily: "var(--font-mono)",
-              fontSize: 11,
-              letterSpacing: 1.4,
-              color: "color-mix(in oklch, var(--fg) 55%, transparent)",
-              textTransform: "uppercase",
-            }}
-          >
-            [ {t(`work.proj.${p.key}`).toUpperCase()} — {t("work.preview")} ]
-          </div>
+          {!p.image && (
+            <div
+              style={{
+                position: "relative",
+                fontFamily: "var(--font-mono)",
+                fontSize: 11,
+                letterSpacing: 1.4,
+                color: "color-mix(in oklch, var(--fg) 55%, transparent)",
+                textTransform: "uppercase",
+              }}
+            >
+              [ {t(`work.proj.${p.key}`).toUpperCase()} — {t("work.preview")} ]
+            </div>
+          )}
         </div>
         <div
           style={{

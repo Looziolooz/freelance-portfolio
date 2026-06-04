@@ -98,6 +98,9 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.15": "Pizzeria Restaurant",
     "work.proj.15.tags": "NEXT 16 · TAILWIND 4 · TS",
     "work.proj.15.blurb": "Sito ristorante completo con menu digitale, ordini online e prenotazione tavoli.",
+    "work.proj.16": "Brasilena",
+    "work.proj.16.tags": "NEXT 16 · TAILWIND 4 · TS",
+    "work.proj.16.blurb": "Sito brand per Brasilena, la gassosa al caffè calabrese dal 1930: hero animato, storia del marchio, catalogo bibite e contatti.",
 
     // Stack
     "stack.num": "04 / STACK",
@@ -339,6 +342,9 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.15": "Pizzeria Restaurant",
     "work.proj.15.tags": "NEXT 16 · TAILWIND 4 · TS",
     "work.proj.15.blurb": "Complete restaurant website with digital menu, online ordering, and table reservations.",
+    "work.proj.16": "Brasilena",
+    "work.proj.16.tags": "NEXT 16 · TAILWIND 4 · TS",
+    "work.proj.16.blurb": "Brand site for Brasilena, the Calabrian coffee soda since 1930: animated hero, brand story, drinks catalogue, and contact.",
 
     "stack.num": "04 / STACK",
     "stack.title": "Tools.",
@@ -577,6 +583,9 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.15": "Pizzeria Restaurant",
     "work.proj.15.tags": "NEXT 16 · TAILWIND 4 · TS",
     "work.proj.15.blurb": "Fullständig restaurangwebbplats med digital meny, onlinebeställning och bordsreservering.",
+    "work.proj.16": "Brasilena",
+    "work.proj.16.tags": "NEXT 16 · TAILWIND 4 · TS",
+    "work.proj.16.blurb": "Varumärkessida för Brasilena, den kalabriska kaffeläsken sedan 1930: animerad hero, varumärkeshistoria, dryckeskatalog och kontakt.",
 
     "stack.num": "04 / VERKTYG",
     "stack.title": "Verktyg.",
