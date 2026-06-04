@@ -24,62 +24,71 @@ export default function AgentChat({
   directQuestion,
 }: AgentChatProps) {
   const { t, lang } = useLang();
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>(
+    initialMessage ? [{ content: initialMessage, isUser: false }] : []
+  );
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const processedRef = useRef<string[]>([]);
+  const abortRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    if (initialMessage) {
-      setMessages([{ content: initialMessage, isUser: false }]);
-    }
-  }, [initialMessage]);
+  // Re-seed the greeting when initialMessage changes (e.g. a language switch),
+  // adjusting state during render rather than in an effect — React's documented
+  // "reset on prop change" pattern (satisfies react-hooks/set-state-in-effect).
+  const [prevInitial, setPrevInitial] = useState(initialMessage);
+  if (initialMessage !== prevInitial) {
+    setPrevInitial(initialMessage);
+    setMessages(initialMessage ? [{ content: initialMessage, isUser: false }] : []);
+  }
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // Abort any in-flight request when the chat unmounts (stops paying for a
+  // reply nobody will see).
+  useEffect(() => () => abortRef.current?.abort(), []);
 
   const handleSend = useCallback(
     async (overrideText?: string) => {
       const text = (overrideText ?? input).trim();
       if (!text || isLoading) return;
 
+      abortRef.current?.abort();
+      const controller = new AbortController();
+      abortRef.current = controller;
+
       setMessages((prev) => [...prev, { content: text, isUser: true }]);
       setInput("");
       setIsLoading(true);
 
       try {
-        const res = await fetch(
-          `http://127.0.0.1:5001/api/${agentType}`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: text, lang }),
-          }
-        );
+        const res = await fetch(`/api/agents/${agentType}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text, lang }),
+          signal: controller.signal,
+        });
 
         const data = await res.json();
-        if (data?.response) {
-          setMessages((prev) => [
-            ...prev,
-            { content: data.response, isUser: false },
-          ]);
-        }
-      } catch {
+        const reply = data?.success ? data?.data?.response : null;
         setMessages((prev) => [
           ...prev,
-          {
-            content:
-              t("agent.chat.error"),
-            isUser: false,
-          },
+          { content: reply || t("agent.chat.error"), isUser: false },
+        ]);
+      } catch (e) {
+        // A new send or an unmount aborted this request — not an error.
+        if (e instanceof DOMException && e.name === "AbortError") return;
+        setMessages((prev) => [
+          ...prev,
+          { content: t("agent.chat.error"), isUser: false },
         ]);
       } finally {
         setIsLoading(false);
       }
     },
-    [input, agentType, isLoading]
+    [input, agentType, isLoading, lang, t]
   );
 
   useEffect(() => {
@@ -93,7 +102,15 @@ export default function AgentChat({
   }, [directQuestion, handleSend]);
 
   const renderContent = (content: string) => {
-    let html = content
+    // Escape HTML first so model- or user-supplied text can never inject live
+    // tags (prompt-injection / XSS), THEN apply the lightweight markdown.
+    const escaped = content
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+    const html = escaped
       .replace(/### (.+)/g, "<strong style='font-size:1.1em'>$1</strong>")
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
       .replace(/\*(.+?)\*/g, "<em>$1</em>")

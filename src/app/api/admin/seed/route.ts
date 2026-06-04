@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { success, error } from "@/lib/api-response";
 import { hashPassword } from "@/lib/auth";
+import { invalidateAgentContextCache } from "@/lib/agent-context";
 
 export async function POST() {
   try {
@@ -1631,6 +1632,10 @@ Detta ramverk driver alla agenter på denna portföljsida. Varje agent är en sp
         },
       ],
     });
+
+    // Freshly seeded content must be visible to the agents immediately, not
+    // after the 5-minute context-cache TTL.
+    invalidateAgentContextCache();
 
     return success({
       user: {
