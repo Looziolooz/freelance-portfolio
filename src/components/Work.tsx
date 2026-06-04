@@ -1,38 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useLang } from "./LangProvider";
 import SectionHeader from "./SectionHeader";
 import ParallaxIndex from "./ParallaxIndex";
-
-type Project = {
-  id: string;
-  key: string;
-  href: string;
-  featured?: boolean;
-  swatch?: string;
-  image?: string;
-};
-
-const PROJECTS: Project[] = [
-  { id: "05", key: "05", href: "https://lorenzospizzaria.netlify.app/" },
-  { id: "07", key: "07", href: "https://weather-se.netlify.app/" },
-  { id: "16", key: "16", href: "https://github.com/Looziolooz/brasilena-website", featured: true, swatch: "#FFD21E", image: "/projects/brasilena.png" },
-  { id: "11", key: "11", href: "https://github.com/Looziolooz/fotografo", featured: true, swatch: "#f0e6d8" },
-  { id: "12", key: "12", href: "https://github.com/Looziolooz/real-estate", featured: true, swatch: "#dce8f0" },
-  { id: "13", key: "13", href: "https://github.com/Looziolooz/aurelia", featured: true, swatch: "#e8d8d8" },
-  { id: "14", key: "14", href: "https://github.com/Looziolooz/couffer" },
-  { id: "15", key: "15", href: "https://github.com/Looziolooz/pizzeria-restaurant" },
-];
+import { PROJECTS } from "@/lib/projects";
 
 function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => string }) {
   const [hover, setHover] = useState(false);
 
   return (
-    <a
-      href={p.href}
-      target="_blank"
-      rel="noopener"
+    <Link
+      href={`/work/${p.slug}`}
       style={{ textDecoration: "none", color: "inherit" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -193,7 +173,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
           </p>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }
 
@@ -201,10 +181,8 @@ function IndexRow({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => stri
   const [hover, setHover] = useState(false);
 
   return (
-    <a
-      href={p.href}
-      target="_blank"
-      rel="noopener"
+    <Link
+      href={`/work/${p.slug}`}
       style={{
         display: "grid",
         gridTemplateColumns: "60px 1fr 100px 280px 80px",
@@ -247,7 +225,7 @@ function IndexRow({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => stri
         {t("work.go")}
         <span className="arrow-blink" aria-hidden="true" style={{ marginLeft: 0 }}>→</span>
       </div>
-    </a>
+    </Link>
   );
 }
 
