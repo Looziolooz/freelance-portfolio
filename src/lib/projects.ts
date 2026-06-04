@@ -21,6 +21,7 @@ export const PROJECTS: Project[] = [
     id: "16",
     key: "16",
     slug: "brasilena",
+    demo: "https://brasilena-website.vercel.app/",
     repo: "https://github.com/Looziolooz/brasilena-website",
     image: "/projects/brasilena.png",
     featured: true,
