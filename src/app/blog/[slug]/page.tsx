@@ -2,7 +2,7 @@
 
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useLang } from "@/components/LangProvider";
-import { useEffect, useState, use } from "react";
+import { useEffect, useState, use, type ReactNode } from "react";
 import Link from "next/link";
 import { TierBadge } from "@/components/auth/TierBadge";
 import { ProtectedContent } from "@/components/auth/ProtectedContent";
@@ -18,6 +18,93 @@ interface ContentDetail {
   imageUrl: string | null;
   published: boolean;
   createdAt: string;
+}
+
+// Block-level renderer for the article body. Tracks fenced code blocks (```)
+// so code is emitted into a .neo-code-box instead of being dropped, and wraps
+// consecutive "- " items in a single <ul>.
+function renderArticleBody(body: string): ReactNode[] {
+  const lines = body.split("\n");
+  const blocks: ReactNode[] = [];
+  let i = 0;
+  let key = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    if (line.trimStart().startsWith("```")) {
+      const code: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].trimStart().startsWith("```")) {
+        code.push(lines[i]);
+        i++;
+      }
+      i++; // skip the closing fence
+      blocks.push(
+        <pre
+          key={key++}
+          className="neo-code-box"
+          style={{ overflowX: "auto", margin: "20px 0", whiteSpace: "pre" }}
+        >
+          <code>{code.join("\n")}</code>
+        </pre>
+      );
+      continue;
+    }
+
+    if (line.startsWith("- ")) {
+      const items: string[] = [];
+      while (i < lines.length && lines[i].startsWith("- ")) {
+        items.push(lines[i].slice(2));
+        i++;
+      }
+      blocks.push(
+        <ul key={key++} style={{ margin: "0 0 12px", paddingLeft: 22 }}>
+          {items.map((it, j) => (
+            <li key={j} style={{ marginBottom: 4, fontSize: 15 }}>
+              {it}
+            </li>
+          ))}
+        </ul>
+      );
+      continue;
+    }
+
+    if (line.startsWith("## ")) {
+      blocks.push(
+        <h2 key={key++} style={{ fontSize: 22, fontWeight: 700, marginTop: 40, marginBottom: 12 }}>
+          {line.slice(3)}
+        </h2>
+      );
+      i++;
+      continue;
+    }
+
+    if (line.startsWith("### ")) {
+      blocks.push(
+        <h3 key={key++} style={{ fontSize: 18, fontWeight: 600, marginTop: 28, marginBottom: 8 }}>
+          {line.slice(4)}
+        </h3>
+      );
+      i++;
+      continue;
+    }
+
+    if (line.trim() === "") {
+      blocks.push(<div key={key++} style={{ height: 12 }} />);
+      i++;
+      continue;
+    }
+
+    blocks.push(
+      <p key={key++} style={{ marginBottom: 12 }}>
+        {line}
+      </p>
+    );
+    i++;
+  }
+
+  return blocks;
 }
 
 export default function ContentPage({
@@ -213,51 +300,7 @@ export default function ContentPage({
               maxWidth: "none",
             }}
           >
-            {content.body.split("\n").map((line, i) => {
-              if (line.startsWith("## ")) {
-                return (
-                  <h2 key={i} style={{ fontSize: 22, fontWeight: 700, marginTop: 40, marginBottom: 12 }}>
-                    {line.replace("## ", "")}
-                  </h2>
-                );
-              }
-              if (line.startsWith("### ")) {
-                return (
-                  <h3 key={i} style={{ fontSize: 18, fontWeight: 600, marginTop: 28, marginBottom: 8 }}>
-                    {line.replace("### ", "")}
-                  </h3>
-                );
-              }
-              if (line.startsWith("```")) {
-                const lang2 = line.replace("```", "").trim();
-                if (!lang2) return <div key={i} />;
-                return <div key={i} />;
-              }
-              if (line.startsWith("- ")) {
-                return (
-                  <li
-                    key={i}
-                    style={{
-                      marginLeft: 20,
-                      marginBottom: 4,
-                      fontSize: 15,
-                    }}
-                  >
-                    {line.replace("- ", "")}
-                  </li>
-                );
-              }
-              const codeMatch = line.match(/^`{3}(\w+)?$/);
-              if (codeMatch) return <div key={i} />;
-
-              if (line.trim() === "") return <div key={i} style={{ height: 12 }} />;
-
-              return (
-                <p key={i} style={{ marginBottom: 12 }}>
-                  {line}
-                </p>
-              );
-            })}
+            {renderArticleBody(content.body)}
           </div>
         </div>
       ) : (

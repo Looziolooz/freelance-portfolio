@@ -11,7 +11,7 @@ export default function Contact() {
   const [typed, setTyped] = useState(false);
 
   const channels = [
-    { l: t("contact.channel.email"), v: "lorenzo.dastoli@mail.com", h: "mailto:lorenzo.dastoli@mail.com" },
+    { l: t("contact.channel.email"), v: "hello@lorenzo.hacks", h: "mailto:hello@lorenzo.hacks" },
     { l: t("contact.channel.phone"), v: "+46 (0)763 12 33 45", h: "tel:+460763123345" },
     { l: t("contact.channel.linkedin"), v: "in/lorenzo-dastoli", h: "https://www.linkedin.com/in/lorenzo-dastoli/" },
     { l: t("contact.channel.github"), v: "@Looziolooz", h: "https://github.com/Looziolooz/" },
