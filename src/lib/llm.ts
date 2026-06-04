@@ -13,7 +13,7 @@ export interface LLMMessage {
   content: string;
 }
 
-export type LLMProviderName = "anthropic" | "openai";
+export type LLMProviderName = "anthropic" | "openai" | "groq";
 
 export interface CompleteParams {
   /** Full system prompt (identity + language directive + portfolio context). */
@@ -48,34 +48,38 @@ export class LLMProviderError extends Error {
 
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL ?? "claude-haiku-4-5";
 const OPENAI_MODEL = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+const GROQ_MODEL = process.env.GROQ_MODEL ?? "llama-3.3-70b-versatile";
+const GROQ_BASE_URL = "https://api.groq.com/openai/v1";
 const DEFAULT_MAX_TOKENS = 800;
 const DEFAULT_TEMPERATURE = 0.6;
 
 function hasKey(provider: LLMProviderName): boolean {
-  return provider === "anthropic"
-    ? Boolean(process.env.ANTHROPIC_API_KEY)
-    : Boolean(process.env.OPENAI_API_KEY);
+  if (provider === "anthropic") return Boolean(process.env.ANTHROPIC_API_KEY);
+  if (provider === "openai") return Boolean(process.env.OPENAI_API_KEY);
+  return Boolean(process.env.GROQ_API_KEY);
 }
+
+// Auto-detect order when LLM_PROVIDER is not set.
+const PROVIDER_ORDER: LLMProviderName[] = ["anthropic", "openai", "groq"];
 
 /** Pick the active provider: explicit LLM_PROVIDER, else Anthropic, else OpenAI. */
 export function resolveProvider(): LLMProviderName {
   const forced = process.env.LLM_PROVIDER as LLMProviderName | undefined;
-  if (forced === "anthropic" || forced === "openai") {
+  if (forced && PROVIDER_ORDER.includes(forced)) {
     if (!hasKey(forced)) {
       throw new LLMConfigError(`LLM_PROVIDER=${forced} but its API key is missing`);
     }
     return forced;
   }
-  if (hasKey("anthropic")) return "anthropic";
-  if (hasKey("openai")) return "openai";
+  const available = PROVIDER_ORDER.find(hasKey);
+  if (available) return available;
   throw new LLMConfigError(
-    "No LLM API key configured (set ANTHROPIC_API_KEY or OPENAI_API_KEY)",
+    "No LLM API key configured (set GROQ_API_KEY, ANTHROPIC_API_KEY or OPENAI_API_KEY)",
   );
 }
 
 function fallbackOf(provider: LLMProviderName): LLMProviderName | null {
-  const other: LLMProviderName = provider === "anthropic" ? "openai" : "anthropic";
-  return hasKey(other) ? other : null;
+  return PROVIDER_ORDER.find((p) => p !== provider && hasKey(p)) ?? null;
 }
 
 function statusOf(e: unknown): number | undefined {
@@ -146,8 +150,33 @@ async function callOpenAI(params: CompleteParams): Promise<string> {
   }
 }
 
+async function callGroq(params: CompleteParams): Promise<string> {
+  // Groq is OpenAI-compatible; reuse the OpenAI SDK pointed at its base URL.
+  const client = new OpenAI({ apiKey: process.env.GROQ_API_KEY, baseURL: GROQ_BASE_URL });
+  try {
+    const res = await client.chat.completions.create(
+      {
+        model: GROQ_MODEL,
+        max_tokens: params.maxTokens ?? DEFAULT_MAX_TOKENS,
+        temperature: params.temperature ?? DEFAULT_TEMPERATURE,
+        messages: [
+          { role: "system", content: params.system },
+          ...params.messages.map((m) => ({ role: m.role, content: m.content })),
+        ],
+      },
+      { signal: params.signal },
+    );
+    return (res.choices[0]?.message?.content ?? "").trim();
+  } catch (e) {
+    if (isAbortError(e)) throw e;
+    throw new LLMProviderError(messageOf(e), "groq", statusOf(e));
+  }
+}
+
 function callProvider(provider: LLMProviderName, params: CompleteParams): Promise<string> {
-  return provider === "anthropic" ? callAnthropic(params) : callOpenAI(params);
+  if (provider === "anthropic") return callAnthropic(params);
+  if (provider === "openai") return callOpenAI(params);
+  return callGroq(params);
 }
 
 /**
