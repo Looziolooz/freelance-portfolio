@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lorenzo Dastoli — Portfolio '26",
+  title: "lorenzo.hacks — Automazione AI, n8n e sistemi su misura",
   description:
     "Orchestro sistemi che fanno il lavoro noioso. AI orchestrator, esperto n8n, designer, data scraper. Stoccolma.",
 };

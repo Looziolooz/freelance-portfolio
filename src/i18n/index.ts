@@ -3,9 +3,9 @@ export type Lang = "it" | "en" | "sv";
 export const dict: Record<Lang, Record<string, string>> = {
   it: {
     // Nav
-    "nav.logo.before": "LO",
+    "nav.logo.before": "lorenzo",
     "nav.logo.dot": ".",
-    "nav.logo.after": "zio",
+    "nav.logo.after": "hacks",
     "nav.work": "lavori",
     "nav.blog": "blog",
     "nav.agents": "agenti",
@@ -145,7 +145,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contact.channel.linkedin": "LinkedIn",
     "contact.channel.github": "GitHub",
     "contact.open": "APRI ↗",
-    "contact.footer.copy": "© 2026 Lorenzo Dastoli · Portfolio v.5",
+    "contact.footer.copy": "© 2026 lorenzo.hacks",
     "contact.footer.made": "Fatto a Stoccolma",
     "contact.footer.up": "Torna su ↑",
 
@@ -274,9 +274,9 @@ export const dict: Record<Lang, Record<string, string>> = {
   },
 
   en: {
-    "nav.logo.before": "LO",
+    "nav.logo.before": "lorenzo",
     "nav.logo.dot": ".",
-    "nav.logo.after": "zio",
+    "nav.logo.after": "hacks",
     "nav.work": "work",
     "nav.blog": "blog",
     "nav.agents": "agents",
@@ -409,7 +409,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contact.channel.linkedin": "LinkedIn",
     "contact.channel.github": "GitHub",
     "contact.open": "OPEN ↗",
-    "contact.footer.copy": "© 2026 Lorenzo Dastoli · Portfolio v.5",
+    "contact.footer.copy": "© 2026 lorenzo.hacks",
     "contact.footer.made": "Made in Stockholm",
     "contact.footer.up": "Back to top ↑",
 
@@ -537,9 +537,9 @@ export const dict: Record<Lang, Record<string, string>> = {
   },
 
   sv: {
-    "nav.logo.before": "LO",
+    "nav.logo.before": "lorenzo",
     "nav.logo.dot": ".",
-    "nav.logo.after": "zio",
+    "nav.logo.after": "hacks",
     "nav.work": "arbeten",
     "nav.blog": "blogg",
     "nav.agents": "agenter",
@@ -672,7 +672,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contact.channel.linkedin": "LinkedIn",
     "contact.channel.github": "GitHub",
     "contact.open": "ÖPPNA ↗",
-    "contact.footer.copy": "© 2026 Lorenzo Dastoli · Portfölj v.5",
+    "contact.footer.copy": "© 2026 lorenzo.hacks",
     "contact.footer.made": "Gjord i Stockholm",
     "contact.footer.up": "Tillbaka upp ↑",
 
