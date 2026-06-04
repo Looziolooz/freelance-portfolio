@@ -116,20 +116,20 @@ export default function ProjectsAgentPage() {
           <div
             key={p.title}
             style={{
-              border: "1px solid var(--line)",
-              borderRadius: 4,
-              background: "var(--panel)",
+              border: "3px solid var(--ink-border)",
+              borderRadius: "var(--radius-lg)",
+              background: "var(--canvas-panel-yellow)",
               display: "flex",
               flexDirection: "column",
               overflow: "hidden",
               transition:
                 "transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s",
               transform:
-                hovered === p.title ? "translateY(-4px)" : "translateY(0)",
+                hovered === p.title ? "translate(-2px, -2px)" : "translate(0, 0)",
               boxShadow:
                 hovered === p.title
-                  ? "0 20px 40px -20px color-mix(in oklch, var(--fg) 25%, transparent)"
-                  : "0 0 0 transparent",
+                  ? "8px 8px 0 var(--ink-shadow)"
+                  : "6px 6px 0 var(--ink-shadow)",
             }}
             onMouseEnter={() => setHovered(p.title)}
             onMouseLeave={() => setHovered(null)}
@@ -137,12 +137,13 @@ export default function ProjectsAgentPage() {
             <div
               style={{
                 aspectRatio: "16/9",
-                background: "color-mix(in oklch, var(--accent) 8%, var(--bg))",
+                background: "color-mix(in oklch, var(--accent-coral) 8%, var(--canvas-page))",
                 position: "relative",
                 overflow: "hidden",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                borderBottom: "3px solid var(--ink-border)",
               }}
             >
               <div
@@ -150,7 +151,7 @@ export default function ProjectsAgentPage() {
                   position: "absolute",
                   inset: 0,
                   backgroundImage:
-                    "repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in oklch, var(--fg) 6%, transparent) 14px 15px)",
+                    "repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in oklch, var(--ink-body) 6%, transparent) 14px 15px)",
                 }}
               />
               <div
@@ -160,7 +161,7 @@ export default function ProjectsAgentPage() {
                   fontSize: 20,
                   fontWeight: 500,
                   letterSpacing: -0.4,
-                  color: "color-mix(in oklch, var(--fg) 40%, transparent)",
+                  color: "color-mix(in oklch, var(--ink-body) 40%, transparent)",
                 }}
               >
                 {p.title}
@@ -172,7 +173,7 @@ export default function ProjectsAgentPage() {
                   left: 14,
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  color: "color-mix(in oklch, var(--fg) 60%, transparent)",
+                  color: "color-mix(in oklch, var(--ink-body) 60%, transparent)",
                 }}
               >
                 {t("agent.projects.prefix")}{PROJECTS.indexOf(p) + 1}
@@ -184,7 +185,7 @@ export default function ProjectsAgentPage() {
                   right: 14,
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  color: "color-mix(in oklch, var(--fg) 60%, transparent)",
+                  color: "color-mix(in oklch, var(--ink-body) 60%, transparent)",
                 }}
               >
                 {p.year}
@@ -195,7 +196,7 @@ export default function ProjectsAgentPage() {
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  color: "var(--muted)",
+                  color: "var(--ink-muted)",
                   letterSpacing: 0.6,
                   textTransform: "uppercase",
                   marginBottom: 8,
@@ -208,7 +209,7 @@ export default function ProjectsAgentPage() {
                   fontSize: 22,
                   fontWeight: 500,
                   letterSpacing: -0.4,
-                  color: "var(--fg)",
+                  color: "var(--ink-body)",
                   margin: "0 0 10px",
                 }}
               >
@@ -218,7 +219,7 @@ export default function ProjectsAgentPage() {
                 style={{
                   fontSize: 15,
                   lineHeight: 1.55,
-                  color: "var(--fg)",
+                  color: "var(--ink-body)",
                   opacity: 0.75,
                   margin: "0 0 16px",
                   flex: 1,
@@ -237,14 +238,10 @@ export default function ProjectsAgentPage() {
                 {p.highlights.map((h) => (
                   <span
                     key={h}
+                    className="neo-badge"
                     style={{
-                      padding: "3px 10px",
                       fontFamily: "var(--font-mono)",
-                      fontSize: 10,
-                      letterSpacing: 0.4,
-                      border: "1px solid var(--line)",
-                      borderRadius: 999,
-                      color: "var(--muted)",
+                      color: "var(--fg-on-coral)",
                     }}
                   >
                     {h}
@@ -253,6 +250,7 @@ export default function ProjectsAgentPage() {
               </div>
               <div style={{ display: "flex", gap: 8, marginTop: "auto" }}>
                 <button
+                  className="neo-btn"
                   onClick={(e) => {
                     e.stopPropagation();
                     ask(`Tell me more about the ${p.title} project`);
@@ -261,17 +259,14 @@ export default function ProjectsAgentPage() {
                     padding: "6px 16px",
                     fontFamily: "var(--font-mono)",
                     fontSize: 11,
-                    border: "1px solid var(--accent)",
-                    borderRadius: 4,
-                    background: "transparent",
-                    color: "var(--accent)",
-                    cursor: "pointer",
+                    color: "var(--ink-body)",
                     letterSpacing: 0.4,
                   }}
                 >
                   {t("agent.projects.details")}
                 </button>
                 <button
+                  className="neo-btn"
                   onClick={(e) => {
                     e.stopPropagation();
                     ask(
@@ -282,11 +277,8 @@ export default function ProjectsAgentPage() {
                     padding: "6px 16px",
                     fontFamily: "var(--font-mono)",
                     fontSize: 11,
-                    border: "1px solid var(--line)",
-                    borderRadius: 4,
-                    background: "transparent",
-                    color: "var(--fg)",
-                    cursor: "pointer",
+                    background: "var(--canvas-panel-grey)",
+                    color: "var(--ink-body)",
                     letterSpacing: 0.4,
                   }}
                 >
@@ -294,6 +286,7 @@ export default function ProjectsAgentPage() {
                 </button>
                 {p.url && (
                   <a
+                    className="neo-btn"
                     href={p.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -302,11 +295,8 @@ export default function ProjectsAgentPage() {
                       padding: "6px 16px",
                       fontFamily: "var(--font-mono)",
                       fontSize: 11,
-                      border: "1px solid var(--line)",
-                      borderRadius: 4,
-                      background: "transparent",
-                      color: "var(--fg)",
-                      cursor: "pointer",
+                      background: "var(--canvas-panel-grey)",
+                      color: "var(--ink-body)",
                       letterSpacing: 0.4,
                       textDecoration: "none",
                       marginLeft: "auto",
@@ -327,7 +317,7 @@ export default function ProjectsAgentPage() {
           gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
           gap: 60,
           alignItems: "flex-start",
-          borderTop: "1px solid var(--line)",
+          borderTop: "3px solid var(--ink-border)",
           paddingTop: 56,
         }}
       >
@@ -338,7 +328,7 @@ export default function ProjectsAgentPage() {
               fontSize: 11,
               textTransform: "uppercase",
               letterSpacing: 1.8,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               marginBottom: 12,
             }}
           >
@@ -350,15 +340,15 @@ export default function ProjectsAgentPage() {
               fontWeight: 500,
               letterSpacing: -1.2,
               lineHeight: 1.05,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
               margin: 0,
             }}
           >
             {t("agent.projects.chat.title.p1")}{" "}
             <span
               style={{
-                background: "var(--accent)",
-                color: "var(--accentInk)",
+                background: "var(--accent-coral)",
+                color: "var(--fg-on-coral)",
                 padding: "0 0.08em",
               }}
             >
@@ -369,7 +359,7 @@ export default function ProjectsAgentPage() {
             style={{
               fontSize: 15,
               lineHeight: 1.55,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
               opacity: 0.75,
               marginTop: 16,
               maxWidth: 380,

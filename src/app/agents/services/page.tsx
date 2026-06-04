@@ -86,20 +86,20 @@ export default function ServicesAgentPage() {
           <div
             key={s.name}
             style={{
-              border: "1px solid var(--line)",
-              borderRadius: 4,
-              background: "var(--panel)",
+              border: "3px solid var(--ink-border)",
+              borderRadius: "var(--radius-lg)",
+              background: "var(--canvas-panel-yellow)",
               padding: 28,
               display: "flex",
               flexDirection: "column",
               transition:
-                "transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s",
+                "transform .2s ease-out, box-shadow .2s ease-out",
               transform:
-                hovered === s.name ? "translateY(-4px)" : "translateY(0)",
+                hovered === s.name ? "translate(-2px, -2px)" : "translate(0, 0)",
               boxShadow:
                 hovered === s.name
-                  ? "0 20px 40px -20px color-mix(in oklch, var(--fg) 25%, transparent)"
-                  : "0 0 0 transparent",
+                  ? "8px 8px 0 var(--ink-shadow)"
+                  : "6px 6px 0 var(--ink-shadow)",
             }}
             onMouseEnter={() => setHovered(s.name)}
             onMouseLeave={() => setHovered(null)}
@@ -107,9 +107,9 @@ export default function ServicesAgentPage() {
             <h3
               style={{
                 fontSize: 20,
-                fontWeight: 500,
+                fontWeight: 700,
                 letterSpacing: -0.3,
-                color: "var(--fg)",
+                color: "var(--ink-body)",
                 margin: "0 0 10px",
               }}
             >
@@ -119,8 +119,7 @@ export default function ServicesAgentPage() {
               style={{
                 fontSize: 14,
                 lineHeight: 1.55,
-                color: "var(--fg)",
-                opacity: 0.75,
+                color: "var(--ink-muted)",
                 margin: "0 0 20px",
                 flex: 1,
               }}
@@ -133,8 +132,8 @@ export default function ServicesAgentPage() {
                 gap: 20,
                 fontFamily: "var(--font-mono)",
                 fontSize: 11,
-                color: "var(--muted)",
-                borderTop: "1px solid var(--line)",
+                color: "var(--ink-muted)",
+                borderTop: "3px solid var(--ink-border)",
                 paddingTop: 16,
                 marginBottom: 16,
               }}
@@ -154,14 +153,11 @@ export default function ServicesAgentPage() {
               {s.tech.map((t) => (
                 <span
                   key={t}
+                  className="neo-badge"
                   style={{
-                    padding: "3px 10px",
                     fontFamily: "var(--font-mono)",
                     fontSize: 10,
                     letterSpacing: 0.4,
-                    border: "1px solid var(--line)",
-                    borderRadius: 999,
-                    color: "var(--muted)",
                   }}
                 >
                   {t}
@@ -169,6 +165,7 @@ export default function ServicesAgentPage() {
               ))}
             </div>
             <button
+              className="neo-btn neo-btn-sm"
               onClick={() =>
                 ask(`Tell me more about your ${s.name.toLowerCase()} services`)
               }
@@ -176,11 +173,7 @@ export default function ServicesAgentPage() {
                 padding: "6px 16px",
                 fontFamily: "var(--font-mono)",
                 fontSize: 11,
-                border: "1px solid var(--accent)",
-                borderRadius: 4,
-                background: "transparent",
-                color: "var(--accent)",
-                cursor: "pointer",
+                color: "var(--ink-body)",
                 letterSpacing: 0.4,
                 alignSelf: "flex-start",
               }}
@@ -198,7 +191,7 @@ export default function ServicesAgentPage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderBottom: "1px solid var(--fg)",
+            borderBottom: "3px solid var(--ink-border)",
             paddingBottom: 14,
             marginBottom: 40,
           }}
@@ -207,9 +200,9 @@ export default function ServicesAgentPage() {
             style={{
               fontSize: 28,
               margin: 0,
-              fontWeight: 500,
+              fontWeight: 700,
               letterSpacing: -0.5,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
             }}
           >
             {t("agent.services.process.title")}
@@ -218,7 +211,7 @@ export default function ServicesAgentPage() {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 10,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               letterSpacing: 1.4,
               textTransform: "uppercase",
             }}
@@ -239,15 +232,17 @@ export default function ServicesAgentPage() {
                 style={{
                   width: 40,
                   height: 40,
-                  borderRadius: "50%",
-                  background: "var(--accent)",
-                  color: "var(--accentInk)",
+                  borderRadius: "var(--radius)",
+                  background: "var(--accent-coral)",
+                  color: "var(--fg-on-coral)",
+                  border: "3px solid var(--ink-border)",
+                  boxShadow: "3px 3px 0 var(--ink-shadow)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontFamily: "var(--font-mono)",
                   fontSize: 14,
-                  fontWeight: 600,
+                  fontWeight: 700,
                   marginBottom: 12,
                 }}
               >
@@ -257,7 +252,7 @@ export default function ServicesAgentPage() {
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 12,
-                  color: "var(--fg)",
+                  color: "var(--ink-body)",
                   lineHeight: 1.4,
                   letterSpacing: 0.3,
                 }}
@@ -269,6 +264,7 @@ export default function ServicesAgentPage() {
         </div>
         <div style={{ marginTop: 32 }}>
           <button
+            className="neo-btn neo-btn-sm"
             onClick={() =>
               ask("Explain your client engagement process in detail")
             }
@@ -276,11 +272,7 @@ export default function ServicesAgentPage() {
               padding: "8px 20px",
               fontFamily: "var(--font-mono)",
               fontSize: 11,
-              border: "1px solid var(--accent)",
-              borderRadius: 4,
-              background: "transparent",
-              color: "var(--accent)",
-              cursor: "pointer",
+              color: "var(--ink-body)",
               letterSpacing: 0.4,
             }}
           >
@@ -296,7 +288,7 @@ export default function ServicesAgentPage() {
           gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
           gap: 60,
           alignItems: "flex-start",
-          borderTop: "1px solid var(--line)",
+          borderTop: "3px solid var(--ink-border)",
           paddingTop: 56,
         }}
       >
@@ -307,7 +299,7 @@ export default function ServicesAgentPage() {
               fontSize: 11,
               textTransform: "uppercase",
               letterSpacing: 1.8,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               marginBottom: 12,
             }}
           >
@@ -316,18 +308,18 @@ export default function ServicesAgentPage() {
           <h2
             style={{
               fontSize: "clamp(28px, 4vw, 52px)",
-              fontWeight: 500,
+              fontWeight: 700,
               letterSpacing: -1.2,
               lineHeight: 1.05,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
               margin: 0,
             }}
           >
             {t("agent.services.chat.title.p1")}{" "}
             <span
               style={{
-                background: "var(--accent)",
-                color: "var(--accentInk)",
+                background: "var(--accent-coral)",
+                color: "var(--fg-on-coral)",
                 padding: "0 0.08em",
               }}
             >
@@ -338,8 +330,7 @@ export default function ServicesAgentPage() {
             style={{
               fontSize: 15,
               lineHeight: 1.55,
-              color: "var(--fg)",
-              opacity: 0.75,
+              color: "var(--ink-muted)",
               marginTop: 16,
               maxWidth: 380,
             }}

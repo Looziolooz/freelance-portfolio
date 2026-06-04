@@ -78,11 +78,8 @@ export default function ResearchAgentPage() {
       >
         <form onSubmit={handleSearch}>
           <div
+            className="neo-card"
             style={{
-              border: "1px solid var(--line)",
-              borderRadius: 4,
-              background: "var(--panel)",
-              padding: 28,
               display: "flex",
               flexDirection: "column",
             }}
@@ -93,7 +90,7 @@ export default function ResearchAgentPage() {
                 fontSize: 11,
                 textTransform: "uppercase",
                 letterSpacing: 1.6,
-                color: "var(--muted)",
+                color: "var(--ink-muted)",
                 marginBottom: 8,
               }}
             >
@@ -104,7 +101,7 @@ export default function ResearchAgentPage() {
                 fontSize: 22,
                 fontWeight: 500,
                 letterSpacing: -0.4,
-                color: "var(--fg)",
+                color: "var(--ink-body)",
                 margin: "0 0 8px",
               }}
             >
@@ -114,7 +111,7 @@ export default function ResearchAgentPage() {
               style={{
                 fontSize: 14,
                 lineHeight: 1.55,
-                color: "var(--fg)",
+                color: "var(--ink-body)",
                 opacity: 0.75,
                 margin: "0 0 20px",
               }}
@@ -123,34 +120,26 @@ export default function ResearchAgentPage() {
             </p>
             <div style={{ display: "flex", gap: 8 }}>
               <input
+                className="neo-input"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t("agent.research.search.placeholder")}
                 style={{
                   flex: 1,
                   padding: "8px 12px",
-                  border: "1px solid var(--line)",
-                  borderRadius: 4,
                   fontFamily: "var(--font-mono)",
                   fontSize: 12,
-                  background: "var(--bg)",
-                  color: "var(--fg)",
-                  outline: "none",
                 }}
               />
               <button
                 type="submit"
+                className="neo-btn neo-btn-sm"
                 style={{
-                  padding: "8px 18px",
-                  background: "var(--accent)",
-                  color: "var(--accentInk)",
-                  border: "none",
-                  borderRadius: 4,
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  cursor: "pointer",
                   fontWeight: 500,
                   letterSpacing: 0.4,
+                  color: "var(--ink-body)",
                 }}
               >
                 {t("agent.research.search.btn")}
@@ -161,11 +150,8 @@ export default function ResearchAgentPage() {
 
         <form onSubmit={handleCompare}>
           <div
+            className="neo-card"
             style={{
-              border: "1px solid var(--line)",
-              borderRadius: 4,
-              background: "var(--panel)",
-              padding: 28,
               display: "flex",
               flexDirection: "column",
             }}
@@ -176,7 +162,7 @@ export default function ResearchAgentPage() {
                 fontSize: 11,
                 textTransform: "uppercase",
                 letterSpacing: 1.6,
-                color: "var(--muted)",
+                color: "var(--ink-muted)",
                 marginBottom: 8,
               }}
             >
@@ -187,7 +173,7 @@ export default function ResearchAgentPage() {
                 fontSize: 22,
                 fontWeight: 500,
                 letterSpacing: -0.4,
-                color: "var(--fg)",
+                color: "var(--ink-body)",
                 margin: "0 0 8px",
               }}
             >
@@ -197,7 +183,7 @@ export default function ResearchAgentPage() {
               style={{
                 fontSize: 14,
                 lineHeight: 1.55,
-                color: "var(--fg)",
+                color: "var(--ink-body)",
                 opacity: 0.75,
                 margin: "0 0 20px",
               }}
@@ -213,50 +199,38 @@ export default function ResearchAgentPage() {
               }}
             >
               <input
+                className="neo-input"
                 value={tech1}
                 onChange={(e) => setTech1(e.target.value)}
                 placeholder={t("agent.research.compare.placeholder1")}
                 style={{
                   padding: "8px 12px",
-                  border: "1px solid var(--line)",
-                  borderRadius: 4,
                   fontFamily: "var(--font-mono)",
                   fontSize: 12,
-                  background: "var(--bg)",
-                  color: "var(--fg)",
-                  outline: "none",
                 }}
               />
               <input
+                className="neo-input"
                 value={tech2}
                 onChange={(e) => setTech2(e.target.value)}
                 placeholder={t("agent.research.compare.placeholder2")}
                 style={{
                   padding: "8px 12px",
-                  border: "1px solid var(--line)",
-                  borderRadius: 4,
                   fontFamily: "var(--font-mono)",
                   fontSize: 12,
-                  background: "var(--bg)",
-                  color: "var(--fg)",
-                  outline: "none",
                 }}
               />
             </div>
             <button
               type="submit"
+              className="neo-btn neo-btn-sm"
               style={{
-                padding: "8px 18px",
-                background: "var(--accent)",
-                color: "var(--accentInk)",
-                border: "none",
-                borderRadius: 4,
                 fontFamily: "var(--font-mono)",
                 fontSize: 11,
-                cursor: "pointer",
                 fontWeight: 500,
                 letterSpacing: 0.4,
                 alignSelf: "flex-start",
+                color: "var(--ink-body)",
               }}
             >
               {t("agent.research.compare.btn")}
@@ -272,7 +246,7 @@ export default function ResearchAgentPage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderBottom: "1px solid var(--fg)",
+            borderBottom: "3px solid var(--ink-border)",
             paddingBottom: 14,
             marginBottom: 40,
           }}
@@ -283,7 +257,7 @@ export default function ResearchAgentPage() {
               margin: 0,
               fontWeight: 500,
               letterSpacing: -0.5,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
             }}
           >
             {t("agent.research.trending.title")}
@@ -292,7 +266,7 @@ export default function ResearchAgentPage() {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 10,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               letterSpacing: 1.4,
               textTransform: "uppercase",
             }}
@@ -311,22 +285,22 @@ export default function ResearchAgentPage() {
             <div
                key={topic.title}
               style={{
-                border: "1px solid var(--line)",
-                borderRadius: 4,
-                background: "var(--panel)",
+                border: "3px solid var(--ink-border)",
+                borderRadius: "var(--radius-lg)",
+                background: "var(--canvas-panel-yellow)",
                 padding: 28,
                 display: "flex",
                 flexDirection: "column",
                 transition:
-                  "transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s",
+                  "transform .2s ease-out, box-shadow .2s ease-out",
                 transform:
                   hoveredTopic === topic.title
-                    ? "translateY(-4px)"
-                    : "translateY(0)",
+                    ? "translate(-2px, -2px)"
+                    : "translate(0, 0)",
                 boxShadow:
                   hoveredTopic === topic.title
-                    ? "0 20px 40px -20px color-mix(in oklch, var(--fg) 25%, transparent)"
-                    : "0 0 0 transparent",
+                    ? "8px 8px 0 var(--ink-shadow)"
+                    : "6px 6px 0 var(--ink-shadow)",
               }}
               onMouseEnter={() => setHoveredTopic(topic.title)}
               onMouseLeave={() => setHoveredTopic(null)}
@@ -336,7 +310,7 @@ export default function ResearchAgentPage() {
                   fontSize: 20,
                   fontWeight: 500,
                   letterSpacing: -0.3,
-                  color: "var(--fg)",
+                  color: "var(--ink-body)",
                   margin: "0 0 10px",
                 }}
               >
@@ -346,7 +320,7 @@ export default function ResearchAgentPage() {
                 style={{
                   fontSize: 14,
                   lineHeight: 1.55,
-                  color: "var(--fg)",
+                  color: "var(--ink-body)",
                   opacity: 0.75,
                   margin: "0 0 20px",
                   flex: 1,
@@ -356,17 +330,13 @@ export default function ResearchAgentPage() {
               </p>
               <button
                 onClick={() => ask(topic.query)}
+                className="neo-btn neo-btn-sm"
                 style={{
-                  padding: "6px 16px",
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  border: "1px solid var(--accent)",
-                  borderRadius: 4,
-                  background: "transparent",
-                  color: "var(--accent)",
-                  cursor: "pointer",
                   letterSpacing: 0.4,
                   alignSelf: "flex-start",
+                  color: "var(--ink-body)",
                 }}
               >
                 {t("agent.research.learn")}
@@ -383,7 +353,7 @@ export default function ResearchAgentPage() {
           gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
           gap: 60,
           alignItems: "flex-start",
-          borderTop: "1px solid var(--line)",
+          borderTop: "3px solid var(--ink-border)",
           paddingTop: 56,
         }}
       >
@@ -394,7 +364,7 @@ export default function ResearchAgentPage() {
               fontSize: 11,
               textTransform: "uppercase",
               letterSpacing: 1.8,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               marginBottom: 12,
             }}
           >
@@ -406,15 +376,15 @@ export default function ResearchAgentPage() {
               fontWeight: 500,
               letterSpacing: -1.2,
               lineHeight: 1.05,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
               margin: 0,
             }}
           >
             {t("agent.research.chat.title.p1")}{" "}
             <span
               style={{
-                background: "var(--accent)",
-                color: "var(--accentInk)",
+                background: "var(--accent-coral)",
+                color: "var(--fg-on-coral)",
                 padding: "0 0.08em",
               }}
             >
@@ -425,7 +395,7 @@ export default function ResearchAgentPage() {
             style={{
               fontSize: 15,
               lineHeight: 1.55,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
               opacity: 0.75,
               marginTop: 16,
               maxWidth: 380,

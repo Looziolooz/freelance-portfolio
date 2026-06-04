@@ -88,7 +88,7 @@ export default function CareerAgentPage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderBottom: "1px solid var(--fg)",
+            borderBottom: "3px solid var(--ink-border)",
             paddingBottom: 14,
             marginBottom: 40,
           }}
@@ -99,7 +99,7 @@ export default function CareerAgentPage() {
               margin: 0,
               fontWeight: 500,
               letterSpacing: -0.5,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
             }}
           >
             {t("agent.career.skills.title")}
@@ -108,7 +108,7 @@ export default function CareerAgentPage() {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 10,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               letterSpacing: 1.4,
               textTransform: "uppercase",
             }}
@@ -127,20 +127,20 @@ export default function CareerAgentPage() {
             <div
               key={s.id}
               style={{
-                border: "1px solid var(--line)",
-                borderRadius: 4,
-                background: "var(--panel)",
+                border: "3px solid var(--ink-border)",
+                borderRadius: "var(--radius-lg)",
+                background: "var(--canvas-panel-yellow)",
                 padding: 28,
                 transition:
-                  "transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s",
+                  "transform .2s ease-out, box-shadow .2s ease-out",
                 transform:
                   hoveredCard === s.id
-                    ? "translateY(-4px)"
-                    : "translateY(0)",
+                    ? "translate(-2px, -2px)"
+                    : "translate(0, 0)",
                 boxShadow:
                   hoveredCard === s.id
-                    ? "0 20px 40px -20px color-mix(in oklch, var(--fg) 25%, transparent)"
-                    : "0 0 0 transparent",
+                    ? "8px 8px 0 var(--ink-shadow)"
+                    : "6px 6px 0 var(--ink-shadow)",
               }}
               onMouseEnter={() => setHoveredCard(s.id)}
               onMouseLeave={() => setHoveredCard(null)}
@@ -151,9 +151,9 @@ export default function CareerAgentPage() {
                   fontSize: 11,
                   textTransform: "uppercase",
                   letterSpacing: 1.6,
-                  color: "var(--muted)",
+                  color: "var(--ink-muted)",
                   paddingBottom: 14,
-                  borderBottom: "1px solid var(--line)",
+                  borderBottom: "3px solid var(--ink-border)",
                   marginBottom: 20,
                   display: "flex",
                   justifyContent: "space-between",
@@ -177,7 +177,7 @@ export default function CareerAgentPage() {
                       fontSize: 20,
                       fontWeight: 500,
                       letterSpacing: -0.3,
-                      color: "var(--fg)",
+                      color: "var(--ink-body)",
                     }}
                   >
                     {x}
@@ -190,7 +190,7 @@ export default function CareerAgentPage() {
                       fontSize: 20,
                       fontWeight: 400,
                       letterSpacing: -0.3,
-                      color: "var(--muted)",
+                      color: "var(--ink-muted)",
                     }}
                   >
                     {x}
@@ -201,15 +201,11 @@ export default function CareerAgentPage() {
                 onClick={() =>
                   ask(`Tell me more about your ${s.label.toLowerCase()} skills`)
                 }
+                className="neo-btn neo-btn-sm"
                 style={{
-                  padding: "6px 14px",
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  border: "1px solid var(--accent)",
-                  borderRadius: 4,
-                  background: "transparent",
-                  color: "var(--accent)",
-                  cursor: "pointer",
+                  color: "var(--ink-body)",
                   letterSpacing: 0.4,
                 }}
               >
@@ -227,7 +223,7 @@ export default function CareerAgentPage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-end",
-            borderBottom: "1px solid var(--fg)",
+            borderBottom: "3px solid var(--ink-border)",
             paddingBottom: 14,
             marginBottom: 40,
           }}
@@ -238,7 +234,7 @@ export default function CareerAgentPage() {
               margin: 0,
               fontWeight: 500,
               letterSpacing: -0.5,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
             }}
           >
             {t("agent.career.experience.title")}
@@ -247,7 +243,7 @@ export default function CareerAgentPage() {
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 10,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               letterSpacing: 1.4,
               textTransform: "uppercase",
             }}
@@ -264,15 +260,15 @@ export default function CareerAgentPage() {
                 gridTemplateColumns: "60px 2fr 1fr 200px 80px",
                 alignItems: "center",
                 padding: "24px 16px",
-                borderBottom: "1px solid var(--line)",
+                borderBottom: "3px solid var(--ink-border)",
                 textDecoration: "none",
-                color: "var(--fg)",
+                color: "var(--ink-body)",
                 transition: "background .2s, padding .2s",
                 cursor: "default",
               }}
               onMouseEnter={(ev) => {
                 (ev.currentTarget as HTMLElement).style.background =
-                  "var(--panel)";
+                  "var(--canvas-panel-yellow)";
               }}
               onMouseLeave={(ev) => {
                 (ev.currentTarget as HTMLElement).style.background =
@@ -283,7 +279,7 @@ export default function CareerAgentPage() {
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 12,
-                  color: "var(--muted)",
+                  color: "var(--ink-muted)",
                 }}
               >
                 {String(i + 1).padStart(2, "0")}
@@ -301,7 +297,7 @@ export default function CareerAgentPage() {
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 12,
-                  color: "var(--muted)",
+                  color: "var(--ink-muted)",
                 }}
               >
                 {e.company}
@@ -310,7 +306,7 @@ export default function CareerAgentPage() {
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  color: "var(--muted)",
+                  color: "var(--ink-muted)",
                   lineHeight: 1.4,
                 }}
               >
@@ -320,7 +316,7 @@ export default function CareerAgentPage() {
                 style={{
                   fontFamily: "var(--font-mono)",
                   fontSize: 14,
-                  color: "var(--fg)",
+                  color: "var(--ink-body)",
                   textAlign: "right",
                 }}
                 onClick={() =>
@@ -328,13 +324,10 @@ export default function CareerAgentPage() {
                 }
               >
                 <span
+                  className="neo-badge"
                   style={{
                     cursor: "pointer",
-                    padding: "4px 12px",
-                    border: "1px solid var(--accent)",
-                    borderRadius: 4,
                     fontSize: 11,
-                    color: "var(--accent)",
                     fontFamily: "var(--font-mono)",
                   }}
                 >
@@ -353,7 +346,7 @@ export default function CareerAgentPage() {
           gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
           gap: 60,
           alignItems: "flex-start",
-          borderTop: "1px solid var(--line)",
+          borderTop: "3px solid var(--ink-border)",
           paddingTop: 56,
         }}
       >
@@ -364,7 +357,7 @@ export default function CareerAgentPage() {
               fontSize: 11,
               textTransform: "uppercase",
               letterSpacing: 1.8,
-              color: "var(--muted)",
+              color: "var(--ink-muted)",
               marginBottom: 12,
             }}
           >
@@ -376,15 +369,15 @@ export default function CareerAgentPage() {
               fontWeight: 500,
               letterSpacing: -1.2,
               lineHeight: 1.05,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
               margin: 0,
             }}
           >
             {t("agent.career.chat.title.p1")}{" "}
             <span
               style={{
-                background: "var(--accent)",
-                color: "var(--accentInk)",
+                background: "var(--accent-coral)",
+                color: "var(--fg-on-coral)",
                 padding: "0 0.08em",
               }}
             >
@@ -395,7 +388,7 @@ export default function CareerAgentPage() {
             style={{
               fontSize: 15,
               lineHeight: 1.55,
-              color: "var(--fg)",
+              color: "var(--ink-body)",
               opacity: 0.75,
               marginTop: 16,
               maxWidth: 380,
