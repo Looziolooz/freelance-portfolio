@@ -83,35 +83,6 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
             {tags}
           </p>
         </div>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          {project.demo && (
-            <a
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="neo-btn neo-btn-sm"
-              style={{ textDecoration: "none", color: "var(--ink-body)", padding: "8px 16px" }}
-            >
-              {t("work.openlive")} ↗
-            </a>
-          )}
-          {project.repo && (
-            <a
-              href={project.repo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="neo-btn neo-btn-sm"
-              style={{
-                textDecoration: "none",
-                color: "var(--ink-body)",
-                padding: "8px 16px",
-                background: "var(--canvas-page)",
-              }}
-            >
-              {t("work.viewcode")} ↗
-            </a>
-          )}
-        </div>
       </header>
 
       <p style={{ fontSize: "var(--fs-lg)", lineHeight: "var(--lh-loose)", maxWidth: 680, marginBottom: 28 }}>
