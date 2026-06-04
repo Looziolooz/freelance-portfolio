@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "./AuthProvider";
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 const TIER_ORDER: Record<string, number> = {
@@ -23,8 +24,17 @@ export function ProtectedContent({
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="w-6 h-6 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
+      <div
+        style={{
+          textAlign: "center",
+          padding: "48px 0",
+          color: "var(--ink-muted)",
+          fontFamily: "var(--font-mono)",
+          fontSize: 13,
+          letterSpacing: 0.5,
+        }}
+      >
+        Caricamento…
       </div>
     );
   }
@@ -36,19 +46,34 @@ export function ProtectedContent({
   if (fallback) return <>{fallback}</>;
 
   return (
-    <div className="text-center py-12 px-6 rounded-xl border border-dashed border-[var(--accent)]/30">
-      <div className="text-4xl mb-4">🔒</div>
-      <h3 className="text-lg font-bold mb-2">Content Bloccato</h3>
-      <p className="text-sm opacity-70 mb-4">
-        Questo contenuto è disponibile per i membri{" "}
-        {tier === "SUPPORTER" ? "Supporter" : "Pro"}.
-      </p>
-      <a
-        href="/membership"
-        className="inline-block px-6 py-2 rounded-full bg-[var(--accent)] text-white font-medium text-sm hover:opacity-80 transition-opacity"
-      >
-        Vedi Piani
-      </a>
+    <div
+      className="offset block offset--panel"
+      style={{ display: "block", width: "100%", maxWidth: 520, margin: "0 auto" }}
+    >
+      <div className="offset__layer" />
+      <div className="offset__fg neo-panel-cream" style={{ padding: "40px 28px", textAlign: "center" }}>
+        <div style={{ fontSize: 40, marginBottom: 12 }}>🔒</div>
+        <h3 style={{ fontSize: "var(--fs-h2)", fontWeight: 700, margin: "0 0 8px" }}>
+          Contenuto Bloccato
+        </h3>
+        <p style={{ fontSize: "var(--fs-sm)", color: "var(--ink-muted)", margin: "0 0 20px" }}>
+          Questo contenuto è disponibile per i membri{" "}
+          {tier === "SUPPORTER" ? "Supporter" : "Pro"}.
+        </p>
+        <Link
+          href="/membership"
+          className="neo-btn"
+          style={{
+            display: "inline-block",
+            padding: "12px 24px",
+            textDecoration: "none",
+            color: "var(--ink-body)",
+            fontWeight: 600,
+          }}
+        >
+          Vedi Piani
+        </Link>
+      </div>
     </div>
   );
 }
