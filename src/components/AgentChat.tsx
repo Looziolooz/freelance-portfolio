@@ -116,7 +116,7 @@ export default function AgentChat({
       .replace(/\*(.+?)\*/g, "<em>$1</em>")
       .replace(
         /`(.+?)`/g,
-        "<code style='background:var(--line);padding:1px 4px;border-radius:3px;font:var(--font-mono);font-size:0.9em'>$1</code>"
+        "<code style='background:var(--canvas-panel-yellow);padding:1px 4px;border-radius:3px;font-family:var(--font-mono);font-size:0.9em'>$1</code>"
       )
       .replace(/\n/g, "<br/>");
     return { __html: html };
@@ -128,10 +128,11 @@ export default function AgentChat({
         display: "flex",
         flexDirection: "column",
         height: 460,
-        border: "1px solid var(--line)",
-        borderRadius: 4,
+        border: "3px solid var(--ink-border)",
+        borderRadius: "var(--radius-lg)",
         overflow: "hidden",
-        background: "var(--bg)",
+        background: "var(--canvas-page)",
+        boxShadow: "8px 8px 0 var(--ink-shadow)",
       }}
     >
       {/* header */}
@@ -141,11 +142,11 @@ export default function AgentChat({
           alignItems: "center",
           gap: 10,
           padding: "10px 16px",
-          borderBottom: "1px solid var(--line)",
-          background: "var(--panel)",
+          borderBottom: "3px solid var(--ink-border)",
+          background: "var(--canvas-panel-yellow)",
           fontFamily: "var(--font-mono)",
           fontSize: 11,
-          color: "var(--muted)",
+          color: "var(--ink-muted)",
           letterSpacing: 0.6,
         }}
       >
@@ -154,7 +155,8 @@ export default function AgentChat({
             width: 8,
             height: 8,
             borderRadius: "50%",
-            background: isLoading ? "var(--accent)" : "#3ecf8e",
+            background: isLoading ? "var(--accent-coral)" : "var(--accent-decor-green)",
+            border: "2px solid var(--ink-border)",
             display: "inline-block",
             flexShrink: 0,
           }}
@@ -208,12 +210,13 @@ export default function AgentChat({
             <div
               style={{
                 padding: "10px 14px",
-                borderRadius: 4,
+                borderRadius: "var(--radius)",
                 fontSize: 13,
                 lineHeight: 1.55,
-                fontFamily: "var(--font-sans)",
-                background: msg.isUser ? "var(--fg)" : "var(--panel)",
-                color: msg.isUser ? "var(--bg)" : "var(--fg)",
+                fontFamily: "var(--font-ui)",
+                border: "2px solid var(--ink-border)",
+                background: msg.isUser ? "var(--ink-body)" : "var(--canvas-panel-yellow)",
+                color: msg.isUser ? "var(--canvas-page)" : "var(--ink-body)",
               }}
             >
               <div dangerouslySetInnerHTML={renderContent(msg.content)} />
@@ -244,11 +247,12 @@ export default function AgentChat({
             <div
               style={{
                 padding: "10px 14px",
-                borderRadius: 4,
+                borderRadius: "var(--radius)",
                 fontSize: 12,
                 fontFamily: "var(--font-mono)",
-                background: "var(--panel)",
-                color: "var(--muted)",
+                border: "2px solid var(--ink-border)",
+                background: "var(--canvas-panel-yellow)",
+                color: "var(--ink-muted)",
               }}
             >
               {t("agent.chat.think")}<span style={{ animation: "dots 1.5s steps(5,end) infinite" }}>...</span>
@@ -264,8 +268,8 @@ export default function AgentChat({
           display: "flex",
           gap: 8,
           padding: 12,
-          borderTop: "1px solid var(--line)",
-          background: "var(--bg)",
+          borderTop: "3px solid var(--ink-border)",
+          background: "var(--canvas-page)",
         }}
       >
         <input
@@ -275,31 +279,25 @@ export default function AgentChat({
             if (e.key === "Enter") handleSend();
           }}
           placeholder={t("agent.chat.placeholder")}
+          className="neo-input"
           style={{
             flex: 1,
-            padding: "8px 12px",
-            border: "1px solid var(--line)",
-            borderRadius: 4,
+            minWidth: 0,
+            padding: "9px 14px",
             fontFamily: "var(--font-mono)",
-            fontSize: 12,
-            background: "var(--bg)",
-            color: "var(--fg)",
-            outline: "none",
+            fontSize: 13,
           }}
         />
         <button
           onClick={() => handleSend()}
           disabled={isLoading}
+          className="neo-btn neo-btn-sm"
           style={{
-            padding: "8px 18px",
-            background: "var(--accent)",
-            color: "var(--accentInk)",
-            border: "none",
-            borderRadius: 4,
+            padding: "9px 18px",
             fontFamily: "var(--font-mono)",
             fontSize: 11,
+            color: "var(--ink-body)",
             cursor: isLoading ? "not-allowed" : "pointer",
-            fontWeight: 500,
             opacity: isLoading ? 0.6 : 1,
           }}
         >
