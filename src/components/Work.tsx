@@ -177,62 +177,9 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
   );
 }
 
-function IndexRow({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => string }) {
-  const [hover, setHover] = useState(false);
-
-  return (
-    <Link
-      href={`/work/${p.slug}`}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "60px 1fr 100px 280px 80px",
-        alignItems: "center",
-        padding: "24px 16px",
-        borderBottom: "3px solid var(--ink-border)",
-        fontSize: 18,
-        textDecoration: "none",
-        color: "var(--ink-body)",
-        transition: "background .2s, padding .2s",
-        background: hover ? "var(--canvas-panel-yellow)" : "transparent",
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted)" }}>
-        {p.id}
-      </div>
-      <div style={{ fontSize: 22, fontWeight: 500, letterSpacing: -0.4 }}>
-        {t(`work.proj.${p.key}`)}
-      </div>
-      <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted)" }}>
-        {["01","02","03","04","11","12","13","14","15"].includes(p.id) ? "2026" : "2023"}
-      </div>
-      <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted)", letterSpacing: 0.5 }}>
-        {t(`work.proj.${p.key}.tags`)}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-end",
-          gap: 6,
-          fontFamily: "var(--font-mono)",
-          fontSize: 14,
-          color: "var(--fg)",
-          textAlign: "right",
-        }}
-      >
-        {t("work.go")}
-        <span className="arrow-blink" aria-hidden="true" style={{ marginLeft: 0 }}>→</span>
-      </div>
-    </Link>
-  );
-}
-
 export default function Work() {
   const { t } = useLang();
   const featured = PROJECTS.filter((p) => p.featured);
-  const rest = PROJECTS.filter((p) => !p.featured);
 
   return (
     <section
@@ -260,36 +207,6 @@ export default function Work() {
       >
         {featured.map((p) => (
           <FeaturedCard key={p.id} p={p} t={t} />
-        ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-end",
-          borderBottom: "3px solid var(--ink-border)",
-          paddingBottom: 14,
-          marginBottom: 8,
-        }}
-      >
-        <h3 style={{ fontSize: 28, margin: 0, fontWeight: 500, letterSpacing: -0.5 }}>
-          {t("work.archive")}
-        </h3>
-        <div
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 10,
-            color: "var(--muted)",
-            letterSpacing: 1.4,
-            textTransform: "uppercase",
-          }}
-        >
-          {t("work.archive.meta")}
-        </div>
-      </div>
-      <div style={{ overflowX: "auto" }}>
-        {rest.map((p) => (
-          <IndexRow key={p.id} p={p} t={t} />
         ))}
       </div>
     </section>
