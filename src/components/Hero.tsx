@@ -109,7 +109,7 @@ export default function Hero() {
                 <span
                   style={{
                     background: "var(--accent-coral)",
-                    color: "#ffffff",
+                    color: "var(--fg-on-coral)",
                     padding: "0.04em 0.08em",
                     boxDecorationBreak: "clone",
                     WebkitBoxDecorationBreak: "clone",
@@ -186,6 +186,22 @@ export default function Hero() {
               {t("hero.pill.scraper")}
             </span>
           </div>
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
+          <a
+            href="#work"
+            className="neo-btn neo-btn-lg"
+            style={{ textDecoration: "none", color: "var(--ink-body)", padding: "13px 26px", fontSize: 16 }}
+          >
+            {t("hero.cta.work")}
+          </a>
+          <a
+            href="/agents"
+            className="neo-btn neo-btn-lg"
+            style={{ textDecoration: "none", color: "var(--ink-body)", padding: "13px 26px", fontSize: 16, background: "var(--canvas-page)" }}
+          >
+            {t("hero.cta.agents")}
+          </a>
         </div>
         <div
           style={{

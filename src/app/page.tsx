@@ -10,6 +10,7 @@ import WayfindingNav from "@/components/WayfindingNav";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollReveal from "@/components/ScrollReveal";
 import AgentsShowcase from "@/components/AgentsShowcase";
+import EntryGrid from "@/components/EntryGrid";
 
 export default function Home() {
   return (
@@ -17,9 +18,10 @@ export default function Home() {
       <ScrollProgress />
       <Nav />
       <WayfindingNav />
-      <main style={{ maxWidth: 1400, margin: "0 auto", padding: "0 40px" }}>
+      <main className="container">
         <Hero />
         <Ticker />
+        <ScrollReveal><EntryGrid /></ScrollReveal>
         <ScrollReveal><About /></ScrollReveal>
         <ScrollReveal><Work /></ScrollReveal>
         <ScrollReveal><Stack /></ScrollReveal>

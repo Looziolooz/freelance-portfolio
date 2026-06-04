@@ -46,9 +46,10 @@ export default function Nav() {
         <div
           className={`topbar__nav nav-links ${menuOpen ? "open" : ""}`}
         >
-          <a href="/blog" onClick={() => setMenuOpen(false)}>Blog</a>
-          <a href="/agents" onClick={() => setMenuOpen(false)}>AI Agents</a>
-          <a href="/membership" onClick={() => setMenuOpen(false)}>Membri</a>
+          <a href="/#work" onClick={() => setMenuOpen(false)}>{t("nav.work")}</a>
+          <a href="/agents" onClick={() => setMenuOpen(false)}>{t("nav.agents")}</a>
+          <a href="/blog" onClick={() => setMenuOpen(false)}>{t("nav.blog")}</a>
+          <a href="/membership" onClick={() => setMenuOpen(false)}>{t("nav.membership")}</a>
           <a
             href={user ? "/account" : "/login"}
             className="neo-btn neo-btn-sm"
@@ -60,7 +61,7 @@ export default function Nav() {
             }}
             onClick={() => setMenuOpen(false)}
           >
-            {user ? "Account" : "Accedi"}
+            {user ? t("nav.account") : t("nav.login")}
           </a>
         </div>
 
