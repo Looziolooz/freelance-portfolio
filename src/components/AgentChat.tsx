@@ -97,7 +97,8 @@ export default function AgentChat({
       !processedRef.current.includes(directQuestion)
     ) {
       processedRef.current.push(directQuestion);
-      handleSend(directQuestion);
+      // Strip the trailing "[timestamp]" uniqueness suffix before sending/showing.
+      handleSend(directQuestion.replace(/\s*\[\d+\]\s*$/, ""));
     }
   }, [directQuestion, handleSend]);
 
