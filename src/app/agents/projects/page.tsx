@@ -6,66 +6,23 @@ import SectionHeader from "@/components/SectionHeader";
 import AgentNav from "@/components/AgentNav";
 import { useLang } from "@/components/LangProvider";
 
-const PROJECTS = [
-  {
-    title: "E-commerce Platform",
-    year: "2023",
-    tech: "React · Node.js · MongoDB · Express",
-    desc: "Full-stack e-commerce platform with product management, shopping cart, and Stripe payment processing.",
-    highlights: ["RESTful API", "JWT auth", "Responsive"],
-  },
-  {
-    title: "Task Management App",
-    year: "2022",
-    tech: "Vue.js · Firebase · Tailwind CSS",
-    desc: "Real-time task management with collaborative features, notifications, and drag-and-drop progress tracking.",
-    highlights: ["Real-time sync", "PWA", "Drag & drop"],
-  },
-  {
-    title: "Data Visualization Dashboard",
-    year: "2021",
-    tech: "Python · Django · D3.js · PostgreSQL",
-    desc: "Interactive dashboard for visualizing complex datasets with filtering, sorting, and CSV/PDF export.",
-    highlights: ["Interactive charts", "Export", "Responsive"],
-  },
-  {
-    title: "AI Chatbot",
-    year: "2024",
-    tech: "Next.js · OpenAI · n8n",
-    desc: "Conversational AI chatbot for client support with natural language understanding and workflow automation.",
-    highlights: ["LLM integration", "n8n pipeline", "Context-aware"],
-  },
+type Project = {
+  title: string;
+  year: string;
+  tech: string;
+  desc: string;
+  highlights: string[];
+  image?: string;
+};
+
+const PROJECTS: Project[] = [
   {
     title: "Atelier Solari",
     year: "2026",
     tech: "Next.js 16 · Tailwind CSS 4 · i18n",
     desc: "Wedding photography studio website for Tuscany & Amalfi Coast. Medium format film aesthetic with multilingual support.",
     highlights: ["Next.js 16", "i18n IT/EN/SV", "Tailwind CSS 4"],
-    url: "https://github.com/Looziolooz/fotografo",
-  },
-  {
-    title: "Nordhem",
-    year: "2026",
-    tech: "Next.js 16 · Tailwind CSS 4 · i18n",
-    desc: "Scandinavian luxury real estate agency website with property grid, filters, detail drawer, and multilingual interface.",
-    highlights: ["Property listings", "Multilingual", "Responsive"],
-    url: "https://github.com/Looziolooz/real-estate",
-  },
-  {
-    title: "Aurelia Pro X1",
-    year: "2026",
-    tech: "Next.js · Python · Blender · 3D",
-    desc: "Premium espresso machine product landing page with 3D configurator, colour variants, and multilingual support.",
-    highlights: ["3D configurator", "Blender", "Python"],
-    url: "https://github.com/Looziolooz/aurelia",
-  },
-  {
-    title: "Couffer",
-    year: "2026",
-    tech: "Next.js 16 · Tailwind CSS 4 · TypeScript",
-    desc: "Full salon management platform with booking, services, products, client portal, staff dashboard, and admin panel.",
-    highlights: ["Booking", "Admin dashboard", "Client portal"],
-    url: "https://github.com/Looziolooz/couffer",
+    image: "/projects/fotografo.png",
   },
   {
     title: "Pizzeria Restaurant",
@@ -73,7 +30,29 @@ const PROJECTS = [
     tech: "Next.js 16 · Tailwind CSS 4 · TypeScript",
     desc: "Complete restaurant website with digital menu, online ordering, table reservation, checkout flow, and admin panel.",
     highlights: ["Online ordering", "Reservations", "Admin panel"],
-    url: "https://github.com/Looziolooz/pizzeria-restaurant",
+    image: "/projects/pizzeria-restaurant.png",
+  },
+  {
+    title: "Aurelia Pro X1",
+    year: "2026",
+    tech: "Next.js · Python · Blender · 3D",
+    desc: "Premium espresso machine product landing page with 3D configurator, colour variants, and multilingual support.",
+    highlights: ["3D configurator", "Blender", "Python"],
+    image: "/projects/aurelia.png",
+  },
+  {
+    title: "Couffer",
+    year: "2026",
+    tech: "Next.js 16 · Tailwind CSS 4 · TypeScript",
+    desc: "Full salon management platform with booking, services, products, client portal, staff dashboard, and admin panel.",
+    highlights: ["Booking", "Admin dashboard", "Client portal"],
+  },
+  {
+    title: "Nordhem",
+    year: "2026",
+    tech: "Next.js 16 · Tailwind CSS 4 · i18n",
+    desc: "Scandinavian luxury real estate agency website with property grid, filters, detail drawer, and multilingual interface.",
+    highlights: ["Property listings", "Multilingual", "Responsive"],
   },
 ];
 
@@ -146,26 +125,43 @@ export default function ProjectsAgentPage() {
                 borderBottom: "3px solid var(--ink-border)",
               }}
             >
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  backgroundImage:
-                    "repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in oklch, var(--ink-body) 6%, transparent) 14px 15px)",
-                }}
-              />
-              <div
-                style={{
-                  position: "relative",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 20,
-                  fontWeight: 500,
-                  letterSpacing: -0.4,
-                  color: "color-mix(in oklch, var(--ink-body) 40%, transparent)",
-                }}
-              >
-                {p.title}
-              </div>
+              {p.image ? (
+                <img
+                  src={p.image}
+                  alt={p.title}
+                  loading="lazy"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              ) : (
+                <>
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      backgroundImage:
+                        "repeating-linear-gradient(45deg, transparent 0 14px, color-mix(in oklch, var(--ink-body) 6%, transparent) 14px 15px)",
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: "relative",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 20,
+                      fontWeight: 500,
+                      letterSpacing: -0.4,
+                      color: "color-mix(in oklch, var(--ink-body) 40%, transparent)",
+                    }}
+                  >
+                    {p.title}
+                  </div>
+                </>
+              )}
               <div
                 style={{
                   position: "absolute",
@@ -173,7 +169,11 @@ export default function ProjectsAgentPage() {
                   left: 14,
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  color: "color-mix(in oklch, var(--ink-body) 60%, transparent)",
+                  color: "var(--ink-body)",
+                  background: "color-mix(in oklch, var(--canvas-page) 82%, transparent)",
+                  border: "1.5px solid var(--ink-border)",
+                  borderRadius: 5,
+                  padding: "2px 7px",
                 }}
               >
                 {t("agent.projects.prefix")}{PROJECTS.indexOf(p) + 1}
@@ -185,7 +185,11 @@ export default function ProjectsAgentPage() {
                   right: 14,
                   fontFamily: "var(--font-mono)",
                   fontSize: 11,
-                  color: "color-mix(in oklch, var(--ink-body) 60%, transparent)",
+                  color: "var(--ink-body)",
+                  background: "color-mix(in oklch, var(--canvas-page) 82%, transparent)",
+                  border: "1.5px solid var(--ink-border)",
+                  borderRadius: 5,
+                  padding: "2px 7px",
                 }}
               >
                 {p.year}
@@ -284,27 +288,6 @@ export default function ProjectsAgentPage() {
                 >
                   {t("agent.projects.tech")}
                 </button>
-                {p.url && (
-                  <a
-                    className="neo-btn"
-                    href={p.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    style={{
-                      padding: "6px 16px",
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 11,
-                      background: "var(--canvas-panel-grey)",
-                      color: "var(--ink-body)",
-                      letterSpacing: 0.4,
-                      textDecoration: "none",
-                      marginLeft: "auto",
-                    }}
-                  >
-                    {t("agent.projects.github")}
-                  </a>
-                )}
               </div>
             </div>
           </div>
