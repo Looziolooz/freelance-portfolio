@@ -99,7 +99,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
               letterSpacing: 1,
             }}
           >
-            {["01","02","03","04","11","12","13","14","15","16"].includes(p.id) ? "2026" : "2024"}
+            {["01","02","03","04","11","12","13","14","15","16","17"].includes(p.id) ? "2026" : "2024"}
           </div>
           {!p.image && (
             <div

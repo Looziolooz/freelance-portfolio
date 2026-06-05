@@ -28,6 +28,17 @@ export const PROJECTS: Project[] = [
     swatch: "#FFD21E",
   },
   {
+    id: "17",
+    key: "17",
+    slug: "barberia",
+    // NOTE: live demo URL pending — https://barberia-seven-mu.vercel.app/
+    // returns Vercel NOT_FOUND (dead deployment). Add `demo` once it's live.
+    repo: "https://github.com/Looziolooz/barberia",
+    image: "/projects/barberia.png",
+    featured: true,
+    swatch: "#cdbfa6",
+  },
+  {
     id: "11",
     key: "11",
     slug: "fotografo",

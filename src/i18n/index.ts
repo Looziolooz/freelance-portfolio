@@ -156,6 +156,10 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.16.tags": "NEXT 16 · TAILWIND 4 · TS",
     "work.proj.16.blurb": "Sito brand per Brasilena, la gassosa al caffè calabrese dal 1930: hero animato, storia del marchio, catalogo bibite e contatti.",
     "work.proj.16.value": "Presenza online forte per un prodotto storico: racconta il marchio e mette in mostra il catalogo a nuovi clienti.",
+    "work.proj.17": "Barberia",
+    "work.proj.17.tags": "NEXT 16 · TAILWIND 4 · TS",
+    "work.proj.17.blurb": "Sito per barbershop con prenotazione online, listino servizi, galleria tagli e contatti.",
+    "work.proj.17.value": "Prenotazioni online che riempiono l'agenda e tagliano le telefonate: meno tempo al telefono, più clienti in poltrona.",
 
     // Stack
     "stack.num": "04 / STACK",
@@ -455,6 +459,10 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.16.tags": "NEXT 16 · TAILWIND 4 · TS",
     "work.proj.16.blurb": "Brand site for Brasilena, the Calabrian coffee soda since 1930: animated hero, brand story, drinks catalogue, and contact.",
     "work.proj.16.value": "A strong online presence for a historic product: it tells the brand story and showcases the catalogue to new customers.",
+    "work.proj.17": "Barberia",
+    "work.proj.17.tags": "NEXT 16 · TAILWIND 4 · TS",
+    "work.proj.17.blurb": "Barbershop website with online booking, services menu, cuts gallery, and contact.",
+    "work.proj.17.value": "Online bookings that fill the calendar and cut phone calls: less time on the phone, more clients in the chair.",
 
     "stack.num": "04 / STACK",
     "stack.title": "Tools.",
@@ -751,6 +759,10 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.16.tags": "NEXT 16 · TAILWIND 4 · TS",
     "work.proj.16.blurb": "Varumärkessida för Brasilena, den kalabriska kaffeläsken sedan 1930: animerad hero, varumärkeshistoria, dryckeskatalog och kontakt.",
     "work.proj.16.value": "En stark närvaro online för en klassisk produkt: den berättar varumärkets historia och visar katalogen för nya kunder.",
+    "work.proj.17": "Barberia",
+    "work.proj.17.tags": "NEXT 16 · TAILWIND 4 · TS",
+    "work.proj.17.blurb": "Barberarsajt med onlinebokning, tjänstemeny, galleri och kontakt.",
+    "work.proj.17.value": "Onlinebokningar som fyller kalendern och minskar telefonsamtalen: mindre tid i telefon, fler kunder i stolen.",
 
     "stack.num": "04 / VERKTYG",
     "stack.title": "Verktyg.",
