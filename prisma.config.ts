@@ -9,6 +9,8 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    // Migrations use the DIRECT (session, :5432) URL — the pooled PgBouncer
+    // (:6543) connection breaks DDL/prepared statements.
+    url: process.env["DIRECT_URL"],
   },
 });
