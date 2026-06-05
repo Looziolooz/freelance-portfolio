@@ -75,6 +75,15 @@ export const dict: Record<Lang, Record<string, string>> = {
     "home.svc.agents.title": "Agenti AI",
     "home.svc.agents.desc": "Per chi lavora da solo: agenti su misura per email e appuntamenti, fatturazione, scrittura mail e riassunti dei clienti.",
 
+    // Assistant widget + homepage assistant band
+    "assistant.label": "Assistente",
+    "assistant.close": "Chiudi",
+    "assistant.toggle": "Apri l'assistente",
+    "home.assist.tag": "ASSISTENTE",
+    "home.assist.title": "Fai una domanda all'assistente.",
+    "home.assist.body": "Chiedigli cosa può fare Lorenzo per la tua attività, com'è fatto un progetto o quanto può costare. Risponde subito — ed è lui stesso un esempio dell'assistente AI che posso costruire per te.",
+    "home.assist.cta": "Parla con l'assistente",
+
     // Ticker
     "ticker.0": "SVILUPPO SITI WEB",
     "ticker.1": "E-COMMERCE",
@@ -369,6 +378,15 @@ export const dict: Record<Lang, Record<string, string>> = {
     "home.svc.agents.title": "AI agents",
     "home.svc.agents.desc": "For solo founders: custom agents for email and scheduling, invoicing, drafting mail and client summaries.",
 
+    // Assistant widget + homepage assistant band
+    "assistant.label": "Assistant",
+    "assistant.close": "Close",
+    "assistant.toggle": "Open the assistant",
+    "home.assist.tag": "ASSISTANT",
+    "home.assist.title": "Ask the assistant anything.",
+    "home.assist.body": "Ask what Lorenzo can do for your business, how a project works, or roughly what it costs. It answers instantly — and it's itself an example of the AI assistant I can build for you.",
+    "home.assist.cta": "Talk to the assistant",
+
     "ticker.0": "WEB DEVELOPMENT",
     "ticker.1": "E-COMMERCE",
     "ticker.2": "AUTOMATIONS",
@@ -655,6 +673,15 @@ export const dict: Record<Lang, Record<string, string>> = {
     "home.svc.data.desc": "Jag samlar in och organiserar data från webben och gör den till konkret värde för dina marknadsbeslut.",
     "home.svc.agents.title": "AI-agenter",
     "home.svc.agents.desc": "För dig som jobbar ensam: skräddarsydda agenter för mejl och bokningar, fakturering, mejlutkast och kundsammanfattningar.",
+
+    // Assistant widget + homepage assistant band
+    "assistant.label": "Assistent",
+    "assistant.close": "Stäng",
+    "assistant.toggle": "Öppna assistenten",
+    "home.assist.tag": "ASSISTENT",
+    "home.assist.title": "Fråga assistenten vad som helst.",
+    "home.assist.body": "Fråga vad Lorenzo kan göra för ditt företag, hur ett projekt fungerar eller vad det ungefär kostar. Den svarar direkt — och är själv ett exempel på AI-assistenten jag kan bygga åt dig.",
+    "home.assist.cta": "Prata med assistenten",
 
     "ticker.0": "WEBBUTVECKLING",
     "ticker.1": "E-HANDEL",
