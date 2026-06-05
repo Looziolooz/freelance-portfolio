@@ -12,8 +12,16 @@
   /* ============================================================
      COLOR — Accents
      ============================================================ */
-  --accent-coral:       #FB4D5C;
-  --accent-coral-deep:  #D6313F;
+  /* Primary accent — emerald green. Codes growth / value, replaces the
+     old coral red. Vibrant tone for fills (badges, CTAs, section numbers,
+     highlights w/ white text); deep tone for text-on-cream (links, wordmark). */
+  --accent-green:        #0E8A57;
+  --accent-green-deep:   #0A6E45;
+  --accent-green-bright: #14A36B;
+  /* Back-compat: every legacy 'coral' token now resolves to the green accent,
+     so existing inline styles flip to green with no per-file edits. */
+  --accent-coral:       var(--accent-green);
+  --accent-coral-deep:  var(--accent-green-deep);
   --accent-peach:       #ffc480;
   --accent-peach-deep:  #F6A623;
   --accent-input-blue:  #E8F0FE;
@@ -70,8 +78,10 @@
   /* ============================================================
      TYPOGRAPHY — Families
      ============================================================ */
-  --font-ui:   var(--font-sans), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans:    'General Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-ui:      var(--font-sans);
+  --font-display: var(--font-fraunces), Georgia, 'Times New Roman', serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* ============================================================
      TYPOGRAPHY — Scale
@@ -167,8 +177,8 @@ body.theme-dark,
   --canvas-panel-grey: #1E1B16;
   --ink-body: #F4F1EA;
   --ink-border: #F4F1EA;
-  --ink-shadow: #FB4D5C;
-  --ink-shadow-soft: #FB4D5C;
+  --ink-shadow: #14A36B;
+  --ink-shadow-soft: #14A36B;
   --ink-muted: #A8A6A0;
 }
 
@@ -208,7 +218,7 @@ button { font-family: inherit; cursor: pointer; }
   letter-spacing: var(--tracking-tight);
 }
 
-.wordmark .accent { color: var(--accent-coral); }
+.wordmark .accent { color: var(--accent-green-deep); }
 
 .badge-new {
   display: inline-block;
@@ -247,7 +257,7 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--ink-body);
 }
 
-.wordmark-link .accent { color: var(--accent-coral); }
+.wordmark-link .accent { color: var(--accent-green-deep); }
 
 .topbar__nav {
   display: flex; align-items: center; gap: 22px;
@@ -260,7 +270,7 @@ button { font-family: inherit; cursor: pointer; }
   transition: color var(--dur-base) var(--ease);
 }
 
-.topbar__nav a:hover { color: var(--accent-coral); }
+.topbar__nav a:hover { color: var(--accent-green-deep); }
 
 .topbar__right {
   display: inline-flex; align-items: center; gap: 14px;
@@ -315,9 +325,10 @@ button { font-family: inherit; cursor: pointer; }
 
 .section-head__title {
   margin: 0;
+  font-family: var(--font-display);
   font-size: clamp(36px, 5vw, 56px);
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 

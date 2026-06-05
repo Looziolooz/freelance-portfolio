@@ -10,6 +10,12 @@ import { PROJECTS } from "@/lib/projects";
 function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => string }) {
   const [hover, setHover] = useState(false);
 
+  // The "value" line is the business outcome, not the tech. Falls back to
+  // nothing when a project has no value copy yet (t() echoes the key on miss).
+  const valueKey = `work.proj.${p.key}.value`;
+  const value = t(valueKey);
+  const hasValue = value !== valueKey;
+
   return (
     <Link
       href={`/work/${p.slug}`}
@@ -128,9 +134,10 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
           >
             <h3
               style={{
-                fontSize: 26,
+                fontFamily: "var(--font-display)",
+                fontSize: 27,
                 fontWeight: 500,
-                letterSpacing: -0.6,
+                letterSpacing: "-0.01em",
                 color: "var(--fg)",
                 margin: 0,
               }}
@@ -171,6 +178,35 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
           >
             {t(`work.proj.${p.key}.blurb`)}
           </p>
+          {hasValue && (
+            <div
+              style={{
+                marginTop: 14,
+                paddingTop: 14,
+                borderTop: "1px solid color-mix(in oklch, var(--fg) 14%, transparent)",
+                display: "flex",
+                gap: 10,
+                alignItems: "baseline",
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: 1,
+                  color: "var(--accent-green-deep)",
+                  flexShrink: 0,
+                }}
+              >
+                {t("work.value.label")}
+              </span>
+              <span style={{ fontSize: 13.5, lineHeight: 1.5, color: "var(--fg)", opacity: 0.92 }}>
+                {value}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </Link>

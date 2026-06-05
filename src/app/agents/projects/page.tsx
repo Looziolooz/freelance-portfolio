@@ -11,6 +11,7 @@ type Project = {
   year: string;
   tech: string;
   desc: string;
+  value: string;
   highlights: string[];
   image?: string;
 };
@@ -21,6 +22,7 @@ const PROJECTS: Project[] = [
     year: "2026",
     tech: "Next.js 16 · Tailwind CSS 4 · i18n",
     desc: "Wedding photography studio website for Tuscany & Amalfi Coast. Medium format film aesthetic with multilingual support.",
+    value: "Multilingual site that brings in wedding enquiries from Italian and international clients, with no middlemen.",
     highlights: ["Next.js 16", "i18n IT/EN/SV", "Tailwind CSS 4"],
     image: "/projects/fotografo.png",
   },
@@ -29,6 +31,7 @@ const PROJECTS: Project[] = [
     year: "2026",
     tech: "Next.js 16 · Tailwind CSS 4 · TypeScript",
     desc: "Complete restaurant website with digital menu, online ordering, table reservation, checkout flow, and admin panel.",
+    value: "Admin panel for online orders, table bookings and a live menu: fewer phone calls, more covers.",
     highlights: ["Online ordering", "Reservations", "Admin panel"],
     image: "/projects/pizzeria-restaurant.png",
   },
@@ -37,6 +40,7 @@ const PROJECTS: Project[] = [
     year: "2026",
     tech: "Next.js · Python · Blender · 3D",
     desc: "Premium espresso machine product landing page with 3D configurator, colour variants, and multilingual support.",
+    value: "3D configurator that lets customers choose and personalise the premium product online, cutting pre-sale questions.",
     highlights: ["3D configurator", "Blender", "Python"],
     image: "/projects/aurelia.png",
   },
@@ -45,6 +49,7 @@ const PROJECTS: Project[] = [
     year: "2026",
     tech: "Next.js 16 · Tailwind CSS 4 · TypeScript",
     desc: "Full salon management platform with booking, services, products, client portal, staff dashboard, and admin panel.",
+    value: "Full salon management: bookings, staff, product stock and a client portal in a single panel.",
     highlights: ["Booking", "Admin dashboard", "Client portal"],
   },
   {
@@ -52,6 +57,7 @@ const PROJECTS: Project[] = [
     year: "2026",
     tech: "Next.js 16 · Tailwind CSS 4 · i18n",
     desc: "Scandinavian luxury real estate agency website with property grid, filters, detail drawer, and multilingual interface.",
+    value: "Property catalogue with filters and detailed pages: clients arrive informed and leads are better qualified.",
     highlights: ["Property listings", "Multilingual", "Responsive"],
   },
 ];
@@ -115,8 +121,8 @@ export default function ProjectsAgentPage() {
           >
             <div
               style={{
-                aspectRatio: "16/9",
-                background: "color-mix(in oklch, var(--accent-coral) 8%, var(--canvas-page))",
+                aspectRatio: "16/10",
+                background: "color-mix(in oklch, var(--accent-green) 8%, var(--canvas-page))",
                 position: "relative",
                 overflow: "hidden",
                 display: "flex",
@@ -210,9 +216,10 @@ export default function ProjectsAgentPage() {
               </div>
               <h3
                 style={{
-                  fontSize: 22,
+                  fontFamily: "var(--font-display)",
+                  fontSize: 23,
                   fontWeight: 500,
-                  letterSpacing: -0.4,
+                  letterSpacing: "-0.01em",
                   color: "var(--ink-body)",
                   margin: "0 0 10px",
                 }}
@@ -225,18 +232,45 @@ export default function ProjectsAgentPage() {
                   lineHeight: 1.55,
                   color: "var(--ink-body)",
                   opacity: 0.75,
-                  margin: "0 0 16px",
-                  flex: 1,
+                  margin: "0 0 14px",
                 }}
               >
                 {p.desc}
               </p>
               <div
                 style={{
+                  marginBottom: 16,
+                  paddingTop: 12,
+                  borderTop: "1px solid color-mix(in oklch, var(--ink-body) 14%, transparent)",
+                  display: "flex",
+                  gap: 10,
+                  alignItems: "baseline",
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--accent-green-deep)",
+                    flexShrink: 0,
+                  }}
+                >
+                  {t("work.value.label")}
+                </span>
+                <span style={{ fontSize: 13, lineHeight: 1.5, color: "var(--ink-body)", opacity: 0.9 }}>
+                  {p.value}
+                </span>
+              </div>
+              <div
+                style={{
                   display: "flex",
                   flexWrap: "wrap",
                   gap: 6,
                   marginBottom: 16,
+                  marginTop: "auto",
                 }}
               >
                 {p.highlights.map((h) => (

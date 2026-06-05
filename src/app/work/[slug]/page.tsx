@@ -41,6 +41,9 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
   const title = t(`work.proj.${project.key}`);
   const tags = t(`work.proj.${project.key}.tags`);
   const blurb = t(`work.proj.${project.key}.blurb`);
+  const valueKey = `work.proj.${project.key}.value`;
+  const value = t(valueKey);
+  const hasValue = value !== valueKey;
 
   return (
     <main className="container" style={pagePad}>
@@ -62,8 +65,9 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
           <h1
             style={{
               margin: 0,
+              fontFamily: "var(--font-display)",
               fontSize: "clamp(32px, 5vw, 56px)",
-              fontWeight: 700,
+              fontWeight: 600,
               letterSpacing: "var(--tracking-tight)",
               lineHeight: 1,
             }}
@@ -85,9 +89,40 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
         </div>
       </header>
 
-      <p style={{ fontSize: "var(--fs-lg)", lineHeight: "var(--lh-loose)", maxWidth: 680, marginBottom: 28 }}>
+      <p style={{ fontSize: "var(--fs-lg)", lineHeight: "var(--lh-loose)", maxWidth: 680, marginBottom: hasValue ? 18 : 28 }}>
         {blurb}
       </p>
+
+      {hasValue && (
+        <div
+          style={{
+            maxWidth: 680,
+            marginBottom: 28,
+            padding: "16px 20px",
+            border: "3px solid var(--ink-border)",
+            borderRadius: "var(--radius-lg)",
+            background: "var(--canvas-panel-yellow)",
+            boxShadow: "4px 4px 0 var(--ink-shadow)",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: 1.4,
+              color: "var(--accent-green-deep)",
+              marginBottom: 6,
+            }}
+          >
+            {t("work.value.label")}
+          </div>
+          <p style={{ margin: 0, fontSize: "var(--fs-base)", lineHeight: "var(--lh-normal)", color: "var(--ink-body)" }}>
+            {value}
+          </p>
+        </div>
+      )}
 
       {project.demo ? (
         <>

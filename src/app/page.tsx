@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Ticker from "@/components/Ticker";
+import Services from "@/components/Services";
 import About from "@/components/About";
 import Work from "@/components/Work";
 import Stack from "@/components/Stack";
@@ -21,6 +22,7 @@ export default function Home() {
       <main className="container">
         <Hero />
         <Ticker />
+        <ScrollReveal><Services /></ScrollReveal>
         <ScrollReveal><EntryGrid /></ScrollReveal>
         <ScrollReveal><About /></ScrollReveal>
         <ScrollReveal><Work /></ScrollReveal>

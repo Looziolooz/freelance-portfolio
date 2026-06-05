@@ -88,10 +88,11 @@ export default function Hero() {
           </div>
           <h1
             style={{
-              fontSize: "clamp(36px, 6vw, 112px)",
-              lineHeight: 0.95,
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(34px, 5.4vw, 96px)",
+              lineHeight: 1.0,
               fontWeight: 500,
-              letterSpacing: -3,
+              letterSpacing: "-0.02em",
               margin: 0,
               color: "var(--fg)",
               overflowWrap: "break-word",
