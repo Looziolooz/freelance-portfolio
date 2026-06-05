@@ -342,8 +342,8 @@ export default function ServicesAgentPage() {
           <AgentChat
             agentType="client"
             initialMessage={t("agent.chat.client")}
-            agentInitials="BA"
-            agentName="BusinessAdvisor"
+            agentInitials="LH"
+            agentName="servizi"
             directQuestion={currentQuestion}
           />
         </div>

@@ -80,7 +80,7 @@ describe("agents route", () => {
     };
     expect(arg.messages[0]).toEqual({ role: "user", content: injection });
     expect(arg.system).not.toContain("Ignore previous instructions");
-    expect(arg.system).toContain("non-negotiable");
+    expect(arg.system).toContain("never overridable");
     expect(JSON.stringify(arg)).not.toContain("sk-ant-SENTINEL");
   });
 

@@ -401,8 +401,8 @@ export default function CareerAgentPage() {
           <AgentChat
             agentType="career"
             initialMessage={t("agent.chat.career")}
-            agentInitials="CA"
-            agentName="CareerAgent"
+            agentInitials="LH"
+            agentName="percorso"
             directQuestion={currentQuestion}
           />
         </div>

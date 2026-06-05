@@ -408,8 +408,8 @@ export default function ResearchAgentPage() {
           <AgentChat
             agentType="research"
             initialMessage={t("agent.chat.research")}
-            agentInitials="RA"
-            agentName="ResearchAgent"
+            agentInitials="LH"
+            agentName="ricerca"
             directQuestion={currentQuestion}
           />
         </div>

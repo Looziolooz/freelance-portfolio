@@ -261,8 +261,8 @@ export default function AgentsHub() {
               <AgentChat
                 agentType="welcome"
                 initialMessage={t("agent.chat.welcome")}
-                agentInitials="WA"
-                agentName="WelcomeAgent"
+                agentInitials="LH"
+                agentName="assistente"
               />
             </div>
           </ScrollReveal>

@@ -6,7 +6,7 @@ import {
   AGENT_MAX_INPUT_CHARS,
   buildSystemPrompt,
   normalizeAgentType,
-  toUserMessages,
+  toConversation,
 } from "@/lib/agent-prompts";
 import { getClientIp, rateLimit } from "@/lib/rate-limit";
 import type { Lang } from "@/generated/prisma/client";
@@ -40,7 +40,7 @@ export async function POST(
       );
     }
 
-    let body: { message?: unknown; lang?: unknown };
+    let body: { message?: unknown; lang?: unknown; history?: unknown };
     try {
       body = await req.json();
     } catch {
@@ -57,7 +57,9 @@ export async function POST(
 
     const { text, provider } = await complete({
       system,
-      messages: toUserMessages(message),
+      // Pass the recent exchange so replies have continuity, not a cold restart.
+      messages: toConversation(body.history, message),
+      temperature: 0.75,
       signal: req.signal,
     });
 

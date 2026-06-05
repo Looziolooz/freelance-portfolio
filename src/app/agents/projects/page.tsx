@@ -389,8 +389,8 @@ export default function ProjectsAgentPage() {
           <AgentChat
             agentType="project"
             initialMessage={t("agent.chat.project")}
-            agentInitials="PA"
-            agentName="ProjectAgent"
+            agentInitials="LH"
+            agentName="progetti"
             directQuestion={currentQuestion}
           />
         </div>

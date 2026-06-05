@@ -32,6 +32,9 @@ export default function AgentChat({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const processedRef = useRef<string[]>([]);
   const abortRef = useRef<AbortController | null>(null);
+  // Mirror the messages so handleSend can read the latest history without
+  // being recreated on every message (and without a stale closure).
+  const messagesRef = useRef<Message[]>([]);
 
   // Re-seed the greeting when initialMessage changes (e.g. a language switch),
   // adjusting state during render rather than in an effect — React's documented
@@ -41,6 +44,7 @@ export default function AgentChat({
     setPrevInitial(initialMessage);
     setMessages(initialMessage ? [{ content: initialMessage, isUser: false }] : []);
   }
+  messagesRef.current = messages;
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -59,6 +63,13 @@ export default function AgentChat({
       const controller = new AbortController();
       abortRef.current = controller;
 
+      // Snapshot the prior turns before adding the new one, so the agent has
+      // the conversation so far for context.
+      const history = messagesRef.current.map((m) => ({
+        role: m.isUser ? "user" : "assistant",
+        content: m.content,
+      }));
+
       setMessages((prev) => [...prev, { content: text, isUser: true }]);
       setInput("");
       setIsLoading(true);
@@ -67,7 +78,7 @@ export default function AgentChat({
         const res = await fetch(`/api/agents/${agentType}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text, lang }),
+          body: JSON.stringify({ message: text, lang, history }),
           signal: controller.signal,
         });
 
