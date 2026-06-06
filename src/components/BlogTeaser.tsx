@@ -30,7 +30,7 @@ export default function BlogTeaser() {
       .then((json) => {
         if (!json?.success) return;
         const list = (json.data as Item[])
-          .filter((i) => i.category !== "projects")
+          .filter((i) => i.category === "blog")
           .sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt))
           .slice(0, 3);
         setItems(list);

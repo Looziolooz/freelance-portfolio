@@ -1,0 +1,101 @@
+import { promises as fs } from "fs";
+import path from "path";
+import { prisma } from "@/lib/prisma";
+import { success, error } from "@/lib/api-response";
+
+// One-off importer for the "Connettori di Claude" content pack. Reads the
+// markdown from a gitignored local folder (the guides are a paid product and
+// must never be committed) and upserts it into Content:
+//   articoli/  -> category "blog",  tier FREE       (public SEO lead magnets)
+//   guide/     -> category "guide", tier SUPPORTER  (unlocked by membership)
+// Placeholders in the source are filled with this site's funnel.
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+const ROOT = path.join(process.cwd(), "content", "connettori");
+const FILL: Record<string, string> = {
+  "[LINK-PAGAMENTO]": "/membership",
+  "[PREZZO]": "5€/mese",
+  "[NOME-SITO]": "lorenzo.hacks",
+};
+
+function fill(s: string): string {
+  let out = s;
+  for (const [k, v] of Object.entries(FILL)) out = out.split(k).join(v);
+  return out;
+}
+
+function stripMd(s: string): string {
+  return s
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // links -> text
+    .replace(/[*_`#>]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parse(md: string): { title: string; description: string } {
+  const lines = md.split("\n");
+  const titleLine = lines.find((l) => l.startsWith("# "));
+  const title = titleLine ? stripMd(titleLine) : "Senza titolo";
+
+  let seenTitle = false;
+  let description = "";
+  for (const l of lines) {
+    if (!seenTitle) {
+      if (l.startsWith("# ")) seenTitle = true;
+      continue;
+    }
+    const t = l.trim();
+    if (!t) continue;
+    if (t.startsWith("#") || t.startsWith("---")) continue;
+    if (t.startsWith("*") && t.endsWith("*")) continue; // italic subtitle
+    description = stripMd(t);
+    if (description) break;
+  }
+  if (description.length > 200) description = description.slice(0, 197).trimEnd() + "…";
+  return { title, description };
+}
+
+// articolo-02-google-drive.md -> "google-drive"; guida-11-threejs.md -> "threejs"
+function connectorOf(filename: string): string {
+  return filename.replace(/\.md$/, "").split("-").slice(2).join("-");
+}
+
+async function importDir(sub: "articoli" | "guide") {
+  const dir = path.join(ROOT, sub);
+  let files: string[] = [];
+  try {
+    files = (await fs.readdir(dir)).filter((f) => f.endsWith(".md"));
+  } catch {
+    return { count: 0, slugs: [] as string[], note: `not found: ${dir}` };
+  }
+
+  const tier = sub === "guide" ? "SUPPORTER" : "FREE";
+  const category = sub === "guide" ? "guide" : "blog";
+  const prefix = sub === "guide" ? "guida-connettore-" : "connettore-";
+
+  const slugs: string[] = [];
+  for (const f of files.sort()) {
+    const body = fill(await fs.readFile(path.join(dir, f), "utf8"));
+    const { title, description } = parse(body);
+    const slug = prefix + connectorOf(f);
+    await prisma.content.upsert({
+      where: { slug_lang: { slug, lang: "IT" } },
+      update: { title, description, body, category, tier, published: true },
+      create: { title, slug, description, body, category, lang: "IT", tier, published: true },
+    });
+    slugs.push(slug);
+  }
+  return { count: slugs.length, slugs };
+}
+
+export async function POST() {
+  try {
+    const articoli = await importDir("articoli");
+    const guide = await importDir("guide");
+    return success({ articoli, guide });
+  } catch (e) {
+    console.error("import-connettori error:", e);
+    return error((e as Error).message || "Import failed", 500);
+  }
+}

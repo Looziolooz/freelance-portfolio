@@ -40,6 +40,7 @@ export default function BlogPage() {
   const categories = [
     { value: "", label: "Tutti" },
     { value: "blog", label: "Articoli" },
+    { value: "guide", label: "Guide" },
     { value: "prompts", label: "Prompt" },
     { value: "tutorials", label: "Tutorial" },
     { value: "projects", label: "Progetti" },

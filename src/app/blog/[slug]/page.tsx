@@ -23,6 +23,52 @@ interface ContentDetail {
 // Block-level renderer for the article body. Tracks fenced code blocks (```)
 // so code is emitted into a .neo-code-box instead of being dropped, and wraps
 // consecutive "- " items in a single <ul>.
+// Inline markdown: **bold**, *italic*, [text](url), `code`. Recurses so a bold
+// link (**[x](/y)**) renders correctly. Used for paragraphs, list items, headings.
+function renderInline(text: string, keyBase = 0): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  const re = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*]+)\*|`([^`]+)`/g;
+  let last = 0;
+  let k = keyBase;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) nodes.push(text.slice(last, m.index));
+    if (m[1] !== undefined) {
+      nodes.push(
+        <a
+          key={k++}
+          href={m[2]}
+          style={{ color: "var(--accent-green-deep)", fontWeight: 600, textDecoration: "underline" }}
+        >
+          {m[1]}
+        </a>
+      );
+    } else if (m[3] !== undefined) {
+      nodes.push(<strong key={k++}>{renderInline(m[3], k * 100)}</strong>);
+    } else if (m[4] !== undefined) {
+      nodes.push(<em key={k++}>{renderInline(m[4], k * 100)}</em>);
+    } else if (m[5] !== undefined) {
+      nodes.push(
+        <code
+          key={k++}
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.9em",
+            background: "var(--canvas-panel-yellow)",
+            padding: "1px 5px",
+            borderRadius: 4,
+          }}
+        >
+          {m[5]}
+        </code>
+      );
+    }
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) nodes.push(text.slice(last));
+  return nodes;
+}
+
 function renderArticleBody(body: string): ReactNode[] {
   const lines = body.split("\n");
   const blocks: ReactNode[] = [];
@@ -62,7 +108,7 @@ function renderArticleBody(body: string): ReactNode[] {
         <ul key={key++} style={{ margin: "0 0 12px", paddingLeft: 22 }}>
           {items.map((it, j) => (
             <li key={j} style={{ marginBottom: 4, fontSize: 15 }}>
-              {it}
+              {renderInline(it)}
             </li>
           ))}
         </ul>
@@ -73,7 +119,7 @@ function renderArticleBody(body: string): ReactNode[] {
     if (line.startsWith("## ")) {
       blocks.push(
         <h2 key={key++} style={{ fontSize: 22, fontWeight: 700, marginTop: 40, marginBottom: 12 }}>
-          {line.slice(3)}
+          {renderInline(line.slice(3))}
         </h2>
       );
       i++;
@@ -83,7 +129,7 @@ function renderArticleBody(body: string): ReactNode[] {
     if (line.startsWith("### ")) {
       blocks.push(
         <h3 key={key++} style={{ fontSize: 18, fontWeight: 600, marginTop: 28, marginBottom: 8 }}>
-          {line.slice(4)}
+          {renderInline(line.slice(4))}
         </h3>
       );
       i++;
@@ -98,7 +144,7 @@ function renderArticleBody(body: string): ReactNode[] {
 
     blocks.push(
       <p key={key++} style={{ marginBottom: 12 }}>
-        {line}
+        {renderInline(line)}
       </p>
     );
     i++;
