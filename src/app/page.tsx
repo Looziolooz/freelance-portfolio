@@ -2,6 +2,7 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Ticker from "@/components/Ticker";
 import Services from "@/components/Services";
+import Plans from "@/components/Plans";
 import About from "@/components/About";
 import Work from "@/components/Work";
 import Stack from "@/components/Stack";
@@ -26,6 +27,7 @@ export default function Home() {
         <ScrollReveal><EntryGrid /></ScrollReveal>
         <ScrollReveal><About /></ScrollReveal>
         <ScrollReveal><Work /></ScrollReveal>
+        <ScrollReveal><Plans /></ScrollReveal>
         <ScrollReveal><Stack /></ScrollReveal>
         <AgentsShowcase />
         <ScrollReveal><Contact /></ScrollReveal>
