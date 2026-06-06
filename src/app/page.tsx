@@ -12,6 +12,7 @@ import WayfindingNav from "@/components/WayfindingNav";
 import ScrollToTop from "@/components/ScrollToTop";
 import ScrollReveal from "@/components/ScrollReveal";
 import AgentsShowcase from "@/components/AgentsShowcase";
+import BlogTeaser from "@/components/BlogTeaser";
 import EntryGrid from "@/components/EntryGrid";
 
 export default function Home() {
@@ -30,6 +31,7 @@ export default function Home() {
         <ScrollReveal><Plans /></ScrollReveal>
         <ScrollReveal><Stack /></ScrollReveal>
         <AgentsShowcase />
+        <ScrollReveal><BlogTeaser /></ScrollReveal>
         <ScrollReveal><Contact /></ScrollReveal>
       </main>
       <ScrollToTop />

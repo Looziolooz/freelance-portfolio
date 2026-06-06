@@ -101,6 +101,14 @@ export const dict: Record<Lang, Record<string, string>> = {
     "home.plans.cta.custom": "Prenota una consulenza",
     "home.plans.note": "Cifre indicative. Il preventivo finale è sempre su misura.",
 
+    // Blog teaser (homepage)
+    "home.journal.tag": "BLOG",
+    "home.journal.title": "Dal blog.",
+    "home.journal.meta": "Guide, prompt e idee",
+    "home.journal.read": "Leggi",
+    "home.journal.cta": "Leggi tutti gli articoli",
+    "home.journal.empty": "Presto nuovi contenuti.",
+
     // Ticker
     "ticker.0": "SVILUPPO SITI WEB",
     "ticker.1": "E-COMMERCE",
@@ -425,6 +433,14 @@ export const dict: Record<Lang, Record<string, string>> = {
     "home.plans.cta.custom": "Book a consultation",
     "home.plans.note": "Indicative figures. The final quote is always tailored.",
 
+    // Blog teaser (homepage)
+    "home.journal.tag": "BLOG",
+    "home.journal.title": "From the blog.",
+    "home.journal.meta": "Guides, prompts and ideas",
+    "home.journal.read": "Read",
+    "home.journal.cta": "Read all articles",
+    "home.journal.empty": "New content soon.",
+
     "ticker.0": "WEB DEVELOPMENT",
     "ticker.1": "E-COMMERCE",
     "ticker.2": "AUTOMATIONS",
@@ -741,6 +757,14 @@ export const dict: Record<Lang, Record<string, string>> = {
     "home.plans.cta": "Prata med assistenten",
     "home.plans.cta.custom": "Boka en konsultation",
     "home.plans.note": "Vägledande siffror. Den slutliga offerten är alltid skräddarsydd.",
+
+    // Blog teaser (homepage)
+    "home.journal.tag": "BLOGG",
+    "home.journal.title": "Från bloggen.",
+    "home.journal.meta": "Guider, prompts och idéer",
+    "home.journal.read": "Läs",
+    "home.journal.cta": "Läs alla artiklar",
+    "home.journal.empty": "Nytt innehåll snart.",
 
     "ticker.0": "WEBBUTVECKLING",
     "ticker.1": "E-HANDEL",
