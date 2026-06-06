@@ -5,6 +5,7 @@ import { useLang } from "@/components/LangProvider";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { TierBadge } from "@/components/auth/TierBadge";
+import { levelForContent, LEVELS, LEVEL_ORDER } from "@/lib/content-levels";
 
 interface ContentItem {
   id: string;
@@ -82,6 +83,55 @@ export default function BlogPage() {
           </Link>{" "}
           per sbloccare tutto.
         </p>
+
+        {/* Level legend — sets honest expectations about who each piece is for. */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 16,
+            marginTop: 20,
+            padding: "14px 16px",
+            border: "2px solid var(--ink-border)",
+            borderRadius: "var(--radius)",
+            background: "var(--canvas-panel-yellow)",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: 0.6,
+              color: "var(--ink-muted)",
+              alignSelf: "center",
+            }}
+          >
+            Livelli
+          </span>
+          {LEVEL_ORDER.map((k) => (
+            <span key={k} style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: 0.5,
+                  padding: "2px 8px",
+                  borderRadius: "var(--radius-sm)",
+                  border: "2px solid var(--ink-border)",
+                  background: LEVELS[k].bg,
+                  color: LEVELS[k].fg,
+                }}
+              >
+                {LEVELS[k].label}
+              </span>
+              <span style={{ fontSize: 12, color: "var(--ink-muted)" }}>{LEVELS[k].blurb}</span>
+            </span>
+          ))}
+        </div>
       </div>
 
       <div
@@ -128,6 +178,7 @@ export default function BlogPage() {
             const isLocked =
               item.locked ||
               (item.tier !== "FREE" && user?.tier !== item.tier && user?.tier !== "PRO");
+            const lvl = levelForContent(item.slug, item.category);
 
             return (
               <div
@@ -182,6 +233,23 @@ export default function BlogPage() {
                       {item.category}
                     </span>
                     <TierBadge tier={item.tier} />
+                    {lvl && (
+                      <span
+                        style={{
+                          fontSize: 11,
+                          padding: "2px 10px",
+                          borderRadius: "var(--radius)",
+                          border: "2px solid var(--ink-border)",
+                          background: LEVELS[lvl].bg,
+                          color: LEVELS[lvl].fg,
+                          textTransform: "uppercase",
+                          fontWeight: 700,
+                          letterSpacing: 0.4,
+                        }}
+                      >
+                        {LEVELS[lvl].label}
+                      </span>
+                    )}
                   </div>
 
                   <h3

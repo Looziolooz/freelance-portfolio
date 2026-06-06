@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "./LangProvider";
 import ParallaxIndex from "./ParallaxIndex";
+import { levelForContent, LEVELS } from "@/lib/content-levels";
 
 // Surfaces the latest content on the homepage — content is the top of the
 // funnel (read -> subscribe -> consult), so it shouldn't be buried at /blog.
@@ -68,7 +69,9 @@ export default function BlogTeaser() {
             gap: 24,
           }}
         >
-          {items.map((item) => (
+          {items.map((item) => {
+            const lvl = levelForContent(item.slug, item.category);
+            return (
             <Link
               key={item.id}
               href={`/blog/${item.slug}`}
@@ -82,18 +85,36 @@ export default function BlogTeaser() {
                 minHeight: 210,
               }}
             >
-              <span
-                style={{
-                  alignSelf: "flex-start",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10,
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: 1,
-                  color: "var(--accent-green-deep)",
-                }}
-              >
-                {item.category}
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: 1,
+                    color: "var(--accent-green-deep)",
+                  }}
+                >
+                  {item.category}
+                </span>
+                {lvl && (
+                  <span
+                    style={{
+                      fontSize: 9,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: 0.4,
+                      padding: "1px 7px",
+                      borderRadius: "var(--radius-sm)",
+                      border: "1.5px solid var(--ink-border)",
+                      background: LEVELS[lvl].bg,
+                      color: LEVELS[lvl].fg,
+                    }}
+                  >
+                    {LEVELS[lvl].label}
+                  </span>
+                )}
               </span>
               <h3
                 style={{
@@ -135,7 +156,8 @@ export default function BlogTeaser() {
                 {t("home.journal.read")} →
               </span>
             </Link>
-          ))}
+            );
+          })}
         </div>
       )}
 

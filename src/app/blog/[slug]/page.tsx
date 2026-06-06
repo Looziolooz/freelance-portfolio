@@ -6,6 +6,7 @@ import { useEffect, useState, use, type ReactNode } from "react";
 import Link from "next/link";
 import { TierBadge } from "@/components/auth/TierBadge";
 import { ProtectedContent } from "@/components/auth/ProtectedContent";
+import { levelForContent, LEVELS } from "@/lib/content-levels";
 
 interface ContentDetail {
   id: string;
@@ -291,6 +292,27 @@ export default function ContentPage({
           {content.category}
         </span>
         <TierBadge tier={content.tier} />
+        {(() => {
+          const lvl = levelForContent(content.slug, content.category);
+          return lvl ? (
+            <span
+              title={LEVELS[lvl].blurb}
+              style={{
+                fontSize: 11,
+                padding: "2px 10px",
+                borderRadius: "var(--radius)",
+                border: "2px solid var(--ink-border)",
+                background: LEVELS[lvl].bg,
+                color: LEVELS[lvl].fg,
+                textTransform: "uppercase",
+                fontWeight: 700,
+                letterSpacing: 0.4,
+              }}
+            >
+              {LEVELS[lvl].label}
+            </span>
+          ) : null;
+        })()}
       </div>
 
       <div style={{ position: "relative", marginBottom: 40 }}>
