@@ -12,14 +12,15 @@ function openAssistant() {
 }
 
 type Plan = {
-  key: "fixed" | "rev" | "custom";
+  key: "unica" | "fixed" | "gestione" | "custom";
   dark?: boolean;
   custom?: boolean;
 };
 
 const PLANS: Plan[] = [
+  { key: "unica" },
   { key: "fixed" },
-  { key: "rev" },
+  { key: "gestione" },
   { key: "custom", dark: true, custom: true },
 ];
 
