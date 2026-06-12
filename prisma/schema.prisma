@@ -62,3 +62,34 @@ model Content {
 
   @@unique([slug, lang])
 }
+
+model BarberiaBooking {
+  id          String   @id @default(cuid())
+  service     String
+  serviceName String
+  barber      String
+  barberName  String
+  date        String
+  time        String
+  name        String
+  email       String
+  phone       String
+  notes       String?
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model BarberiaProduct {
+  id          String   @id @default(cuid())
+  name        String
+  category    String
+  price       Float
+  image       String?
+  description String?
+  stock       Int      @default(0)
+  threshold   Int      @default(5)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -15,6 +15,7 @@ import AgentsShowcase from "@/components/AgentsShowcase";
 import BlogTeaser from "@/components/BlogTeaser";
 import EntryGrid from "@/components/EntryGrid";
 
+
 export default function Home() {
   return (
     <>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLang } from "./LangProvider";
 import SectionHeader from "./SectionHeader";
@@ -10,8 +10,6 @@ import { PROJECTS } from "@/lib/projects";
 function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => string }) {
   const [hover, setHover] = useState(false);
 
-  // The "value" line is the business outcome, not the tech. Falls back to
-  // nothing when a project has no value copy yet (t() echoes the key on miss).
   const valueKey = `work.proj.${p.key}.value`;
   const value = t(valueKey);
   const hasValue = value !== valueKey;
@@ -99,7 +97,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
               letterSpacing: 1,
             }}
           >
-            {["01","02","03","04","11","12","13","14","15","16","17"].includes(p.id) ? "2026" : "2024"}
+            {["01","02","03","04","11","12","13","14","15","16","17","18","19","20"].includes(p.id) ? "2026" : "2024"}
           </div>
           {!p.image && (
             <div
@@ -217,6 +215,69 @@ export default function Work() {
   const { t } = useLang();
   const featured = PROJECTS.filter((p) => p.featured);
 
+  const trackRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const wrapper = wrapperRef.current;
+    const strip = stripRef.current;
+    if (!track || !wrapper || !strip) return;
+
+    // Sticky-driven horizontal scroll. The sticky child pins itself natively
+    // (no GSAP pin-spacer, so nothing to desync and no jump on release); we just
+    // map the page's scroll progress through the tall track onto the strip's
+    // translateX. Everything is read live from getBoundingClientRect each frame,
+    // so async layout shifts (typewriter title, font load, lazy images above)
+    // can't throw it off. Must mirror the globals.css media query below.
+    const mq = window.matchMedia(
+      "(min-width: 769px) and (prefers-reduced-motion: no-preference)"
+    );
+    let raf = 0;
+
+    const distance = () => Math.max(0, strip.scrollWidth - wrapper.clientWidth);
+
+    const update = () => {
+      if (!mq.matches) return;
+      const dist = distance();
+      // -track.top is how far we've scrolled into the sticky range (0 → dist).
+      const progress = dist > 0 ? Math.min(1, Math.max(0, -track.getBoundingClientRect().top / dist)) : 0;
+      strip.style.transform = `translateX(${-(progress * dist)}px)`;
+    };
+
+    const layout = () => {
+      if (mq.matches) {
+        // Extra scroll height = how far the strip must travel horizontally.
+        track.style.height = `${window.innerHeight + distance()}px`;
+        update();
+      } else {
+        track.style.height = "";
+        strip.style.transform = "";
+      }
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(update);
+    };
+
+    layout();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", layout);
+    mq.addEventListener("change", layout);
+    if (document.fonts?.ready) document.fonts.ready.then(layout);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", layout);
+      mq.removeEventListener("change", layout);
+      track.style.height = "";
+      strip.style.transform = "";
+    };
+  }, []);
+
   return (
     <section
       id="work"
@@ -225,25 +286,43 @@ export default function Work() {
         padding: "clamp(80px, 8vw, 140px) 0",
         borderTop: "1px solid var(--line)",
         position: "relative",
+        // The global `section { overflow: hidden }` rule would break the
+        // position:sticky child the horizontal gallery relies on.
+        overflow: "visible",
       }}
     >
       <ParallaxIndex>03</ParallaxIndex>
-      <SectionHeader
-        num={t("work.num")}
-        title={t("work.title")}
-        meta={t("work.meta")}
-      />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: 32,
-          marginBottom: 96,
-        }}
-      >
-        {featured.map((p) => (
-          <FeaturedCard key={p.id} p={p} t={t} />
-        ))}
+      <div ref={trackRef} className="work-track">
+        <div className="work-sticky">
+          <SectionHeader
+            num={t("work.num")}
+            title={t("work.title")}
+            meta={t("work.meta")}
+          />
+          <div ref={wrapperRef} className="work-gallery">
+            <div
+              ref={stripRef}
+              style={{
+                display: "flex",
+                flexWrap: "nowrap",
+                gap: "clamp(28px, 3vw, 44px)",
+                // room so the hard offset shadows aren't clipped by the wrapper
+                padding: "8px 8px 16px 4px",
+                willChange: "transform",
+              }}
+            >
+              {featured.map((p) => (
+                <div
+                  key={p.id}
+                  className="work-gallery__item"
+                  style={{ flex: "0 0 auto", width: "clamp(340px, 40vw, 520px)" }}
+                >
+                  <FeaturedCard p={p} t={t} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

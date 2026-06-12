@@ -832,6 +832,14 @@ a:hover .arrow-blink {
   animation: reveal-fade .6s ease-out forwards;
 }
 
+/* After the entrance animation ends, remove it so no fill-mode transform
+   lingers (a transformed ancestor breaks position:fixed / ScrollTrigger pin). */
+.reveal.reveal-done,
+.reveal-fade.reveal-done {
+  animation: none;
+  opacity: 1;
+}
+
 .reveal-d1.in-view { animation-delay: .05s; }
 .reveal-d2.in-view { animation-delay: .1s; }
 .reveal-d3.in-view { animation-delay: .15s; }
@@ -903,3 +911,42 @@ select:focus-visible,
 @media (min-width: 768px) {
   .nav-hamburger { display: none !important; }
 }
+
+/* ─── Work: horizontal gallery (sticky-driven) ─── */
+
+/* Full-width title on top, then large cards that scroll horizontally below it.
+   On desktop the sticky child pins natively while the page scrolls through the
+   tall .work-track (height set in Work.tsx); below 769px it falls back to a
+   native horizontal swipe with the title in normal flow above. */
+.work-sticky {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vh, 56px);
+}
+
+/* Default (mobile + reduced motion): native horizontal swipe. */
+.work-gallery {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+.work-gallery::-webkit-scrollbar { display: none; }
+.work-gallery__item { scroll-snap-align: start; }
+
+/* Desktop with motion allowed: the sticky child fills the viewport and pins at
+   top:0 while .work-track scrolls past; the strip is moved via translateX from
+   JS. Must mirror the matchMedia() condition in Work.tsx. */
+@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
+  .work-track { position: relative; }
+  .work-sticky {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .work-gallery { overflow: hidden; scroll-snap-type: none; }
+}
+
+

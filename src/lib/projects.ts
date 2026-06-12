@@ -18,6 +18,33 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "18",
+    key: "18",
+    slug: "vespa-heritage",
+    demo: "https://vespa-heritage.vercel.app/",
+    repo: "https://github.com/Looziolooz/vespa-heritage",
+    image: "/projects/vespa-heritage.png",
+    featured: true,
+    swatch: "#cfc9bf",
+  },
+  {
+    id: "19",
+    key: "19",
+    slug: "bellitalia",
+    repo: "https://github.com/Looziolooz/bellitalia",
+    image: "/projects/bellitalia.png",
+    featured: true,
+    swatch: "#b9cdd6",
+  },
+  {
+    id: "20",
+    key: "20",
+    slug: "bella-calabria",
+    repo: "https://github.com/Looziolooz/bella-calabria",
+    featured: true,
+    swatch: "#d8b896",
+  },
+  {
     id: "16",
     key: "16",
     slug: "brasilena",
@@ -31,8 +58,7 @@ export const PROJECTS: Project[] = [
     id: "17",
     key: "17",
     slug: "barberia",
-    // NOTE: live demo URL pending — https://barberia-seven-mu.vercel.app/
-    // returns Vercel NOT_FOUND (dead deployment). Add `demo` once it's live.
+    demo: "https://barberia-ashy-beta.vercel.app/en",
     repo: "https://github.com/Looziolooz/barberia",
     image: "/projects/barberia.png",
     featured: true,

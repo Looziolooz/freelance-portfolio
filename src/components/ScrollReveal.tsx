@@ -13,6 +13,14 @@ export default function ScrollReveal({ children, className = "reveal" }: { child
       ([entry]) => {
         if (entry.isIntersecting) {
           el.classList.add("in-view");
+          // Once the entrance animation ends, drop it entirely: a fill-mode
+          // transform (even identity) makes this wrapper the containing block
+          // for position:fixed, which breaks ScrollTrigger pinning inside.
+          el.addEventListener(
+            "animationend",
+            () => el.classList.add("reveal-done"),
+            { once: true }
+          );
           obs.unobserve(el);
         }
       },
