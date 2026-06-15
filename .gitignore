@@ -50,6 +50,10 @@ next-env.d.ts
 
 # Sellable content pack (paid guides) — DB-only, never commit
 /content/connettori/
+/content/claude-da-zero/
+/content/claude-code-da-zero/
+/content/claude-api-da-zero/
+/content/claude-cowork-da-zero/
 
 # Social/marketing scripts — local working material
 /content/social/

@@ -6,7 +6,8 @@ import { useEffect, useState, use, type ReactNode } from "react";
 import Link from "next/link";
 import { TierBadge } from "@/components/auth/TierBadge";
 import { ProtectedContent } from "@/components/auth/ProtectedContent";
-import { levelForContent, LEVELS } from "@/lib/content-levels";
+import { levelForContent, LEVELS, programmingForContent, PROG } from "@/lib/content-levels";
+import { isPreviewUnlockAll } from "@/lib/preview";
 
 interface ContentDetail {
   id: string;
@@ -137,8 +138,48 @@ function renderArticleBody(body: string): ReactNode[] {
       continue;
     }
 
+    // The body repeats the H1 title, which is already shown in the header card.
+    // Skip it instead of printing a literal "# ..." line. (Checked after ##/###,
+    // which never match "# " — a single hash + space.)
+    if (line.startsWith("# ")) {
+      i++;
+      continue;
+    }
+
     if (line.trim() === "") {
       blocks.push(<div key={key++} style={{ height: 12 }} />);
+      i++;
+      continue;
+    }
+
+    // Explanatory image: a line that is just ![alt](src). Rendered as an
+    // on-brand figure (ink border + hard offset shadow); alt becomes the caption.
+    const img = line.match(/^!\[([^\]]*)\]\(([^)]+)\)\s*$/);
+    if (img) {
+      blocks.push(
+        <figure key={key++} style={{ margin: "24px 0", textAlign: "center" }}>
+          <img
+            src={img[2]}
+            alt={img[1]}
+            loading="lazy"
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+              border: "3px solid var(--ink-border)",
+              borderRadius: "var(--radius-lg)",
+              boxShadow: "6px 6px 0 var(--ink-shadow)",
+              background: "var(--canvas-page)",
+            }}
+          />
+          {img[1] ? (
+            <figcaption
+              style={{ marginTop: 10, fontSize: 13, color: "var(--ink-muted)", fontStyle: "italic" }}
+            >
+              {img[1]}
+            </figcaption>
+          ) : null}
+        </figure>
+      );
       i++;
       continue;
     }
@@ -249,11 +290,14 @@ export default function ContentPage({
   if (!content) return null;
 
   const userTier = user?.tier ?? "FREE";
-  const canView =
+  const userCanView =
     content.tier === "FREE" ||
     (content.tier === "SUPPORTER" &&
       (userTier === "SUPPORTER" || userTier === "PRO")) ||
     (content.tier === "PRO" && userTier === "PRO");
+  const preview = isPreviewUnlockAll();
+  const canView = userCanView || preview;
+  const previewUnlocked = preview && !userCanView;
 
   return (
     <main
@@ -292,6 +336,24 @@ export default function ContentPage({
           {content.category}
         </span>
         <TierBadge tier={content.tier} />
+        {previewUnlocked ? (
+          <span
+            title="Sbloccato dalla modalità anteprima per sviluppo. In produzione è riservato ai membri."
+            style={{
+              fontSize: 11,
+              padding: "2px 10px",
+              borderRadius: "var(--radius)",
+              border: "2px dashed var(--ink-border)",
+              background: "var(--canvas-page)",
+              color: "var(--ink-body)",
+              textTransform: "uppercase",
+              fontWeight: 700,
+              letterSpacing: 0.4,
+            }}
+          >
+            Anteprima dev
+          </span>
+        ) : null}
         {(() => {
           const lvl = levelForContent(content.slug, content.category);
           return lvl ? (
@@ -310,6 +372,27 @@ export default function ContentPage({
               }}
             >
               {LEVELS[lvl].label}
+            </span>
+          ) : null;
+        })()}
+        {(() => {
+          const prog = programmingForContent(content.slug);
+          return prog ? (
+            <span
+              title={PROG[prog].blurb}
+              style={{
+                fontSize: 11,
+                padding: "2px 10px",
+                borderRadius: "var(--radius)",
+                border: "2px solid var(--ink-border)",
+                background: PROG[prog].bg,
+                color: PROG[prog].fg,
+                textTransform: "uppercase",
+                fontWeight: 700,
+                letterSpacing: 0.4,
+              }}
+            >
+              {PROG[prog].label}
             </span>
           ) : null;
         })()}

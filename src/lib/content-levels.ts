@@ -34,6 +34,59 @@ export const LEVELS: Record<
 
 export const LEVEL_ORDER: LevelKey[] = ["base", "intermedio", "avanzato"];
 
+// Programming knowledge a piece of content assumes — a second, orthogonal axis
+// to the difficulty level above (an API tutorial is "avanzato" AND needs real
+// coding, while a Cowork lesson is "base" and needs no code at all).
+export type ProgKey = "none" | "base" | "intermedia";
+
+export const PROG: Record<
+  ProgKey,
+  { label: string; blurb: string; bg: string; fg: string }
+> = {
+  none: {
+    label: "Senza codice",
+    blurb: "Nessuna conoscenza di programmazione richiesta.",
+    bg: "var(--canvas-page)",
+    fg: "var(--ink-body)",
+  },
+  base: {
+    label: "Codice base",
+    blurb: "Serve dimestichezza base con editor e riga di comando.",
+    bg: "var(--accent-peach-deep)",
+    fg: "var(--ink-body)",
+  },
+  intermedia: {
+    label: "Codice intermedio",
+    blurb: "Serve saper leggere e scrivere codice.",
+    bg: "var(--ink-body)",
+    fg: "var(--canvas-page)",
+  },
+};
+
+// Difficulty + programming knowledge per "... da zero" course pack. Applies to
+// every article and guide whose slug starts with the pack prefix
+// ("<pack>-..." or "guida-<pack>-...").
+const PACK_LEVELS: Record<string, { level: LevelKey; prog: ProgKey }> = {
+  "claude-da-zero": { level: "base", prog: "none" },
+  "claude-cowork-da-zero": { level: "base", prog: "none" },
+  "claude-code-da-zero": { level: "intermedio", prog: "base" },
+  "claude-api-da-zero": { level: "avanzato", prog: "intermedia" },
+};
+
+function packOf(slug: string): string | null {
+  const s = slug.replace(/^guida-/, "");
+  for (const pack of Object.keys(PACK_LEVELS)) {
+    if (s === pack || s.startsWith(pack + "-")) return pack;
+  }
+  return null;
+}
+
+/** Programming knowledge a piece of content assumes (course packs only). */
+export function programmingForContent(slug: string): ProgKey | null {
+  const pack = packOf(slug);
+  return pack ? PACK_LEVELS[pack].prog : null;
+}
+
 // Difficulty per Claude connector (applies to both its free article and its
 // paid guide, since the topic is the same).
 const CONNECTOR_LEVELS: Record<string, LevelKey> = {
@@ -53,6 +106,9 @@ const CONNECTOR_LEVELS: Record<string, LevelKey> = {
 
 /** Resolve a content's level from its slug, falling back to a per-category default. */
 export function levelForContent(slug: string, category: string): LevelKey | null {
+  const pack = packOf(slug);
+  if (pack) return PACK_LEVELS[pack].level;
+
   const connector = slug
     .replace(/^guida-connettore-/, "")
     .replace(/^connettore-/, "");

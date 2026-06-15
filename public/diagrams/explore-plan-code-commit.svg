@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 200" role="img" aria-label="Il flusso Explore, Plan, Code, Commit">
+  <style>
+    .box{fill:#FFFCF7;stroke:#14110D;stroke-width:3}
+    .boxg{fill:#0E8A57;stroke:#14110D;stroke-width:3}
+    .sh{fill:#14110D}
+    .lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:17px;font-weight:700;fill:#14110D}
+    .lblw{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:17px;font-weight:700;fill:#ffffff}
+    .cap{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#5C5349}
+    .capw{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#FFFCF7}
+    .arr{stroke:#14110D;stroke-width:3;fill:none}
+  </style>
+  <defs>
+    <marker id="ar2" markerWidth="11" markerHeight="11" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7.5,3.2 L0,6.4 Z" fill="#14110D"/>
+    </marker>
+  </defs>
+  <g>
+    <rect class="sh" x="24" y="60" width="150" height="74" rx="10"/>
+    <rect class="box" x="18" y="54" width="150" height="74" rx="10"/>
+    <text class="lbl" x="93" y="88" text-anchor="middle">EXPLORE</text>
+    <text class="cap" x="93" y="110" text-anchor="middle">capisci</text>
+  </g>
+  <g>
+    <rect class="sh" x="216" y="60" width="150" height="74" rx="10"/>
+    <rect class="box" x="210" y="54" width="150" height="74" rx="10"/>
+    <text class="lbl" x="285" y="88" text-anchor="middle">PLAN</text>
+    <text class="cap" x="285" y="110" text-anchor="middle">proponi</text>
+  </g>
+  <g>
+    <rect class="sh" x="408" y="60" width="150" height="74" rx="10"/>
+    <rect class="box" x="402" y="54" width="150" height="74" rx="10"/>
+    <text class="lbl" x="477" y="88" text-anchor="middle">CODE</text>
+    <text class="cap" x="477" y="110" text-anchor="middle">implementa</text>
+  </g>
+  <g>
+    <rect class="sh" x="600" y="60" width="150" height="74" rx="10"/>
+    <rect class="boxg" x="594" y="54" width="150" height="74" rx="10"/>
+    <text class="lblw" x="669" y="88" text-anchor="middle">COMMIT</text>
+    <text class="capw" x="669" y="110" text-anchor="middle">chiudi pulito</text>
+  </g>
+  <path class="arr" d="M172 91 L206 91" marker-end="url(#ar2)"/>
+  <path class="arr" d="M364 91 L398 91" marker-end="url(#ar2)"/>
+  <path class="arr" d="M556 91 L590 91" marker-end="url(#ar2)"/>
+</svg>

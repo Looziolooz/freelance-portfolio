@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getSession, canAccess } from "@/lib/auth";
+import { isPreviewUnlockAll } from "@/lib/preview";
 import { success, error } from "@/lib/api-response";
 import type { Lang } from "@/generated/prisma/client";
 
@@ -25,7 +26,8 @@ export async function GET(
       return error("Content not found", 404);
     }
 
-    if (!canAccess(userTier, content.tier)) {
+    // Dev preview bypasses the paywall so gated guides are reviewable locally.
+    if (!isPreviewUnlockAll() && !canAccess(userTier, content.tier)) {
       return error(
         `This content requires ${content.tier.toLowerCase()} tier or higher`,
         403

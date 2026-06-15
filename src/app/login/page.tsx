@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { isPreviewUnlockAll } from "@/lib/preview";
 
 export default function LoginPage() {
   const { login, user, loading } = useAuth();
@@ -29,6 +30,22 @@ export default function LoginPage() {
     } catch (err: any) {
       setError(err.message);
     } finally {
+      setBusy(false);
+    }
+  };
+
+  // Dev-only: skip the form and log in as a throwaway PRO user. A full reload
+  // lets AuthProvider pick up the new session, then lands on the blog to review.
+  const handleDevLogin = async () => {
+    setError("");
+    setBusy(true);
+    try {
+      const res = await fetch("/api/auth/dev-login", { method: "POST" });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.error || "Dev login non disponibile");
+      window.location.href = "/blog";
+    } catch (err: any) {
+      setError(err.message);
       setBusy(false);
     }
   };
@@ -142,6 +159,35 @@ export default function LoginPage() {
               {busy ? "Accesso in corso..." : "Accedi"}
             </button>
           </form>
+
+          {isPreviewUnlockAll() && (
+            <div style={{ marginTop: 22, paddingTop: 18, borderTop: "2px dashed var(--ink-border)" }}>
+              <button
+                type="button"
+                onClick={handleDevLogin}
+                disabled={busy}
+                style={{
+                  width: "100%",
+                  padding: "11px 14px",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  fontFamily: "var(--font-mono)",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.4,
+                  cursor: busy ? "not-allowed" : "pointer",
+                  background: "var(--canvas-page)",
+                  color: "var(--ink-body)",
+                  border: "2px dashed var(--ink-border)",
+                  borderRadius: "var(--radius)",
+                }}
+              >
+                Entra come dev (PRO)
+              </button>
+              <p style={{ marginTop: 8, fontSize: 11, color: "var(--ink-muted)", textAlign: "center" }}>
+                Solo in sviluppo · sblocca tutti i contenuti
+              </p>
+            </div>
+          )}
 
           <p style={{ marginTop: 20, fontSize: 13, textAlign: "center", color: "var(--ink-muted)" }}>
             Non hai un account?{" "}
