@@ -23,31 +23,46 @@ const icons = [
   </svg>,
 ];
 
+// One tinted palette per category so the four tool families read apart at a
+// glance. Soft pastels on the cream canvas — the ink border + offset shadow do
+// the structural work; per-card colour is the user-requested differentiator.
+type Palette = { bg: string; head: string; accent: string };
+const PALETTES: Palette[] = [
+  { bg: "#E9F4ED", head: "#D4EADD", accent: "#0E8A57" }, // AI / Automation — emerald
+  { bg: "#E9F1FE", head: "#D6E4FC", accent: "#2563EB" }, // Frontend — blue
+  { bg: "#FFF1DC", head: "#FFE3BC", accent: "#C9791A" }, // Data / Backend — amber
+  { bg: "#F4EAF8", head: "#E7D6F0", accent: "#8A4FAE" }, // Design / Craft — violet
+];
+
+// Every tool surfaced across the portfolio projects and the Claude content
+// packs, grouped into the four families. Primary = headline tools; secondary =
+// supporting chips. Proper nouns, so they stay identical in every language.
 const cols = (t: (k: string) => string) => [
   {
     label: t("stack.col.0"),
-    primary: ["n8n", "OpenAI", "Claude", "LangChain"],
-    secondary: ["Zapier", "Make"],
+    primary: ["Claude", "Claude Code", "MCP", "n8n", "OpenAI", "LangChain"],
+    secondary: ["Groq", "Make", "Zapier", "Prompt design"],
   },
   {
     label: t("stack.col.1"),
-    primary: ["React", "Next.js", "TypeScript", "Tailwind"],
-    secondary: ["Framer Motion", "MDX"],
+    primary: ["React", "Next.js", "TypeScript", "Tailwind", "GSAP"],
+    secondary: ["Framer Motion", "ScrollTrigger", "Lenis", "Three.js", "MDX"],
   },
   {
     label: t("stack.col.2"),
-    primary: ["Puppeteer", "Playwright", "Supabase", "Postgres"],
-    secondary: ["REST", "Webhook"],
+    primary: ["Supabase", "Postgres", "Prisma", "Node.js", "Playwright"],
+    secondary: ["Puppeteer", "REST", "Webhook", "Vercel", "Python"],
   },
   {
     label: t("stack.col.3"),
-    primary: ["Figma", "Illustrator", "Photoshop"],
-    secondary: ["Branding", "Strategia"],
+    primary: ["Figma", "Illustrator", "Photoshop", "Canva"],
+    secondary: ["Branding", "Strategy", "UX/UI", "Copywriting"],
   },
 ];
 
 function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) {
   const [hover, setHover] = useState(false);
+  const pal = PALETTES[i % PALETTES.length];
 
   return (
       <div
@@ -55,9 +70,10 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
           border: "3px solid var(--ink-border)",
           borderRadius: "var(--radius-lg)",
           overflow: "hidden",
-          background: "var(--canvas-panel-yellow)",
+          background: pal.bg,
           display: "flex",
           flexDirection: "column",
+          height: "100%",
           transition: "transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s cubic-bezier(.16,1,.3,1)",
           transform: hover ? "translate(-2px, -2px)" : "translateY(0)",
           boxShadow: hover
@@ -69,8 +85,8 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
     >
       <div
         style={{
-          background: "var(--canvas-panel-grey)",
-          padding: "32px 28px 28px",
+          background: pal.head,
+          padding: "26px 24px 22px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -82,7 +98,7 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
         <span
           className="label"
           style={{
-            fontSize: 14,
+            fontSize: 13.5,
             color: "var(--fg)",
             position: "relative",
             zIndex: 1,
@@ -94,8 +110,8 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 11,
-            color: "var(--muted)",
-            opacity: 0.6,
+            color: pal.accent,
+            fontWeight: 700,
           }}
         >
           0{i + 1}
@@ -104,12 +120,15 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
           aria-hidden="true"
           style={{
             display: "inline-flex",
-            color: hover ? "var(--accent)" : "var(--muted)",
-            opacity: hover ? 0.15 : 0.08,
-            transition: "color .3s, opacity .3s, transform .4s cubic-bezier(.22,1,.36,1)",
+            color: pal.accent,
+            opacity: hover ? 0.22 : 0.12,
+            transition: "opacity .3s, transform .4s cubic-bezier(.22,1,.36,1)",
             transform: hover ? "scale(1.15) rotate(-8deg)" : "scale(1) rotate(0)",
             pointerEvents: "none",
             flexShrink: 0,
+            position: "absolute",
+            right: 18,
+            bottom: -2,
           }}
         >
           {icons[i]}
@@ -117,10 +136,11 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
       </div>
       <div
         style={{
-          padding: "24px 28px 28px",
+          padding: "22px 24px 24px",
           display: "flex",
           flexDirection: "column",
-          gap: 10,
+          gap: 9,
+          flex: 1,
         }}
       >
         {c.primary.map((x) => (
@@ -129,8 +149,8 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 10,
-              fontSize: 20,
+              gap: 9,
+              fontSize: 17,
               fontWeight: 500,
               letterSpacing: -0.3,
               color: "var(--fg)",
@@ -140,13 +160,11 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
           >
             <span
               style={{
-                width: 5,
-                height: 5,
+                width: 6,
+                height: 6,
                 borderRadius: "50%",
-                background: "var(--accent)",
+                background: pal.accent,
                 flexShrink: 0,
-                opacity: hover ? 1 : 0,
-                transition: "opacity .2s",
               }}
             />
             {x}
@@ -157,8 +175,8 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
             display: "flex",
             flexWrap: "wrap",
             gap: 6,
-            marginTop: 8,
-            paddingTop: 12,
+            marginTop: "auto",
+            paddingTop: 14,
             borderTop: "3px solid var(--ink-border)",
           }}
         >
@@ -169,12 +187,11 @@ function StackCard({ c, i }: { c: ReturnType<typeof cols>[number]; i: number }) 
                 fontFamily: "var(--font-mono)",
                 fontSize: 10,
                 letterSpacing: 0.5,
-                color: "var(--muted)",
+                color: "var(--fg)",
                 padding: "3px 8px",
-                border: "1px solid var(--line)",
+                border: "1px solid var(--ink-border)",
                 borderRadius: 999,
-                opacity: hover ? 1 : 0.6,
-                transition: "opacity .2s",
+                background: "color-mix(in oklch, var(--canvas-page) 60%, transparent)",
               }}
             >
               {x}
@@ -201,13 +218,7 @@ export default function Stack() {
     >
       <ParallaxIndex>04</ParallaxIndex>
       <SectionHeader num={t("stack.num")} title={t("stack.title")} meta={t("stack.meta")} />
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-          gap: 24,
-        }}
-      >
+      <div className="tools-grid">
         {cols(t).map((c, i) => (
           <StackCard key={i} c={c} i={i} />
         ))}

@@ -35,11 +35,8 @@ export default function AgentsShowcase() {
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <div
+          className="head-3col"
           style={{
-            display: "grid",
-            gridTemplateColumns: "80px 1fr auto",
-            alignItems: "flex-end",
-            gap: 24,
             padding: "0 0 28px",
             borderBottom: "1px solid var(--fg)",
             marginBottom: 48,
@@ -64,7 +61,7 @@ export default function AgentsShowcase() {
               <Typewriter text={t("home.assist.title")} speed={35} onDone={() => setTyped(true)} />
             )}
           </h2>
-          <div className="label" style={{ textAlign: "right", fontSize: 10 }}>
+          <div className="label head-3col__meta" style={{ textAlign: "right", fontSize: 10 }}>
             {t("home.svc.agents.title")}
           </div>
         </div>

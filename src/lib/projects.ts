@@ -12,8 +12,15 @@ export type Project = {
   demo?: string;
   repo?: string;
   image?: string;
+  // CSS object-position for the cover when the source is wider/taller than the
+  // 16/10 card (e.g. a full-page screenshot). Defaults to "center"; use "left"
+  // to keep a left-anchored composition (headline) from being cropped.
+  imagePosition?: string;
   featured?: boolean;
   swatch?: string;
+  // Temporarily pulled from the gallery AND its detail page (e.g. awaiting the
+  // client's go-ahead to show it publicly). Data is kept; just not displayed.
+  hidden?: boolean;
 };
 
 export const PROJECTS: Project[] = [
@@ -41,6 +48,8 @@ export const PROJECTS: Project[] = [
     key: "20",
     slug: "bella-calabria",
     repo: "https://github.com/Looziolooz/bella-calabria",
+    image: "/projects/bella-calabria.png",
+    imagePosition: "left center", // 2.06:1 screenshot — keep the headline, crop the right
     featured: true,
     swatch: "#d8b896",
   },
@@ -53,6 +62,7 @@ export const PROJECTS: Project[] = [
     image: "/projects/brasilena.png",
     featured: true,
     swatch: "#FFD21E",
+    hidden: true, // pending owners' OK — not shown for now
   },
   {
     id: "17",

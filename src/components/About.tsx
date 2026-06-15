@@ -33,8 +33,8 @@ export default function About() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
-          gap: 60,
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+          gap: "clamp(36px, 5vw, 60px)",
           alignItems: "flex-start",
         }}
       >

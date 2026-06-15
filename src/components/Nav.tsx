@@ -63,6 +63,41 @@ export default function Nav() {
           >
             {user ? t("nav.account") : t("nav.login")}
           </a>
+
+          {/* Mobile-only: language + theme live here since the desktop locale
+              extras are hidden below 768px. */}
+          <div className="nav-mobile-extras" style={{ display: "none" }}>
+            {langs.map((l) => (
+              <button
+                key={l.k}
+                onClick={() => { setLang(l.k); }}
+                className="status-pill"
+                style={{
+                  border: BORDER,
+                  fontFamily: "var(--font-mono)",
+                  background: lang === l.k ? "var(--accent-peach)" : "var(--canvas-panel-yellow)",
+                }}
+                aria-label={`${t("nav.lang." + l.k)}`}
+              >
+                {l.label}
+              </button>
+            ))}
+            <button
+              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+              className="status-pill"
+              style={{ border: BORDER, fontFamily: "var(--font-ui)", display: "inline-flex", alignItems: "center", gap: 6 }}
+              aria-label={t("nav.theme")}
+            >
+              <span
+                style={{
+                  width: 8, height: 8, borderRadius: 0,
+                  background: theme === "light" ? "var(--accent-peach)" : "var(--ink-border)",
+                  border: "2px solid var(--ink-border)", display: "inline-block",
+                }}
+              />
+              {theme === "light" ? t("nav.theme.light") : t("nav.theme.dark")}
+            </button>
+          </div>
         </div>
 
         {/* Right extras */}

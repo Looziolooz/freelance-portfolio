@@ -29,7 +29,7 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
     </Link>
   );
 
-  if (!project) {
+  if (!project || project.hidden) {
     return (
       <main className="container" style={pagePad}>
         {back}
@@ -151,7 +151,7 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
               <img
                 src={project.image}
                 alt={title}
-                style={{ display: "block", width: "100%", aspectRatio: "16/10", objectFit: "cover" }}
+                style={{ display: "block", width: "100%", aspectRatio: "16/10", objectFit: "cover", objectPosition: project.imagePosition ?? "center" }}
               />
             )}
             <p style={{ margin: 0, padding: "20px 24px", color: "var(--ink-muted)", fontSize: "var(--fs-sm)" }}>

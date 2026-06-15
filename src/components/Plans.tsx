@@ -3,25 +3,19 @@
 import { useLang } from "./LangProvider";
 import ParallaxIndex from "./ParallaxIndex";
 
-// How Lorenzo charges. Two standard variants — a flat monthly fee, or a lower
-// fee plus a commission on the revenue the site generates — and a consultation
-// track for complex work. Figures are indicative; the real quote happens in a
-// call (or with the assistant). The first two CTAs open the site-wide widget.
-function openAssistant() {
-  if (typeof window !== "undefined") window.dispatchEvent(new Event("open-assistant"));
-}
-
-type Plan = {
-  key: "unica" | "fixed" | "gestione" | "custom";
+// Engagements — three ways to work together (no fixed prices/subscriptions):
+// a Brand System, a Conversion Website, or an ongoing Retainer. Each card lists
+// what's included and points to the contact form. The real scope is set in a
+// short intro call, so the only CTA is "fill the form".
+type Engagement = {
+  key: "brand" | "web" | "retainer";
   dark?: boolean;
-  custom?: boolean;
 };
 
-const PLANS: Plan[] = [
-  { key: "unica" },
-  { key: "fixed" },
-  { key: "gestione" },
-  { key: "custom", dark: true, custom: true },
+const ENGAGEMENTS: Engagement[] = [
+  { key: "brand" },
+  { key: "web" },
+  { key: "retainer", dark: true },
 ];
 
 export default function Plans() {
@@ -40,7 +34,7 @@ export default function Plans() {
         <h2 className="section-head__title" style={{ fontSize: "clamp(28px, 5vw, 64px)" }}>
           {t("home.plans.title")}
         </h2>
-        <span className="label" style={{ alignSelf: "end", textAlign: "right" }}>
+        <span className="label" style={{ alignSelf: "end", textAlign: "right", maxWidth: 340 }}>
           {t("home.plans.meta")}
         </span>
       </div>
@@ -48,22 +42,23 @@ export default function Plans() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
           gap: 24,
         }}
       >
-        {PLANS.map((p, i) => {
-          const dark = p.dark;
+        {ENGAGEMENTS.map((e, i) => {
+          const dark = e.dark;
           const ink = dark ? "var(--canvas-page)" : "var(--ink-body)";
+          const features = t(`home.eng.${e.key}.features`).split("|");
           return (
             <div
-              key={p.key}
+              key={e.key}
               className="neo-card"
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: 14,
-                minHeight: 280,
+                gap: 16,
+                minHeight: 360,
                 background: dark ? "var(--ink-body)" : "var(--canvas-panel-yellow)",
                 color: ink,
               }}
@@ -84,69 +79,93 @@ export default function Plans() {
                   boxShadow: "var(--shadow-badge)",
                 }}
               >
-                {String(i + 1).padStart(2, "0")} · {t(`home.plans.${p.key}.tag`)}
+                {String(i + 1).padStart(2, "0")} · {t("home.plans.tag")}
               </span>
 
               <div
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: 26,
+                  fontSize: 28,
                   fontWeight: 600,
                   letterSpacing: "-0.01em",
+                  lineHeight: 1.05,
                   color: dark ? "var(--accent-green-bright)" : "var(--accent-green-deep)",
                 }}
               >
-                {t(`home.plans.${p.key}.price`)}
+                {t(`home.eng.${e.key}.title`)}
               </div>
 
               <p
                 style={{
                   margin: 0,
-                  flex: 1,
                   fontSize: 15,
                   lineHeight: 1.55,
                   color: ink,
-                  opacity: dark ? 0.88 : 0.8,
+                  opacity: dark ? 0.88 : 0.82,
                 }}
               >
-                {t(`home.plans.${p.key}.desc`)}
+                {t(`home.eng.${e.key}.desc`)}
               </p>
 
-              {p.custom ? (
-                <a
-                  href="#contact"
-                  className="neo-btn"
-                  style={{
-                    alignSelf: "flex-start",
-                    padding: "10px 18px",
-                    background: "var(--accent-green)",
-                    color: "#fff",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 13,
-                    letterSpacing: 0.3,
-                    textDecoration: "none",
-                  }}
-                >
-                  {t("home.plans.cta.custom")} →
-                </a>
-              ) : (
-                <button
-                  type="button"
-                  onClick={openAssistant}
-                  className="neo-btn"
-                  style={{
-                    alignSelf: "flex-start",
-                    padding: "10px 18px",
-                    background: "var(--accent-green)",
-                    color: "#fff",
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 13,
-                    letterSpacing: 0.3,
-                  }}
-                >
-                  {t("home.plans.cta")} →
-                </button>
-              )}
+              <ul
+                style={{
+                  listStyle: "none",
+                  margin: 0,
+                  padding: 0,
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 9,
+                  borderTop: dark
+                    ? "1px solid color-mix(in oklch, var(--canvas-page) 22%, transparent)"
+                    : "1px solid color-mix(in oklch, var(--ink-body) 16%, transparent)",
+                  paddingTop: 16,
+                }}
+              >
+                {features.map((f) => (
+                  <li
+                    key={f}
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      gap: 10,
+                      fontSize: 14,
+                      lineHeight: 1.45,
+                      color: ink,
+                      opacity: dark ? 0.92 : 0.88,
+                    }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{
+                        flexShrink: 0,
+                        color: dark ? "var(--accent-green-bright)" : "var(--accent-green-deep)",
+                        fontWeight: 700,
+                      }}
+                    >
+                      ↳
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href="#contact"
+                className="neo-btn"
+                style={{
+                  alignSelf: "flex-start",
+                  padding: "11px 20px",
+                  background: "var(--accent-green)",
+                  color: "#fff",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 13,
+                  letterSpacing: 0.3,
+                  textDecoration: "none",
+                }}
+              >
+                {t("home.plans.cta")} →
+              </a>
             </div>
           );
         })}

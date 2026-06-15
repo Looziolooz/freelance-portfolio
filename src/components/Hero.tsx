@@ -10,7 +10,6 @@ const dots = (t: (k: string) => string) => [
   { num: "40+", label: t("hero.stat.workflows") },
   { num: "10", label: t("hero.stat.projects") },
   { num: "6a", label: t("hero.stat.web") },
-  { num: "2026", label: t("hero.stat.bookings") },
 ];
 
 export default function Hero() {
@@ -33,28 +32,9 @@ export default function Hero() {
   }, [lang]);
 
   return (
-    <section
-      id="top"
-      className="section-indexed"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "minmax(0,1fr) minmax(360px, 460px)",
-        gap: 0,
-        padding: "120px 0 60px",
-        position: "relative",
-      }}
-    >
+    <section id="top" className="section-indexed hero">
       <ParallaxIndex>01</ParallaxIndex>
-      <div
-        style={{
-          padding: "60px 48px 48px 60px",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          gap: 40,
-          minWidth: 0,
-        }}
-      >
+      <div className="hero__text">
         <div>
           <div
             style={{
@@ -89,8 +69,8 @@ export default function Hero() {
           <h1
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(34px, 5.4vw, 96px)",
-              lineHeight: 1.0,
+              fontSize: "clamp(28px, 3.2vw, 52px)",
+              lineHeight: 1.08,
               fontWeight: 500,
               letterSpacing: "-0.02em",
               margin: 0,
@@ -98,7 +78,7 @@ export default function Hero() {
               overflowWrap: "break-word",
               wordBreak: "break-word",
               hyphens: "auto",
-              minHeight: "2.85em",
+              minHeight: "3.6em",
             }}
           >
             {typed ? (
@@ -248,21 +228,12 @@ export default function Hero() {
         </div>
       </div>
 
-      <div
-          style={{
-            padding: "60px 24px 48px",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            gap: 24,
-          }}
-      >
+      <div className="hero__media">
         <div
           style={{
-            width: "min(clamp(260px, 24vw, 400px), 100%)",
-            aspectRatio: "3/4",
-            borderRadius: "var(--radius-lg)",
+            width: "min(clamp(240px, 22vw, 380px), 100%)",
+            aspectRatio: "1/1",
+            borderRadius: "50%",
             overflow: "hidden",
             position: "relative",
             background: "var(--canvas-page)",
@@ -306,7 +277,6 @@ export default function Hero() {
                 "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='hn'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0'/></filter><rect width='100%' height='100%' filter='url(%23hn)'/></svg>\")",
             }}
           />
-          <span className="reticule-corners" aria-hidden="true" style={{ zIndex: 5, color: "var(--accent)" }}><span /><span /><span /><span /></span>
         </div>
 
         <div

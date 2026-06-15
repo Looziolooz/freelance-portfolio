@@ -950,3 +950,69 @@ select:focus-visible,
 }
 
 
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE LAYER — mobile-first, coherent phone → tablet → desktop
+   ════════════════════════════════════════════════════════════ */
+
+/* Tighter gutters on small phones (var cascades to every .container) */
+@media (max-width: 480px) { :root { --container-pad: 16px; } }
+
+/* ── Hero: single column on phones/tablet, two columns from 900px up ── */
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding: 88px 0 24px;
+}
+.hero__text {
+  display: flex; flex-direction: column; justify-content: flex-start;
+  gap: 26px; min-width: 0; padding: 4px 0;
+}
+.hero__media {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: flex-start; gap: 18px; padding: 4px 0 8px;
+  order: -1; /* circle photo leads on mobile */
+}
+@media (min-width: 900px) {
+  .hero { grid-template-columns: minmax(0, 1fr) minmax(340px, 440px); padding: 120px 0 60px; }
+  .hero__text { gap: 40px; padding: 60px 48px 48px 60px; }
+  .hero__media { padding: 60px 24px 48px; order: 0; }
+}
+
+/* ── Tools / Stack: 1 → 2 → 4 cards across ── */
+.tools-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 560px) { .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; } }
+@media (min-width: 1000px) { .tools-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; } }
+
+/* ── Shared .section-head (num / title / meta): drop the meta below on phones ── */
+@media (max-width: 680px) {
+  .section-head { grid-template-columns: auto 1fr; gap: 8px 14px; align-items: end; }
+  .section-head .label { grid-column: 1 / -1; text-align: left !important; align-self: start !important; }
+}
+
+/* ── Inline 3-part heads (Contact / Agents): stack on phones ── */
+.head-3col { display: grid; grid-template-columns: 1fr; gap: 12px; align-items: flex-start; }
+.head-3col .head-3col__meta { display: none; }
+@media (min-width: 768px) {
+  .head-3col { grid-template-columns: 80px 1fr auto; gap: 24px; align-items: flex-end; }
+  .head-3col .head-3col__meta { display: block; }
+}
+
+/* ── Contact body: photo + content stack on phones ── */
+.contact-body { display: grid; grid-template-columns: 1fr; gap: clamp(28px, 4vw, 60px); align-items: flex-start; }
+@media (min-width: 768px) { .contact-body { grid-template-columns: minmax(240px, 320px) 1fr; } }
+.contact-row { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; }
+.contact-row .contact-open { display: none; }
+@media (min-width: 600px) {
+  .contact-row { display: grid; grid-template-columns: 140px 1fr auto; align-items: center; gap: 0; }
+  .contact-row .contact-open { display: flex; }
+}
+
+/* ── Mobile nav menu: surface language + theme inside the open drawer ── */
+@media (max-width: 767px) {
+  .nav-mobile-extras { display: flex !important; gap: 10px; flex-wrap: wrap; padding-top: 4px; }
+}
+@media (min-width: 768px) { .nav-mobile-extras { display: none !important; } }
+
+

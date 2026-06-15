@@ -17,7 +17,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
   return (
     <Link
       href={`/work/${p.slug}`}
-      style={{ textDecoration: "none", color: "inherit" }}
+      style={{ textDecoration: "none", color: "inherit", display: "flex", height: "100%", width: "100%" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -29,6 +29,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
           background: "var(--canvas-panel-yellow)",
           display: "flex",
           flexDirection: "column",
+          width: "100%",
           transition: "transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s cubic-bezier(.16,1,.3,1)",
           transform: hover ? "translate(-2px, -2px)" : "translateY(0)",
           boxShadow: hover
@@ -59,6 +60,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
+                objectPosition: p.imagePosition ?? "center",
                 transform: hover ? "scale(1.03)" : "scale(1)",
                 transition: "transform .4s cubic-bezier(.16,1,.3,1)",
               }}
@@ -120,6 +122,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
             display: "flex",
             flexDirection: "column",
             gap: 8,
+            flex: 1,
           }}
         >
           <div
@@ -179,7 +182,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
           {hasValue && (
             <div
               style={{
-                marginTop: 14,
+                marginTop: "auto",
                 paddingTop: 14,
                 borderTop: "1px solid color-mix(in oklch, var(--fg) 14%, transparent)",
                 display: "flex",
@@ -213,7 +216,7 @@ function FeaturedCard({ p, t }: { p: typeof PROJECTS[number]; t: (k: string) => 
 
 export default function Work() {
   const { t } = useLang();
-  const featured = PROJECTS.filter((p) => p.featured);
+  const featured = PROJECTS.filter((p) => p.featured && !p.hidden);
 
   const trackRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);

@@ -29,11 +29,8 @@ export default function Contact() {
     >
       <ParallaxIndex>06</ParallaxIndex>
       <div
+        className="head-3col"
         style={{
-          display: "grid",
-          gridTemplateColumns: "80px 1fr auto",
-          gap: 24,
-          alignItems: "flex-end",
           paddingBottom: 28,
           borderBottom: "3px solid var(--ink-border)",
           marginBottom: 60,
@@ -44,7 +41,7 @@ export default function Contact() {
         </div>
         <h2
           style={{
-            fontSize: "clamp(40px, 7vw, 128px)",
+            fontSize: "clamp(34px, 7vw, 128px)",
             letterSpacing: -3,
             fontWeight: 500,
             lineHeight: 0.95,
@@ -75,6 +72,7 @@ export default function Contact() {
           )}
         </h2>
         <div
+          className="head-3col__meta"
           style={{
             fontFamily: "var(--font-mono)",
             fontSize: 11,
@@ -87,14 +85,7 @@ export default function Contact() {
           {t("contact.meta")}
         </div>
       </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "minmax(260px, 320px) 1fr",
-          gap: "clamp(32px, 4vw, 60px)",
-          alignItems: "flex-start",
-        }}
-      >
+      <div className="contact-body">
         <div
           style={{
             width: "min(240px, 100%)",
@@ -171,12 +162,10 @@ export default function Contact() {
                 href={c.h}
                 target={c.h.startsWith("http") ? "_blank" : undefined}
                 rel="noopener"
+                className="contact-row"
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "140px 1fr auto",
-                  padding: "22px 0",
+                  padding: "18px 0",
                   borderBottom: "3px solid var(--ink-border)",
-                  alignItems: "center",
                   textDecoration: "none",
                   color: "var(--fg)",
                   transition: "padding-left .2s",
@@ -196,7 +185,7 @@ export default function Contact() {
                 <div style={{ fontSize: "clamp(18px, 1.5vw, 22px)", fontWeight: 500, letterSpacing: -0.3 }}>
                   {c.v}
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 6, fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--muted)" }}>
+                <div className="contact-open" style={{ alignItems: "center", gap: 6, fontFamily: "var(--font-mono)", fontSize: 13, color: "var(--muted)" }}>
                   {t("contact.open")}
                   <span className="arrow-blink" aria-hidden="true" style={{ marginLeft: 0 }}>→</span>
                 </div>
@@ -213,6 +202,8 @@ export default function Contact() {
           right: "clamp(24px, 4vw, 60px)",
           display: "flex",
           justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "4px 16px",
           fontFamily: "var(--font-mono)",
           fontSize: 10,
           color: "var(--muted)",
