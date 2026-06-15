@@ -33,8 +33,9 @@ describe("formatContext", () => {
 
 describe("buildAgentContext", () => {
   it("queries only published rows for the language with a body-free projection", async () => {
+    // Articles surface in the live catalog (projects come from the curated KB).
     findMany.mockResolvedValue([
-      { title: "P1", description: "d", category: "projects" },
+      { title: "P1", description: "d", category: "tutorials" },
     ]);
 
     const block = await buildAgentContext("EN");

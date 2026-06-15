@@ -97,7 +97,7 @@ describe("agents route", () => {
     const { buildAgentContext } = await import("@/lib/agent-context");
     const { req, ctx } = makeReq("career", { message: "hi", lang: "klingon" });
     await POST(req, ctx);
-    expect(buildAgentContext).toHaveBeenLastCalledWith("IT");
+    expect(buildAgentContext).toHaveBeenLastCalledWith("IT", "hi");
   });
 
   it("502s when the model returns an empty reply", async () => {

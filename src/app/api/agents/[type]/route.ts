@@ -52,7 +52,9 @@ export async function POST(
     if (message.length > AGENT_MAX_INPUT_CHARS) return error("Message too long", 400);
 
     const lang = coerceLang(body.lang);
-    const contextBlock = await buildAgentContext(lang);
+    // Pass the message so the context is retrieved around what they actually
+    // asked (curated KB + live catalog), not a generic dump.
+    const contextBlock = await buildAgentContext(lang, message);
     const system = buildSystemPrompt(agent, lang, contextBlock);
 
     const { text, provider } = await complete({
