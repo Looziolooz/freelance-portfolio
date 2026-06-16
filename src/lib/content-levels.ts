@@ -74,6 +74,8 @@ const PACK_LEVELS: Record<string, { level: LevelKey; prog: ProgKey }> = {
   // Front-end build tutorials and coding-agent guides: for experienced devs.
   "frontend-effetti": { level: "avanzato", prog: "intermedia" },
   "ponytail": { level: "avanzato", prog: "intermedia" },
+  // Lead-magnet blog for micro-businesses: beginner, no code required.
+  "pmi": { level: "base", prog: "none" },
 };
 
 function packOf(slug: string): string | null {
