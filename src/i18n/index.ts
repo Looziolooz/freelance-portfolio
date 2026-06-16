@@ -196,6 +196,10 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.20.tags": "NEXT 14 · TAILWIND · GSAP",
     "work.proj.20.blurb": "Portale di viaggi per la Calabria: homepage con scroll animato (GSAP + Lenis), listing alloggi con ricerca, filtri e prenotazione tipo Airbnb, ricerca voli, offerte e una dashboard admin per gestire alloggi, prenotazioni e offerte.",
     "work.proj.20.value": "Piattaforma di prenotazione completa con pannello di gestione: il cliente prenota online e l'attività controlla alloggi, richieste e offerte da un'unica dashboard.",
+    "work.proj.21": "AI Visibility",
+    "work.proj.21.tags": "NEXT 15 · TS · RECHARTS",
+    "work.proj.21.blurb": "Demo interattiva di un prodotto di 'AI search visibility': monitora come un brand appare nelle risposte di ChatGPT, Gemini, Perplexity e Claude. Indice AVI 0–100, monitoraggio dei prompt, analisi competitor, audit AEO/GEO e heatmap del sentiment.",
+    "work.proj.21.value": "Mostra dove e come un brand viene citato dai motori AI — il nuovo SEO — e cosa sistemare per essere citato più spesso.",
 
     // Stack
     "stack.num": "04 / STACK",
@@ -585,6 +589,10 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.20.tags": "NEXT 14 · TAILWIND · GSAP",
     "work.proj.20.blurb": "Travel portal for Calabria: an animated scroll homepage (GSAP + Lenis), stay listings with search, filters and Airbnb-style booking, flight search, deals, and an admin dashboard to manage stays, bookings, and offers.",
     "work.proj.20.value": "A complete booking platform with a management panel: customers book online while the business controls stays, requests, and deals from a single dashboard.",
+    "work.proj.21": "AI Visibility",
+    "work.proj.21.tags": "NEXT 15 · TS · RECHARTS",
+    "work.proj.21.blurb": "Interactive demo of an 'AI search visibility' product: it tracks how a brand shows up in ChatGPT, Gemini, Perplexity and Claude answers. AVI 0–100 index, prompt monitoring, competitor analysis, AEO/GEO audit and a sentiment heatmap.",
+    "work.proj.21.value": "Shows where and how a brand is cited by AI engines — the new SEO — and what to fix to get cited more often.",
 
     "stack.num": "04 / STACK",
     "stack.title": "Tools.",
@@ -971,6 +979,10 @@ export const dict: Record<Lang, Record<string, string>> = {
     "work.proj.20.tags": "NEXT 14 · TAILWIND · GSAP",
     "work.proj.20.blurb": "Reseportal för Kalabrien: en animerad scroll-startsida (GSAP + Lenis), boendelistor med sök, filter och Airbnb-liknande bokning, flygsök, erbjudanden och en admin-panel för att hantera boenden, bokningar och erbjudanden.",
     "work.proj.20.value": "En komplett bokningsplattform med hanteringspanel: kunder bokar online medan verksamheten styr boenden, förfrågningar och erbjudanden från en enda panel.",
+    "work.proj.21": "AI Visibility",
+    "work.proj.21.tags": "NEXT 15 · TS · RECHARTS",
+    "work.proj.21.blurb": "Interaktiv demo av en 'AI search visibility'-produkt: den spårar hur ett varumärke syns i svaren från ChatGPT, Gemini, Perplexity och Claude. AVI 0–100-index, promptövervakning, konkurrentanalys, AEO/GEO-revision och en sentiment-heatmap.",
+    "work.proj.21.value": "Visar var och hur ett varumärke citeras av AI-motorer — det nya SEO — och vad som behöver åtgärdas för att citeras oftare.",
 
     "stack.num": "04 / VERKTYG",
     "stack.title": "Verktyg.",

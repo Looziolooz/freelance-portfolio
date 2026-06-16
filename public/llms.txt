@@ -1,0 +1,58 @@
+# lorenzo.hacks
+
+> Freelance studio by Lorenzo Dastoli building custom websites & e-commerce, automations, AI agents, online visibility (SEO), social content, and web data for small and large businesses. Italian-market focus, mirrored in English and Swedish. Based in Stockholm, works across Europe, fully remote.
+
+lorenzo.hacks sells outcomes, not hours: websites that turn visitors into customers, automations that take over repetitive work (email, invoicing, reports), and AI agents for solo founders (email and scheduling, invoicing, drafting messages, client summaries). The site is multilingual — Italian primary, English and Swedish mirrored — and ships a free, always-on AI assistant that replies in the visitor's own language and can run cost-free on Groq. Pricing is either a one-off payment (finished work, 3 months support, then it's yours) or an all-inclusive subscription (€25/month, or €39/month with content management); complex work (automations, AI agents, integrations) is quoted after a short, no-obligation intro call.
+
+## Pages
+
+- [Home](/): Studio overview — services, selected projects, tools, engagements, and contact.
+- [AI agents](/agents): The live AI assistant and the kind of always-on agents Lorenzo builds for businesses, which can run at zero model cost on Groq.
+- [Blog & guides](/blog): Articles and beginner-friendly, step-by-step guides (e.g. getting started with Claude, Claude Code, automations, and AI workflows), in Italian, English and Swedish.
+- [Membership](/membership): Free, Supporter (€5/month) and Pro (€20/month) tiers unlocking prompts, n8n workflows, advanced techniques, and full projects with code.
+
+## Services
+
+- Websites & e-commerce — custom, fast, built to convert.
+- Automation — email, invoices and reports handled automatically.
+- AI agents — for solo founders: email/scheduling, invoicing, drafting, client summaries.
+- Online visibility & SEO — built in from the start, not bolted on.
+- Social content — simple, low/zero cost, consistent.
+- Web data — collected and turned into value for marketing decisions.
+
+## Engagements
+
+- Brand System — brand strategy, visual identity, messaging foundation, launch assets.
+- Conversion Website — offer strategy, brand copywriting, UX/UI, mobile optimization, CRO.
+- Retainer — ongoing brand management, content creation and marketing execution.
+
+## Selected projects
+
+- [AI Visibility](/work/ai-visibility): Interactive demo of an AI search visibility product — tracks how a brand is cited across ChatGPT, Gemini, Perplexity and Claude, with an AVI score, competitor gap and AEO/GEO audit (Next.js, TypeScript, Recharts).
+- [Vespa Heritage](/work/vespa-heritage): Scroll-driven product-launch landing for a heritage Vespa (Next.js, Framer Motion, Canvas).
+- [Bell'Italia](/work/bellitalia): Animated tourism landing about Italy's most beautiful places (GSAP, ScrollTrigger, Lenis).
+- [Bella Calabria](/work/bella-calabria): Travel booking portal with search, Airbnb-style booking and admin dashboard (Next.js, Tailwind, GSAP).
+- [Barberia](/work/barberia): Barbershop site with online booking, services menu and gallery (Next.js, Tailwind, TypeScript).
+- [Atelier Solari](/work/fotografo): Multilingual wedding-photography studio for Tuscany and the Amalfi Coast (Next.js, Tailwind, i18n).
+- [Nordhem](/work/real-estate): Upscale Scandinavian real-estate agency, trilingual (Next.js, Tailwind, i18n).
+- [Aurelia Pro X1](/work/aurelia): Premium espresso-machine landing with a 3D configurator (Next.js, Python, 3D).
+- [Pizzeria Restaurant](/work/pizzeria-restaurant): Restaurant site with digital menu, online ordering and table reservations (Next.js, Tailwind, TypeScript).
+- [Couffer](/work/couffer): Salon management platform — booking, product e-commerce, staff, stock and client portal (Next.js, Tailwind, TypeScript).
+
+## Tools
+
+- AI & automation: Claude, Claude Code, MCP, n8n, OpenAI, LangChain, Groq, Make, Zapier.
+- Frontend: React, Next.js, TypeScript, Tailwind, GSAP, Framer Motion, Three.js.
+- Data & backend: Supabase, Postgres, Prisma, Node.js, Playwright, Puppeteer, Vercel, Python.
+- Design & craft: Figma, Illustrator, Photoshop, Canva, branding, UX/UI, copywriting.
+
+## Contact
+
+- Email: hello@lorenzo.hacks
+- Phone: +46 (0)763 12 33 45
+- [LinkedIn](https://www.linkedin.com/in/lorenzo-dastoli/)
+- [GitHub](https://github.com/Looziolooz)
+
+## Optional
+
+- [Get started](/#contact): Book a short intro call or fill in the contact form — reply within 24 hours.

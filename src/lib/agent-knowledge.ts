@@ -158,6 +158,14 @@ interface RawEntry {
 const RAW: RawEntry[] = [
   // ── Projects ───────────────────────────────────────────────────────────────
   {
+    id: "project-ai-visibility",
+    category: "project",
+    keywords: ["ai visibility", "ai search visibility", "geo", "aeo", "answer engine optimization", "generative engine optimization", "chatgpt", "gemini", "perplexity", "claude", "brand monitoring", "visibilità ai", "seo ai", "motori di risposta", "answer engines", "sentiment", "competitor", "share of voice", "dashboard", "saas", "next.js", "typescript", "recharts"],
+    it: "AI Visibility è una demo interattiva di un prodotto di 'AI search visibility': monitora come un brand viene citato nelle risposte di ChatGPT, Gemini, Perplexity e Claude. Include un indice AVI 0–100 con trend, monitoraggio dei prompt, analisi competitor (share of voice), audit AEO/GEO/E-E-A-T e una heatmap del sentiment. Costruita con Next.js 15, TypeScript, Tailwind e Recharts. È il nuovo SEO: mostra dove e come appari nelle risposte AI e cosa sistemare per essere citato più spesso. Demo live: https://ai-visibility-rho.vercel.app/",
+    en: "AI Visibility is an interactive demo of an 'AI search visibility' product: it tracks how a brand is cited in ChatGPT, Gemini, Perplexity and Claude answers. It includes an AVI 0–100 index with trends, prompt monitoring, competitor analysis (share of voice), an AEO/GEO/E-E-A-T audit and a sentiment heatmap. Built with Next.js 15, TypeScript, Tailwind and Recharts. It's the new SEO: it shows where and how you appear in AI answers and what to fix to get cited more often. Live demo: https://ai-visibility-rho.vercel.app/",
+    sv: "AI Visibility är en interaktiv demo av en 'AI search visibility'-produkt: den spårar hur ett varumärke citeras i svaren från ChatGPT, Gemini, Perplexity och Claude. Den innehåller ett AVI 0–100-index med trender, promptövervakning, konkurrentanalys (share of voice), en AEO/GEO/E-E-A-T-revision och en sentiment-heatmap. Byggd med Next.js 15, TypeScript, Tailwind och Recharts. Det är det nya SEO: den visar var och hur du syns i AI-svar och vad du behöver åtgärda för att citeras oftare. Live-demo: https://ai-visibility-rho.vercel.app/",
+  },
+  {
     id: "project-vespa-heritage",
     category: "project",
     keywords: ["vespa heritage", "vespa", "vespa primavera", "scrollytelling", "landing page", "concept", "premium", "scooter", "motorino", "next.js", "framer motion", "canvas", "animazione", "animation", "scroll", "heritage", "1968", "lancio prodotto", "product launch", "produktlansering"],

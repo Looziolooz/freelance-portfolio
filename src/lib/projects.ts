@@ -25,6 +25,16 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "21",
+    key: "21",
+    slug: "ai-visibility",
+    demo: "https://ai-visibility-rho.vercel.app/",
+    repo: "https://github.com/Looziolooz/ai-visibility",
+    image: "/projects/ai-visibility.png",
+    featured: true,
+    swatch: "#1b1a2e",
+  },
+  {
     id: "18",
     key: "18",
     slug: "vespa-heritage",
