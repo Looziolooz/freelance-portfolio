@@ -71,6 +71,9 @@ const PACK_LEVELS: Record<string, { level: LevelKey; prog: ProgKey }> = {
   "claude-cowork-da-zero": { level: "base", prog: "none" },
   "claude-code-da-zero": { level: "intermedio", prog: "base" },
   "claude-api-da-zero": { level: "avanzato", prog: "intermedia" },
+  // Front-end build tutorials and coding-agent guides: for experienced devs.
+  "frontend-effetti": { level: "avanzato", prog: "intermedia" },
+  "ponytail": { level: "avanzato", prog: "intermedia" },
 };
 
 function packOf(slug: string): string | null {
