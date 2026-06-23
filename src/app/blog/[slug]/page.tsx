@@ -358,7 +358,7 @@ export default function ContentPage({
           const lvl = levelForContent(content.slug, content.category);
           return lvl ? (
             <span
-              title={LEVELS[lvl].blurb}
+              title={LEVELS[lvl].blurb[lang]}
               style={{
                 fontSize: 11,
                 padding: "2px 10px",
@@ -371,7 +371,7 @@ export default function ContentPage({
                 letterSpacing: 0.4,
               }}
             >
-              {LEVELS[lvl].label}
+              {LEVELS[lvl].label[lang]}
             </span>
           ) : null;
         })()}
@@ -379,7 +379,7 @@ export default function ContentPage({
           const prog = programmingForContent(content.slug);
           return prog ? (
             <span
-              title={PROG[prog].blurb}
+              title={PROG[prog].blurb[lang]}
               style={{
                 fontSize: 11,
                 padding: "2px 10px",
@@ -392,7 +392,7 @@ export default function ContentPage({
                 letterSpacing: 0.4,
               }}
             >
-              {PROG[prog].label}
+              {PROG[prog].label[lang]}
             </span>
           ) : null;
         })()}

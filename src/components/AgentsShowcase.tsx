@@ -25,13 +25,12 @@ export default function AgentsShowcase() {
       className="section-indexed"
       style={{
         padding: "clamp(100px, 10vw, 160px) 0",
-        borderTop: "1px solid var(--line)",
         position: "relative",
         overflow: "hidden",
       }}
     >
       <AgentNetworkBg />
-      <ParallaxIndex>05</ParallaxIndex>
+      <ParallaxIndex>06</ParallaxIndex>
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <div
@@ -98,7 +97,7 @@ export default function AgentsShowcase() {
               flexShrink: 0,
               padding: "13px 24px",
               background: "var(--accent-green)",
-              color: "#fff",
+              color: "var(--btn-ink)",
               fontFamily: "var(--font-mono)",
               fontSize: 14,
               letterSpacing: 0.3,

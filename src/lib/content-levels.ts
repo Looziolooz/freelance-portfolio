@@ -6,27 +6,44 @@
 //
 // Kept in code (not the DB) to avoid a live migration; extend the maps below.
 
+import type { Lang } from "@/i18n";
+
+// Labels and blurbs are localised IT/EN/SV; colours are language-independent.
+type Localized = Record<Lang, string>;
+
 export type LevelKey = "base" | "intermedio" | "avanzato";
 
 export const LEVELS: Record<
   LevelKey,
-  { label: string; blurb: string; bg: string; fg: string }
+  { label: Localized; blurb: Localized; bg: string; fg: string }
 > = {
   base: {
-    label: "Principiante",
-    blurb: "Adatto a chi parte da zero.",
+    label: { it: "Principiante", en: "Beginner", sv: "Nybörjare" },
+    blurb: {
+      it: "Adatto a chi parte da zero.",
+      en: "Great if you're starting from scratch.",
+      sv: "Perfekt om du börjar från noll.",
+    },
     bg: "var(--accent-green)",
-    fg: "#ffffff",
+    fg: "var(--btn-ink)",
   },
   intermedio: {
-    label: "Intermedio",
-    blurb: "Serve una conoscenza di base.",
+    label: { it: "Intermedio", en: "Intermediate", sv: "Medel" },
+    blurb: {
+      it: "Serve una conoscenza di base.",
+      en: "Some basic knowledge needed.",
+      sv: "Kräver viss grundkunskap.",
+    },
     bg: "var(--accent-peach-deep)",
-    fg: "var(--ink-body)",
+    fg: "var(--btn-ink)",
   },
   avanzato: {
-    label: "Del mestiere",
-    blurb: "Per chi ha esperienza tecnica.",
+    label: { it: "Del mestiere", en: "Advanced", sv: "Avancerad" },
+    blurb: {
+      it: "Per chi ha esperienza tecnica.",
+      en: "For people with technical experience.",
+      sv: "För dig med teknisk erfarenhet.",
+    },
     bg: "var(--ink-body)",
     fg: "var(--canvas-page)",
   },
@@ -41,23 +58,35 @@ export type ProgKey = "none" | "base" | "intermedia";
 
 export const PROG: Record<
   ProgKey,
-  { label: string; blurb: string; bg: string; fg: string }
+  { label: Localized; blurb: Localized; bg: string; fg: string }
 > = {
   none: {
-    label: "Senza codice",
-    blurb: "Nessuna conoscenza di programmazione richiesta.",
+    label: { it: "Senza codice", en: "No code", sv: "Ingen kod" },
+    blurb: {
+      it: "Nessuna conoscenza di programmazione richiesta.",
+      en: "No coding knowledge required.",
+      sv: "Inga programmeringskunskaper krävs.",
+    },
     bg: "var(--canvas-page)",
     fg: "var(--ink-body)",
   },
   base: {
-    label: "Codice base",
-    blurb: "Serve dimestichezza base con editor e riga di comando.",
+    label: { it: "Codice base", en: "Basic code", sv: "Grundkod" },
+    blurb: {
+      it: "Serve dimestichezza base con editor e riga di comando.",
+      en: "A little comfort with an editor and command line helps.",
+      sv: "Viss vana vid en editor och kommandoraden behövs.",
+    },
     bg: "var(--accent-peach-deep)",
-    fg: "var(--ink-body)",
+    fg: "var(--btn-ink)",
   },
   intermedia: {
-    label: "Codice intermedio",
-    blurb: "Serve saper leggere e scrivere codice.",
+    label: { it: "Codice intermedio", en: "Intermediate code", sv: "Kod på medelnivå" },
+    blurb: {
+      it: "Serve saper leggere e scrivere codice.",
+      en: "You'll need to read and write code.",
+      sv: "Du behöver kunna läsa och skriva kod.",
+    },
     bg: "var(--ink-body)",
     fg: "var(--canvas-page)",
   },
@@ -76,6 +105,12 @@ const PACK_LEVELS: Record<string, { level: LevelKey; prog: ProgKey }> = {
   "ponytail": { level: "avanzato", prog: "intermedia" },
   // Lead-magnet blog for micro-businesses: beginner, no code required.
   "pmi": { level: "base", prog: "none" },
+  // AI-tool reviews + how-to guides (Descript, OpusClip, ElevenLabs, SayWhat,
+  // OpenCut…): for non-technical creators, no code required.
+  "strumenti-ai": { level: "base", prog: "none" },
+  // Developer-focused AI tooling (LLM observability/evals, agent frameworks…):
+  // "del mestiere", assumes real coding.
+  "dev-ai": { level: "avanzato", prog: "intermedia" },
 };
 
 function packOf(slug: string): string | null {

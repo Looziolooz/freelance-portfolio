@@ -112,7 +112,7 @@ export default function BlogTeaser() {
                       color: LEVELS[lvl].fg,
                     }}
                   >
-                    {LEVELS[lvl].label}
+                    {LEVELS[lvl].label[lang]}
                   </span>
                 )}
               </span>
@@ -169,7 +169,7 @@ export default function BlogTeaser() {
             display: "inline-block",
             padding: "11px 20px",
             background: "var(--accent-green)",
-            color: "#fff",
+            color: "var(--btn-ink)",
             fontFamily: "var(--font-mono)",
             fontSize: 13,
             letterSpacing: 0.3,

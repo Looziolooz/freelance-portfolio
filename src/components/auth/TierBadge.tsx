@@ -21,7 +21,8 @@ export function TierBadge({ tier }: { tier: string }) {
       className="neo-badge"
       style={{
         background: TIER_BG[tier] ?? "var(--canvas-panel-yellow)",
-        color: tier === "PRO" ? "var(--fg-on-coral)" : "var(--ink-body)",
+        // FREE sits on dark petrolio (light text); SUPPORTER/PRO on light gold (dark text).
+        color: tier === "FREE" ? "#EFE8D9" : "var(--btn-ink)",
       }}
     >
       {TIER_LABELS[tier] ?? tier}

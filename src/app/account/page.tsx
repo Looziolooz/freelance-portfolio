@@ -4,6 +4,7 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { TierBadge } from "@/components/auth/TierBadge";
+import Nav from "@/components/Nav";
 
 export default function AccountPage() {
   const { user, loading, logout } = useAuth();
@@ -17,29 +18,36 @@ export default function AccountPage() {
   }
 
   return (
-    <main
-      style={{
-        padding: "100px 20px",
-        maxWidth: 600,
-        margin: "0 auto",
-      }}
-    >
+    <>
+      <Nav />
+      <main
+        className="container"
+        style={{
+          paddingTop: "calc(var(--topbar-h) + 48px)",
+          paddingBottom: 80,
+          maxWidth: 620,
+        }}
+      >
       <Link
         href="/"
         style={{
-          display: "inline-block",
-          marginBottom: 32,
-          fontSize: 13,
-          fontWeight: 600,
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 8,
+          marginBottom: 26,
+          fontFamily: "var(--font-mono)",
+          fontSize: 12,
+          letterSpacing: 0.6,
+          textTransform: "uppercase",
           textDecoration: "none",
-          color: "var(--ink-body)",
+          color: "var(--ink-muted)",
         }}
       >
-        &larr; Home
+        <span className="btn-arrow" aria-hidden="true" style={{ marginLeft: 0 }}>←</span> Home
       </Link>
 
-      <h1 style={{ fontSize: 32, fontWeight: 700, marginBottom: 32 }}>
-        Il Mio Account
+      <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(34px, 5vw, 48px)", fontWeight: 600, letterSpacing: "-0.02em", marginBottom: 32 }}>
+        Il mio account
       </h1>
 
       <div style={{ position: "relative", marginBottom: 24 }}>
@@ -99,7 +107,7 @@ export default function AccountPage() {
               position: "relative",
               zIndex: 2,
               textDecoration: "none",
-              color: "var(--ink-body)",
+              color: "var(--btn-ink)",
             }}
           >
             Passa a un Piano Premium
@@ -139,7 +147,7 @@ export default function AccountPage() {
           style={{
             position: "absolute",
             inset: 0,
-            background: "var(--accent-coral)",
+            background: "var(--ink-shadow)",
             borderRadius: "var(--radius)",
             transform: "translate(4px, 4px)",
           }}
@@ -151,13 +159,14 @@ export default function AccountPage() {
             position: "relative",
             zIndex: 2,
             background: "var(--canvas-page)",
-            color: "var(--accent-coral)",
+            color: "var(--ink-body)",
             cursor: "pointer",
           }}
         >
           Esci
         </button>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

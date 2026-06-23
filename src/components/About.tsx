@@ -4,13 +4,10 @@ import { useLang } from "./LangProvider";
 import SectionHeader from "./SectionHeader";
 import ParallaxIndex from "./ParallaxIndex";
 
-const metaItems = (t: (k: string) => string) => [
-  { label: t("about.meta.location"), value: t("about.meta.location.val") },
-  { label: t("about.meta.works"), value: t("about.meta.works.val") },
-  { label: t("about.meta.langs"), value: t("about.meta.langs.val") },
-  { label: t("about.meta.edu"), value: t("about.meta.edu.val") },
-];
+const STRENGTHS = 6;
 
+// Founder bio (hexart-style "Meet …"): intro + Personal note on the left, the
+// Core Strengths list on the right.
 export default function About() {
   const { t } = useLang();
 
@@ -18,97 +15,93 @@ export default function About() {
     <section
       id="about"
       className="section-indexed"
-      style={{
-        padding: "clamp(80px, 8vw, 140px) 0",
-        borderTop: "1px solid var(--line)",
-        position: "relative",
-      }}
+      style={{ padding: "clamp(80px, 8vw, 140px) 0", position: "relative" }}
     >
-      <ParallaxIndex>02</ParallaxIndex>
-      <SectionHeader
-        num={t("about.num")}
-        title={t("about.title")}
-        meta={t("about.meta")}
-      />
+      <ParallaxIndex>04</ParallaxIndex>
+      <SectionHeader num={t("about.num")} title={t("about.title")} />
+
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
-          gap: "clamp(36px, 5vw, 60px)",
-          alignItems: "flex-start",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))",
+          gap: "clamp(40px, 6vw, 80px)",
+          alignItems: "start",
+          marginTop: "clamp(32px, 4vw, 56px)",
         }}
       >
-        <div>
+        {/* Left: intro + personal note */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 30 }}>
           <p
             style={{
-              fontSize: "clamp(24px, 3vw, 42px)",
-              lineHeight: 1.25,
-              letterSpacing: -0.8,
+              fontSize: "clamp(20px, 2.4vw, 30px)",
+              lineHeight: 1.3,
               fontWeight: 500,
+              letterSpacing: "-0.01em",
               color: "var(--fg)",
               margin: 0,
             }}
           >
-            {t("about.lede.p1")}{" "}
-            <span
+            {t("about.intro")}
+          </p>
+          <div>
+            <div
               style={{
-                background: "var(--accent-coral)",
-                color: "#ffffff",
-                padding: "0 0.08em",
+                fontFamily: "var(--font-mono)",
+                fontSize: 11,
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: 1.4,
+                color: "var(--accent-green-deep)",
+                marginBottom: 10,
               }}
             >
-              {t("about.lede.highlight")}
-            </span>{" "}
-            {t("about.lede.p2")}
-            <br />
-            {t("about.lede.p3")}
-          </p>
-          <div
-            style={{
-              marginTop: 48,
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: 24,
-              paddingTop: 24,
-              borderTop: "3px solid var(--ink-border)",
-            }}
-          >
-            {metaItems(t).map((m) => (
-              <div key={m.label}>
-                <div
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: 10,
-                    textTransform: "uppercase",
-                    letterSpacing: 1.4,
-                    color: "var(--muted)",
-                    marginBottom: 8,
-                  }}
-                >
-                  {m.label}
-                </div>
-                <div
-                  style={{ fontSize: 17, color: "var(--fg)", fontWeight: 500 }}
-                >
-                  {m.value}
-                </div>
-              </div>
-            ))}
+              {t("about.personal.label")}
+            </div>
+            <p style={{ fontSize: 16, lineHeight: 1.65, color: "var(--ink-body)", opacity: 0.85, margin: 0 }}>
+              {t("about.personal.body")}
+            </p>
           </div>
         </div>
-        <div
-          style={{
-            fontSize: 17,
-            lineHeight: 1.65,
-            color: "var(--fg)",
-            display: "flex",
-            flexDirection: "column",
-            gap: 20,
-          }}
-        >
-          <p>{t("about.body.p1")}</p>
-          <p style={{ color: "var(--muted)" }}>{t("about.body.p2")}</p>
-          <p>{t("about.body.p3")}</p>
+
+        {/* Right: core strengths */}
+        <div>
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: 1.4,
+              color: "var(--accent-green-deep)",
+              marginBottom: 16,
+            }}
+          >
+            {t("about.strengths.label")}
+          </div>
+          <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            {Array.from({ length: STRENGTHS }, (_, i) => (
+              <li
+                key={i}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 16,
+                  padding: "15px 0",
+                  borderTop: "1px solid color-mix(in oklch, var(--fg) 14%, transparent)",
+                  fontSize: "clamp(16px, 1.5vw, 19px)",
+                  color: "var(--fg)",
+                }}
+              >
+                <span
+                  aria-hidden="true"
+                  style={{ fontFamily: "var(--font-mono)", fontSize: 12, fontWeight: 700, color: "var(--accent-green)" }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {t(`about.strength.${i}`)}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

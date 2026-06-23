@@ -11,6 +11,7 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [themeOpen, setThemeOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { theme, setTheme } = useTheme();
   const { lang, setLang, t } = useLang();
   const { user } = useAuth();
@@ -18,6 +19,13 @@ export default function Nav() {
   useEffect(() => {
     const id = setInterval(() => setT2(Date.now()), 1000);
     return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const hhmm = new Date(t2).toLocaleTimeString(lang === "sv" ? "sv-SE" : lang === "en" ? "en-GB" : "it-IT", {
@@ -35,7 +43,7 @@ export default function Nav() {
   const BORDER = "3px solid var(--ink-border)";
 
   return (
-    <div className="topbar">
+    <div className={`topbar${scrolled ? " is-scrolled" : ""}`}>
       <div className="topbar__inner">
         {/* Wordmark */}
         <a href="/" className="wordmark-link">
@@ -49,13 +57,14 @@ export default function Nav() {
           <a href="/#work" onClick={() => setMenuOpen(false)}>{t("nav.work")}</a>
           <a href="/agents" onClick={() => setMenuOpen(false)}>{t("nav.agents")}</a>
           <a href="/blog" onClick={() => setMenuOpen(false)}>{t("nav.blog")}</a>
+          <a href="/componenti" onClick={() => setMenuOpen(false)}>{t("nav.components")}</a>
           <a href="/membership" onClick={() => setMenuOpen(false)}>{t("nav.membership")}</a>
           <a
             href={user ? "/account" : "/login"}
             className="neo-btn neo-btn-sm"
             style={{
               textDecoration: "none",
-              color: "var(--ink-body)",
+              color: "var(--btn-ink)",
               padding: "6px 16px",
               fontSize: 13,
             }}
@@ -246,7 +255,7 @@ export default function Nav() {
             background: "var(--accent-peach)",
             border: BORDER,
             borderRadius: "var(--radius)",
-            color: "var(--ink-body)",
+            color: "var(--btn-ink)",
             cursor: "pointer",
             fontSize: 18,
             padding: "6px 10px",

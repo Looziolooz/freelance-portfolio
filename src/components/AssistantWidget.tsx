@@ -55,7 +55,7 @@ export default function AssistantWidget() {
           gap: 8,
           padding: "11px 18px",
           background: "var(--accent-green)",
-          color: "#fff",
+          color: "var(--btn-ink)",
           border: "3px solid var(--ink-border)",
           borderRadius: "var(--radius-full)",
           boxShadow: "4px 4px 0 var(--ink-shadow)",

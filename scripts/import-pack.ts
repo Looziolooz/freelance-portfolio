@@ -52,8 +52,9 @@ const PREZZO: Record<string, string> = {
 };
 const FILL: Record<string, string> = {
   "[LINK-PAGAMENTO]": "/membership",
+  "[LINK-CONSULENZA]": "/#contact",
   "[PREZZO]": PREZZO[lang] ?? PREZZO.IT,
-  "[NOME-SITO]": "lorenzo.hacks",
+  "[NOME-SITO]": "lorenzo.studio",
 };
 
 function fill(s: string): string {

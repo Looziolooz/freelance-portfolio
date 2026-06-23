@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 200" role="img" aria-label="Il flusso Explore, Plan, Code, Commit">
   <style>
-    .box{fill:#FFFCF7;stroke:#14110D;stroke-width:3}
-    .boxg{fill:#0E8A57;stroke:#14110D;stroke-width:3}
-    .sh{fill:#14110D}
-    .lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:17px;font-weight:700;fill:#14110D}
-    .lblw{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:17px;font-weight:700;fill:#ffffff}
-    .cap{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#5C5349}
-    .capw{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#FFFCF7}
-    .arr{stroke:#14110D;stroke-width:3;fill:none}
+    .box{fill:#EFE6D1;stroke:#221E17;stroke-width:3}
+    .boxg{fill:#E8A12C;stroke:#221E17;stroke-width:3}
+    .sh{fill:#221E17}
+    .lbl{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:17px;font-weight:700;fill:#221E17}
+    .lblw{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:17px;font-weight:700;fill:#221E17}
+    .cap{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#6B6253}
+    .capw{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12px;fill:#221E17}
+    .arr{stroke:#221E17;stroke-width:3;fill:none}
   </style>
   <defs>
     <marker id="ar2" markerWidth="11" markerHeight="11" refX="7" refY="3.2" orient="auto">
-      <path d="M0,0 L7.5,3.2 L0,6.4 Z" fill="#14110D"/>
+      <path d="M0,0 L7.5,3.2 L0,6.4 Z" fill="#221E17"/>
     </marker>
   </defs>
   <g>

@@ -2,6 +2,7 @@
 
 import { useLang } from "./LangProvider";
 import ParallaxIndex from "./ParallaxIndex";
+import { RevealStagger, RevealItem } from "./Reveal";
 
 // Engagements — three ways to work together (no fixed prices/subscriptions):
 // a Brand System, a Conversion Website, or an ongoing Retainer. Each card lists
@@ -28,7 +29,7 @@ export default function Plans() {
       aria-label={t("home.plans.title")}
       style={{ position: "relative" }}
     >
-      <ParallaxIndex>06</ParallaxIndex>
+      <ParallaxIndex>05</ParallaxIndex>
       <div className="section-head" style={{ marginBottom: 40 }}>
         <span className="section-head__num">{t("home.plans.tag")}</span>
         <h2 className="section-head__title" style={{ fontSize: "clamp(28px, 5vw, 64px)" }}>
@@ -39,7 +40,7 @@ export default function Plans() {
         </span>
       </div>
 
-      <div
+      <RevealStagger
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
@@ -51,14 +52,15 @@ export default function Plans() {
           const ink = dark ? "var(--canvas-page)" : "var(--ink-body)";
           const features = t(`home.eng.${e.key}.features`).split("|");
           return (
+            <RevealItem key={e.key} style={{ display: "flex" }}>
             <div
-              key={e.key}
-              className="neo-card"
+              className="neo-card neo-card--shine accent-rail"
               style={{
                 display: "flex",
                 flexDirection: "column",
                 gap: 16,
                 minHeight: 360,
+                width: "100%",
                 background: dark ? "var(--ink-body)" : "var(--canvas-panel-yellow)",
                 color: ink,
               }}
@@ -71,7 +73,7 @@ export default function Plans() {
                   fontWeight: 700,
                   textTransform: "uppercase",
                   letterSpacing: 0.8,
-                  color: "#fff",
+                  color: "var(--btn-ink)",
                   background: "var(--accent-green)",
                   border: "2px solid var(--ink-border)",
                   borderRadius: "var(--radius-sm)",
@@ -152,12 +154,10 @@ export default function Plans() {
 
               <a
                 href="#contact"
-                className="neo-btn"
+                className="neo-btn neo-btn--primary"
                 style={{
                   alignSelf: "flex-start",
                   padding: "11px 20px",
-                  background: "var(--accent-green)",
-                  color: "#fff",
                   fontFamily: "var(--font-mono)",
                   fontSize: 13,
                   letterSpacing: 0.3,
@@ -167,9 +167,10 @@ export default function Plans() {
                 {t("home.plans.cta")} →
               </a>
             </div>
+            </RevealItem>
           );
         })}
-      </div>
+      </RevealStagger>
 
       <p
         style={{

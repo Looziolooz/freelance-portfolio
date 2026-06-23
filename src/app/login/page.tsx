@@ -83,18 +83,22 @@ export default function LoginPage() {
           <Link
             href="/"
             style={{
-              display: "inline-block",
-              marginBottom: 24,
-              fontSize: 13,
-              fontWeight: 600,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              marginBottom: 22,
+              fontFamily: "var(--font-mono)",
+              fontSize: 12,
+              letterSpacing: 0.6,
+              textTransform: "uppercase",
               textDecoration: "none",
-              color: "var(--ink-body)",
+              color: "var(--ink-muted)",
             }}
           >
-            &larr; Home
+            <span className="btn-arrow" aria-hidden="true" style={{ marginLeft: 0 }}>←</span> Home
           </Link>
 
-          <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 4 }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: 34, fontWeight: 600, letterSpacing: "-0.02em", marginBottom: 4 }}>
             Accedi
           </h1>
           <p style={{ fontSize: 14, color: "var(--ink-muted)", marginBottom: 28 }}>
@@ -143,20 +147,36 @@ export default function LoginPage() {
             </div>
 
             {error && (
-              <p style={{ color: "var(--accent-coral)", fontSize: 13, margin: 0 }}>{error}</p>
+              <p
+                role="alert"
+                style={{
+                  color: "var(--error)",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  margin: 0,
+                  padding: "8px 12px",
+                  border: "2px solid var(--error)",
+                  borderRadius: "var(--radius)",
+                  background: "color-mix(in oklch, var(--error) 12%, transparent)",
+                }}
+              >
+                {error}
+              </p>
             )}
 
             <button
               type="submit"
               disabled={busy}
-              className="neo-btn neo-btn-lg neo-btn-block"
+              className="neo-btn neo-btn-lg neo-btn-block neo-btn--primary"
               style={{
                 cursor: busy ? "not-allowed" : "pointer",
                 opacity: busy ? 0.7 : 1,
                 marginTop: 4,
               }}
             >
-              {busy ? "Accesso in corso..." : "Accedi"}
+              {busy ? "Accesso in corso…" : (
+                <>Accedi <span className="btn-arrow" aria-hidden="true">→</span></>
+              )}
             </button>
           </form>
 

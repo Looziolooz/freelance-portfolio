@@ -95,6 +95,6 @@ describe("renderKnowledge", () => {
   it("groups entries under category headings", () => {
     const block = renderKnowledge(coreKnowledge(), "EN");
     expect(block).toContain("## Contact & how to start");
-    expect(block).toContain("hello@lorenzo.hacks");
+    expect(block).toContain("hello@lorenzo.studio");
   });
 });

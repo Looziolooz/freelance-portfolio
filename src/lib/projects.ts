@@ -25,6 +25,15 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "22",
+    key: "22",
+    slug: "gelateria",
+    demo: "https://gelateria-theta.vercel.app/",
+    repo: "https://github.com/Looziolooz/gelateria-",
+    featured: true,
+    swatch: "#e9ddc8",
+  },
+  {
     id: "21",
     key: "21",
     slug: "ai-visibility",

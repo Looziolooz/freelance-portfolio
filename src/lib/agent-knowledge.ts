@@ -38,7 +38,7 @@ const STOPWORDS = new Set([
   // SV
   "och", "att", "som", "för", "med", "kan", "vad", "hur", "har", "din", "ditt", "jag", "vill", "vilka",
   // glue
-  "lorenzo", "hacks",
+  "lorenzo", "studio",
 ]);
 
 /** Lowercase, strip accents/punctuation, drop short + stop words. */
@@ -164,6 +164,14 @@ const RAW: RawEntry[] = [
     it: "AI Visibility è una demo interattiva di un prodotto di 'AI search visibility': monitora come un brand viene citato nelle risposte di ChatGPT, Gemini, Perplexity e Claude. Include un indice AVI 0–100 con trend, monitoraggio dei prompt, analisi competitor (share of voice), audit AEO/GEO/E-E-A-T e una heatmap del sentiment. Costruita con Next.js 15, TypeScript, Tailwind e Recharts. È il nuovo SEO: mostra dove e come appari nelle risposte AI e cosa sistemare per essere citato più spesso. Demo live: https://ai-visibility-rho.vercel.app/",
     en: "AI Visibility is an interactive demo of an 'AI search visibility' product: it tracks how a brand is cited in ChatGPT, Gemini, Perplexity and Claude answers. It includes an AVI 0–100 index with trends, prompt monitoring, competitor analysis (share of voice), an AEO/GEO/E-E-A-T audit and a sentiment heatmap. Built with Next.js 15, TypeScript, Tailwind and Recharts. It's the new SEO: it shows where and how you appear in AI answers and what to fix to get cited more often. Live demo: https://ai-visibility-rho.vercel.app/",
     sv: "AI Visibility är en interaktiv demo av en 'AI search visibility'-produkt: den spårar hur ett varumärke citeras i svaren från ChatGPT, Gemini, Perplexity och Claude. Den innehåller ett AVI 0–100-index med trender, promptövervakning, konkurrentanalys (share of voice), en AEO/GEO/E-E-A-T-revision och en sentiment-heatmap. Byggd med Next.js 15, TypeScript, Tailwind och Recharts. Det är det nya SEO: den visar var och hur du syns i AI-svar och vad du behöver åtgärda för att citeras oftare. Live-demo: https://ai-visibility-rho.vercel.app/",
+  },
+  {
+    id: "project-gelateria",
+    category: "project",
+    keywords: ["artigiano gelateria", "gelateria", "gelato", "ice cream", "glass", "calabria", "cosenza", "catanzaro", "lamezia", "artigianale", "artisan", "1978", "prenotazione", "ritiro", "pickup", "booking", "ordini online", "online ordering", "gestionale", "admin", "botteghe", "next.js", "tailwind", "gsap", "i18n", "bilingue", "carosello", "carousel"],
+    it: "Artigiano Gelateria è il sito di una gelateria artigianale calabrese dal 1978, con tre botteghe (Cosenza, Catanzaro, Lamezia Terme) e il claim 'Gelato per amore'. Include hero a carosello, il racconto del processo e degli ingredienti (anche senza glutine, senza lattosio e vegan), prenotazione del ritiro online, newsletter e un pannello gestionale per il titolare. Bilingue IT/EN, costruito con Next.js 16, Tailwind 4 e GSAP. Risultato: i clienti ordinano e prenotano il ritiro online e l'attività gestisce tutto da un unico pannello, con meno coda al banco. Demo live: https://gelateria-theta.vercel.app/",
+    en: "Artigiano Gelateria is the website of a Calabrian artisan gelateria running since 1978, with three shops (Cosenza, Catanzaro, Lamezia Terme) and the tagline 'Gelato per amore'. It includes a carousel hero, the story of its process and ingredients (gluten-free, lactose-free and vegan options), online pickup booking, a newsletter and an admin panel for the owner. Bilingual IT/EN, built with Next.js 16, Tailwind 4 and GSAP. Outcome: customers order and book pickup online while the business runs it all from one panel, with less queueing at the counter. Live demo: https://gelateria-theta.vercel.app/",
+    sv: "Artigiano Gelateria är webbplatsen för en kalabrisk hantverksglassbar sedan 1978, med tre butiker (Cosenza, Catanzaro, Lamezia Terme) och sloganen 'Gelato per amore'. Den innehåller en karusell-hero, berättelsen om processen och ingredienserna (glutenfritt, laktosfritt och veganskt), onlinebokning av upphämtning, ett nyhetsbrev och en adminpanel för ägaren. Tvåspråkig IT/EN, byggd med Next.js 16, Tailwind 4 och GSAP. Resultat: kunderna beställer och bokar upphämtning online medan verksamheten sköter allt från en panel, med mindre kö vid disken. Live-demo: https://gelateria-theta.vercel.app/",
   },
   {
     id: "project-vespa-heritage",
@@ -389,17 +397,17 @@ const RAW: RawEntry[] = [
     id: "pricing-complex-work-consultation",
     category: "pricing",
     keywords: ["lavoro complesso", "complex work", "komplext arbete", "automazioni", "automation", "agenti ai", "ai agents", "integrazioni", "integrations", "integrationer", "preventivo personalizzato", "tailored quote", "skräddarsydd offert", "consulenza", "consultation", "konsultation", "prezzo automazione", "quanto costa un agente ai"],
-    it: "Per il lavoro complesso — automazioni, agenti AI, integrazioni su misura — si parte da una consulenza personalizzata e un preventivo dedicato. Per numeri esatti, meglio una chiamata veloce o hello@lorenzo.hacks.",
-    en: "For complex work — automations, AI agents, custom integrations — it starts with a personalised consultation and a tailored quote. For exact numbers, a quick call or hello@lorenzo.hacks is best.",
-    sv: "För komplext arbete — automatiseringar, AI-agenter, skräddarsydda integrationer — börjar det med en personlig konsultation och en skräddarsydd offert. För exakta siffror är ett snabbt samtal eller hello@lorenzo.hacks bäst.",
+    it: "Per il lavoro complesso — automazioni, agenti AI, integrazioni su misura — si parte da una consulenza personalizzata e un preventivo dedicato. Per numeri esatti, meglio una chiamata veloce o hello@lorenzo.studio.",
+    en: "For complex work — automations, AI agents, custom integrations — it starts with a personalised consultation and a tailored quote. For exact numbers, a quick call or hello@lorenzo.studio is best.",
+    sv: "För komplext arbete — automatiseringar, AI-agenter, skräddarsydda integrationer — börjar det med en personlig konsultation och en skräddarsydd offert. För exakta siffror är ett snabbt samtal eller hello@lorenzo.studio bäst.",
   },
   {
     id: "pricing-no-fixed-figure",
     category: "pricing",
     keywords: ["prezzo fisso", "fixed price", "fast pris", "quanto costa", "how much", "hur mycket kostar", "preventivo", "quote", "offert", "caso per caso", "case by case", "fall till fall", "stima", "estimate", "uppskattning", "chiamata", "call", "samtal", "contatto", "contact", "kontakt"],
-    it: "Ogni lavoro viene preventivato caso per caso, quindi non c'è una cifra fissa di sviluppo. Invece di inventare un numero, Lorenzo spiega cosa determina il costo e propone una chiamata veloce o un contatto a hello@lorenzo.hacks per una stima reale.",
-    en: "Every job is quoted case by case, so there's no fixed development figure. Rather than inventing a number, Lorenzo explains what drives the cost and offers a quick call or hello@lorenzo.hacks for a real estimate.",
-    sv: "Varje uppdrag offereras från fall till fall, så det finns ingen fast utvecklingssumma. I stället för att hitta på en siffra förklarar Lorenzo vad som driver kostnaden och erbjuder ett snabbt samtal eller hello@lorenzo.hacks för en riktig uppskattning.",
+    it: "Ogni lavoro viene preventivato caso per caso, quindi non c'è una cifra fissa di sviluppo. Invece di inventare un numero, Lorenzo spiega cosa determina il costo e propone una chiamata veloce o un contatto a hello@lorenzo.studio per una stima reale.",
+    en: "Every job is quoted case by case, so there's no fixed development figure. Rather than inventing a number, Lorenzo explains what drives the cost and offers a quick call or hello@lorenzo.studio for a real estimate.",
+    sv: "Varje uppdrag offereras från fall till fall, så det finns ingen fast utvecklingssumma. I stället för att hitta på en siffra förklarar Lorenzo vad som driver kostnaden och erbjuder ett snabbt samtal eller hello@lorenzo.studio för en riktig uppskattning.",
   },
   // ── Membership ─────────────────────────────────────────────────────────────
   {
@@ -479,18 +487,18 @@ const RAW: RawEntry[] = [
   {
     id: "contact-channels",
     category: "contact",
-    keywords: ["contatto", "contatti", "contact", "kontakt", "email", "e-mail", "e-post", "posta", "telefono", "phone", "telefon", "numero", "number", "linkedin", "github", "social", "canali", "channels", "kanaler", "hello@lorenzo.hacks", "looziolooz"],
-    it: "Puoi contattare lorenzo.hacks via email a hello@lorenzo.hacks, per telefono al +46 (0)763 12 33 45, su LinkedIn (in/lorenzo-dastoli) e su GitHub (@Looziolooz). Tempo di risposta entro 24 ore.",
-    en: "You can reach lorenzo.hacks by email at hello@lorenzo.hacks, by phone at +46 (0)763 12 33 45, on LinkedIn (in/lorenzo-dastoli) and on GitHub (@Looziolooz). Reply within 24 hours.",
-    sv: "Du kan nå lorenzo.hacks via e-post på hello@lorenzo.hacks, per telefon på +46 (0)763 12 33 45, på LinkedIn (in/lorenzo-dastoli) och på GitHub (@Looziolooz). Svar inom 24 timmar.",
+    keywords: ["contatto", "contatti", "contact", "kontakt", "email", "e-mail", "e-post", "posta", "telefono", "phone", "telefon", "numero", "number", "linkedin", "github", "social", "canali", "channels", "kanaler", "hello@lorenzo.studio", "looziolooz"],
+    it: "Puoi contattare lorenzo.studio via email a hello@lorenzo.studio, per telefono al +46 (0)763 12 33 45, su LinkedIn (in/lorenzo-dastoli) e su GitHub (@Looziolooz). Tempo di risposta entro 24 ore.",
+    en: "You can reach lorenzo.studio by email at hello@lorenzo.studio, by phone at +46 (0)763 12 33 45, on LinkedIn (in/lorenzo-dastoli) and on GitHub (@Looziolooz). Reply within 24 hours.",
+    sv: "Du kan nå lorenzo.studio via e-post på hello@lorenzo.studio, per telefon på +46 (0)763 12 33 45, på LinkedIn (in/lorenzo-dastoli) och på GitHub (@Looziolooz). Svar inom 24 timmar.",
   },
   {
     id: "how-to-start",
     category: "contact",
     keywords: ["come iniziare", "how to start", "hur man börjar", "iniziare", "start", "börja", "primo passo", "next step", "nästa steg", "prenota", "book", "boka", "chiamata", "call", "samtal", "modulo", "form", "formulär", "preventivo", "consulenza", "contattare"],
-    it: "Il primo passo è una breve chiamata conoscitiva oppure scrivere a hello@lorenzo.hacks o compilare il modulo di contatto, raccontando il problema o l'idea da realizzare. La risposta arriva entro 24 ore.",
-    en: "The next step is a quick intro call, or emailing hello@lorenzo.hacks or filling in the contact form, describing the problem or idea you'd like to tackle. Reply comes within 24 hours.",
-    sv: "Första steget är ett kort introsamtal, eller att mejla hello@lorenzo.hacks eller fylla i kontaktformuläret och berätta om problemet eller idén du vill förverkliga. Svar kommer inom 24 timmar.",
+    it: "Il primo passo è una breve chiamata conoscitiva oppure scrivere a hello@lorenzo.studio o compilare il modulo di contatto, raccontando il problema o l'idea da realizzare. La risposta arriva entro 24 ore.",
+    en: "The next step is a quick intro call, or emailing hello@lorenzo.studio or filling in the contact form, describing the problem or idea you'd like to tackle. Reply comes within 24 hours.",
+    sv: "Första steget är ett kort introsamtal, eller att mejla hello@lorenzo.studio eller fylla i kontaktformuläret och berätta om problemet eller idén du vill förverkliga. Svar kommer inom 24 timmar.",
   },
   // ── FAQ (completeness pass) ────────────────────────────────────────────────
   {
@@ -577,9 +585,9 @@ const RAW: RawEntry[] = [
     id: "faq-free-intro-call",
     category: "faq",
     keywords: ["call conoscitiva", "chiamata gratuita", "consulenza gratuita", "primo incontro", "preventivo", "come iniziare", "free call", "intro call", "discovery call", "free consultation", "quote", "introsamtal", "gratis samtal", "kostnadsfri konsultation", "offert"],
-    it: "Sì: ogni collaborazione parte da una breve call conoscitiva, senza impegno, per capire il problema e trovare la soluzione giusta. Da lì arriva un preventivo su misura; per fissarla basta scrivere a hello@lorenzo.hacks o compilare il modulo nella sezione contatti.",
-    en: "Yes: every engagement starts with a short, no-obligation intro call to understand the problem and find the right solution. From there you get a tailored quote; to set it up just email hello@lorenzo.hacks or fill the form in the contact section.",
-    sv: "Ja: varje samarbete börjar med ett kort, förutsättningslöst introsamtal för att förstå problemet och hitta rätt lösning. Därifrån får du en skräddarsydd offert; för att boka, mejla hello@lorenzo.hacks eller fyll i formuläret i kontaktsektionen.",
+    it: "Sì: ogni collaborazione parte da una breve call conoscitiva, senza impegno, per capire il problema e trovare la soluzione giusta. Da lì arriva un preventivo su misura; per fissarla basta scrivere a hello@lorenzo.studio o compilare il modulo nella sezione contatti.",
+    en: "Yes: every engagement starts with a short, no-obligation intro call to understand the problem and find the right solution. From there you get a tailored quote; to set it up just email hello@lorenzo.studio or fill the form in the contact section.",
+    sv: "Ja: varje samarbete börjar med ett kort, förutsättningslöst introsamtal för att förstå problemet och hitta rätt lösning. Därifrån får du en skräddarsydd offert; för att boka, mejla hello@lorenzo.studio eller fyll i formuläret i kontaktsektionen.",
   },
   {
     id: "faq-agents-run-cost-free-groq",

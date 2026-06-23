@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
   turbopack: { root: projectRoot },
   // Keep Prisma + the Postgres driver external to the bundler.
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg", "pg"],
+  // The component gallery reads the raw pens from /codepen at request time; make
+  // sure those files are traced into the serverless functions on deploy.
+  outputFileTracingIncludes: {
+    "/api/componenti/**": ["./codepen/**"],
+  },
 };
 
 export default nextConfig;

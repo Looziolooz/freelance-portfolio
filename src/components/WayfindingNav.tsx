@@ -1,19 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLang } from "./LangProvider";
 
-const sections = [
-  { id: "top", label: "Intro" },
-  { id: "about", label: "About" },
-  { id: "work", label: "Work" },
-  { id: "stack", label: "Stack" },
-  { id: "agents", label: "Agents" },
-  { id: "contact", label: "Contact" },
-];
+// Full homepage section list, in the order they appear on the page, localized.
+// Keep ids in sync with the section ids rendered in page.tsx / the components.
+const SECTIONS = [
+  { id: "top", it: "Intro", en: "Intro", sv: "Intro" },
+  { id: "work", it: "Lavori", en: "Work", sv: "Arbeten" },
+  { id: "about", it: "Chi sono", en: "About", sv: "Om mig" },
+  { id: "servizi", it: "Servizi", en: "Services", sv: "Tjänster" },
+  { id: "piani", it: "Metodo", en: "Method", sv: "Metod" },
+  { id: "contact", it: "Contatti", en: "Contact", sv: "Kontakt" },
+] as const;
 
 export default function WayfindingNav() {
+  const { lang } = useLang();
   const listRef = useRef<HTMLUListElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
+  const labelFor = (s: (typeof SECTIONS)[number]) => s[lang] ?? s.en;
 
   useEffect(() => {
     const links = document.querySelectorAll<HTMLAnchorElement>(".wayfinding-link");
@@ -29,11 +34,11 @@ export default function WayfindingNav() {
       let activeIdx = 0;
 
       if (atBottom) {
-        activeIdx = sections.length - 1;
+        activeIdx = SECTIONS.length - 1;
       } else {
         const mid = window.innerHeight * 0.4;
-        for (let i = sections.length - 1; i >= 0; i--) {
-          const el = document.getElementById(sections[i].id);
+        for (let i = SECTIONS.length - 1; i >= 0; i--) {
+          const el = document.getElementById(SECTIONS[i].id);
           if (el && el.getBoundingClientRect().top <= mid) {
             activeIdx = i;
             break;
@@ -46,7 +51,7 @@ export default function WayfindingNav() {
       });
 
       if (activeLabel) {
-        activeLabel.textContent = sections[activeIdx].label;
+        activeLabel.textContent = labelFor(SECTIONS[activeIdx]);
       }
 
       const activeLink = links[activeIdx];
@@ -64,16 +69,16 @@ export default function WayfindingNav() {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
-  }, []);
+  }, [lang]);
 
   return (
     <nav className="wayfinding-nav" aria-label="Page sections">
       <span ref={labelRef} className="wayfinding-active-label" aria-hidden="true">Intro</span>
       <ul ref={listRef} className="wayfinding-list">
-        {sections.map((s) => (
+        {SECTIONS.map((s) => (
           <li key={s.id}>
             <a href={`#${s.id}`} className="wayfinding-link" data-section={s.id}>
-              <span className="wayfinding-label">{s.label}</span>
+              <span className="wayfinding-label">{labelFor(s)}</span>
               <span className="wayfinding-tick" aria-hidden="true" />
             </a>
           </li>
@@ -106,8 +111,8 @@ export default function WayfindingNav() {
           padding: 3px 8px;
           border-radius: 4px;
           color: var(--fg);
-          background: color-mix(in oklch, var(--bg) 85%, transparent);
-          backdrop-filter: blur(8px);
+          background: var(--canvas-page);
+          border: 1px solid var(--line);
         }
 
         .wayfinding-list {
@@ -165,8 +170,8 @@ export default function WayfindingNav() {
           padding: 3px 8px;
           border-radius: 4px;
           color: var(--fg);
-          background: color-mix(in oklch, var(--bg) 85%, transparent);
-          backdrop-filter: blur(8px);
+          background: var(--canvas-page);
+          border: 1px solid var(--line);
         }
 
         .wayfinding-tick {

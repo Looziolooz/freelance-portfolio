@@ -1,19 +1,14 @@
 import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import Ticker from "@/components/Ticker";
+import HeroMotion from "@/components/HeroMotion";
+import Projects from "@/components/Projects";
+import About from "@/components/About";
 import Services from "@/components/Services";
 import Plans from "@/components/Plans";
-import About from "@/components/About";
-import Work from "@/components/Work";
-import Stack from "@/components/Stack";
-import Contact from "@/components/Contact";
 import ScrollProgress from "@/components/ScrollProgress";
 import WayfindingNav from "@/components/WayfindingNav";
-import ScrollToTop from "@/components/ScrollToTop";
 import ScrollReveal from "@/components/ScrollReveal";
-import AgentsShowcase from "@/components/AgentsShowcase";
-import BlogTeaser from "@/components/BlogTeaser";
-import EntryGrid from "@/components/EntryGrid";
+import ContactClose from "@/components/ContactClose";
+import CinematicFooter from "@/components/CinematicFooter";
 
 
 export default function Home() {
@@ -22,20 +17,18 @@ export default function Home() {
       <ScrollProgress />
       <Nav />
       <WayfindingNav />
+      <HeroMotion />
+      {/* Projects: full-bleed dark "blinds" paged viewer (own black stage). */}
+      <Projects />
       <main className="container">
-        <Hero />
-        <Ticker />
-        <ScrollReveal><Services /></ScrollReveal>
-        <ScrollReveal><EntryGrid /></ScrollReveal>
+        {/* Studio funnel (hexart-style): hero → works → founder (trust) →
+            services (what) → engagements/pricing (offer) → final CTA (footer). */}
         <ScrollReveal><About /></ScrollReveal>
-        <ScrollReveal><Work /></ScrollReveal>
-        <ScrollReveal><Plans /></ScrollReveal>
-        <ScrollReveal><Stack /></ScrollReveal>
-        <AgentsShowcase />
-        <ScrollReveal><BlogTeaser /></ScrollReveal>
-        <ScrollReveal><Contact /></ScrollReveal>
+        <ScrollReveal><Services /></ScrollReveal>
+        <Plans />
       </main>
-      <ScrollToTop />
+      <ContactClose />
+      <CinematicFooter />
     </>
   );
 }

@@ -2,6 +2,7 @@
 
 import { use } from "react";
 import Link from "next/link";
+import Nav from "@/components/Nav";
 import { useLang } from "@/components/LangProvider";
 import { getProject } from "@/lib/projects";
 
@@ -31,10 +32,13 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
 
   if (!project || project.hidden) {
     return (
-      <main className="container" style={pagePad}>
-        {back}
-        <p style={{ fontSize: "var(--fs-lg)", color: "var(--ink-muted)" }}>{t("work.notfound")}</p>
-      </main>
+      <>
+        <Nav />
+        <main className="container" style={pagePad}>
+          {back}
+          <p style={{ fontSize: "var(--fs-lg)", color: "var(--ink-muted)" }}>{t("work.notfound")}</p>
+        </main>
+      </>
     );
   }
 
@@ -46,7 +50,9 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
   const hasValue = value !== valueKey;
 
   return (
-    <main className="container" style={pagePad}>
+    <>
+      <Nav />
+      <main className="container" style={pagePad}>
       {back}
 
       <header
@@ -126,9 +132,18 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
 
       {project.demo ? (
         <>
-          <p className="label" style={{ marginBottom: 12 }}>
-            {t("work.demohint")}
-          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12 }}>
+            <span className="label">{t("work.demohint")}</span>
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noopener"
+              className="label"
+              style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--accent-green-deep)", textDecoration: "none" }}
+            >
+              {t("work.openlive")} <span className="btn-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
           <div className="offset block offset--panel" style={{ display: "block", width: "100%" }}>
             <div className="offset__layer" />
             <div className="offset__fg" style={{ overflow: "hidden" }}>
@@ -160,6 +175,39 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
           </div>
         </div>
       )}
-    </main>
+
+      <div
+        style={{
+          marginTop: 44,
+          paddingTop: 28,
+          borderTop: "3px solid var(--ink-border)",
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 16,
+        }}
+      >
+        <p
+          style={{
+            margin: 0,
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(20px, 2.4vw, 30px)",
+            fontWeight: 600,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {t("work.cta.lead")}
+        </p>
+        <a
+          href="/#contact"
+          className="neo-btn neo-btn-lg neo-btn--primary"
+          style={{ textDecoration: "none", padding: "13px 26px", fontSize: 16 }}
+        >
+          {t("work.cta.btn")} <span className="btn-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+      </main>
+    </>
   );
 }

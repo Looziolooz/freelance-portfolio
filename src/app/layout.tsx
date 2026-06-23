@@ -22,7 +22,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "lorenzo.hacks — Siti, automazioni e agenti AI per la tua impresa",
+  title: "lorenzo.studio — Siti, automazioni e agenti AI per la tua impresa",
   description:
     "Sviluppo siti su misura per piccole e grandi aziende, automazione dei processi ripetitivi, contenuti social e agenti AI. Più visibilità, meno lavoro manuale, dati dal web che generano valore.",
 };

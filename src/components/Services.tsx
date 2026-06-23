@@ -2,6 +2,7 @@
 
 import { useLang } from "./LangProvider";
 import ParallaxIndex from "./ParallaxIndex";
+import { RevealStagger, RevealItem } from "./Reveal";
 
 // The core sales band of the homepage: six service pillars, outcome-first
 // (what the business gains), not a tool list. Uses the system .neo-card so
@@ -36,7 +37,7 @@ export default function Services() {
         </span>
       </div>
 
-      <div
+      <RevealStagger
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
@@ -44,60 +45,62 @@ export default function Services() {
         }}
       >
         {PILLARS.map((key, i) => (
-          <div
-            key={key}
-            className="neo-card"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 12,
-              minHeight: 210,
-            }}
-          >
-            <span
-              aria-hidden="true"
+          <RevealItem key={key} style={{ display: "flex" }}>
+            <div
+              className="neo-card neo-card--shine accent-rail"
               style={{
-                alignSelf: "flex-start",
-                fontFamily: "var(--font-mono)",
-                fontSize: 12,
-                fontWeight: 700,
-                color: "#fff",
-                background: "var(--accent-green)",
-                border: "2px solid var(--ink-border)",
-                borderRadius: "var(--radius-sm)",
-                padding: "2px 8px",
-                letterSpacing: 0.5,
-                boxShadow: "var(--shadow-badge)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 12,
+                minHeight: 210,
+                width: "100%",
               }}
             >
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <h3
-              style={{
-                margin: 0,
-                fontFamily: "var(--font-display)",
-                fontSize: 23,
-                fontWeight: 600,
-                letterSpacing: "-0.01em",
-                color: "var(--ink-body)",
-              }}
-            >
-              {t(`home.svc.${key}.title`)}
-            </h3>
-            <p
-              style={{
-                margin: 0,
-                fontSize: 15,
-                lineHeight: 1.55,
-                color: "var(--ink-body)",
-                opacity: 0.8,
-              }}
-            >
-              {t(`home.svc.${key}.desc`)}
-            </p>
-          </div>
+              <span
+                aria-hidden="true"
+                style={{
+                  alignSelf: "flex-start",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: "var(--btn-ink)",
+                  background: "var(--accent-green-sheen)",
+                  border: "2px solid var(--ink-border)",
+                  borderRadius: "var(--radius-sm)",
+                  padding: "2px 8px",
+                  letterSpacing: 0.5,
+                  boxShadow: "var(--shadow-badge)",
+                }}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3
+                style={{
+                  margin: 0,
+                  fontFamily: "var(--font-display)",
+                  fontSize: 23,
+                  fontWeight: 600,
+                  letterSpacing: "-0.01em",
+                  color: "var(--ink-body)",
+                }}
+              >
+                {t(`home.svc.${key}.title`)}
+              </h3>
+              <p
+                style={{
+                  margin: 0,
+                  fontSize: 15,
+                  lineHeight: 1.55,
+                  color: "var(--ink-body)",
+                  opacity: 0.8,
+                }}
+              >
+                {t(`home.svc.${key}.desc`)}
+              </p>
+            </div>
+          </RevealItem>
         ))}
-      </div>
+      </RevealStagger>
     </section>
   );
 }

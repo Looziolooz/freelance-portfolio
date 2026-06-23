@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+body {
+  overflow-x: hidden;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  height: 100vh;
+  width: 100vw;
+}
+
+#hero {
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  #hero-content {
+      h2 {
+      font-size: 5em;
+      color: #ffffff;
+      font-family: 'Bebas Neue', cursive;
+    }
+  }
+}
+
+#high-dynamic-range {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &-video-text-mask {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #000 url('https://images.red.com/vr/hdr-mask-3.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40vw;
+    mix-blend-mode: multiply;
+    transition: 1s ease;
+  }
+  &-video-content {
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 999999;
+    height: 100%;
+    h2 {
+      font-size: 5em;
+      display: block;
+      width: 100%;
+      position: absolute;
+      text-align: center;
+    }
+  }
+}

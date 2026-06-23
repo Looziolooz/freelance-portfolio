@@ -4,12 +4,15 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import Nav from "@/components/Nav";
+import { RevealStagger, RevealItem } from "@/components/Reveal";
+import CountUp from "@/components/CountUp";
 
 const TIERS = [
   {
     id: "FREE",
     name: "Free",
-    price: "0",
+    price: 0,
     currency: "€",
     period: "sempre",
     description: "Accesso base al portfolio",
@@ -18,14 +21,14 @@ const TIERS = [
       "Demo projects pubblici",
       "Contenuti free sempre accessibili",
     ],
-    cta: "Inizia Gratis",
+    cta: "Inizia gratis",
     href: "/register",
     featured: false,
   },
   {
     id: "SUPPORTER",
     name: "Supporter",
-    price: "5",
+    price: 5,
     currency: "€",
     period: "mese",
     description: "Per chi vuole approfondire",
@@ -43,7 +46,7 @@ const TIERS = [
   {
     id: "PRO",
     name: "Pro",
-    price: "20",
+    price: 20,
     currency: "€",
     period: "mese",
     description: "Per professionisti e creator",
@@ -98,171 +101,206 @@ export default function MembershipPage() {
   };
 
   return (
-    <main
-      style={{
-        padding: "100px 20px 80px",
-        maxWidth: 1100,
-        margin: "0 auto",
-      }}
-    >
-      <Link
-        href="/"
+    <>
+      <Nav />
+      <main
+        className="container"
         style={{
-          display: "inline-block",
-          marginBottom: 32,
-          fontSize: 13,
-          fontWeight: 600,
-          textDecoration: "none",
-          color: "var(--ink-body)",
+          paddingTop: "calc(var(--topbar-h) + 56px)",
+          paddingBottom: 100,
+          maxWidth: 1120,
         }}
       >
-        &larr; Home
-      </Link>
+        <Link
+          href="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 36,
+            fontFamily: "var(--font-mono)",
+            fontSize: 12,
+            letterSpacing: 0.6,
+            textTransform: "uppercase",
+            textDecoration: "none",
+            color: "var(--ink-muted)",
+          }}
+        >
+          <span className="btn-arrow" aria-hidden="true" style={{ marginLeft: 0 }}>←</span> Home
+        </Link>
 
-      <div style={{ textAlign: "center", marginBottom: 56 }}>
-        <h1 style={{ fontSize: 40, fontWeight: 700, marginBottom: 12 }}>
-          Piani e Prezzi
-        </h1>
-        <p style={{ fontSize: 16, color: "var(--ink-muted)", maxWidth: 500, margin: "0 auto" }}>
-          Scegli il piano che fa per te. Puoi passare a un livello superiore o cancellare quando vuoi.
-        </p>
-      </div>
+        {/* Header */}
+        <header style={{ textAlign: "center", marginBottom: 64 }}>
+          <span
+            className="cap-pill cap-pill--solid"
+            style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: 1 }}
+          >
+            <span className="cap-pill__dot" />
+            Membership
+          </span>
+          <h1
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(40px, 6vw, 76px)",
+              fontWeight: 600,
+              letterSpacing: "-0.02em",
+              lineHeight: 1.02,
+              margin: "20px 0 14px",
+            }}
+          >
+            Sblocca il{" "}
+            <span
+              style={{
+                background: "var(--accent-green-sheen)",
+                color: "var(--btn-ink)",
+                padding: "0 0.12em",
+                borderRadius: 4,
+                boxDecorationBreak: "clone",
+                WebkitBoxDecorationBreak: "clone",
+                boxShadow: "3px 3px 0 var(--ink-shadow)",
+              }}
+            >
+              know-how
+            </span>
+          </h1>
+          <p
+            style={{
+              fontSize: 17,
+              lineHeight: 1.6,
+              color: "var(--ink-muted)",
+              maxWidth: 560,
+              margin: "0 auto",
+            }}
+          >
+            Prompt, workflow e guide che uso davvero nel lavoro. Passa a un livello superiore o
+            cancella quando vuoi, senza vincoli.
+          </p>
+        </header>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-          gap: 32,
-          alignItems: "start",
-        }}
-      >
-        {TIERS.map((tier) => {
-          const subscribed = isSubscribed(tier.id);
-          return (
-            <div key={tier.id} style={{ position: "relative" }}>
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "var(--ink-shadow)",
-                  borderRadius: "var(--radius-lg)",
-                  transform: "translate(8px, 8px)",
-                }}
-              />
-              <div
-                className={tier.featured ? "neo-panel-cream" : "neo-panel-white"}
-                style={{
-                  position: "relative",
-                  zIndex: 2,
-                  border: "3px solid var(--ink-border)",
-                  borderRadius: "var(--radius-lg)",
-                  padding: "36px 28px",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                {tier.featured && (
-                  <div
-                    className="neo-badge neo-badge-tilt"
-                    style={{
-                      position: "absolute",
-                      top: -14,
-                      left: "50%",
-                      transform: "translateX(-50%) rotate(-6deg)",
-                      padding: "4px 18px",
-                      fontSize: 12,
-                    }}
-                  >
-                    Più Popolare
-                  </div>
-                )}
-
-                <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 4 }}>
-                  {tier.name}
-                </h2>
-                <p style={{ fontSize: 13, color: "var(--ink-muted)", marginBottom: 16 }}>
-                  {tier.description}
-                </p>
-
-                <div style={{ marginBottom: 24 }}>
-                  <span style={{ fontSize: 40, fontWeight: 700 }}>
-                    {tier.currency}{tier.price}
-                  </span>
-                  <span style={{ fontSize: 14, color: "var(--ink-muted)", marginLeft: 6 }}>
-                    /{tier.period}
-                  </span>
-                </div>
-
-                <ul
-                  style={{
-                    listStyle: "none",
-                    padding: 0,
-                    margin: "0 0 28px 0",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 10,
-                    flex: 1,
-                  }}
-                >
-                  {tier.features.map((f, i) => (
-                    <li
-                      key={i}
+        <RevealStagger
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 290px), 1fr))",
+            gap: 30,
+            alignItems: "stretch",
+          }}
+        >
+          {TIERS.map((tier) => {
+            const subscribed = isSubscribed(tier.id);
+            const ink = "var(--ink-body)";
+            return (
+              <RevealItem key={tier.id} style={{ display: "flex", width: "100%" }}>
+                <div style={{ position: "relative", width: "100%", display: "flex" }}>
+                  {tier.featured && (
+                    <span
+                      className="neo-badge neo-badge-tilt"
                       style={{
-                        fontSize: 13,
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 8,
+                        position: "absolute",
+                        top: -12,
+                        left: "50%",
+                        transform: "translateX(-50%) rotate(-5deg)",
+                        background: "var(--accent-green-sheen)",
+                        padding: "4px 16px",
+                        fontSize: 11,
+                        zIndex: 6,
+                        whiteSpace: "nowrap",
                       }}
                     >
-                      <span style={{ color: "var(--accent-coral)", fontWeight: 700 }}>✓</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                {subscribed ? (
+                      Più popolare
+                    </span>
+                  )}
                   <div
-                    className="neo-panel-cream"
+                    className="neo-card neo-card--shine accent-rail"
                     style={{
-                      textAlign: "center",
-                      padding: "12px 24px",
-                      border: "3px solid var(--ink-border)",
-                      borderRadius: "var(--radius)",
-                      fontSize: 14,
-                      fontWeight: 600,
+                      position: "relative",
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      padding: "34px 28px",
+                      background: tier.featured
+                        ? "var(--canvas-panel-yellow)"
+                        : "var(--canvas-panel-grey)",
+                      boxShadow: tier.featured
+                        ? "8px 8px 0 var(--ink-shadow), 0 28px 56px -26px rgba(14,138,87,0.45)"
+                        : "var(--shadow-card)",
                     }}
                   >
-                    Piano Attuale
+
+                  <h2
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: 26,
+                      fontWeight: 600,
+                      letterSpacing: "-0.01em",
+                      margin: "0 0 4px",
+                      color: tier.featured ? "var(--accent-green-deep)" : ink,
+                    }}
+                  >
+                    {tier.name}
+                  </h2>
+                  <p style={{ fontSize: 13.5, color: "var(--ink-muted)", margin: "0 0 18px" }}>
+                    {tier.description}
+                  </p>
+
+                  <div style={{ display: "flex", alignItems: "baseline", gap: 4, marginBottom: 22 }}>
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: 46, fontWeight: 600, letterSpacing: -1 }}>
+                      {tier.currency}
+                      <CountUp value={tier.price} />
+                    </span>
+                    <span style={{ fontSize: 14, color: "var(--ink-muted)" }}>/{tier.period}</span>
                   </div>
-                ) : tier.id === "FREE" ? (
-                  <div style={{ position: "relative" }}>
-                    <div style={{ position: "absolute", inset: 0, background: "var(--ink-shadow)", borderRadius: "var(--radius)", transform: "translate(4px, 4px)" }} />
+
+                  <ul
+                    style={{
+                      listStyle: "none",
+                      padding: 0,
+                      margin: "0 0 26px 0",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 11,
+                      flex: 1,
+                      borderTop: "1px solid color-mix(in oklch, var(--ink-body) 14%, transparent)",
+                      paddingTop: 18,
+                    }}
+                  >
+                    {tier.features.map((f, i) => (
+                      <li key={i} style={{ fontSize: 13.5, display: "flex", alignItems: "baseline", gap: 10, lineHeight: 1.45 }}>
+                        <span style={{ color: "var(--accent-green-deep)", fontWeight: 700, flexShrink: 0 }}>✓</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {subscribed ? (
+                    <div
+                      style={{
+                        textAlign: "center",
+                        padding: "12px 24px",
+                        border: "3px solid var(--ink-border)",
+                        borderRadius: "var(--radius)",
+                        fontSize: 13,
+                        fontWeight: 600,
+                        fontFamily: "var(--font-mono)",
+                        background: "color-mix(in oklch, var(--accent-green) 14%, transparent)",
+                      }}
+                    >
+                      ✓ Piano attuale
+                    </div>
+                  ) : tier.id === "FREE" ? (
                     <a
                       href="/register"
                       className="neo-btn neo-btn-block"
-                      style={{
-                        position: "relative",
-                        zIndex: 2,
-                        textDecoration: "none",
-                        color: "var(--ink-body)",
-                        padding: "12px 24px",
-                        fontSize: 14,
-                        fontWeight: 600,
-                      }}
+                      style={{ textDecoration: "none", color: "var(--btn-ink)", padding: "12px 24px", fontSize: 14, fontWeight: 600 }}
                     >
                       {tier.cta}
+                      <span className="btn-arrow" aria-hidden="true">→</span>
                     </a>
-                  </div>
-                ) : (
-                  <div style={{ position: "relative" }}>
-                    <div style={{ position: "absolute", inset: 0, background: "var(--ink-shadow)", borderRadius: "var(--radius)", transform: "translate(4px, 4px)" }} />
+                  ) : (
                     <button
                       onClick={() => handleCheckout(tier.id)}
                       disabled={loading === tier.id}
-                      className="neo-btn neo-btn-block"
+                      className={`neo-btn neo-btn-block${tier.featured ? " neo-btn--primary" : ""}`}
                       style={{
-                        position: "relative",
-                        zIndex: 2,
                         padding: "12px 24px",
                         fontSize: 14,
                         fontWeight: 600,
@@ -270,32 +308,36 @@ export default function MembershipPage() {
                         opacity: loading === tier.id ? 0.7 : 1,
                       }}
                     >
-                      {loading === tier.id ? "Reindirizzamento..." : tier.cta}
+                      {loading === tier.id ? "Reindirizzamento…" : tier.cta}
+                      {loading !== tier.id && <span className="btn-arrow" aria-hidden="true">→</span>}
                     </button>
+                  )}
                   </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+                </div>
+              </RevealItem>
+            );
+          })}
+        </RevealStagger>
 
-      <div
-        style={{
-          marginTop: 56,
-          textAlign: "center",
-          fontSize: 13,
-          color: "var(--ink-muted)",
-        }}
-      >
-        <p>Pagamenti sicuri tramite Stripe. Cancellazione in qualsiasi momento.</p>
-        <p style={{ marginTop: 4 }}>
-          Già abbonato?{" "}
-          <Link href="/account" style={{ fontWeight: 600, textDecoration: "underline" }}>
-            Gestisci abbonamento
-          </Link>
-        </p>
-      </div>
-    </main>
+        <div
+          style={{
+            marginTop: 60,
+            textAlign: "center",
+            fontFamily: "var(--font-mono)",
+            fontSize: 12.5,
+            color: "var(--ink-muted)",
+            letterSpacing: 0.2,
+          }}
+        >
+          <p style={{ margin: 0 }}>Pagamenti sicuri via Stripe · Cancellazione in qualsiasi momento.</p>
+          <p style={{ marginTop: 6 }}>
+            Già abbonato?{" "}
+            <Link href="/account" style={{ fontWeight: 600, color: "var(--accent-green-deep)" }}>
+              Gestisci abbonamento →
+            </Link>
+          </p>
+        </div>
+      </main>
+    </>
   );
 }

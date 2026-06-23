@@ -1,8 +1,8 @@
-# lorenzo.hacks
+# lorenzo.studio
 
 > Freelance studio by Lorenzo Dastoli building custom websites & e-commerce, automations, AI agents, online visibility (SEO), social content, and web data for small and large businesses. Italian-market focus, mirrored in English and Swedish. Based in Stockholm, works across Europe, fully remote.
 
-lorenzo.hacks sells outcomes, not hours: websites that turn visitors into customers, automations that take over repetitive work (email, invoicing, reports), and AI agents for solo founders (email and scheduling, invoicing, drafting messages, client summaries). The site is multilingual — Italian primary, English and Swedish mirrored — and ships a free, always-on AI assistant that replies in the visitor's own language and can run cost-free on Groq. Pricing is either a one-off payment (finished work, 3 months support, then it's yours) or an all-inclusive subscription (€25/month, or €39/month with content management); complex work (automations, AI agents, integrations) is quoted after a short, no-obligation intro call.
+lorenzo.studio sells outcomes, not hours: websites that turn visitors into customers, automations that take over repetitive work (email, invoicing, reports), and AI agents for solo founders (email and scheduling, invoicing, drafting messages, client summaries). The site is multilingual — Italian primary, English and Swedish mirrored — and ships a free, always-on AI assistant that replies in the visitor's own language and can run cost-free on Groq. Pricing is either a one-off payment (finished work, 3 months support, then it's yours) or an all-inclusive subscription (€25/month, or €39/month with content management); complex work (automations, AI agents, integrations) is quoted after a short, no-obligation intro call.
 
 ## Pages
 
@@ -48,7 +48,7 @@ lorenzo.hacks sells outcomes, not hours: websites that turn visitors into custom
 
 ## Contact
 
-- Email: hello@lorenzo.hacks
+- Email: hello@lorenzo.studio
 - Phone: +46 (0)763 12 33 45
 - [LinkedIn](https://www.linkedin.com/in/lorenzo-dastoli/)
 - [GitHub](https://github.com/Looziolooz)
