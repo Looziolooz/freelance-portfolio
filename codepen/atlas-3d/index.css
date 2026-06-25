@@ -1,0 +1,232 @@
+/* Atlas, 3D studio portfolio. Framework-free port of the React + Tailwind +
+   Framer Motion original so it renders live in the sandboxed preview.
+   Signature effects: magnetic hero centerpiece, scroll-driven dual marquee,
+   char-by-char scroll-reveal paragraph, sticky-stacking project cards,
+   gradient silver clip-text headings. Kanit is loaded via <link> in index.html. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Kanit', sans-serif; background: #0C0C0C; }
+
+.atlas-root { background: #0C0C0C; overflow-x: clip; }
+
+/* Silver gradient clip-text shared by all display headings */
+.clip-text {
+  background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+
+/* ---------- Buttons ---------- */
+.btn-contact {
+  border: 0; cursor: pointer; border-radius: 999px;
+  color: #fff; font-family: 'Kanit', sans-serif; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.15em;
+  padding: 14px 40px; font-size: clamp(12px, 1.4vw, 16px);
+  background: linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%);
+  box-shadow: 0 4px 4px rgba(181,1,167,0.25), 4px 4px 12px #7721B1 inset;
+  outline: 2px solid #fff; outline-offset: -3px;
+  transition: transform 0.25s ease;
+}
+.btn-contact:hover { transform: translateY(-2px) scale(1.02); }
+.btn-contact:active { transform: scale(0.97); }
+
+.btn-ghost {
+  background: transparent; cursor: pointer; border: 2px solid #D7E2EA;
+  color: #D7E2EA; font-family: 'Kanit', sans-serif; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.18em; border-radius: 999px;
+  padding: 10px 28px; font-size: clamp(12px, 1.2vw, 16px);
+  transition: background 0.2s ease;
+}
+.btn-ghost:hover { background: rgba(215,226,234,0.1); }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative; min-height: 100vh; min-height: 100dvh;
+  display: flex; flex-direction: column; overflow-x: clip;
+}
+.hero-nav {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 24px 24px 0;
+}
+@media (min-width: 768px) { .hero-nav { padding: 32px 40px 0; } }
+.nav-link {
+  color: #D7E2EA; font-weight: 500; text-transform: uppercase;
+  letter-spacing: 0.08em; cursor: pointer; text-decoration: none;
+  font-size: 14px; transition: opacity 0.2s ease;
+}
+@media (min-width: 768px) { .nav-link { font-size: 18px; } }
+@media (min-width: 1024px) { .nav-link { font-size: 1.4rem; } }
+.nav-link:hover { opacity: 0.7; }
+
+.hero-portrait {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  top: 50%; margin-top: -50%; z-index: 10;
+  width: 280px;
+}
+@media (min-width: 640px) { .hero-portrait { top: auto; bottom: 0; margin-top: 0; width: 360px; } }
+@media (min-width: 768px) { .hero-portrait { width: 440px; } }
+@media (min-width: 1024px) { .hero-portrait { width: 520px; } }
+.magnet { will-change: transform; }
+.hero-portrait img {
+  width: 100%; display: block; border-radius: 28px;
+  box-shadow: 0 40px 90px rgba(0,0,0,0.6);
+}
+
+.hero-heading-wrap { overflow: hidden; padding: 0 16px; margin-top: auto; }
+.hero-heading {
+  font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em;
+  line-height: 0.9; white-space: nowrap; width: 100%; text-align: left;
+  font-size: 14vw;
+}
+@media (min-width: 640px) { .hero-heading { font-size: 15vw; } }
+@media (min-width: 768px) { .hero-heading { font-size: 16vw; } }
+@media (min-width: 1024px) { .hero-heading { font-size: 17.5vw; } }
+
+.hero-foot {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 20px;
+  padding: 0 24px 28px;
+}
+@media (min-width: 768px) { .hero-foot { padding: 0 40px 40px; } }
+.hero-tag {
+  color: #D7E2EA; font-weight: 300; text-transform: uppercase;
+  letter-spacing: 0.04em; line-height: 1.35;
+  font-size: clamp(0.75rem, 1.4vw, 1.5rem); max-width: 160px;
+}
+@media (min-width: 640px) { .hero-tag { max-width: 220px; } }
+@media (min-width: 768px) { .hero-tag { max-width: 260px; } }
+
+/* ---------- Marquee ---------- */
+.marquee {
+  background: #0C0C0C; padding: 96px 0 40px;
+  display: flex; flex-direction: column; gap: 12px; overflow: hidden;
+}
+@media (min-width: 768px) { .marquee { padding: 160px 0 40px; } }
+.marquee-row { display: flex; gap: 12px; will-change: transform; }
+.marquee-tile {
+  width: 420px; height: 270px; flex: 0 0 auto;
+  border-radius: 16px; object-fit: cover; background: #161616;
+}
+
+/* ---------- About ---------- */
+.about {
+  position: relative; min-height: 100vh; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 80px 20px;
+  gap: 40px;
+}
+@media (min-width: 768px) { .about { padding: 80px 40px; gap: 64px; } }
+.corner { position: absolute; pointer-events: none; border-radius: 18px; object-fit: cover; }
+.corner-tl { top: 4%; left: 1%; width: 120px; height: 120px; }
+.corner-bl { bottom: 8%; left: 3%; width: 100px; height: 100px; }
+.corner-tr { top: 4%; right: 1%; width: 120px; height: 120px; }
+.corner-br { bottom: 8%; right: 3%; width: 130px; height: 130px; }
+@media (min-width: 640px) {
+  .corner-tl { left: 2%; width: 160px; height: 160px; }
+  .corner-bl { left: 6%; width: 140px; height: 140px; }
+  .corner-tr { right: 2%; width: 160px; height: 160px; }
+  .corner-br { right: 6%; width: 170px; height: 170px; }
+}
+@media (min-width: 768px) {
+  .corner-tl { left: 4%; width: 210px; height: 210px; }
+  .corner-bl { left: 10%; width: 180px; height: 180px; }
+  .corner-tr { right: 4%; width: 210px; height: 210px; }
+  .corner-br { right: 10%; width: 220px; height: 220px; }
+}
+.about-heading {
+  font-weight: 900; text-transform: uppercase; line-height: 0.9;
+  letter-spacing: -0.03em; font-size: clamp(3rem, 12vw, 160px);
+}
+.about-text {
+  color: #D7E2EA; font-weight: 500; line-height: 1.7; max-width: 560px;
+  font-size: clamp(1rem, 2vw, 1.35rem); position: relative; z-index: 2;
+}
+.about-text .ch { transition: opacity 0.1s linear; }
+
+/* ---------- Services ---------- */
+.services {
+  background: #FFFFFF; border-radius: 40px 40px 0 0;
+  padding: 80px 20px;
+}
+@media (min-width: 640px) { .services { border-radius: 50px 50px 0 0; padding: 96px 32px; } }
+@media (min-width: 768px) { .services { border-radius: 60px 60px 0 0; padding: 128px 40px; } }
+.services-heading {
+  color: #0C0C0C; font-weight: 900; text-transform: uppercase; text-align: center;
+  font-size: clamp(3rem, 12vw, 160px); line-height: 0.9; margin-bottom: 64px;
+}
+@media (min-width: 768px) { .services-heading { margin-bottom: 112px; } }
+.service-list { max-width: 64rem; margin: 0 auto; }
+.service-item {
+  display: flex; align-items: flex-start; gap: 20px;
+  padding: 32px 0; border-top: 1px solid rgba(12,12,12,0.15);
+}
+.service-item:last-child { border-bottom: 1px solid rgba(12,12,12,0.15); }
+@media (min-width: 768px) { .service-item { padding: 48px 0; gap: 40px; } }
+.s-num {
+  color: #0C0C0C; font-weight: 900; line-height: 0.9; flex: 0 0 auto;
+  font-size: clamp(3rem, 10vw, 140px);
+}
+.s-body { display: flex; flex-direction: column; gap: 12px; padding-top: 6px; }
+.s-name {
+  color: #0C0C0C; font-weight: 500; text-transform: uppercase;
+  font-size: clamp(1rem, 2.2vw, 2.1rem); line-height: 1.1;
+}
+.s-desc {
+  color: #0C0C0C; font-weight: 300; line-height: 1.6; max-width: 42rem; opacity: 0.6;
+  font-size: clamp(0.85rem, 1.6vw, 1.25rem);
+}
+
+/* ---------- Projects ---------- */
+.projects {
+  background: #0C0C0C; border-radius: 40px 40px 0 0;
+  margin-top: -40px; position: relative; z-index: 10;
+  padding: 80px 16px 120px;
+}
+@media (min-width: 640px) { .projects { border-radius: 50px 50px 0 0; margin-top: -48px; } }
+@media (min-width: 768px) { .projects { border-radius: 60px 60px 0 0; margin-top: -56px; padding: 100px 24px 160px; } }
+.projects-heading {
+  font-weight: 900; text-transform: uppercase; text-align: center;
+  font-size: clamp(3rem, 12vw, 160px); line-height: 0.9; margin-bottom: 48px;
+}
+.card-stack { max-width: 1100px; margin: 0 auto; }
+.card-wrap {
+  position: sticky; top: 96px; height: 85vh;
+}
+@media (min-width: 768px) { .card-wrap { top: 128px; } }
+.card {
+  border: 2px solid #D7E2EA; background: #0C0C0C; border-radius: 40px;
+  padding: 16px; transform-origin: top center; will-change: transform;
+}
+@media (min-width: 640px) { .card { border-radius: 50px; padding: 24px; } }
+@media (min-width: 768px) { .card { border-radius: 60px; padding: 32px; } }
+.card-top {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.c-num {
+  color: transparent; font-weight: 900; line-height: 0.9;
+  background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+  -webkit-background-clip: text; background-clip: text;
+  font-size: clamp(3rem, 10vw, 140px); flex: 0 0 auto;
+}
+.c-meta { display: flex; flex-direction: column; gap: 4px; margin-right: auto; }
+.c-cat { color: #8C97A0; text-transform: uppercase; letter-spacing: 0.16em; font-size: 13px; font-weight: 400; }
+.c-name { color: #D7E2EA; text-transform: uppercase; font-weight: 500; font-size: clamp(1.1rem, 2.4vw, 2rem); }
+.card-grid { display: flex; gap: 12px; }
+.card-col-l { flex: 0 0 40%; display: flex; flex-direction: column; gap: 12px; }
+.card-col-r { flex: 1; }
+.c-img { width: 100%; object-fit: cover; border-radius: 40px; display: block; }
+@media (min-width: 640px) { .c-img { border-radius: 50px; } }
+@media (min-width: 768px) { .c-img { border-radius: 60px; } }
+.c-img-sm { height: clamp(130px, 16vw, 230px); }
+.c-img-md { height: clamp(160px, 22vw, 340px); }
+.c-img-tall { height: 100%; min-height: clamp(290px, 38vw, 570px); }
+
+/* ---------- Load / reveal animations ---------- */
+@keyframes atlasUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes atlasInX { from { opacity: 0; transform: translateX(var(--dir, 0)); } to { opacity: 1; transform: translateX(0); } }
+.atlas-anim { opacity: 0; animation: atlasUp 0.8s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay: var(--d, 0s); }
+.hero-portrait.atlas-anim { animation-name: atlasUp; }
+.atlas-anim-x { opacity: 0; animation: atlasInX 0.9s cubic-bezier(0.25,0.1,0.25,1) forwards; animation-delay: var(--d, 0s); }
+@media (prefers-reduced-motion: reduce) {
+  .atlas-anim, .atlas-anim-x { animation: none; opacity: 1; }
+}

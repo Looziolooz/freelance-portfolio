@@ -1,0 +1,136 @@
+/* Lume — full-screen spotlight-reveal hero. Framework-free port of the
+   React + Tailwind original so it renders live in the sandboxed preview.
+   Fonts (Inter + Playfair Display) are injected in the preview <head>. */
+
+* { box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; letter-spacing: -0.02em; background: #fff; }
+
+.lume-root { min-height: 100vh; background: #fff; letter-spacing: -0.02em; }
+
+/* ---------- Navigation ---------- */
+.lume-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px;
+}
+@media (min-width: 640px) { .lume-nav { padding: 20px; } }
+
+.nav-left { display: flex; align-items: center; gap: 10px; }
+.wordmark {
+  color: #fff; font-size: 24px; line-height: 1;
+  font-family: 'Playfair Display', serif; font-style: italic;
+}
+
+.nav-pill {
+  display: none;
+  position: absolute; left: 50%; transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 999px;
+  padding: 8px; align-items: center; gap: 4px;
+}
+@media (min-width: 768px) { .nav-pill { display: flex; } }
+
+.pill-btn {
+  border: 0; background: transparent; cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+  padding: 6px 16px; border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+.pill-btn:hover { background: rgba(255, 255, 255, 0.2); color: #fff; }
+.pill-btn.is-active { color: #fff; }
+
+.nav-cta {
+  display: none;
+  background: #fff; color: #111827; border: 0; cursor: pointer;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+  padding: 10px 24px; border-radius: 999px; transition: background 0.2s;
+}
+@media (min-width: 768px) { .nav-cta { display: block; } }
+.nav-cta:hover { background: #f3f4f6; }
+
+.nav-burger {
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 40px; height: 40px; padding: 9px 8px;
+  background: transparent; border: 0; cursor: pointer;
+}
+@media (min-width: 768px) { .nav-burger { display: none; } }
+.nav-burger span { height: 2px; background: #fff; border-radius: 2px; }
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative; width: 100%; overflow: hidden;
+  height: 100vh; height: 100dvh; background: #000;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; z-index: 10;
+  background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1280&q=85&fm=webp');
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+
+.reveal { position: absolute; inset: 0; z-index: 30; pointer-events: none; }
+.reveal-canvas { position: absolute; inset: 0; pointer-events: none; display: none; }
+.reveal-img {
+  position: absolute; inset: 0; z-index: 30; pointer-events: none;
+  background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1280&q=85&fm=webp');
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+  /* Hidden until the JS mask is applied — avoids a first-paint flash. */
+  -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+  mask-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+}
+
+.hero-heading {
+  position: absolute; top: 14%; left: 0; right: 0; z-index: 50;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 0 20px; pointer-events: none;
+}
+.hero-heading h1 { color: #fff; line-height: 0.95; margin: 0; }
+.line { display: block; }
+.line-display {
+  font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400;
+  font-size: clamp(48px, 9vw, 96px); letter-spacing: -0.05em;
+}
+.line-sans {
+  font-family: 'Inter', sans-serif; font-weight: 400;
+  font-size: clamp(48px, 9vw, 96px); letter-spacing: -0.08em; margin-top: -4px;
+}
+
+.note { position: absolute; z-index: 50; }
+.note p { margin: 0; color: rgba(255, 255, 255, 0.8); line-height: 1.6; }
+
+.note-left { display: none; bottom: 56px; left: 40px; max-width: 260px; }
+.note-left p { font-size: 14px; }
+@media (min-width: 640px) { .note-left { display: block; } }
+@media (min-width: 768px) { .note-left { left: 56px; } }
+
+.note-right {
+  bottom: 40px; left: 20px; right: 20px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+}
+.note-right p { font-size: 12px; }
+@media (min-width: 640px) {
+  .note-right { bottom: 96px; left: auto; right: 40px; max-width: 260px; gap: 20px; }
+  .note-right p { font-size: 14px; }
+}
+@media (min-width: 768px) { .note-right { right: 56px; } }
+
+.hero-btn {
+  background: #e8702a; color: #fff; border: 0; cursor: pointer;
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+  padding: 12px 28px; border-radius: 999px;
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.hero-btn:hover { background: #d2611f; transform: scale(1.03); box-shadow: 0 10px 30px rgba(232, 112, 42, 0.3); }
+.hero-btn:active { transform: scale(0.95); }
+
+/* ---------- Load animations ---------- */
+@keyframes heroReveal { 0% { opacity: 0; transform: translateY(28px); filter: blur(12px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes heroFadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes heroZoom { 0% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.hero-anim { opacity: 0; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+.hero-reveal { animation-name: heroReveal; animation-duration: 1.1s; }
+.hero-fade { animation-name: heroFadeUp; animation-duration: 1s; }
+.hero-zoom { animation: heroZoom 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@media (prefers-reduced-motion: reduce) { .hero-anim, .hero-zoom { animation: none; opacity: 1; } }

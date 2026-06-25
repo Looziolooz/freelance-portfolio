@@ -10,6 +10,7 @@ interface ComponentMeta {
   title: string;
   description: string;
   tags: string[];
+  kind: "pen" | "prompt";
 }
 
 export default function ComponentiPage() {
@@ -130,6 +131,27 @@ function ComponentCard({ c, t }: { c: ComponentMeta; t: (k: string) => string })
         >
           {t("components.preview")}
         </span>
+        {c.kind === "prompt" && (
+          <span
+            style={{
+              position: "absolute",
+              top: 10,
+              right: 12,
+              fontFamily: "var(--font-mono)",
+              fontSize: 10,
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: 0.5,
+              padding: "2px 8px",
+              borderRadius: "var(--radius-sm)",
+              border: "2px solid var(--ink-border)",
+              background: "var(--accent-green)",
+              color: "var(--btn-ink)",
+            }}
+          >
+            {t("components.promptBadge")}
+          </span>
+        )}
       </div>
 
       {/* Meta */}

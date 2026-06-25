@@ -12,6 +12,7 @@ interface ComponentMeta {
   title: string;
   description: string;
   tags: string[];
+  kind: "pen" | "prompt";
 }
 
 export default function ComponentDetailPage() {
@@ -71,6 +72,24 @@ export default function ComponentDetailPage() {
                 {meta.title}
               </h1>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+                {meta.kind === "prompt" && (
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 10,
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                      letterSpacing: 0.4,
+                      padding: "2px 8px",
+                      borderRadius: "var(--radius-sm)",
+                      border: "2px solid var(--ink-border)",
+                      background: "var(--accent-green)",
+                      color: "var(--btn-ink)",
+                    }}
+                  >
+                    {t("components.promptBadge")}
+                  </span>
+                )}
                 {meta.tags.map((tag) => (
                   <span
                     key={tag}
@@ -134,7 +153,7 @@ export default function ComponentDetailPage() {
               />
             </div>
 
-            <ComponentCode slug={meta.slug} />
+            <ComponentCode slug={meta.slug} kind={meta.kind} />
           </>
         )}
       </main>
