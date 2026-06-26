@@ -1,0 +1,19 @@
+<!-- Globe3D — framework-free port of the Aceternity "Globe" for the live preview.
+     The React/R3F original is the gated product (prompt.md); here we recreate the
+     same rotating, draggable, textured Earth with plain three.js so it renders in
+     the sandboxed iframe. three.js (r160 UMD) is loaded from a CDN — it exposes a
+     global `THREE`. Drag-to-rotate + auto-spin are hand-rolled in index.js (no
+     OrbitControls dependency). -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<section class="globe-root">
+  <div class="globe-stage">
+    <canvas class="globe-canvas" aria-label="Mappamondo 3D interattivo con i clienti europei"></canvas>
+    <div class="globe-loading" data-globe-loading>Carico il mondo…</div>
+  </div>
+
+  <figure class="globe-caption">
+    <figcaption>I tuoi clienti, ovunque.</figcaption>
+    <p>Trascina per ruotare. Da Milano a Stoccolma, ogni punto è una storia che possiamo raccontare insieme.</p>
+  </figure>
+</section>

@@ -1,0 +1,186 @@
+/* Carousel 3D — framework-free port of the Aceternity "Carousel" (3D perspective
+   slider) so it renders live in the sandboxed preview. The active slide sits flat
+   and large; inactive slides scale down and tilt back on the X axis. The active
+   image parallax-shifts toward the cursor. Fonts (Fraunces + Inter) load via the
+   <link> at the top of index.html. Brand: Parchment & Forest. */
+
+* { box-sizing: border-box; }
+
+.carousel-3d {
+  --gold: #c8972e;
+  --ink: #26221d;
+  --forest: #1f4d3a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  min-height: 100vh;
+  padding: 32px 20px;
+  font-family: 'Inter', system-ui, sans-serif;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #f4efe4 0%, #efe9dc 60%, #e8e1d1 100%);
+  color: var(--ink);
+}
+
+/* ---------- Stage: holds the 3D perspective ---------- */
+.carousel-stage {
+  width: 70vmin;
+  height: 70vmin;
+  max-width: 520px;
+  max-height: 520px;
+  perspective: 1200px;
+  overflow: hidden;
+  border-radius: 26px;
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform: translateX(0);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+
+/* ---------- Slides ---------- */
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  transform: scale(0.82) rotateX(8deg);
+  opacity: 0.55;
+  filter: saturate(0.85) brightness(0.92);
+  transition:
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide.is-active {
+  transform: scale(1) rotateX(0deg);
+  opacity: 1;
+  filter: none;
+}
+
+.slide-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px -34px rgba(38, 34, 29, 0.55);
+}
+
+.slide-img {
+  position: absolute;
+  inset: -6%;
+  width: 112%;
+  height: 112%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+  transform: translate(0, 0) scale(1.04);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Cursor parallax only animates on the active slide. */
+.slide.is-active .slide-img {
+  transform: translate(calc(var(--x, 0px) / 30), calc(var(--y, 0px) / 30)) scale(1.06);
+}
+
+.slide-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(38, 34, 29, 0.62) 0%, rgba(38, 34, 29, 0.12) 42%, rgba(38, 34, 29, 0) 70%);
+}
+
+.slide-overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 30px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+
+.slide.is-active .slide-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-title {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(26px, 5.2vmin, 40px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: #f4efe4;
+  text-shadow: 0 2px 18px rgba(38, 34, 29, 0.45);
+}
+
+.slide-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  cursor: pointer;
+  background: #f4efe4;
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 11px 24px;
+  border-radius: 999px;
+  box-shadow: 0 12px 28px -14px rgba(38, 34, 29, 0.7);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+.slide-pill:hover { background: #ffffff; transform: translateY(-1px); box-shadow: 0 16px 34px -14px rgba(38, 34, 29, 0.7); }
+.slide-pill:active { transform: translateY(0) scale(0.97); }
+
+/* ---------- Controls ---------- */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ctrl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  border: 1px solid rgba(38, 34, 29, 0.16);
+  background: #f4efe4;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 10px 24px -16px rgba(38, 34, 29, 0.6);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.ctrl:hover {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #f4efe4;
+  transform: translateY(-1px);
+}
+.ctrl:active { transform: translateY(0) scale(0.95); }
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track,
+  .slide,
+  .slide-img,
+  .slide-overlay { transition: none; }
+}

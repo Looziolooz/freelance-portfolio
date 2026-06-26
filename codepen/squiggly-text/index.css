@@ -1,0 +1,64 @@
+/* SquigglyText — framework-free port for the lorenzo.studio live preview.
+   The React original wraps text in an SVG turbulence/displacement filter and
+   cycles a set of pre-rendered feTurbulence filters over time (motion useTime).
+   Here we build N <filter> defs per word and swap style.filter every step on a
+   requestAnimationFrame timer. Fonts (Fraunces + General Sans) load via <link>
+   at the top of index.html — the preview <head> only ships Inter + Playfair, so
+   we bring the brand faces in ourselves; do NOT @import in CSS (it's injected
+   after html,body{margin:0}). Parchment & Forest palette. */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'General Sans', system-ui, sans-serif;
+  background: #F5EEDF;            /* parchment canvas */
+  color: #221E17;                 /* ink */
+}
+
+.sq-stage {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  /* a whisper-soft diagonal parchment wash, no radial pool */
+  background:
+    linear-gradient(135deg, #F7F1E3 0%, #F5EEDF 55%, #EFE6D1 100%);
+}
+
+.sq-headline {
+  margin: 0;
+  max-width: 14ch;
+  text-align: center;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(40px, 8.2vw, 104px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: #221E17;
+}
+
+/* The squiggly words. inline-block so the SVG filter has a box to displace. */
+.sq-word {
+  display: inline-block;
+  color: #E8A12C;                 /* ochre-gold accent */
+  /* the displacement can push pixels past the glyph box; keep them visible */
+  padding: 0 0.04em;
+}
+
+/* Keep the hidden filter <svg> out of layout. */
+.sq-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No wobble cycling under reduced motion — JS checks this too, but make the
+     static state clean if a filter was already applied. */
+  .sq-word { filter: none !important; }
+}

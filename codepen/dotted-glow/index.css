@@ -1,0 +1,138 @@
+/* DottedGlow — sfondo a puntini che pulsano dietro una card.
+   Port framework-free dell'originale React/canvas, così gira live nella
+   preview sandboxata. I font (Inter + Playfair) arrivano dal <head> della
+   preview; nessun @import qui (la regola html,body è iniettata prima). */
+
+:root {
+  /* Palette lorenzo.studio */
+  --dg-parchment: #efe9dc;
+  --dg-parchment-2: #f4efe4;
+  --dg-ink: #26221d;
+  --dg-ink-muted: #6b6256;
+  --dg-gold: #c8972e;
+  --dg-forest: #1f4d3a;
+  --dg-teal: #2f6f68;
+
+  /* Variabili lette dal canvas in JS (vedi index.js) */
+  --dg-dot: #6b6256;        /* colore dei puntini = ink-muted */
+  --dg-glow: #c8972e;       /* bagliore = ochre-gold (in alternativa teal) */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--dg-parchment);
+  color: var(--dg-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Stage ---------- */
+.dg-stage {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 50% 12%, var(--dg-parchment-2), var(--dg-parchment) 70%);
+}
+
+/* Il canvas riempie tutto lo stage e sta dietro la card.
+   Una maschera radiale fa dissolvere i puntini ai bordi. */
+.dg-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 38%, transparent 78%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 38%, transparent 78%);
+}
+
+/* ---------- Card ---------- */
+.dg-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  min-height: 232px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 26px 22px;
+  border-radius: 18px;
+  background: rgba(244, 239, 228, 0.86);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(38, 34, 29, 0.10);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 18px 40px -24px rgba(38, 34, 29, 0.45),
+    0 2px 8px -4px rgba(38, 34, 29, 0.18);
+}
+
+/* Monogramma forest centrato in alto */
+.dg-badge {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.dg-monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--dg-forest);
+  color: var(--dg-parchment-2);
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 34px;
+  line-height: 1;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 10px 22px -10px rgba(20, 58, 43, 0.55);
+}
+
+/* Riga inferiore: testo a sinistra, freccia a destra */
+.dg-foot {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(38, 34, 29, 0.10);
+}
+.dg-tagline {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--dg-ink);
+}
+.dg-arrow {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  /* Fill ochre → icona in ink scuro, mai chiara (regola del brand) */
+  color: var(--dg-ink);
+  background: var(--dg-gold);
+  box-shadow: 0 6px 16px -8px rgba(200, 151, 46, 0.7);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dg-card:hover .dg-arrow { transform: translateX(3px); }

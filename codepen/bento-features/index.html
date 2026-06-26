@@ -1,0 +1,101 @@
+<!-- Bento "Features" section — framework-free port of the Aceternity FeaturesSection.
+     A heading + a 6-col bento grid of four feature cells, each with a title, a short
+     description, and a visual "skeleton": (1) a site screenshot with top/bottom fades,
+     (2) a fan of rotated photos, (3) a video thumbnail with a play button that blurs on
+     hover, (4) a real spinning globe drawn by the cobe WebGL library.
+
+     Fonts (General Sans display via the preview <head> + Fraunces for the heading) are
+     loaded with <link> below — no @import. The cobe library ships ESM only, so it's
+     pulled in as a module and parked on window.__cobe for the IIFE in index.js. If it
+     fails to load, index.js draws a CSS/canvas globe fallback. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&display=swap"
+  rel="stylesheet"
+/>
+
+<script type="module">
+  // cobe is ESM-only; jsDelivr's +esm bundle resolves its phenomenon dependency.
+  // We grab the default export (createGlobe) and stash it for the vanilla IIFE.
+  try {
+    const mod = await import("https://cdn.jsdelivr.net/npm/cobe@0.6.3/+esm");
+    window.__cobe = mod.default;
+  } catch (e) {
+    window.__cobe = null;
+  }
+  window.dispatchEvent(new Event("cobe:ready"));
+</script>
+
+<section class="bento">
+  <div class="bento-head">
+    <h2 class="bento-title">Tutto quello che serve per crescere online.</h2>
+    <p class="bento-sub">
+      Dal sito alle automazioni: gli strumenti giusti per trasformare i visitatori in clienti, senza disperdere
+      tempo o budget.
+    </p>
+  </div>
+
+  <div class="bento-grid">
+    <!-- 1 · Site screenshot with top/bottom fades -->
+    <article class="cell cell-screenshot">
+      <h3 class="cell-title">Siti che convertono</h3>
+      <p class="cell-desc">
+        Pagine veloci e curate nei dettagli, pensate per guidare ogni visita verso una richiesta di contatto.
+      </p>
+      <div class="cell-visual">
+        <div class="shot">
+          <div class="shot-img"></div>
+          <div class="shot-fade shot-fade-top"></div>
+          <div class="shot-fade shot-fade-bottom"></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 · Fan of rotated photos -->
+    <article class="cell cell-fan">
+      <h3 class="cell-title">Contenuti che si notano</h3>
+      <p class="cell-desc">
+        Foto, reel e caroselli pronti per i social, con un'identità riconoscibile in ogni scatto.
+      </p>
+      <div class="cell-visual">
+        <div class="fan">
+          <div class="fan-card fan-1"></div>
+          <div class="fan-card fan-2"></div>
+          <div class="fan-card fan-3"></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3 · Video thumbnail with play button (blurs on hover) -->
+    <article class="cell cell-video">
+      <h3 class="cell-title">Guarda i risultati</h3>
+      <p class="cell-desc">
+        Un breve video racconta i numeri reali dei progetti: traffico, contatti e vendite a confronto.
+      </p>
+      <div class="cell-visual">
+        <button class="thumb" type="button" aria-label="Riproduci il video dei risultati">
+          <span class="thumb-img"></span>
+          <span class="thumb-play">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path d="M8 5.5v13l11-6.5z" fill="currentColor" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </article>
+
+    <!-- 4 · Spinning cobe globe peeking from the corner -->
+    <article class="cell cell-globe">
+      <h3 class="cell-title">I tuoi clienti, ovunque</h3>
+      <p class="cell-desc">
+        Visibilità e automazioni che lavorano giorno e notte, raggiungendo le persone giuste in ogni fuso orario.
+      </p>
+      <div class="cell-visual">
+        <div class="globe-wrap">
+          <canvas class="globe-canvas" aria-hidden="true"></canvas>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

@@ -1,0 +1,277 @@
+/* Bento "Features" section — framework-free port of the Aceternity FeaturesSection.
+   Light parchment canvas, ink text, ochre-gold + forest + teal accents. The display
+   heading uses Fraunces (loaded via <link>); body copy uses General Sans, supplied by
+   the preview <head>, with a graceful sans-serif fallback. */
+
+:root {
+  --parchment: #efe9dc;
+  --parchment-soft: #f4efe4;
+  --ink: #26221d;
+  --ink-muted: #6b6256;
+  --gold: #c8972e;
+  --forest: #1f4d3a;
+  --teal: #2f6f68;
+  --line: rgba(38, 34, 29, 0.1);
+  --card: #f4efe4;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: "General Sans", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bento {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 72px 24px 88px;
+}
+
+/* ---------- Heading ---------- */
+.bento-head {
+  max-width: 620px;
+  margin: 0 auto 56px;
+  text-align: center;
+}
+.bento-title {
+  margin: 0 0 16px;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(30px, 4.4vw, 46px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.bento-sub {
+  margin: 0;
+  font-size: clamp(15px, 1.6vw, 17px);
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* ---------- Grid (lg:grid-cols-6 → cells span 3) ---------- */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+}
+@media (min-width: 760px) {
+  .bento-grid { grid-template-columns: repeat(6, 1fr); }
+  .cell { grid-column: span 3; }
+}
+
+.cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  padding: 28px 28px 0;
+  background: var(--parchment-soft);
+  overflow: hidden;
+}
+
+.cell-title {
+  margin: 0 0 8px;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.cell-desc {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.cell-visual {
+  position: relative;
+  flex: 1;
+  margin-top: 22px;
+  min-height: 180px;
+}
+
+/* ======================================================================
+   1 · Site screenshot with top + bottom fade gradients
+   ====================================================================== */
+.shot {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
+  box-shadow: 0 -6px 30px rgba(38, 34, 29, 0.08);
+}
+.shot-img {
+  position: absolute;
+  inset: 0;
+  background-image: url("https://images.unsplash.com/photo-1559028012-481c04fa702d?w=1280&q=85&fm=webp");
+  background-size: cover;
+  background-position: top center;
+  transform: scale(1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cell-screenshot:hover .shot-img { transform: scale(1.04); }
+.shot-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 56px;
+  pointer-events: none;
+}
+.shot-fade-top {
+  top: 0;
+  background: linear-gradient(to bottom, var(--parchment-soft), rgba(244, 239, 228, 0));
+}
+.shot-fade-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, var(--parchment-soft), rgba(244, 239, 228, 0));
+}
+
+/* ======================================================================
+   2 · Fan of small rotated photos
+   ====================================================================== */
+.fan {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 8px;
+}
+.fan-card {
+  position: relative;
+  width: 108px;
+  height: 138px;
+  margin: 0 -14px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  border: 4px solid var(--parchment-soft);
+  box-shadow: 0 10px 26px rgba(38, 34, 29, 0.16);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fan-1 {
+  transform: rotate(-11deg) translateY(8px);
+  background-image: url("https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1280&q=85&fm=webp");
+  z-index: 1;
+}
+.fan-2 {
+  transform: rotate(0deg) translateY(-6px);
+  background-image: url("https://images.unsplash.com/photo-1556745757-8d76bdb6984b?w=1280&q=85&fm=webp");
+  z-index: 3;
+}
+.fan-3 {
+  transform: rotate(11deg) translateY(8px);
+  background-image: url("https://images.unsplash.com/photo-1481833761820-0509d3217039?w=1280&q=85&fm=webp");
+  z-index: 1;
+}
+.cell-fan:hover .fan-1 { transform: rotate(-15deg) translateY(4px) translateX(-12px); }
+.cell-fan:hover .fan-2 { transform: rotate(0deg) translateY(-14px); }
+.cell-fan:hover .fan-3 { transform: rotate(15deg) translateY(4px) translateX(12px); }
+
+/* ======================================================================
+   3 · Video thumbnail with play button (image blurs on hover)
+   ====================================================================== */
+.thumb {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+}
+.thumb-img {
+  position: absolute;
+  inset: 0;
+  background-image: url("https://images.unsplash.com/photo-1551434678-e076c223a692?w=1280&q=85&fm=webp");
+  background-size: cover;
+  background-position: center;
+  transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(38, 34, 29, 0.45), rgba(38, 34, 29, 0.05));
+  transition: opacity 0.4s ease;
+}
+.thumb:hover .thumb-img { filter: blur(5px); transform: scale(1.05); }
+.thumb-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--ink); /* dark text/icon on gold — never white */
+  box-shadow: 0 12px 30px rgba(200, 151, 46, 0.4);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+.thumb-play svg { margin-left: 3px; }
+.thumb:hover .thumb-play { transform: scale(1.12); }
+
+/* ======================================================================
+   4 · Spinning cobe globe peeking from the corner
+   ====================================================================== */
+.globe-wrap {
+  position: absolute;
+  left: 50%;
+  bottom: -56px;
+  width: 300px;
+  height: 300px;
+  margin-left: -150px;
+}
+.globe-canvas {
+  width: 300px;
+  height: 300px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  /* CSS fallback globe (used only if cobe fails to load) sits underneath the canvas */
+}
+.globe-wrap.is-fallback .globe-canvas { display: none; }
+.globe-wrap.is-fallback::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 220px;
+  height: 220px;
+  margin: -110px 0 0 -110px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 32% 30%, rgba(244, 239, 228, 0.9), rgba(244, 239, 228, 0) 42%),
+    repeating-linear-gradient(0deg, rgba(244, 239, 228, 0.35) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, rgba(244, 239, 228, 0.3) 0 1px, transparent 1px 22px),
+    radial-gradient(circle at 50% 50%, var(--teal), var(--forest) 78%);
+  box-shadow: 0 24px 60px rgba(31, 77, 58, 0.3), inset -18px -22px 50px rgba(38, 34, 29, 0.45);
+  animation: globeSpin 18s linear infinite;
+}
+@keyframes globeSpin {
+  to { background-position: 0 0, -220px 0, 0 0, 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot-img, .fan-card, .thumb-img, .thumb-play { transition: none; }
+  .globe-wrap.is-fallback::before { animation: none; }
+}

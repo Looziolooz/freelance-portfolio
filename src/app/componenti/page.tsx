@@ -13,6 +13,14 @@ interface ComponentMeta {
   kind: "pen" | "prompt";
 }
 
+// Per-item title/description are localized via i18n keys components.cat.<slug>.{title,desc}
+// when present, falling back to the server META value (IT) otherwise.
+function loc(t: (k: string) => string, slug: string, field: "title" | "desc", fb: string) {
+  const k = `components.cat.${slug}.${field}`;
+  const v = t(k);
+  return v === k ? fb : v;
+}
+
 export default function ComponentiPage() {
   const { t } = useLang();
   const [items, setItems] = useState<ComponentMeta[]>([]);
@@ -30,7 +38,7 @@ export default function ComponentiPage() {
       <Nav />
       <main
         className="container"
-        style={{ paddingTop: "calc(var(--topbar-h) + 48px)", paddingBottom: 96, maxWidth: 1120 }}
+        style={{ paddingTop: "calc(var(--topbar-h) + 48px)", paddingBottom: 96, maxWidth: 1200 }}
       >
         <Link
           href="/"
@@ -82,7 +90,7 @@ export default function ComponentiPage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 460px), 1fr))",
               gap: 28,
             }}
           >
@@ -103,7 +111,7 @@ function ComponentCard({ c, t }: { c: ComponentMeta; t: (k: string) => string })
       style={{ position: "relative", padding: 0, overflow: "hidden", display: "flex", flexDirection: "column" }}
     >
       {/* Mini live preview — non-interactive in the grid; full preview is on the detail page. */}
-      <div style={{ position: "relative", height: 200, overflow: "hidden", borderBottom: "3px solid var(--ink-border)", background: "var(--canvas-panel-grey)" }}>
+      <div style={{ position: "relative", height: 340, overflow: "hidden", borderBottom: "3px solid var(--ink-border)", background: "var(--canvas-panel-grey)" }}>
         <iframe
           src={`/api/componenti/${c.slug}/preview`}
           title={c.title}
@@ -158,7 +166,7 @@ function ComponentCard({ c, t }: { c: ComponentMeta; t: (k: string) => string })
       <div style={{ padding: "16px 18px 18px", display: "flex", flexDirection: "column", gap: 8, flex: 1 }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8, flexWrap: "wrap" }}>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 600, margin: 0, letterSpacing: "-0.01em" }}>
-            {c.title}
+            {loc(t, c.slug, "title", c.title)}
           </h2>
         </div>
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -181,7 +189,7 @@ function ComponentCard({ c, t }: { c: ComponentMeta; t: (k: string) => string })
             </span>
           ))}
         </div>
-        {c.description && (
+        {loc(t, c.slug, "desc", c.description) && (
           <p
             style={{
               margin: 0,
@@ -194,7 +202,7 @@ function ComponentCard({ c, t }: { c: ComponentMeta; t: (k: string) => string })
               overflow: "hidden",
             }}
           >
-            {c.description}
+            {loc(t, c.slug, "desc", c.description)}
           </p>
         )}
         <span

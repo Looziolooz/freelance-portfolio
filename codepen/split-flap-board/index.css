@@ -1,0 +1,152 @@
+/* Split-Flap Board — framework-free port of the React + motion/react original so
+   it renders live in the sandboxed preview. A Solari departure board: a grid of
+   tall split-flap cells that scramble through random glyphs and settle on a
+   target message, with a mechanical flip on every character change. Personalized
+   for lorenzo.studio: light parchment board, brand accents, Italian lines that
+   cycle every 6s. The preview <head> ships Inter + Playfair; the glyphs use a
+   monospace stack so every flap is the same width. No @import here. */
+
+* { box-sizing: border-box; }
+
+body { background: #efe9dc; } /* parchment canvas */
+
+.sfb-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #efe9dc;
+}
+
+/* ---------- Board panel ---------- */
+.sfb-board {
+  --cell-w: 26px;
+  --cell-h: 52px;   /* ~3:6 tall cells */
+  --gap: 5px;
+  background: #f4efe4;          /* panel parchment */
+  padding: 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(42, 38, 32, 0.10);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 24px 60px -28px rgba(38, 34, 29, 0.45),
+    0 8px 22px -16px rgba(38, 34, 29, 0.3);
+}
+
+.sfb-grid {
+  display: grid;
+  grid-template-columns: repeat(22, var(--cell-w));
+  grid-auto-rows: var(--cell-h);
+  gap: var(--gap);
+}
+
+/* ---------- A single split-flap cell ---------- */
+.sfb-cell {
+  position: relative;
+  width: var(--cell-w);
+  height: var(--cell-h);
+  border-radius: 4px;
+  background: #d8d4c8;          /* warm light grey cell */
+  color: #2b2a26;              /* dark ink glyph */
+  font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 1;
+  overflow: hidden;
+  perspective: 220px;          /* 3D for the flip */
+  box-shadow: 0 1px 2px rgba(38, 34, 29, 0.18);
+}
+
+/* Thin dark seam splitting top and bottom leaf */
+.sfb-cell::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  height: 1px;
+  transform: translateY(-0.5px);
+  background: rgba(38, 34, 29, 0.32);
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* Decorative striped strip at the bottom of every cell */
+.sfb-cell::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 4px;
+  z-index: 7;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(38, 34, 29, 0.22) 0 2px,
+    rgba(38, 34, 29, 0) 2px 4px
+  );
+}
+
+/* Static halves: each holds a full-height glyph, clipped to one half. The glyph
+   is vertically centered across the WHOLE cell, then the half hides the rest. */
+.sfb-half {
+  position: absolute;
+  left: 0; right: 0;
+  height: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+.sfb-half-top { top: 0; align-items: flex-start; }
+.sfb-half-bottom { bottom: 0; align-items: flex-end; }
+
+.sfb-glyph {
+  height: 200%;                /* full cell height inside a half */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.sfb-half-top .sfb-glyph { align-self: flex-start; }
+.sfb-half-bottom .sfb-glyph { align-self: flex-end; }
+
+/* Animated leaves sit above the static halves during a flip. */
+.sfb-leaf {
+  position: absolute;
+  left: 0; right: 0;
+  height: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  z-index: 4;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.sfb-leaf-top {
+  top: 0;
+  align-items: flex-start;
+  transform-origin: bottom center;
+  background: #d8d4c8;
+  box-shadow: 0 1px 3px rgba(38, 34, 29, 0.25);
+}
+.sfb-leaf-bottom {
+  bottom: 0;
+  align-items: flex-end;
+  transform-origin: top center;
+  background: #d4d0c3;
+}
+
+/* Color tile: a solid brand square instead of a flap. */
+.sfb-cell.is-tile { color: #2b2a26; }
+.sfb-cell.is-tile .sfb-half,
+.sfb-cell.is-tile .sfb-leaf { display: none; }
+.sfb-cell.is-tile::before { opacity: 0; }
+
+/* Accent flash on a scramble step. */
+.sfb-cell.is-flash .sfb-half,
+.sfb-cell.is-flash .sfb-leaf-top { background: var(--flash, #c8972e); }
+.sfb-cell.is-flash { color: var(--flash-ink, #26221d); }
+
+@media (prefers-reduced-motion: reduce) {
+  /* JS renders the final message statically; no flips, no scramble. */
+  .sfb-leaf { display: none; }
+}

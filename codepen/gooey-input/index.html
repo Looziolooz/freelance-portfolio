@@ -1,0 +1,35 @@
+<div class="goo-root">
+  <!-- The SVG gooey filter. feGaussianBlur softens the shapes, the goo
+       feColorMatrix sharpens the alpha back up so blurred edges that overlap
+       fuse into one liquid blob, and feComposite paints the original crisp
+       artwork back on top so only the merging seam looks gooey. -->
+  <svg class="goo-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="gooey-input-goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+        <feColorMatrix in="blur" mode="matrix"
+          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="goo-stage">
+    <!-- The gooey filter is applied to this wrapper, so the pill and the
+         detached bubble melt into each other where they touch. -->
+    <div class="goo-merge" id="gooMerge">
+      <button class="goo-pill" id="gooPill" type="button" aria-label="Apri la ricerca">
+        <input class="goo-input" id="gooInput" type="text" placeholder="Cosa ti serve?"
+          aria-label="Cosa ti serve?" autocomplete="off" spellcheck="false" />
+      </button>
+
+      <span class="goo-bubble" id="gooBubble" aria-hidden="true">
+        <svg class="goo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7" />
+          <line x1="16.5" y1="16.5" x2="21" y2="21" />
+        </svg>
+      </span>
+    </div>
+  </div>
+</div>

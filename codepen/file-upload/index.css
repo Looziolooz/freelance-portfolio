@@ -1,0 +1,226 @@
+/* file-upload — framework-free port of the Aceternity "FileUpload" for the
+   lorenzo.studio gallery preview. Vanilla CSS + JS, no React/Tailwind at
+   runtime. Brand: Parchment & Forest (light parchment surface, ink text,
+   ochre-gold drop highlight with DARK text, forest/teal cool accents).
+   Fonts (Fraunces + General Sans) are loaded via <link> at the top of
+   index.html. */
+
+:root {
+  --parchment: #efe9dc;
+  --parchment-soft: #f4efe4;
+  --ink: #26221d;
+  --ink-muted: #6b6256;
+  --gold: #c8972e;
+  --gold-deep: #b3852b;
+  --forest: #1f4d3a;
+  --teal: #2f6f68;
+  --border: rgba(38, 34, 29, 0.12);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'General Sans', system-ui, sans-serif;
+  background:
+    radial-gradient(130% 130% at 50% 0%, #f4efe4 0%, #efe9dc 55%, #e6dfcd 100%);
+  color: var(--ink);
+}
+
+.stage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+}
+
+/* ---------- Dropzone shell ---------- */
+.upload {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  border-radius: 22px;
+  background: var(--parchment-soft);
+  border: 1px solid var(--border);
+  padding: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 28px 70px -34px rgba(38, 34, 29, 0.45),
+    0 10px 30px -20px rgba(38, 34, 29, 0.3);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+/* Gold highlight while a file is dragged over (the brand drop accent). */
+.upload.is-dragging {
+  border-color: var(--gold);
+  background: var(--parchment);
+  box-shadow:
+    0 0 0 3px rgba(200, 151, 46, 0.22),
+    0 28px 70px -30px rgba(38, 34, 29, 0.5);
+}
+
+.upload-input { display: none; }
+
+/* ---------- GridPattern (masked checkerboard) ---------- */
+.grid-pattern {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  --cell: 40px;
+  /* Two offset checkerboards in warm ink tints so the pattern reads on parchment. */
+  background-image:
+    linear-gradient(rgba(38, 34, 29, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(38, 34, 29, 0.05) 1px, transparent 1px),
+    repeating-conic-gradient(
+      rgba(38, 34, 29, 0.035) 0% 25%,
+      transparent 0% 50%
+    );
+  background-size:
+    var(--cell) var(--cell),
+    var(--cell) var(--cell),
+    calc(var(--cell) * 2) calc(var(--cell) * 2);
+  /* Radial mask: pattern is crisp at the centre, fades to the edges. */
+  -webkit-mask-image: radial-gradient(circle at center, #000 0%, rgba(0, 0, 0, 0.35) 55%, transparent 78%);
+  mask-image: radial-gradient(circle at center, #000 0%, rgba(0, 0, 0, 0.35) 55%, transparent 78%);
+  /* Slow drift so the non-interactive teaser shows life. */
+  animation: gridDrift 18s linear infinite;
+}
+@keyframes gridDrift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to   { background-position: 0 80px, 80px 0, 80px 80px; }
+}
+
+/* ---------- Inner content ---------- */
+.upload-inner {
+  position: relative;
+  z-index: 1;
+  padding: 44px 28px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.upload-title {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.upload-subtitle {
+  margin: 0.45rem 0 0;
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+}
+
+.upload-zone {
+  position: relative;
+  width: 100%;
+  margin-top: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- Upload tile (lifts on hover, floats when idle) ---------- */
+.upload-tile {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  color: var(--forest);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 14px 30px -16px rgba(38, 34, 29, 0.4);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease, color 0.3s ease;
+  animation: tileFloat 3.4s ease-in-out infinite;
+}
+.tile-icon { width: 32px; height: 32px; }
+
+@keyframes tileFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+
+/* Hover/drag lifts the tile higher and pauses the idle float. */
+.upload:hover .upload-tile,
+.upload.is-dragging .upload-tile {
+  animation: none;
+  transform: translateY(-10px) scale(1.04);
+  color: var(--gold-deep);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 22px 44px -18px rgba(38, 34, 29, 0.5);
+}
+
+/* ---------- File cards ---------- */
+.file-list {
+  width: 100%;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.file-list:empty { margin-top: 0; }
+
+.file-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1rem;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  text-align: left;
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 10px 26px -20px rgba(38, 34, 29, 0.5);
+  animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.file-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+  word-break: break-all;
+}
+.file-size {
+  justify-self: end;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: rgba(200, 151, 46, 0.16);
+  border: 1px solid rgba(200, 151, 46, 0.3);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.file-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin-top: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+.file-type { color: var(--teal); font-weight: 500; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-pattern,
+  .upload-tile { animation: none; }
+  .file-card { animation: none; }
+}

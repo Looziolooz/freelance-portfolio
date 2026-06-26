@@ -1,0 +1,60 @@
+<!-- Fonts loaded at the TOP of the body markup (the preview harness injects
+     index.css after html,body{} so @import isn't available; <link> is). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=General+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<section class="testi" aria-roledescription="carousel" aria-label="Cosa dicono i clienti">
+  <div class="testi-grid">
+    <!-- Left: the rotating stack of portraits. The active one springs to the
+         top; the inactive ones sit behind with a small random rotation. -->
+    <div class="testi-photos" aria-hidden="true">
+      <div class="photo-stack">
+        <figure class="photo is-active" data-index="0">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1280&q=85&fm=webp" alt="Giulia Ferraro" loading="eager" />
+        </figure>
+        <figure class="photo" data-index="1">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1280&q=85&fm=webp" alt="Marco Bianchi" loading="lazy" />
+        </figure>
+        <figure class="photo" data-index="2">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=1280&q=85&fm=webp" alt="Sara De Luca" loading="lazy" />
+        </figure>
+        <figure class="photo" data-index="3">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1280&q=85&fm=webp" alt="Luca Moretti" loading="lazy" />
+        </figure>
+        <figure class="photo" data-index="4">
+          <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1280&q=85&fm=webp" alt="Elena Conti" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+
+    <!-- Right: name, role, and the quote revealed word by word. -->
+    <div class="testi-copy">
+      <div class="testi-text">
+        <h3 class="testi-name">Giulia Ferraro</h3>
+        <p class="testi-role">Pasticceria Aurora</p>
+        <blockquote class="testi-quote" aria-live="polite"></blockquote>
+      </div>
+
+      <div class="testi-controls">
+        <button class="ctrl prev" type="button" aria-label="Testimonianza precedente">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="ctrl next" type="button" aria-label="Testimonianza successiva">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data island: the JS reads name/role/quote from here so markup stays clean. -->
+  <script type="application/json" class="testi-data">
+  [
+    { "name": "Giulia Ferraro", "role": "Pasticceria Aurora", "quote": "Prima ricevevo gli ordini a voce, su fogli che si perdevano. Adesso le torte si prenotano dal sito anche di notte e arrivo in laboratorio con la giornata gia organizzata. Nel primo mese le richieste sono quasi raddoppiate." },
+    { "name": "Marco Bianchi", "role": "E-commerce di arredo", "quote": "Avevo un catalogo bellissimo ma nessuno comprava. Hanno rifatto le schede prodotto e il percorso di acquisto, e in tre mesi le vendite online sono cresciute del quaranta per cento. Ora il negozio lavora anche mentre dormo." },
+    { "name": "Sara De Luca", "role": "Studio fotografico", "quote": "Il vecchio sito non rendeva giustizia al mio lavoro. Quello nuovo mette le foto al centro e i clienti arrivano gia convinti. Chiudo piu matrimoni e con meno telefonate di trattativa." },
+    { "name": "Luca Moretti", "role": "Ristorante", "quote": "Volevamo riempire i tavoli anche nelle sere piu tranquille. Con il menu chiaro e la prenotazione diretta abbiamo coperto il martedi e il mercoledi, e molti ospiti dicono di averci scelto proprio dal sito." },
+    { "name": "Elena Conti", "role": "Studio di pilates", "quote": "Passavo le serate a rispondere agli stessi messaggi per fissare le lezioni di prova. Adesso le persone prenotano da sole in pochi minuti e io ho recuperato tempo per seguire chi e gia in sala." }
+  ]
+  </script>
+</section>

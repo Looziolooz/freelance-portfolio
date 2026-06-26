@@ -1,0 +1,99 @@
+/* Globe3D — live preview styling. Parchment canvas, ink text, ochre-gold caption.
+   The three.js scene paints into .globe-canvas; everything around it is static
+   markup. Fonts (Inter + Playfair Display) come from the preview <head>. */
+
+:root {
+  --parchment: #efe9dc;
+  --ink: #26221d;
+  --gold: #c8972e;
+  --forest: #1f4d3a;
+  --teal: #2f6f68;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--parchment);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.globe-root {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 32px 20px 44px;
+  /* Soft warm vignette so the dark globe sits on light paper without a hard edge. */
+  background:
+    radial-gradient(120% 90% at 50% 32%, #f4efe4 0%, var(--parchment) 58%, #e7e0d0 100%);
+  overflow: hidden;
+}
+
+.globe-stage {
+  position: relative;
+  width: min(86vmin, 560px);
+  aspect-ratio: 1 / 1;
+  /* Faint teal/forest atmosphere halo behind the sphere, painted with CSS so the
+     glow reads even before WebGL warms up. */
+  background:
+    radial-gradient(circle at 50% 50%,
+      rgba(47, 111, 104, 0.16) 0%,
+      rgba(31, 77, 58, 0.10) 38%,
+      rgba(31, 77, 58, 0.0) 64%);
+}
+
+.globe-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;            /* let JS own drag gestures on touch */
+  outline: none;
+}
+.globe-canvas:active { cursor: grabbing; }
+
+.globe-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: rgba(38, 34, 29, 0.55);
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.globe-loading.is-hidden { opacity: 0; }
+
+.globe-caption {
+  margin: 0;
+  text-align: center;
+  max-width: 440px;
+}
+.globe-caption figcaption {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(26px, 5vw, 38px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--gold);
+}
+.globe-caption p {
+  margin: 10px auto 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(38, 34, 29, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-loading { transition: none; }
+}

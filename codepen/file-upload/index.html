@@ -1,0 +1,35 @@
+<!-- Fonts loaded at the TOP of the body markup (the preview harness injects
+     index.css after html,body{} so @import isn't available; <link> is).
+     Fraunces (display) + General Sans (body) — the lorenzo.studio brand. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=General+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="stage">
+  <!-- FileUpload: a click/drag dropzone over an animated grid pattern.
+       A hidden real <input type=file> is optional but kept for accessibility. -->
+  <div class="upload" role="button" tabindex="0" aria-label="Carica il tuo file">
+    <input class="upload-input" type="file" multiple aria-hidden="true" tabindex="-1" />
+
+    <!-- GridPattern: checkerboard of cells under a soft radial mask. -->
+    <div class="grid-pattern" aria-hidden="true"></div>
+
+    <div class="upload-inner">
+      <p class="upload-title">Carica il tuo file</p>
+      <p class="upload-subtitle">Trascina qui o clicca per caricare</p>
+
+      <div class="upload-zone">
+        <!-- The lifting/floating upload tile. -->
+        <div class="upload-tile">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 16V4m0 0L7 9m5-5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 17v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Files added by drop/click stack here as animated cards. -->
+        <div class="file-list" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -76,7 +76,7 @@ Bottom-right: abstract render at https://images.unsplash.com/photo-1618005182384
 
 Heading: "About me" using .hero-heading gradient text, font-black, uppercase, leading-none, tracking-tight, centered. Font size: clamp(3rem, 12vw, 160px). FadeIn: delay 0, y 40.
 
-Animated paragraph: Uses a character-by-character scroll-driven opacity animation. Text: "With more than five years shaping motion, form and material, we focus on branding, 3d design, and the way a render makes someone feel. We work best with teams that want to stand apart and show their truest face. Let's build something incredible together." Styling: color #D7E2EA, font-medium, centered, leading-relaxed, max-w-[560px], font size clamp(1rem, 2vw, 1.35rem). Each character animates from opacity 0.2 to 1 based on scroll progress, with scroll offset ['start 0.8', 'end 0.2'].
+Animated paragraph: Uses a character-by-character scroll-driven opacity animation. Text: "With more than three years shaping motion, form and material, we focus on branding, 3d design, and the way a render makes someone feel. We work best with teams that want to stand apart and show their truest face. Let's build something incredible together." Styling: color #D7E2EA, font-medium, centered, leading-relaxed, max-w-[560px], font size clamp(1rem, 2vw, 1.35rem). Each character animates from opacity 0.2 to 1 based on scroll progress, with scroll offset ['start 0.8', 'end 0.2'].
 
 Contact button below the text block. Gap between heading/text: gap-10 sm:gap-14 md:gap-16. Gap between text block and button: gap-16 sm:gap-20 md:gap-24.
 

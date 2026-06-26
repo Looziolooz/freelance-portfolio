@@ -1,0 +1,135 @@
+/* Gooey Input — framework-free port of the React + motion/react original so it
+   renders live in the sandboxed preview. A pill-shaped search control expands
+   from a small button into a wider input, while a detached circular search-icon
+   bubble visually MELTS into the pill through an SVG gooey filter (Gaussian blur
+   + a high-contrast alpha matrix + composite). Personalized for lorenzo.studio:
+   ink pill with parchment text, ochre-gold search bubble, centered on parchment.
+   Fonts in the preview <head> are Inter + Playfair; we use Inter for the UI. */
+
+* { box-sizing: border-box; }
+
+body { background: #efe9dc; }
+
+/* Sizing knobs mirrored from the React component, so tweaking one place keeps
+   the bubble travel and the pill width in sync. */
+:root {
+  --goo-collapsed: 115px;  /* pill width when idle (collapsedWidth) */
+  --goo-expanded: 200px;   /* pill width when active (expandedWidth) */
+  --goo-offset: 50px;      /* how far the bubble sits to the right (expandedOffset) */
+  --goo-h: 52px;           /* control height */
+  --goo-bubble: 52px;      /* search-bubble diameter */
+
+  --goo-ink: #26221d;        /* pill surface */
+  --goo-parchment: #f4efe4;  /* pill text / input caret */
+  --goo-muted: #b8ad9c;      /* placeholder */
+  --goo-gold: #c8972e;       /* search bubble accent */
+  --goo-gold-ink: #26221d;   /* dark glyph on gold */
+}
+
+.goo-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background:
+    radial-gradient(120% 120% at 50% 0%, #f4efe4 0%, #efe9dc 60%, #e9e2d2 100%);
+  font-family: 'Inter', sans-serif;
+}
+
+.goo-defs { position: absolute; width: 0; height: 0; }
+
+.goo-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The wrapper the gooey filter is applied to. Everything inside (pill + bubble)
+   is blurred together, so when the bubble slides over the pill edge the two
+   shapes fuse into one liquid silhouette instead of overlapping as two pieces. */
+.goo-merge {
+  position: relative;
+  height: var(--goo-h);
+  width: var(--goo-collapsed);
+  filter: url(#gooey-input-goo);
+  transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.goo-merge.is-open { width: var(--goo-expanded); }
+
+/* The pill. The whole thing is a button so a real click expands it; the input
+   lives inside and only becomes usable once open. */
+.goo-pill {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 56px 0 22px; /* right room for the bubble seam */
+  border: 0;
+  border-radius: 999px;
+  background: var(--goo-ink);
+  cursor: pointer;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.goo-input {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--goo-parchment);
+  caret-color: var(--goo-gold);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  /* Hidden until open so the collapsed pill reads as a clean button. */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.goo-merge.is-open .goo-input { opacity: 1; pointer-events: auto; }
+.goo-input::placeholder { color: var(--goo-muted); opacity: 1; }
+
+/* The detached search bubble. It starts overlapping the pill's right edge
+   (scaled down so it reads as part of the pill), then slides out by
+   --goo-offset and scales up when the control opens — the gooey filter stretches
+   the connecting "neck" so it looks like a drip pulling away. */
+.goo-bubble {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: var(--goo-bubble);
+  height: var(--goo-bubble);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--goo-gold);
+  color: var(--goo-gold-ink);
+  transform: translate(-2px, -50%) scale(0.78);
+  transition:
+    transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+    right 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.goo-merge.is-open .goo-bubble {
+  right: calc(-1 * var(--goo-offset));
+  transform: translate(0, -50%) scale(1);
+}
+
+.goo-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goo-merge, .goo-bubble, .goo-input { transition: none; }
+}

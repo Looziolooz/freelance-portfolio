@@ -1,0 +1,58 @@
+<!-- Fonts loaded at the TOP of the body markup (the preview harness injects
+     index.css after html,body{} so @import isn't available; <link> is). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=General+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="board">
+  <!-- Faint headline sitting behind the cards. -->
+  <h2 class="board-headline" aria-hidden="true">
+    Trascina.<br><span>È il tuo spazio.</span>
+  </h2>
+
+  <!-- Each card scatters to an absolute spot with a slight base rotation.
+       The JS reads data-x / data-y / data-rot to place and drift it. -->
+  <div class="drag-card" data-x="-320" data-y="-150" data-rot="-7">
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&q=80&fm=webp" alt="Villa moderna immersa nel verde" loading="lazy" draggable="false">
+    <span class="card-title">Architettura</span>
+    <span class="card-glare" aria-hidden="true"></span>
+  </div>
+
+  <div class="drag-card" data-x="-110" data-y="-200" data-rot="5">
+    <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=900&q=80&fm=webp" alt="Interno minimale in luce naturale" loading="lazy" draggable="false">
+    <span class="card-title">Interni</span>
+    <span class="card-glare" aria-hidden="true"></span>
+  </div>
+
+  <div class="drag-card" data-x="150" data-y="-160" data-rot="-4">
+    <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=900&q=80&fm=webp" alt="Dettaglio di una stanza curata" loading="lazy" draggable="false">
+    <span class="card-title">Dettaglio</span>
+    <span class="card-glare" aria-hidden="true"></span>
+  </div>
+
+  <div class="drag-card" data-x="-260" data-y="80" data-rot="6">
+    <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=900&q=80&fm=webp" alt="Rifugio di legno tra gli alberi" loading="lazy" draggable="false">
+    <span class="card-title">Rifugio</span>
+    <span class="card-glare" aria-hidden="true"></span>
+  </div>
+
+  <div class="drag-card" data-x="20" data-y="120" data-rot="-6">
+    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&q=80&fm=webp" alt="Bosco attraversato dalla luce" loading="lazy" draggable="false">
+    <span class="card-title">Natura</span>
+    <span class="card-glare" aria-hidden="true"></span>
+  </div>
+
+  <div class="drag-card" data-x="280" data-y="60" data-rot="8">
+    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900&q=80&fm=webp" alt="Orizzonte di montagna al tramonto" loading="lazy" draggable="false">
+    <span class="card-title">Orizzonte</span>
+    <span class="card-glare" aria-hidden="true"></span>
+  </div>
+
+  <div class="drag-card" data-x="120" data-y="-30" data-rot="3">
+    <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&q=80&fm=webp" alt="Spazio domestico ben progettato" loading="lazy" draggable="false">
+    <span class="card-title">Spazio</span>
+    <span class="card-glare" aria-hidden="true"></span>
+  </div>
+
+  <p class="board-hint" aria-hidden="true">Trascina una card</p>
+</div>

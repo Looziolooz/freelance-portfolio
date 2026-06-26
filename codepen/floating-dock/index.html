@@ -1,0 +1,73 @@
+<!-- Floating Dock — framework-free port of the Aceternity "FloatingDock".
+     A macOS-style dock whose icons magnify based on the cursor's horizontal
+     distance. Fonts (Inter + Playfair) are injected by the preview <head>;
+     these <link>s make the standalone file self-sufficient too. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+
+<div class="dock-stage">
+  <p class="dock-hint">Avvicina il cursore alle icone</p>
+
+  <!-- Desktop / pointer dock: icons magnify with cursor distance -->
+  <nav class="dock" aria-label="Dock principale">
+    <a class="dock-item" href="#" data-label="Home">
+      <span class="dock-tooltip">Home</span>
+      <span class="dock-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/>
+        </svg>
+      </span>
+    </a>
+
+    <a class="dock-item" href="#" data-label="Lavori">
+      <span class="dock-tooltip">Lavori</span>
+      <span class="dock-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/>
+        </svg>
+      </span>
+    </a>
+
+    <a class="dock-item" href="#" data-label="Servizi">
+      <span class="dock-tooltip">Servizi</span>
+      <span class="dock-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M21 12h-2.5M5.5 12H3M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8M18.4 18.4l-1.8-1.8M7.4 7.4 5.6 5.6"/>
+        </svg>
+      </span>
+    </a>
+
+    <a class="dock-item" href="#" data-label="Componenti">
+      <span class="dock-tooltip">Componenti</span>
+      <span class="dock-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+      </span>
+    </a>
+
+    <a class="dock-item" href="#" data-label="Contatti">
+      <span class="dock-tooltip">Contatti</span>
+      <span class="dock-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/>
+        </svg>
+      </span>
+    </a>
+  </nav>
+
+  <!-- Mobile collapsed variant: a single trigger that fans the items out -->
+  <div class="dock-mobile">
+    <div class="dock-mobile-items" data-open="false">
+      <a class="dock-mobile-item" href="#" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg></a>
+      <a class="dock-mobile-item" href="#" aria-label="Lavori"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="M3 12h18"/></svg></a>
+      <a class="dock-mobile-item" href="#" aria-label="Servizi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M21 12h-2.5M5.5 12H3M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8M18.4 18.4l-1.8-1.8M7.4 7.4 5.6 5.6"/></svg></a>
+      <a class="dock-mobile-item" href="#" aria-label="Componenti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></a>
+      <a class="dock-mobile-item" href="#" aria-label="Contatti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></a>
+    </div>
+    <button class="dock-mobile-trigger" aria-label="Apri il menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+</div>

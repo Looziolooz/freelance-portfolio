@@ -15,6 +15,14 @@ interface ComponentMeta {
   kind: "pen" | "prompt";
 }
 
+// Per-item title/description are localized via i18n keys components.cat.<slug>.{title,desc}
+// when present, falling back to the server META value (IT) otherwise.
+function loc(t: (k: string) => string, slug: string, field: "title" | "desc", fb: string) {
+  const k = `components.cat.${slug}.${field}`;
+  const v = t(k);
+  return v === k ? fb : v;
+}
+
 export default function ComponentDetailPage() {
   const { t } = useLang();
   const params = useParams<{ slug: string }>();
@@ -69,7 +77,7 @@ export default function ComponentDetailPage() {
           <>
             <header style={{ marginBottom: 24 }}>
               <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(30px, 4.4vw, 52px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, margin: "0 0 10px" }}>
-                {meta.title}
+                {loc(t, meta.slug, "title", meta.title)}
               </h1>
               <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
                 {meta.kind === "prompt" && (
@@ -109,9 +117,9 @@ export default function ComponentDetailPage() {
                   </span>
                 ))}
               </div>
-              {meta.description && (
+              {loc(t, meta.slug, "desc", meta.description) && (
                 <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--ink-muted)", maxWidth: 640 }}>
-                  {meta.description}
+                  {loc(t, meta.slug, "desc", meta.description)}
                 </p>
               )}
             </header>

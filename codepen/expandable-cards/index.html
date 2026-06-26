@@ -1,0 +1,118 @@
+<!-- Fonts loaded at the TOP of the body markup (the preview harness injects
+     index.css after html,body{} so @import isn't available; <link> is). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=General+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="stage">
+  <ul class="card-list">
+    <!-- Each row is its own expandable card. data-* fields feed the modal so
+         the markup stays the single source of truth (like the React data array). -->
+    <li class="card"
+        data-title="Sito vetrina"
+        data-subtitle="Per farti trovare e contattare"
+        data-cta="Scopri"
+        data-img="https://images.unsplash.com/photo-1547658719-da2b51169166?w=1280&q=85&fm=webp"
+        data-desc="Un sito chiaro e veloce che racconta chi sei e cosa offri. Pagine che caricano in un attimo, testi pensati per convincere e un modulo di contatto sempre a portata di mano. Online in pochi giorni, pronto a trasformare le visite in richieste vere.">
+      <div class="card-row">
+        <div class="card-row-media">
+          <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=1280&q=85&fm=webp"
+               alt="Sito vetrina mostrato su monitor e tablet" loading="lazy">
+        </div>
+        <div class="card-row-text">
+          <h3 class="card-row-title">Sito vetrina</h3>
+          <p class="card-row-subtitle">Per farti trovare e contattare</p>
+        </div>
+        <button class="card-row-cta" type="button">Scopri</button>
+      </div>
+    </li>
+
+    <li class="card"
+        data-title="E-commerce"
+        data-subtitle="Per vendere mentre dormi"
+        data-cta="Scopri"
+        data-img="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1280&q=85&fm=webp"
+        data-desc="Uno store che incassa anche di notte. Schede prodotto curate, carrello senza intoppi e pagamenti sicuri con carta o bonifico. Gestisci ordini e magazzino da un pannello semplice, mentre i clienti comprano quando vogliono, da qualsiasi dispositivo.">
+      <div class="card-row">
+        <div class="card-row-media">
+          <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1280&q=85&fm=webp"
+               alt="Persona che paga online con carta al portatile" loading="lazy">
+        </div>
+        <div class="card-row-text">
+          <h3 class="card-row-title">E-commerce</h3>
+          <p class="card-row-subtitle">Per vendere mentre dormi</p>
+        </div>
+        <button class="card-row-cta" type="button">Scopri</button>
+      </div>
+    </li>
+
+    <li class="card"
+        data-title="Visibilità locale"
+        data-subtitle="Primo su Google in zona"
+        data-cta="Scopri"
+        data-img="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1280&q=85&fm=webp"
+        data-desc="Quando qualcuno cerca un servizio come il tuo qui vicino, devi comparire tu. Scheda Google curata, recensioni che contano e parole giuste per la tua zona. Così il telefono squilla e la gente entra, senza spendere una fortuna in pubblicità.">
+      <div class="card-row">
+        <div class="card-row-media">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1280&q=85&fm=webp"
+               alt="Smartphone con l'app delle mappe in primo piano" loading="lazy">
+        </div>
+        <div class="card-row-text">
+          <h3 class="card-row-title">Visibilità locale</h3>
+          <p class="card-row-subtitle">Primo su Google in zona</p>
+        </div>
+        <button class="card-row-cta" type="button">Scopri</button>
+      </div>
+    </li>
+
+    <li class="card"
+        data-title="Assistente AI"
+        data-subtitle="Risponde ai clienti 24/7"
+        data-cta="Scopri"
+        data-img="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=1280&q=85&fm=webp"
+        data-desc="Un assistente che non va mai in pausa. Risponde alle domande più frequenti, prende prenotazioni e raccoglie i contatti anche di notte e nel weekend. Parla la lingua dei tuoi clienti e passa a te solo le richieste che contano davvero.">
+      <div class="card-row">
+        <div class="card-row-media">
+          <img src="https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=1280&q=85&fm=webp"
+               alt="Smartphone con app di messaggistica" loading="lazy">
+        </div>
+        <div class="card-row-text">
+          <h3 class="card-row-title">Assistente AI</h3>
+          <p class="card-row-subtitle">Risponde ai clienti 24/7</p>
+        </div>
+        <button class="card-row-cta" type="button">Scopri</button>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Backdrop + modal are built once and reused. The modal grows from the
+       clicked row (FLIP) so it reads as the same card expanding. -->
+  <div class="backdrop" aria-hidden="true"></div>
+
+  <div class="modal-layer" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" aria-label="Chiudi">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="modal-media">
+        <img class="modal-img" src="" alt="">
+      </div>
+
+      <div class="modal-head">
+        <div class="modal-head-text">
+          <h3 class="modal-title" id="modal-title"></h3>
+          <p class="modal-subtitle"></p>
+        </div>
+        <button class="modal-cta" type="button"></button>
+      </div>
+
+      <div class="modal-scroll">
+        <p class="modal-desc"></p>
+      </div>
+    </div>
+  </div>
+</div>

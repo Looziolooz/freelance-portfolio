@@ -1,0 +1,84 @@
+/* AsciiArt: an image rendered as ASCII characters on a <canvas>. Framework-free
+   port of the React component so it renders live in the sandboxed preview. The
+   image is sampled into a low-res grid; each cell's brightness maps to a glyph
+   from a ramp, then the glyphs are drawn onto the canvas. Ink on parchment, with
+   a typewriter reveal that loops every few seconds. Fonts come from the preview
+   <head>; no @import here. */
+
+* { box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #efe9dc; color: #26221d; }
+
+.ascii-stage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 40px 24px;
+  background:
+    radial-gradient(120% 120% at 50% 0%, #f4efe4 0%, #efe9dc 55%, #e7e0d0 100%);
+}
+
+/* ---------- Frame around the canvas ---------- */
+.ascii-frame {
+  position: relative;
+  width: min(560px, 92vw);
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #efe9dc;
+  border: 1px solid rgba(38, 34, 29, 0.12);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 24px 60px -28px rgba(38, 34, 29, 0.45),
+    0 6px 18px -10px rgba(38, 34, 29, 0.25);
+}
+
+.ascii-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  /* The canvas draws ink glyphs on a parchment fill (set below in JS too). */
+  background: #efe9dc;
+}
+
+/* Faint paper grain so the panel doesn't read as flat. */
+.ascii-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* ---------- Caption ---------- */
+.ascii-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.ascii-kicker {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(22px, 4.4vw, 30px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #26221d;
+}
+.ascii-caption {
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b6256;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ascii-grain { opacity: 0.35; }
+}

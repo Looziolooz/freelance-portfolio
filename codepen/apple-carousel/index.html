@@ -1,0 +1,82 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<section class="ac-root">
+  <div class="ac-head">
+    <h2 class="ac-title">Conosci lo studio.</h2>
+    <p class="ac-kicker">Scorri di lato o tocca una scheda per aprirla.</p>
+  </div>
+
+  <div class="ac-viewport">
+    <div class="ac-track" id="acTrack">
+
+      <article class="ac-card" data-index="0" style="--d:0.05s">
+        <div class="ac-card-img" style="background-image:url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=900&q=80&auto=format&fit=crop')"></div>
+        <div class="ac-card-shade"></div>
+        <div class="ac-card-copy">
+          <p class="ac-card-cat">Siti &amp; E-commerce</p>
+          <h3 class="ac-card-title">Siti che vendono, non solo belli.</h3>
+        </div>
+      </article>
+
+      <article class="ac-card" data-index="1" style="--d:0.12s">
+        <div class="ac-card-img" style="background-image:url('https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=900&q=80&auto=format&fit=crop')"></div>
+        <div class="ac-card-shade"></div>
+        <div class="ac-card-copy">
+          <p class="ac-card-cat">Visibilità</p>
+          <h3 class="ac-card-title">Farti trovare quando ti cercano.</h3>
+        </div>
+      </article>
+
+      <article class="ac-card" data-index="2" style="--d:0.19s">
+        <div class="ac-card-img" style="background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=900&q=80&auto=format&fit=crop')"></div>
+        <div class="ac-card-shade"></div>
+        <div class="ac-card-copy">
+          <p class="ac-card-cat">Automazioni</p>
+          <h3 class="ac-card-title">Il lavoro ripetitivo, fatto da solo.</h3>
+        </div>
+      </article>
+
+      <article class="ac-card" data-index="3" style="--d:0.26s">
+        <div class="ac-card-img" style="background-image:url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=900&q=80&auto=format&fit=crop')"></div>
+        <div class="ac-card-shade"></div>
+        <div class="ac-card-copy">
+          <p class="ac-card-cat">AI</p>
+          <h3 class="ac-card-title">Un assistente che risponde ai clienti.</h3>
+        </div>
+      </article>
+
+      <article class="ac-card" data-index="4" style="--d:0.33s">
+        <div class="ac-card-img" style="background-image:url('https://images.unsplash.com/photo-1563986768609-322da13575f3?w=900&q=80&auto=format&fit=crop')"></div>
+        <div class="ac-card-shade"></div>
+        <div class="ac-card-copy">
+          <p class="ac-card-cat">Social</p>
+          <h3 class="ac-card-title">Contenuti che fanno parlare di te.</h3>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <div class="ac-controls">
+    <button class="ac-arrow" id="acPrev" aria-label="Scheda precedente" disabled>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <button class="ac-arrow" id="acNext" aria-label="Scheda successiva">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</section>
+
+<div class="ac-modal" id="acModal" aria-hidden="true">
+  <div class="ac-modal-backdrop" id="acBackdrop"></div>
+  <div class="ac-modal-card" id="acModalCard" role="dialog" aria-modal="true" aria-labelledby="acModalTitle">
+    <button class="ac-modal-close" id="acClose" aria-label="Chiudi">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <p class="ac-modal-cat" id="acModalCat"></p>
+    <h3 class="ac-modal-title" id="acModalTitle"></h3>
+    <div class="ac-modal-body" id="acModalBody"></div>
+  </div>
+</div>

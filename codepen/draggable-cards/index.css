@@ -1,0 +1,144 @@
+/* draggable-cards — framework-free port of the Aceternity "DraggableCard" for
+   the lorenzo.studio gallery preview. Vanilla CSS + JS (pointer events), no
+   React/motion at runtime. Brand: Parchment & Forest (light parchment canvas,
+   ink text, ochre-gold accent, forest-green). Fonts (Fraunces + General Sans)
+   are loaded via <link> at the top of index.html. */
+
+:root {
+  --parchment: #efe9dc;
+  --parchment-2: #f4efe4;
+  --ink: #26221d;
+  --ink-muted: #6b6256;
+  --gold: #c8972e;
+  --forest: #1f4d3a;
+  --card: #f7f3ea;
+  --border: rgba(38, 34, 29, 0.1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'General Sans', system-ui, sans-serif;
+  color: var(--ink);
+  /* Soft parchment wash so the scattered cards read against the canvas. */
+  background:
+    radial-gradient(130% 130% at 50% 18%, var(--parchment-2) 0%, var(--parchment) 58%, #e7e0cf 100%);
+}
+
+/* ---------- Board (the draggable canvas) ---------- */
+.board {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  /* Cards are positioned relative to the board centre via JS. */
+  touch-action: none;
+  cursor: grab;
+}
+
+/* Faint centred headline that sits BEHIND the cards. */
+.board-headline {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  z-index: 1;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.4rem, 7vw, 5.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  opacity: 0.07;
+}
+.board-headline span { font-style: italic; }
+
+.board-hint {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  opacity: 0.55;
+}
+
+/* ---------- Cards ---------- */
+.drag-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+  width: clamp(150px, 19vw, 224px);
+  padding: 12px 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 18px 38px -22px rgba(38, 34, 29, 0.5),
+    0 6px 16px -12px rgba(38, 34, 29, 0.3);
+  cursor: grab;
+  user-select: none;
+  /* The board centre offset is baked into a CSS var the JS keeps current, so
+     the resting transform = centre + scatter(dx,dy) + base rotation. */
+  will-change: transform;
+  transform: translate(-50%, -50%);
+  /* 3D so the drag tilt (rotateX/Y) reads. */
+  transform-style: preserve-3d;
+}
+.drag-card.is-grabbed { cursor: grabbing; z-index: 40; }
+
+.drag-card img {
+  display: block;
+  width: 100%;
+  height: clamp(150px, 19vw, 224px);
+  object-fit: cover;
+  border-radius: 9px;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.card-title {
+  display: block;
+  margin-top: 10px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: 0.98rem;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+/* Glare highlight that brightens and shifts while a card is dragged. */
+.card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  background:
+    radial-gradient(60% 55% at var(--gx, 50%) var(--gy, 0%),
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.2) 35%,
+      rgba(255, 255, 255, 0) 70%);
+  transition: opacity 0.25s ease;
+}
+.drag-card.is-grabbed .card-glare { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card-glare { transition: none; }
+}

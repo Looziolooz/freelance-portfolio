@@ -1,0 +1,193 @@
+/* Floating Dock — framework-free port of the Aceternity "FloatingDock" for
+   lorenzo.studio. Parchment dock surface, ink icons, ochre-gold hover accent.
+   The per-icon width/scale is driven from JS (see index.js); CSS owns the
+   resting look, the tooltip, and the mobile collapsed variant. */
+
+:root {
+  --parchment: #efe9dc;
+  --parchment-2: #f4efe4;
+  --ink: #26221d;
+  --ink-muted: #6b6256;
+  --gold: #c8972e;
+  --forest: #1f4d3a;
+  --teal: #2f6f68;
+  --dock-base: 40px;   /* resting icon box */
+  --dock-max: 80px;    /* magnified icon box */
+}
+
+* { box-sizing: border-box; }
+
+.dock-stage {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 26px;
+  padding: 40px 20px 56px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, var(--parchment-2) 0%, var(--parchment) 70%);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.dock-hint {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: var(--ink-muted);
+  font-style: italic;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* ---------- Pointer dock ---------- */
+.dock {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  height: calc(var(--dock-max) + 16px);
+  padding: 0 16px 12px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(38, 34, 29, 0.10);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 18px 44px -22px rgba(38, 34, 29, 0.5);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.dock-item {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: var(--dock-base);
+  height: var(--dock-base);
+  text-decoration: none;
+  /* width is set inline by JS each frame; no CSS transition so the spring
+     in JS owns the motion and stays smooth during the auto-demo sweep. */
+}
+
+.dock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  background: var(--parchment-2);
+  border: 1px solid rgba(38, 34, 29, 0.10);
+  color: var(--ink);
+  box-shadow: 0 6px 16px -10px rgba(38, 34, 29, 0.55);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.dock-icon svg {
+  width: 55%;
+  height: 55%;
+}
+
+/* Gold hover accent — dark ink icon on gold, per brand (never white on gold) */
+.dock-item:hover .dock-icon,
+.dock-item.is-near .dock-icon {
+  background: var(--gold);
+  border-color: rgba(38, 34, 29, 0.18);
+  color: var(--ink);
+}
+
+/* ---------- Tooltip ---------- */
+.dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--parchment-2);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+.dock-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--ink);
+}
+.dock-item:hover .dock-tooltip,
+.dock-item.show-tip .dock-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Mobile collapsed variant ---------- */
+.dock-mobile { display: none; }
+
+@media (max-width: 560px) {
+  .dock { display: none; }
+  .dock-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .dock-mobile-items {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .dock-mobile-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--parchment-2);
+    border: 1px solid rgba(38, 34, 29, 0.10);
+    color: var(--ink);
+    box-shadow: 0 6px 16px -10px rgba(38, 34, 29, 0.55);
+    opacity: 0;
+    transform: translateY(10px) scale(0.85);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+  .dock-mobile-item svg { width: 22px; height: 22px; }
+  .dock-mobile-items[data-open="true"] .dock-mobile-item {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .dock-mobile-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+    background: var(--parchment-2);
+    border: 1px solid rgba(38, 34, 29, 0.12);
+    color: var(--ink);
+    cursor: pointer;
+    box-shadow: 0 10px 26px -14px rgba(38, 34, 29, 0.6);
+    transition: background 0.2s ease;
+  }
+  .dock-mobile-trigger[aria-expanded="true"] { background: var(--gold); }
+  .dock-mobile-trigger svg { width: 24px; height: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dock-item, .dock-icon, .dock-tooltip, .dock-mobile-item { transition: none; }
+}

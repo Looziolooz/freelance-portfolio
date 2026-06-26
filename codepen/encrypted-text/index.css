@@ -1,0 +1,48 @@
+/* Encrypted Text — framework-free port of the React + motion/react original so
+   it renders live in the sandboxed preview. The effect: text starts as gibberish
+   (random charset, spaces preserved) and reveals the real characters left to
+   right; unrevealed chars keep flipping. Personalized for lorenzo.studio: an
+   Italian line on a parchment canvas, looping every ~5s for the card teaser.
+   Fonts in the preview <head> are Inter + Playfair; we use a monospace stack. */
+
+* { box-sizing: border-box; }
+
+body {
+  background: #f4efe6; /* parchment canvas */
+}
+
+.enc-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: #f4efe6;
+}
+
+.enc-line {
+  margin: 0 auto;
+  max-width: 40rem;
+  text-align: center;
+}
+
+.enc-text {
+  font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+  font-size: clamp(28px, 5.2vw, 52px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Encrypted (not yet revealed) glyphs: muted ink. */
+.enc-muted { color: #9a8f80; }
+
+/* Revealed glyphs: dark ink. */
+.enc-ink { color: #26221d; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Effect still resolves to the real text; JS skips the loop below. */
+  .enc-text { color: #26221d; }
+}

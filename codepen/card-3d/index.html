@@ -1,0 +1,35 @@
+<!-- Fonts loaded at the TOP of the body markup (the preview harness injects
+     index.css after html,body{} so @import isn't available; <link> is). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=General+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="stage">
+  <!-- CardContainer: tracks the cursor and tilts on the X/Y axes. -->
+  <div class="card-container">
+    <!-- CardBody: the preserve-3d surface holding the lifting items. -->
+    <div class="card-body">
+      <h3 class="card-item card-title" data-tz="50">Fai volare il tuo brand</h3>
+
+      <p class="card-item card-text" data-tz="60">
+        Passa il mouse sulla card: la stessa cura che mettiamo in ogni progetto.
+      </p>
+
+      <div class="card-item card-media" data-tz="100">
+        <img
+          src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1280&q=85&fm=webp"
+          alt="Interno di uno studio luminoso e curato"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="card-row">
+        <a class="card-item card-link" href="#" data-tz="20">
+          Scopri come
+          <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <button class="card-item card-cta" type="button" data-tz="20">Parliamone</button>
+      </div>
+    </div>
+  </div>
+</div>
