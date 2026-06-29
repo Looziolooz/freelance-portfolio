@@ -1,0 +1,28 @@
+<div class="vs-stage">
+  <button class="vs-card is-muted" id="vs-card" type="button" aria-label="Avvia o metti in pausa il video, attiva o disattiva l'audio">
+    <video
+      class="vs-video"
+      id="vs-video"
+      src="/clips/animo-position-dance-720p.mp4"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+    ></video>
+
+    <span class="vs-grad" aria-hidden="true"></span>
+
+    <span class="vs-play" id="vs-play" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+    </span>
+
+    <span class="vs-sound" id="vs-sound">
+      <svg class="vs-ic-mute" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+      <svg class="vs-ic-sound" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+      <span class="vs-sound-label" id="vs-sound-label">Clicca per l'audio</span>
+    </span>
+  </button>
+
+  <p class="vs-cap" id="vs-cap">Clicca il video per avviarlo e attivare l'audio</p>
+</div>

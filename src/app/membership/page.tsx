@@ -60,6 +60,24 @@ const TIERS = [
     ],
     cta: "Diventa Pro",
     href: "#",
+    featured: false,
+  },
+  {
+    id: "LIFETIME",
+    name: "A vita",
+    price: 100,
+    currency: "€",
+    period: "una tantum",
+    description: "Accesso a vita a tutti i componenti",
+    features: [
+      "Tutti i componenti: codice + prompt completi",
+      "Un nuovo componente avanzato ogni settimana",
+      "Accesso a vita, pagamento unico",
+      "Nessun abbonamento, nessun rinnovo",
+      "Tutti gli aggiornamenti futuri inclusi",
+    ],
+    cta: "Sblocca a vita",
+    href: "#",
     featured: true,
   },
 ];
@@ -206,7 +224,7 @@ export default function MembershipPage() {
                         whiteSpace: "nowrap",
                       }}
                     >
-                      Più popolare
+                      Miglior valore
                     </span>
                   )}
                   <div
@@ -247,7 +265,9 @@ export default function MembershipPage() {
                       {tier.currency}
                       <CountUp value={tier.price} />
                     </span>
-                    <span style={{ fontSize: 14, color: "var(--ink-muted)" }}>/{tier.period}</span>
+                    <span style={{ fontSize: 14, color: "var(--ink-muted)" }}>
+                      {tier.id === "LIFETIME" ? " " : "/"}{tier.period}
+                    </span>
                   </div>
 
                   <ul

@@ -4,9 +4,9 @@ import { useLang } from "./LangProvider";
 import ParallaxIndex from "./ParallaxIndex";
 import { RevealStagger, RevealItem } from "./Reveal";
 
-// The core sales band of the homepage: six service pillars, outcome-first
-// (what the business gains), not a tool list. Uses the system .neo-card so
-// every card on the site shares one shape.
+// Core sales band: six service pillars in an asymmetric BENTO grid, each with a
+// representative placeholder image (/public/services/<key>.svg — on-brand vector
+// motifs, swap for real photos/renders later). Outcome-first copy.
 const PILLARS = [
   "sites",
   "visibility",
@@ -15,6 +15,9 @@ const PILLARS = [
   "data",
   "agents",
 ] as const;
+
+// Bento areas, in source order (sites is the 2x2 feature cell).
+const AREAS = ["a", "b", "c", "d", "e", "f"] as const;
 
 export default function Services() {
   const { t } = useLang();
@@ -37,66 +40,19 @@ export default function Services() {
         </span>
       </div>
 
-      <RevealStagger
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-          gap: 24,
-        }}
-      >
+      <RevealStagger className="svc-bento">
         {PILLARS.map((key, i) => (
-          <RevealItem key={key} style={{ display: "flex" }}>
-            <div
-              className="neo-card neo-card--shine accent-rail"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 12,
-                minHeight: 210,
-                width: "100%",
-              }}
-            >
-              <span
-                aria-hidden="true"
-                style={{
-                  alignSelf: "flex-start",
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: "var(--btn-ink)",
-                  background: "var(--accent-green-sheen)",
-                  border: "2px solid var(--ink-border)",
-                  borderRadius: "var(--radius-sm)",
-                  padding: "2px 8px",
-                  letterSpacing: 0.5,
-                  boxShadow: "var(--shadow-badge)",
-                }}
-              >
+          <RevealItem key={key} className={`svc-cell svc-cell--${AREAS[i]}`}>
+            <div className="svc-cell__media">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/services/${key}.svg`} alt="" aria-hidden="true" loading="lazy" />
+            </div>
+            <div className="svc-cell__body">
+              <span className="svc-cell__num" aria-hidden="true">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3
-                style={{
-                  margin: 0,
-                  fontFamily: "var(--font-display)",
-                  fontSize: 23,
-                  fontWeight: 600,
-                  letterSpacing: "-0.01em",
-                  color: "var(--ink-body)",
-                }}
-              >
-                {t(`home.svc.${key}.title`)}
-              </h3>
-              <p
-                style={{
-                  margin: 0,
-                  fontSize: 15,
-                  lineHeight: 1.55,
-                  color: "var(--ink-body)",
-                  opacity: 0.8,
-                }}
-              >
-                {t(`home.svc.${key}.desc`)}
-              </p>
+              <h3 className="svc-cell__title">{t(`home.svc.${key}.title`)}</h3>
+              <p className="svc-cell__desc">{t(`home.svc.${key}.desc`)}</p>
             </div>
           </RevealItem>
         ))}

@@ -19,7 +19,6 @@ export const useLang = () => useContext(ctx);
 
 export default function LangProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>("it");
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("lang") as Lang | null;
@@ -31,7 +30,6 @@ export default function LangProvider({ children }: { children: React.ReactNode }
         setLangState(browser as Lang);
       }
     }
-    setMounted(true);
   }, []);
 
   const setLang = (l: Lang) => {
@@ -49,9 +47,8 @@ export default function LangProvider({ children }: { children: React.ReactNode }
     return val;
   };
 
-  if (!mounted) {
-    return <div style={{ visibility: "hidden" }}>{children}</div>;
-  }
-
+  // Render immediately with the SSR default (IT) so content paints without waiting
+  // for hydration — no more whole-page visibility:hidden gate (which delayed
+  // FCP/LCP on slow connections). Non-IT visitors get a brief swap on mount.
   return <ctx.Provider value={{ lang, setLang, t }}>{children}</ctx.Provider>;
 }

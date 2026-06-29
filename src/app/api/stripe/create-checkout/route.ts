@@ -9,11 +9,13 @@ export async function POST(req: NextRequest) {
     const session = await requireAuth();
     const { tier } = await req.json();
 
-    if (!["SUPPORTER", "PRO"].includes(tier)) {
+    if (!["SUPPORTER", "PRO", "LIFETIME"].includes(tier)) {
       return error("Invalid tier");
     }
 
-    const priceId = PRICE_IDS[tier];
+    // LIFETIME is a one-time payment that grants permanent PRO access.
+    const isLifetime = tier === "LIFETIME";
+    const priceId = isLifetime ? PRICE_IDS.LIFETIME : PRICE_IDS[tier];
     if (!priceId) {
       return error("Price ID not configured for this tier");
     }
@@ -36,17 +38,18 @@ export async function POST(req: NextRequest) {
     const origin = req.headers.get("origin") || "http://localhost:3000";
 
     const checkout = await stripe.checkout.sessions.create({
-      mode: "subscription",
+      mode: isLifetime ? "payment" : "subscription",
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
       customer: customerId,
       client_reference_id: user.id,
-      metadata: { userId: user.id, tier },
+      // Lifetime purchases grant PRO; the webhook reads tier from here.
+      metadata: { userId: user.id, tier: isLifetime ? "PRO" : tier, kind: isLifetime ? "lifetime" : "subscription" },
       success_url: `${origin}/members-only?checkout=success`,
       cancel_url: `${origin}/membership?checkout=cancelled`,
-      subscription_data: {
-        metadata: { userId: user.id, tier },
-      },
+      ...(isLifetime
+        ? {}
+        : { subscription_data: { metadata: { userId: user.id, tier } } }),
     });
 
     return success({ url: checkout.url });

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import ThemeProvider from "@/components/ThemeProvider";
 import LangProvider from "@/components/LangProvider";
 import ClientLayout from "./ClientLayout";
@@ -21,6 +22,23 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+// Body/UI face: General Sans — self-hosted via next/font/local. Removes the
+// render-blocking 3rd-party request to fontshare and the late font swap: the
+// woff2 ship from our own origin and next/font generates a size-adjusted
+// fallback, so the face applies fast with ~0 CLS. Exposed as --font-general-sans;
+// globals.css points --font-sans at it.
+const generalSans = localFont({
+  src: [
+    { path: "./fonts/general-sans/general-sans-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/general-sans/general-sans-500.woff2", weight: "500", style: "normal" },
+    { path: "./fonts/general-sans/general-sans-600.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/general-sans/general-sans-700.woff2", weight: "700", style: "normal" },
+  ],
+  variable: "--font-general-sans",
+  display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+});
+
 export const metadata: Metadata = {
   title: "lorenzo.studio — Siti, automazioni e agenti AI per la tua impresa",
   description:
@@ -31,16 +49,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="it"
-      className={`${fraunces.variable} ${jetbrainsMono.variable}`}
+      className={`${fraunces.variable} ${jetbrainsMono.variable} ${generalSans.variable}`}
       data-theme="light"
     >
       <body className="antialiased" style={{ margin: 0, WebkitFontSmoothing: "antialiased" }}>
-        {/* Body/UI face: General Sans (Fontshare). React 19 hoists these to <head>. */}
-        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap"
-          rel="stylesheet"
-        />
         <ThemeProvider>
           <LangProvider>
             <ClientLayout>{children}</ClientLayout>

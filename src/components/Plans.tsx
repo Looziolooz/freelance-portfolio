@@ -153,7 +153,7 @@ export default function Plans() {
               </ul>
 
               <a
-                href="#contact"
+                href="/contatti"
                 className="neo-btn neo-btn--primary"
                 style={{
                   alignSelf: "flex-start",

@@ -11,7 +11,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // (it would fight Lenis) and re-route in-page anchor clicks through lenis.scrollTo.
 export default function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const mq = (q: string) => window.matchMedia(q).matches;
+    // Smooth scroll is a desktop pointer/wheel enhancement. Skip it on
+    // reduced-motion, touch, and small screens: there Lenis' continuous rAF
+    // ticker only saturates a weaker main thread (tanking mobile LCP/TBT and
+    // keeping the page from ever going idle), while native momentum scroll is
+    // already smooth. Desktop keeps the premium feel.
+    if (
+      mq("(prefers-reduced-motion: reduce)") ||
+      mq("(pointer: coarse)") ||
+      mq("(max-width: 1024px)")
+    )
+      return;
 
     gsap.registerPlugin(ScrollTrigger);
     const lenis = new Lenis({

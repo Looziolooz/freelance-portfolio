@@ -7,11 +7,8 @@ import { useLang } from "./LangProvider";
 // Keep ids in sync with the section ids rendered in page.tsx / the components.
 const SECTIONS = [
   { id: "top", it: "Intro", en: "Intro", sv: "Intro" },
-  { id: "work", it: "Lavori", en: "Work", sv: "Arbeten" },
-  { id: "about", it: "Chi sono", en: "About", sv: "Om mig" },
   { id: "servizi", it: "Servizi", en: "Services", sv: "Tjänster" },
   { id: "piani", it: "Metodo", en: "Method", sv: "Metod" },
-  { id: "contact", it: "Contatti", en: "Contact", sv: "Kontakt" },
 ] as const;
 
 export default function WayfindingNav() {

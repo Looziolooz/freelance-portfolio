@@ -1,0 +1,119 @@
+/* Clickable video showcase. Autoplays muted + looped (so it moves in the
+   non-interactive gallery card); click toggles play/pause and the sound. */
+
+* { box-sizing: border-box; }
+body { background: #efe9dc; font-family: 'Inter', system-ui, sans-serif; }
+
+.vs-stage {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 28px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #f4efe4 0%, #efe9dc 60%, #e7e0d1 100%);
+}
+
+.vs-card {
+  position: relative;
+  display: block;
+  width: min(100%, 760px);
+  aspect-ratio: 16 / 9;
+  margin: 0;
+  padding: 0;
+  border: 3px solid #2a2620;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #2a2620;
+  box-shadow: 8px 8px 0 rgba(38, 34, 29, 0.16);
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.vs-card:hover { box-shadow: 10px 10px 0 rgba(38, 34, 29, 0.18); }
+.vs-card:active { transform: translateY(1px); }
+.vs-card:focus-visible { box-shadow: 0 0 0 4px #c8972e, 8px 8px 0 rgba(38, 34, 29, 0.16); }
+
+.vs-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Soft vignette so the badge + play icon stay legible over any frame. */
+.vs-grad {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(80% 70% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.28) 100%),
+    linear-gradient(to top, rgba(0, 0, 0, 0.32), transparent 38%);
+}
+
+/* Center play button — only visible when paused. */
+.vs-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #c8972e;
+  color: #26221d;
+  border: 3px solid #2a2620;
+  box-shadow: 4px 4px 0 rgba(38, 34, 29, 0.3);
+  opacity: 0;
+  transform: scale(0.82);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+.vs-play svg { margin-left: 3px; }
+.vs-card.is-paused .vs-play { opacity: 1; transform: scale(1); }
+
+/* Sound badge — bottom-left glassy pill. */
+.vs-sound {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  background: rgba(20, 18, 15, 0.5);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.vs-sound-label { white-space: nowrap; }
+.vs-ic-sound { display: none; }
+.vs-card:not(.is-muted) .vs-ic-mute { display: none; }
+.vs-card:not(.is-muted) .vs-ic-sound { display: inline-block; }
+
+.vs-cap {
+  margin: 0;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6b6256;
+}
+
+@media (max-width: 520px) {
+  .vs-play { width: 60px; height: 60px; }
+  .vs-cap { text-align: center; }
+}

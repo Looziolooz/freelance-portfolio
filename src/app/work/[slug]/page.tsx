@@ -3,8 +3,10 @@
 import { use } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
+import BrandKit from "@/components/BrandKit";
 import { useLang } from "@/components/LangProvider";
 import { getProject } from "@/lib/projects";
+import { getBrandKit } from "@/lib/brand-kits";
 
 // In-site project viewer. Live demos are embedded in an iframe so the visitor
 // stays on the portfolio instead of being sent to the external deploy. The
@@ -14,6 +16,7 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
   const { slug } = use(params);
   const { t } = useLang();
   const project = getProject(slug);
+  const kit = getBrandKit(slug);
 
   const pagePad: React.CSSProperties = {
     paddingTop: "calc(var(--topbar-h) + var(--space-10))",
@@ -22,7 +25,7 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
 
   const back = (
     <Link
-      href="/#work"
+      href="/work"
       className="label"
       style={{ display: "inline-block", marginBottom: 24, textDecoration: "none" }}
     >
@@ -176,6 +179,12 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
         </div>
       )}
 
+      {kit && (
+        <div style={{ marginTop: 44 }}>
+          <BrandKit kit={kit} siteImage={project.image} siteVideo={project.coverVideo} />
+        </div>
+      )}
+
       <div
         style={{
           marginTop: 44,
@@ -200,7 +209,7 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
           {t("work.cta.lead")}
         </p>
         <a
-          href="/#contact"
+          href="/contatti"
           className="neo-btn neo-btn-lg neo-btn--primary"
           style={{ textDecoration: "none", padding: "13px 26px", fontSize: 16 }}
         >

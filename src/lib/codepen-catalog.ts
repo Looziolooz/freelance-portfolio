@@ -54,30 +54,6 @@ const META: Record<string, { title: string; description: string; tags: string[] 
       "Slider 3D in prospettiva: slide quadrate a tutto schermo dentro uno stage con perspective, la slide attiva piatta e grande mentre le altre rimpiccioliscono e si inclinano sull'asse X. L'immagine attiva fa parallax verso il cursore, titolo e pillola bianca in overlay, controlli tondi prev/next e auto-avanzamento ogni 4s. React + shadcn/ui + Tailwind v4 + TypeScript. Il prompt completo si sblocca con il Pro.",
     tags: ["React", "Carousel", "3D"],
   },
-  "atlas-3d": {
-    title: "Atlas — 3D Studio Portfolio",
-    description:
-      "Landing per studio 3D, tema scuro e titoli clip-text argento. Centerpiece magnetico che insegue il cursore, marquee doppio guidato dallo scroll, paragrafo che si rivela lettera per lettera e card progetto sticky che si impilano. React + Tailwind + Framer Motion. Il prompt completo si sblocca con il Pro.",
-    tags: ["React", "Framer Motion", "Scroll", "3D"],
-  },
-  "vesper-studio": {
-    title: "Vesper — Cinematic Studio Landing",
-    description:
-      "Landing dark e cinematografica per uno studio creativo: crema calda su nero, texture noise, titoli con word pull-up, reveal del testo carattere per carattere allo scroll, video di sfondo e card in sequenza. React + Tailwind + framer-motion. Il prompt completo si sblocca con il Pro.",
-    tags: ["React", "Tailwind", "framer-motion", "Cinematic"],
-  },
-  "atelier-nord": {
-    title: "Atelier Nord — Video Hero & Menu",
-    description:
-      "Hero full-screen con video di sfondo in loop, menu mobile a tendina con hamburger animato e testo che entra con stagger al caricamento. Look minimale bianco-su-nero con CTA a pillola. React + Tailwind + lucide-react. Il prompt completo si sblocca con il Pro.",
-    tags: ["React", "Tailwind", "Video", "Menu"],
-  },
-  "sereno": {
-    title: "Sereno — Glassmorphism Video Hero",
-    description:
-      "Hero a tutto schermo con video di sfondo in loop, nav e feature pill in glassmorphism sopra il video, pillola di cattura email inline e menu mobile. React + Tailwind, display serif Cormorant Garamond. Il prompt completo si sblocca con il Pro.",
-    tags: ["React", "Tailwind", "Glassmorphism", "Video"],
-  },
   "draggable-cards": {
     title: "Draggable Cards — Photo Pile Fisica",
     description:
@@ -173,6 +149,24 @@ const META: Record<string, { title: string; description: string; tags: string[] 
     description:
       "Area di upload in stile Aceternity: sfondo a scacchiera animato con maschera radiale, tile di caricamento che si solleva e fluttua al passaggio del mouse, drag & drop o click per aggiungere file. Ogni file appare in una card animata con nome, peso, tipo e data. React + Tailwind v4 + motion/react + react-dropzone. Il prompt completo si sblocca con il Pro.",
     tags: ["React", "Upload", "Motion"],
+  },
+  "timeline": {
+    title: "Timeline — Il percorso dello studio",
+    description:
+      "Timeline verticale in stile Aceternity: una rotaia sottile a sinistra si riempie con un gradiente oro ocra verso verde foresta mentre scorri, puntini sticky e grandi etichette d'anno che restano fisse mentre il contenuto scorre a destra. Personalizzata con le tappe dello studio, tema parchment chiaro. React + Tailwind v4 + motion/react. Il prompt completo si sblocca con il Pro.",
+    tags: ["React", "Scroll", "Timeline"],
+  },
+  "images-slider": {
+    title: "Images Slider — Slideshow con pop 3D",
+    description:
+      "Slideshow a tutto schermo in stile Aceternity: ogni immagine entra con un pop 3D (scala da zero mentre un'inclinazione di 45 gradi si appiattisce) e quella uscente scorre verso l'alto, su uno strato scuro. Titolo con clip-text sfumato e pillola glassy con bagliore oro, autoplay e frecce. React + shadcn/ui + Tailwind v4 + motion/react. Il prompt completo si sblocca con il Pro.",
+    tags: ["React", "Slider", "Motion"],
+  },
+  "video-showcase": {
+    title: "Video Showcase — Clip cliccabile",
+    description:
+      "Un player video a tutto schermo che parte in autoplay muto e in loop; al clic attivi l'audio e metti in play o pausa, con pulsante play centrale e badge audio. Cornice parchment, bordo ink, accento oro. HTML + CSS + JS puro, nessun framework. Il codice si sblocca con il Pro.",
+    tags: ["Video", "HTML", "CSS"],
   },
 };
 

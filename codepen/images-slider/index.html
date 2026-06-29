@@ -1,0 +1,25 @@
+<!-- Extra display weights for the headline. The preview <head> already loads
+     Inter + Playfair Display; index.css is injected after html,body{} so it can't
+     @import — any extra font must arrive via a <link> at the top of this markup. -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+<div class="slider" aria-roledescription="carousel" aria-label="Galleria di immagini">
+  <!-- Slides are created at runtime once the images preload, so the card never
+       flashes a half-loaded photo. This container holds the stack. -->
+  <div class="slider-stage" data-slider-stage></div>
+
+  <!-- bg-black/60 overlay, exactly as in the original, sits above the photo. -->
+  <div class="slider-overlay" aria-hidden="true"></div>
+
+  <!-- Centered content (z above the overlay): gradient-clip heading + glassy pill. -->
+  <div class="slider-content">
+    <h2 class="slider-heading">Immagini che fermano lo scroll.</h2>
+    <button class="slider-cta" type="button">
+      <span>Scopri</span>
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+</div>

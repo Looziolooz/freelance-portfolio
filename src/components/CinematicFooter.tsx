@@ -67,7 +67,6 @@ export default function CinematicFooter() {
   const { t } = useLang();
   const wrapRef = useRef<HTMLDivElement>(null);
   const giantRef = useRef<HTMLDivElement>(null);
-  const headRef = useRef<HTMLHeadingElement>(null);
   const linksRef = useRef<HTMLDivElement>(null);
 
   const terms = Array.from({ length: 10 }, (_, i) => t(`ticker.${i}`)).filter(Boolean);
@@ -88,7 +87,7 @@ export default function CinematicFooter() {
         },
       );
       gsap.fromTo(
-        [headRef.current, linksRef.current],
+        linksRef.current,
         { y: 48, opacity: 0 },
         {
           y: 0,
@@ -104,7 +103,7 @@ export default function CinematicFooter() {
   }, []);
 
   const navPills: { href: string; label: string }[] = [
-    { href: "/#work", label: t("nav.work") },
+    { href: "/work", label: t("nav.work") },
     { href: "/agents", label: t("nav.agents") },
     { href: "/componenti", label: t("nav.components") },
     { href: "/membership", label: t("nav.membership") },
@@ -132,7 +131,7 @@ export default function CinematicFooter() {
             color: "var(--ink-body)",
             fontFamily: "var(--font-ui)",
           }}
-          aria-label={t("footer.cta")}
+          aria-label="lorenzo.studio"
         >
           {/* Giant background wordmark */}
           <div
@@ -154,28 +153,14 @@ export default function CinematicFooter() {
 
           {/* Center content */}
           <div style={{ position: "relative", zIndex: 2, flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", marginTop: 80, width: "100%", maxWidth: 1040, marginInline: "auto", textAlign: "center" }}>
-            <h2 ref={headRef} style={{ fontFamily: "var(--font-display)", fontSize: "clamp(40px, 7vw, 96px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.02, margin: "0 0 36px" }}>
-              {t("footer.cta")}
-            </h2>
-
             <div ref={linksRef} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22, width: "100%" }}>
-              {/* Primary CTAs */}
-              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 14 }}>
-                <MagneticButton href="/#work" className="cine-pill cine-pill--primary" style={{ padding: "16px 30px", fontSize: 15 }}>
-                  {t("hero.cta.work")} →
-                </MagneticButton>
-                <MagneticButton href="/agents" className="cine-pill" style={{ padding: "16px 30px", fontSize: 15 }}>
-                  {t("hero.cta.agents")} ↗
-                </MagneticButton>
-                <MagneticButton href="mailto:hello@lorenzo.studio" className="cine-pill" style={{ padding: "16px 30px", fontSize: 15 }}>
-                  hello@lorenzo.studio
-                </MagneticButton>
-              </div>
-
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(34px, 6vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.02, margin: "0 0 6px" }}>
+                {t("footer.discover")}
+              </h2>
               {/* Section links */}
-              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12, marginTop: 4 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 }}>
                 {navPills.map((p) => (
-                  <MagneticButton key={p.href} href={p.href} className="cine-pill" style={{ padding: "10px 20px", fontSize: 12, background: "var(--canvas-page)" }} strength={0.25}>
+                  <MagneticButton key={p.href} href={p.href} className="cine-pill" style={{ padding: "12px 24px", fontSize: 13, background: "var(--canvas-page)" }} strength={0.25}>
                     {p.label}
                   </MagneticButton>
                 ))}

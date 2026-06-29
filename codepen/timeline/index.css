@@ -1,0 +1,280 @@
+/* Timeline — framework-free port of the Aceternity "Timeline" component.
+   A vertical timeline on a light parchment canvas: a thin rail on the left fills
+   with an ochre-gold -> forest gradient as the iframe scrolls through the
+   container, masked to fade at top and bottom. Each entry has a sticky dot marker
+   and a big sticky year/label in muted ink, while its content (a paragraph + a
+   2-col image grid, or a checklist) scrolls past on the right.
+   Original motion (motion/react useScroll + useTransform driving heightTransform
+   and opacityTransform) is recreated with iframe-window scroll math in index.js.
+   Fonts (Inter + Playfair Display) come from the preview <head>. */
+
+:root {
+  --parchment: #efe9dc;
+  --parchment-2: #f4efe4;
+  --ink: #26221d;
+  --ink-muted: #6b6256;
+  --gold: #c8972e;
+  --forest: #1f4d3a;
+  --teal: #2f6f68;
+
+  /* The rail lives at this x within the padded content; markers align to it.
+     --rail-pad must match .tl-body's horizontal padding so the absolutely
+     positioned rail (offset from the padding box) lines up with the markers
+     (which live inside the padded content flow). */
+  --rail-pad: clamp(20px, 5vw, 56px);
+  --rail-x: 28px;
+}
+@media (min-width: 768px) {
+  :root { --rail-x: 33px; }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+}
+
+.tl-root {
+  width: 100%;
+  background:
+    radial-gradient(1200px 700px at 50% -8%, var(--parchment-2) 0%, var(--parchment) 60%, #ece5d6 100%);
+}
+
+/* ---------- Heading ---------- */
+.tl-head {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(56px, 12vh, 120px) clamp(20px, 5vw, 56px) clamp(28px, 6vh, 64px);
+}
+.tl-title {
+  margin: 0 0 12px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: clamp(30px, 5vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 18ch;
+}
+.tl-sub {
+  margin: 0;
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.6;
+  color: var(--ink-muted);
+  max-width: 40ch;
+}
+
+/* ---------- Timeline body (the scroll container) ---------- */
+.tl-body {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 var(--rail-pad) clamp(64px, 12vh, 140px);
+}
+
+/* ---------- One entry ---------- */
+.tl-row {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: clamp(56px, 14vh, 160px);
+}
+@media (min-width: 768px) {
+  .tl-row { gap: 40px; }
+}
+
+/* The sticky column: dot marker + big year label, pinned while content scrolls. */
+.tl-sticky {
+  position: sticky;
+  top: clamp(96px, 22vh, 160px);
+  z-index: 20;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .tl-sticky { width: 100%; max-width: 22rem; }
+}
+
+/* Round marker that sits exactly over the rail. */
+.tl-marker {
+  position: absolute;
+  left: calc(var(--rail-x) - 20px);
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--parchment-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 2px 10px -4px rgba(38, 34, 29, 0.25);
+}
+.tl-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--parchment);
+  border: 1px solid #d8cdb6;
+  box-shadow: 0 0 0 3px rgba(200, 151, 46, 0.16);
+}
+
+/* Big sticky year label, muted ink (hidden on mobile; shown inline instead). */
+.tl-year {
+  display: none;
+  margin: 0;
+  padding-left: 80px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: clamp(40px, 5vw, 60px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--ink-muted);
+}
+@media (min-width: 768px) {
+  .tl-year { display: block; }
+}
+
+/* ---------- Content column ---------- */
+.tl-content {
+  position: relative;
+  width: 100%;
+  padding-left: 80px;
+  padding-right: 4px;
+}
+@media (min-width: 768px) {
+  .tl-content { padding-left: 16px; }
+}
+
+/* Inline year label on mobile (sticky labels are hidden below 768px). */
+.tl-year-mobile {
+  display: block;
+  margin: 0 0 16px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink-muted);
+}
+@media (min-width: 768px) {
+  .tl-year-mobile { display: none; }
+}
+
+.tl-text {
+  margin: 0 0 22px;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.7;
+  color: var(--ink);
+  max-width: 56ch;
+}
+
+/* ---------- Checklist (entry 3) ---------- */
+.tl-check {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 56ch;
+}
+.tl-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: clamp(15px, 1.5vw, 17px);
+  line-height: 1.5;
+  color: var(--ink);
+}
+.tl-tick {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--forest);
+  position: relative;
+}
+.tl-tick::after {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 4px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--parchment-2);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ---------- Image grid ---------- */
+.tl-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.tl-img {
+  width: 100%;
+  height: 88px;
+  border-radius: 12px;
+  object-fit: cover;
+  display: block;
+  background: #e4dccd;
+  box-shadow:
+    0 0 0 1px rgba(38, 34, 29, 0.06),
+    0 8px 22px -10px rgba(38, 34, 29, 0.28),
+    0 24px 40px -24px rgba(38, 34, 29, 0.22);
+}
+@media (min-width: 768px) {
+  .tl-img { height: 176px; }
+}
+@media (min-width: 1024px) {
+  .tl-img { height: 232px; }
+}
+
+/* ---------- The rail (thin line + masked gradient fill) ---------- */
+.tl-rail {
+  position: absolute;
+  left: calc(var(--rail-pad) + var(--rail-x));
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  overflow: hidden;
+  /* The base track: a faint vertical line, faded at the very top and bottom. */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(38, 34, 29, 0.14) 12%,
+    rgba(38, 34, 29, 0.14) 88%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+/* The fill grows from the top as you scroll; height + opacity set by index.js. */
+.tl-rail-fill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: 2px;
+  height: 0;
+  opacity: 0;
+  border-radius: 999px;
+  /* Brand gradient: ochre-gold at the leading edge fading down into forest. */
+  background: linear-gradient(
+    to top,
+    var(--forest) 0%,
+    var(--gold) 80%,
+    rgba(200, 151, 46, 0) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-rail-fill { transition: none; }
+}

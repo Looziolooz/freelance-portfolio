@@ -5,7 +5,10 @@ export async function GET() {
   try {
     const session = await getSession();
     if (!session) {
-      return error("Not authenticated", 401);
+      // Logged-out is a normal state, not an error — return 200 with a null user
+      // so the browser doesn't log a 401 to the console (AuthProvider reads
+      // `data` and treats null as "no user").
+      return success(null);
     }
     return success({
       id: session.userId,

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useTheme } from "./ThemeProvider";
 import { useLang } from "./LangProvider";
 import { useAuth } from "./auth/AuthProvider";
@@ -15,9 +16,17 @@ export default function Nav() {
   const { theme, setTheme } = useTheme();
   const { lang, setLang, t } = useLang();
   const { user } = useAuth();
+  const pathname = usePathname();
+
+  // On the homepage (full-bleed hero) the menu stays hidden until the first
+  // scroll; on other pages it stays visible so navigation is always reachable.
+  const hideTop = pathname === "/" && !scrolled;
 
   useEffect(() => {
-    const id = setInterval(() => setT2(Date.now()), 1000);
+    // The topbar clock only shows hh:mm, so a 1s tick re-rendered the whole Nav
+    // 60×/min for nothing and kept the main thread from going idle. 30s keeps the
+    // minute accurate while letting the page settle (better TTI on throttled CPUs).
+    const id = setInterval(() => setT2(Date.now()), 30000);
     return () => clearInterval(id);
   }, []);
 
@@ -43,7 +52,7 @@ export default function Nav() {
   const BORDER = "3px solid var(--ink-border)";
 
   return (
-    <div className={`topbar${scrolled ? " is-scrolled" : ""}`}>
+    <div className={`topbar${scrolled ? " is-scrolled" : ""}${hideTop ? " is-hidden" : ""}${pathname === "/agents" ? " topbar--onyellow" : ""}`}>
       <div className="topbar__inner">
         {/* Wordmark */}
         <a href="/" className="wordmark-link">
@@ -54,7 +63,8 @@ export default function Nav() {
         <div
           className={`topbar__nav nav-links ${menuOpen ? "open" : ""}`}
         >
-          <a href="/#work" onClick={() => setMenuOpen(false)}>{t("nav.work")}</a>
+          <a href="/work" onClick={() => setMenuOpen(false)}>{t("nav.work")}</a>
+          <a href="/processo" onClick={() => setMenuOpen(false)}>{t("nav.process")}</a>
           <a href="/agents" onClick={() => setMenuOpen(false)}>{t("nav.agents")}</a>
           <a href="/blog" onClick={() => setMenuOpen(false)}>{t("nav.blog")}</a>
           <a href="/componenti" onClick={() => setMenuOpen(false)}>{t("nav.components")}</a>
@@ -243,7 +253,7 @@ export default function Nav() {
             )}
           </div>
 
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
+          <span suppressHydrationWarning style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
             {t("nav.sto")} · {hhmm}
           </span>
         </div>

@@ -1,0 +1,157 @@
+/* Images Slider — framework-free port of the Aceternity "ImagesSlider".
+   The React original uses motion/react AnimatePresence + slideVariants; here the
+   same 3D pop-in / slide-up exit is rebuilt with plain CSS keyframes and vanilla
+   JS (index.js) so the card animates live inside the sandboxed preview iframe.
+   Inter + Playfair Display are injected by the preview <head>; extra Playfair
+   weights come from the <link> at the top of index.html. No @import here. */
+
+* { box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #26221d; }
+
+/* ---------- Frame ---------- */
+.slider {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 420px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1714;
+  /* perspective:1000px on the container, as in the original, gives the
+     rotateX pop-in its depth. */
+  perspective: 1000px;
+}
+
+.slider-stage { position: absolute; inset: 0; }
+
+/* Each slide is a full-bleed cover image absolutely stacked in the frame. */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* initial: { scale: 0, opacity: 0, rotateX: 45 }
+   visible: { scale: 1, rotateX: 0, opacity: 1 } over .5s, the original easing. */
+@keyframes slidePopIn {
+  0%   { opacity: 0; transform: scale(0) rotateX(45deg); }
+  100% { opacity: 1; transform: scale(1) rotateX(0deg); }
+}
+/* upExit: { opacity: 1, y: '-150%' } over 1s — the outgoing slide slides up. */
+@keyframes slideUpExit {
+  0%   { opacity: 1; transform: translateY(0) scale(1) rotateX(0deg); }
+  100% { opacity: 1; transform: translateY(-150%) scale(1) rotateX(0deg); }
+}
+
+.slide.is-entering {
+  animation: slidePopIn 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+  z-index: 20;
+}
+.slide.is-exiting {
+  animation: slideUpExit 1s ease forwards;
+  z-index: 30;
+}
+/* The settled, on-screen slide stays fully visible underneath. */
+.slide.is-active {
+  opacity: 1;
+  transform: none;
+  z-index: 10;
+}
+
+/* ---------- Overlay (bg-black/60) ---------- */
+.slider-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 40;
+}
+
+/* ---------- Centered content (z-50) ---------- */
+.slider-content {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 28px;
+  padding: 0 24px;
+  pointer-events: none;
+}
+
+/* Gradient-clip heading, white -> light grey, large display type. */
+.slider-heading {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  font-size: clamp(40px, 7vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+  background-image: linear-gradient(to bottom, #ffffff 0%, #ffffff 42%, #c7c4bd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+  /* Soft entrance once the gallery is ready. */
+  opacity: 0;
+  animation: contentRise 1s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
+
+/* Glassy pill, ochre-gold accent border + glow (replaces the original emerald). */
+.slider-cta {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.10);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(200, 151, 46, 0.65);
+  box-shadow: 0 0 0 1px rgba(200, 151, 46, 0.18),
+              0 14px 40px rgba(200, 151, 46, 0.22);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  opacity: 0;
+  animation: contentRise 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+.slider-cta svg { transition: transform 0.25s ease; }
+.slider-cta:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(200, 151, 46, 0.9);
+  box-shadow: 0 0 0 1px rgba(200, 151, 46, 0.3),
+              0 18px 50px rgba(200, 151, 46, 0.32);
+  transform: translateY(-1px);
+}
+.slider-cta:hover svg { transform: translateX(4px); }
+.slider-cta:active { transform: translateY(0) scale(0.98); }
+
+@keyframes contentRise {
+  0%   { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide.is-entering, .slide.is-exiting { animation: none; }
+  .slide.is-entering { opacity: 1; transform: none; }
+  .slide.is-exiting { opacity: 0; }
+  .slider-heading, .slider-cta { animation: none; opacity: 1; }
+}

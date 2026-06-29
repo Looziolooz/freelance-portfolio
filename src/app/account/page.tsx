@@ -2,6 +2,7 @@
 
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Link from "next/link";
 import { TierBadge } from "@/components/auth/TierBadge";
 import Nav from "@/components/Nav";
@@ -9,6 +10,24 @@ import Nav from "@/components/Nav";
 export default function AccountPage() {
   const { user, loading, logout } = useAuth();
   const router = useRouter();
+  const [portalLoading, setPortalLoading] = useState(false);
+
+  const openPortal = async () => {
+    setPortalLoading(true);
+    try {
+      const res = await fetch("/api/stripe/portal", { method: "POST" });
+      const json = await res.json();
+      if (json.success && json.data?.url) {
+        window.location.href = json.data.url;
+        return;
+      }
+      alert("Errore: " + (json.error || "Impossibile aprire la gestione abbonamento"));
+    } catch {
+      alert("Errore di connessione");
+    } finally {
+      setPortalLoading(false);
+    }
+  };
 
   if (loading) return null;
 
@@ -114,32 +133,59 @@ export default function AccountPage() {
           </Link>
         </div>
       ) : (
-        <div style={{ position: "relative", marginBottom: 12 }}>
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "var(--ink-shadow)",
-              borderRadius: "var(--radius)",
-              transform: "translate(4px, 4px)",
-            }}
-          />
-          <div
-            className="neo-panel-cream"
-            style={{
-              position: "relative",
-              zIndex: 2,
-              textAlign: "center",
-              padding: "14px 24px",
-              border: "3px solid var(--ink-border)",
-              borderRadius: "var(--radius)",
-              fontWeight: 600,
-              fontSize: 14,
-            }}
-          >
-            Sei abbonato al piano {user.tier === "SUPPORTER" ? "Supporter" : "Pro"}
+        <>
+          <div style={{ position: "relative", marginBottom: 12 }}>
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "var(--ink-shadow)",
+                borderRadius: "var(--radius)",
+                transform: "translate(4px, 4px)",
+              }}
+            />
+            <div
+              className="neo-panel-cream"
+              style={{
+                position: "relative",
+                zIndex: 2,
+                textAlign: "center",
+                padding: "14px 24px",
+                border: "3px solid var(--ink-border)",
+                borderRadius: "var(--radius)",
+                fontWeight: 600,
+                fontSize: 14,
+              }}
+            >
+              Sei abbonato al piano {user.tier === "SUPPORTER" ? "Supporter" : "Pro"}
+            </div>
           </div>
-        </div>
+          <div style={{ position: "relative", marginBottom: 12 }}>
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: "var(--ink-shadow)",
+                borderRadius: "var(--radius)",
+                transform: "translate(4px, 4px)",
+              }}
+            />
+            <button
+              onClick={openPortal}
+              disabled={portalLoading}
+              className="neo-btn neo-btn-block neo-btn-lg"
+              style={{
+                position: "relative",
+                zIndex: 2,
+                color: "var(--btn-ink)",
+                cursor: portalLoading ? "not-allowed" : "pointer",
+                opacity: portalLoading ? 0.7 : 1,
+              }}
+            >
+              {portalLoading ? "Apertura…" : "Gestisci abbonamento"}
+            </button>
+          </div>
+        </>
       )}
 
       <div style={{ position: "relative" }}>

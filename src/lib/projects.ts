@@ -1,5 +1,5 @@
-// Single source of truth for portfolio projects, shared by the home Work
-// section and the in-site demo viewer at /work/[slug].
+// Single source of truth for portfolio projects, shared by the /work page
+// viewer and the in-site demo viewer at /work/[slug].
 // - `demo`  = a live, embeddable URL (shown in-site via iframe)
 // - `repo`  = source code (opened externally)
 // - `image` = cover screenshot (used when there is no embeddable demo)
@@ -12,6 +12,9 @@ export type Project = {
   demo?: string;
   repo?: string;
   image?: string;
+  // Short looping cover clip (muted, autoplay) shown in the /work viewer instead
+  // of the static `image`. `image` stays as the poster + reduced-motion fallback.
+  coverVideo?: string;
   // CSS object-position for the cover when the source is wider/taller than the
   // 16/10 card (e.g. a full-page screenshot). Defaults to "center"; use "left"
   // to keep a left-anchored composition (headline) from being cropped.
@@ -30,6 +33,7 @@ export const PROJECTS: Project[] = [
     slug: "gelateria",
     demo: "https://gelateria-theta.vercel.app/",
     repo: "https://github.com/Looziolooz/gelateria-",
+    coverVideo: "/projects/gelateria.mp4",
     featured: true,
     swatch: "#e9ddc8",
   },
@@ -40,6 +44,7 @@ export const PROJECTS: Project[] = [
     demo: "https://ai-visibility-rho.vercel.app/",
     repo: "https://github.com/Looziolooz/ai-visibility",
     image: "/projects/ai-visibility.png",
+    coverVideo: "/projects/ai-visibility.mp4",
     featured: true,
     swatch: "#1b1a2e",
   },
@@ -90,6 +95,7 @@ export const PROJECTS: Project[] = [
     demo: "https://barberia-ashy-beta.vercel.app/en",
     repo: "https://github.com/Looziolooz/barberia",
     image: "/projects/barberia.png",
+    coverVideo: "/projects/barberia.mp4",
     featured: true,
     swatch: "#cdbfa6",
   },
@@ -100,6 +106,7 @@ export const PROJECTS: Project[] = [
     demo: "https://fotografo-five.vercel.app/en",
     repo: "https://github.com/Looziolooz/fotografo",
     image: "/projects/fotografo.png",
+    coverVideo: "/projects/fotografo.mp4",
     featured: true,
     swatch: "#f0e6d8",
   },
@@ -118,6 +125,7 @@ export const PROJECTS: Project[] = [
     demo: "https://aurelia-seven-fawn.vercel.app/en",
     repo: "https://github.com/Looziolooz/aurelia",
     image: "/projects/aurelia.png",
+    coverVideo: "/projects/aurelia.mp4",
     featured: true,
     swatch: "#e8d8d8",
   },
@@ -146,6 +154,7 @@ export const PROJECTS: Project[] = [
     demo: "https://pizzeria-restaurant.vercel.app/",
     repo: "https://github.com/Looziolooz/pizzeria-restaurant",
     image: "/projects/pizzeria-restaurant.png",
+    coverVideo: "/projects/pizzeria-restaurant.mp4",
     featured: true,
     swatch: "#e8c4a0",
   },

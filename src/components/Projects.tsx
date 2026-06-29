@@ -43,6 +43,7 @@ export default function Projects() {
   const [curtainFx, setCurtainFx] = useState<string>("blinds");
   const [scrollDrive, setScrollDrive] = useState(false);
   const [segVh, setSegVh] = useState(60);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   const busy = useRef(false);
   const pending = useRef<number | null>(null);
@@ -90,6 +91,7 @@ export default function Projects() {
   // Decide mode once (client): reduced motion → no scroll-jacking.
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setReduceMotion(reduce);
     if (reduce) return;
     setSegVh(window.matchMedia("(max-width: 768px)").matches ? 48 : 60);
     setScrollDrive(true);
@@ -183,7 +185,20 @@ export default function Projects() {
             </div>
 
             <div className="pb-page__media" style={{ background: p.swatch ?? "#16151a" }}>
-              {p.image ? (
+              {p.coverVideo && !reduceMotion ? (
+                <video
+                  key={p.coverVideo}
+                  src={p.coverVideo}
+                  poster={p.image}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  aria-label={t(`work.proj.${p.key}`)}
+                  style={{ objectPosition: p.imagePosition ?? "center" }}
+                />
+              ) : p.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={p.image} alt={t(`work.proj.${p.key}`)} style={{ objectPosition: p.imagePosition ?? "center top" }} />
               ) : (
