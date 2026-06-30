@@ -27,7 +27,7 @@ export function cn(...inputs: ClassValue[]) {
 
 - Components live under `@/components/ui` (the shadcn convention). We'll add two files there.
 
-### Design tokens (lorenzo.studio palette)
+### Design tokens (Lorenzo.studio palette)
 Add these CSS variables once, in your global stylesheet (e.g. `src/index.css`, after `@import "tailwindcss";`). The canvas reads the dot/glow colors from `--dg-dot` / `--dg-glow`, so you can retheme without touching JS — including light/dark variants.
 
 ```css

@@ -1,6 +1,6 @@
 Build an **Apple Cards Carousel** for a React + Next.js (App Router) project, in the style of the Aceternity UI component. It is a horizontally scrollable row of tall, rounded image cards, each with a category label and a title overlaid at the top. Round left/right buttons scroll the row one card at a time. Clicking a card expands it into a centered modal with a blurred backdrop, rich content, and a close button (Escape, the close button, and an outside click all close it). The cards stagger-fade in as they enter view.
 
-This guide reproduces the component faithfully and personalizes the demo for **lorenzo.studio** (heading "Conosci lo studio." + our five services).
+This guide reproduces the component faithfully and personalizes the demo for **Lorenzo.studio** (heading "Conosci lo studio." + our five services).
 
 ## Stack & setup
 
@@ -383,7 +383,7 @@ Then in `app/globals.css` (Tailwind v4 uses the `@theme` inline block):
 
 Add both `variable` classes to `<body>` in `app/layout.tsx`.
 
-## Demo, personalized for lorenzo.studio
+## Demo, personalized for Lorenzo.studio
 
 Create a section that renders the carousel with our heading and five services. Drop this into a page or a section component.
 

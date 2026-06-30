@@ -124,7 +124,7 @@ export default function HeroMotion() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="top" className="hero-motion" aria-label="lorenzo.studio">
+    <section ref={sectionRef} id="top" className="hero-motion" aria-label="Lorenzo.studio">
       {/* The poster is the LCP element — preload it at high priority so it paints
           immediately instead of waiting in the queue (React 19 hoists this to <head>). */}
       {/* eslint-disable-next-line @next/next/no-head-element */}
@@ -145,8 +145,8 @@ export default function HeroMotion() {
               <EncryptedText
                 text={t("heroMotion.h1")}
                 encryptedClassName="hm-enc"
-                revealDelayMs={60}
-                flipDelayMs={45}
+                revealDelayMs={18}
+                flipDelayMs={28}
               />
             </span>
           </h1>
@@ -154,22 +154,29 @@ export default function HeroMotion() {
           <p className="hm-lede">{t("heroMotion.lede")}</p>
           <div className="hm-cta">
             <MagneticButton
-              href="/work"
+              href="/contatti"
               className="neo-btn neo-btn-lg neo-btn--primary"
               style={{ textDecoration: "none", padding: "14px 26px", fontSize: 15 }}
             >
-              {t("hero.cta.work")}
+              {t("hero.cta.call")}
               <span className="btn-arrow" aria-hidden="true">→</span>
             </MagneticButton>
             <MagneticButton
-              href="/contatti"
+              href="/work"
               className="neo-btn neo-btn-lg"
               style={{ textDecoration: "none", color: "var(--ink-body)", padding: "14px 26px", fontSize: 15, background: "var(--canvas-panel-yellow)" }}
             >
-              {t("heroMotion.talk")}
+              {t("hero.cta.work")}
               <span className="btn-arrow" aria-hidden="true">↗</span>
             </MagneticButton>
           </div>
+
+          {/* Honest social proof — no invented testimonials, just verifiable signals. */}
+          <ul className="hm-proof" aria-label={t("heroMotion.kicker")}>
+            {t("heroMotion.proof").split("|").map((p) => (
+              <li key={p} className="hm-proof__item">{p}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

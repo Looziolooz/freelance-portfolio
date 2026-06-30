@@ -1,4 +1,4 @@
-Build a macOS-style **floating dock** in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. The dock is a horizontal bar of icon buttons; each icon (and its container) **magnifies based on the cursor's horizontal distance** — growing from ~40px to ~80px as the pointer nears, then easing back — with a tooltip that pops above the focused icon. A separate **collapsed mobile variant** shows a single trigger that fans the items out. This is a faithful reproduction of the Aceternity "FloatingDock". The demo is personalized for **lorenzo.studio** (Italian labels, parchment surface, ink icons, ochre-gold hover accent).
+Build a macOS-style **floating dock** in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. The dock is a horizontal bar of icon buttons; each icon (and its container) **magnifies based on the cursor's horizontal distance** — growing from ~40px to ~80px as the pointer nears, then easing back — with a tooltip that pops above the focused icon. A separate **collapsed mobile variant** shows a single trigger that fans the items out. This is a faithful reproduction of the Aceternity "FloatingDock". The demo is personalized for **Lorenzo.studio** (Italian labels, parchment surface, ink icons, ochre-gold hover accent).
 
 ## Setup checklist
 
@@ -290,7 +290,7 @@ export default function FloatingDockDemo() {
 - **Magnify reach / strength.** The `±150` in the `useTransform` input domain is how far the bump extends; the `80` (and icon `40`) is the peak size. Widen the domain for a gentler ripple, raise the peak for a punchier pop.
 - **Spring feel.** `{ mass, stiffness, damping }` is the whole personality. Defaults give a quick, lightly-bouncy macOS dock; bump `mass` to `0.2` for a heavier slide.
 
-### Brand notes (lorenzo.studio)
+### Brand notes (Lorenzo.studio)
 
 - Dock surface is translucent over warm parchment (`#efe9dc` / `#f4efe4`) with a hairline `#26221d/10` border and a soft drop shadow; corners `rounded-2xl`.
 - Icons are **ink** `#26221d`; the hover/active accent fill is ochre-gold `#c8972e` with the **ink icon kept on top** — never white on gold.

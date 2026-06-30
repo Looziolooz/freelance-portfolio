@@ -8,7 +8,10 @@ import { useLang } from "./LangProvider";
 const SECTIONS = [
   { id: "top", it: "Intro", en: "Intro", sv: "Intro" },
   { id: "servizi", it: "Servizi", en: "Services", sv: "Tjänster" },
+  { id: "perche", it: "Perché", en: "Why me", sv: "Varför" },
   { id: "piani", it: "Metodo", en: "Method", sv: "Metod" },
+  { id: "faq", it: "FAQ", en: "FAQ", sv: "FAQ" },
+  { id: "audit", it: "Audit", en: "Audit", sv: "Audit" },
 ] as const;
 
 export default function WayfindingNav() {

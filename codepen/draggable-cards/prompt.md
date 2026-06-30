@@ -1,4 +1,4 @@
-Build a **draggable photo card** set in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. Photo cards are scattered across a canvas at absolute positions with slight rotations; each one can be dragged with momentum and springs back into place. While you drag, the card tilts in 3D based on its velocity and position and a glare highlight slides across it; on hover it scales up a touch. A faint headline sits centred behind the whole set. Reproduce both files below faithfully. The demo is personalized for **lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
+Build a **draggable photo card** set in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. Photo cards are scattered across a canvas at absolute positions with slight rotations; each one can be dragged with momentum and springs back into place. While you drag, the card tilts in 3D based on its velocity and position and a glare highlight slides across it; on hover it scales up a touch. A faint headline sits centred behind the whole set. Reproduce both files below faithfully. The demo is personalized for **Lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
 
 ## Setup checklist
 
@@ -234,7 +234,7 @@ import { animate } from "motion/react";
 
 ## `components/draggable-card-demo.tsx`
 
-Our personalized demo: a warm **parchment** canvas with seven photo cards scattered at fixed positions and slight rotations, a faint centred **Fraunces** headline behind them, and brand-toned titles under each photo. Architecture, craft, interiors and nature, the kind of work lorenzo.studio ships.
+Our personalized demo: a warm **parchment** canvas with seven photo cards scattered at fixed positions and slight rotations, a faint centred **Fraunces** headline behind them, and brand-toned titles under each photo. Architecture, craft, interiors and nature, the kind of work Lorenzo.studio ships.
 
 ```tsx
 "use client";
@@ -350,7 +350,7 @@ export default function DraggableCardDemo() {
 - **Glare:** change the `/1500` divisor in `glareOpacity` to make the highlight appear at lower or higher speeds.
 - **Reduced motion:** gate the springs behind `useReducedMotion()` from `motion/react` if you want to flatten the tilt for those users.
 
-### Brand notes (lorenzo.studio)
+### Brand notes (Lorenzo.studio)
 
 - Canvas is parchment `#efe9dc`; cards are a lighter parchment `#f7f3ea` with a hairline border, rounded corners and a soft shadow.
 - Titles use **Fraunces** in ink `#26221d`; the centred ghost headline is the same ink at ~7% opacity so it stays a background texture, never competing with the photos.

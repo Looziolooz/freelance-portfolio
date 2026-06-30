@@ -28,7 +28,7 @@ const ROOT = path.join(process.cwd(), "content", "connettori");
 const FILL: Record<string, string> = {
   "[LINK-PAGAMENTO]": "/membership",
   "[PREZZO]": "5€/mese",
-  "[NOME-SITO]": "lorenzo.studio",
+  "[NOME-SITO]": "Lorenzo.studio",
 };
 
 function fill(s: string): string {

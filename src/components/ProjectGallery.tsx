@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useLang } from "./LangProvider";
 import { PROJECTS, type Project } from "@/lib/projects";
 
@@ -65,7 +66,7 @@ function ProjectCard({ p }: { p: Project }) {
             <video
               ref={vref}
               src={p.coverVideo}
-              poster={p.image}
+              poster={p.image ? `/_next/image?url=${encodeURIComponent(p.image)}&w=828&q=75` : undefined}
               muted
               loop
               playsInline
@@ -74,8 +75,14 @@ function ProjectCard({ p }: { p: Project }) {
               style={{ objectPosition: p.imagePosition ?? "center" }}
             />
           ) : p.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={p.image} alt={title} loading="lazy" style={{ objectPosition: p.imagePosition ?? "center top" }} />
+            <Image
+              src={p.image}
+              alt={title}
+              fill
+              sizes="(max-width: 720px) 100vw, 50vw"
+              loading="lazy"
+              style={{ objectFit: "cover", objectPosition: p.imagePosition ?? "center top" }}
+            />
           ) : (
             <span className="pg-tex" aria-hidden="true" />
           )}

@@ -2,7 +2,7 @@
    it renders live in the sandboxed preview. A Solari departure board: a grid of
    tall split-flap cells that scramble through random glyphs and settle on a
    target message, with a mechanical flip on every character change. Personalized
-   for lorenzo.studio: light parchment board, brand accents, Italian lines that
+   for Lorenzo.studio: light parchment board, brand accents, Italian lines that
    cycle every 6s. The preview <head> ships Inter + Playfair; the glyphs use a
    monospace stack so every flap is the same width. No @import here. */
 

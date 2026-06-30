@@ -1,4 +1,4 @@
-Build an **animated testimonials** block in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. It is a two-column layout: on the left a stack of portrait images where the active photo springs forward and the inactive ones sit behind with a small random rotation; on the right the person's name, role, and their quote revealed **word by word with a blur-in**. Round prev/next buttons step through, and it autoplays every 5 seconds. Reproduce both files below faithfully. The demo is personalized for **lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
+Build an **animated testimonials** block in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. It is a two-column layout: on the left a stack of portrait images where the active photo springs forward and the inactive ones sit behind with a small random rotation; on the right the person's name, role, and their quote revealed **word by word with a blur-in**. Round prev/next buttons step through, and it autoplays every 5 seconds. Reproduce both files below faithfully. The demo is personalized for **Lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
 
 ## Setup checklist
 
@@ -250,7 +250,7 @@ export default function AnimatedTestimonialsDemo() {
 - **Word-by-word blur-in.** The quote is split on spaces; each word is a `motion.span` that animates `filter: blur(10px) -> blur(0)`, `opacity 0 -> 1`, and `y: 5 -> 0`, with `delay: 0.02 * index` so the words clear left to right. Re-keying the wrapper on `active` replays the whole reveal when the testimonial changes.
 - **Autoplay + controls.** A `useEffect` sets a `setInterval(handleNext, 5000)` when `autoplay` is on and clears it on unmount. `handleNext` / `handlePrev` wrap with modulo so the carousel loops in both directions.
 
-### Brand notes (lorenzo.studio)
+### Brand notes (Lorenzo.studio)
 
 - Canvas is light **parchment**; name is **ink** `#26221d` in Fraunces, role is **teal** `#2f6f68`, and the quote is muted ink `#6b6256`.
 - The round prev/next buttons sit on soft parchment `#f4efe4` and fill **ochre-gold** `#c8972e` on hover, always with a **dark ink icon** — never white on gold.

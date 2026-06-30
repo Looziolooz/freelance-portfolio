@@ -1,4 +1,4 @@
-Build a **3D tilt card** in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. The card tracks the cursor and rotates on its X/Y axes with CSS perspective; inner items lift toward the viewer via `translateZ` on hover and settle back flat on mouse leave. Reproduce both files below faithfully. The demo is personalized for **lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
+Build a **3D tilt card** in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. The card tracks the cursor and rotates on its X/Y axes with CSS perspective; inner items lift toward the viewer via `translateZ` on hover and settle back flat on mouse leave. Reproduce both files below faithfully. The demo is personalized for **Lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
 
 ## Setup checklist
 
@@ -255,7 +255,7 @@ export default function ThreeDCardDemo() {
 - **Depth on the items.** Each `CardItem` lives on the `preserve-3d` surface. When the pointer enters, it applies its `translateZ` (50 / 60 / 100 / 20 here) so the elements lift toward the viewer at different depths; on leave every transform returns to `0`. The `transition duration-200 ease-linear` makes the lift smooth.
 - **Tuning.** Larger `translateZ` = more dramatic pop. The `/ 25` divisor controls tilt sensitivity (smaller = stronger tilt). Keep the title/image/CTA on clearly different Z values so the parallax reads.
 
-### Brand notes (lorenzo.studio)
+### Brand notes (Lorenzo.studio)
 
 - Card surface is warm parchment `#f3efe6` with a hairline border and a soft shadow; corners `rounded-[18px]`, width `~30rem`.
 - The CTA fill is ochre-gold `#c79a3a` with **dark ink text** `#2c2a25` — never white text on gold.

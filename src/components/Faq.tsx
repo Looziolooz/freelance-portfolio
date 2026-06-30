@@ -1,6 +1,7 @@
 "use client";
 
 import { useLang } from "./LangProvider";
+import SectionHeader from "./SectionHeader";
 
 // Objection-handling FAQ. Native <details>/<summary> = accessible, zero JS, and
 // the page stays usable without scripts. Keys live under faq.<id>.q / .a.
@@ -10,10 +11,7 @@ export default function Faq() {
   const { t } = useLang();
   return (
     <section id="faq" className="faq" aria-label={t("faq.title")}>
-      <header className="faq-head">
-        <span className="faq-eyebrow">{t("faq.eyebrow")}</span>
-        <h2 className="faq-title">{t("faq.title")}</h2>
-      </header>
+      <SectionHeader eyebrow={t("faq.eyebrow")} title={t("faq.title")} />
 
       <div className="faq-list">
         {QUESTIONS.map((q) => (

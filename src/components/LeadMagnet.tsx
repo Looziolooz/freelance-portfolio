@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useLang } from "./LangProvider";
+import SectionHeader from "./SectionHeader";
 
 // Lead magnet: a free site audit in exchange for an email. Zero-cost capture —
-// submitting opens a prefilled email to hello@lorenzo.studio, so the lead lands
+// submitting opens a prefilled email to hello@Lorenzo.studio, so the lead lands
 // in the inbox with no backend. (Swap the submit for Formspree/Tally later for a
 // real list.) Honest offer: a quick, genuine audit reply within 24h.
-const CONTACT = "hello@lorenzo.studio";
+const CONTACT = "hello@Lorenzo.studio";
 
 export default function LeadMagnet() {
   const { t } = useLang();
@@ -25,9 +26,7 @@ export default function LeadMagnet() {
     <section id="audit" className="lead" aria-label={t("lead.title")}>
       <div className="lead-inner">
         <div className="lead-copy">
-          <span className="lead-eyebrow">{t("lead.eyebrow")}</span>
-          <h2 className="lead-title">{t("lead.title")}</h2>
-          <p className="lead-sub">{t("lead.sub")}</p>
+          <SectionHeader eyebrow={t("lead.eyebrow")} title={t("lead.title")} sub={t("lead.sub")} tone="ink" />
           <ul className="lead-list">
             <li>{t("lead.b1")}</li>
             <li>{t("lead.b2")}</li>

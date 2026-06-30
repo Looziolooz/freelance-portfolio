@@ -1,7 +1,7 @@
 /* Encrypted Text — framework-free port of the React + motion/react original so
    it renders live in the sandboxed preview. The effect: text starts as gibberish
    (random charset, spaces preserved) and reveals the real characters left to
-   right; unrevealed chars keep flipping. Personalized for lorenzo.studio: an
+   right; unrevealed chars keep flipping. Personalized for Lorenzo.studio: an
    Italian line on a parchment canvas, looping every ~5s for the card teaser.
    Fonts in the preview <head> are Inter + Playfair; we use a monospace stack. */
 

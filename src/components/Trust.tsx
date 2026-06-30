@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLang } from "./LangProvider";
+import SectionHeader from "./SectionHeader";
 import { TESTIMONIALS } from "@/lib/testimonials";
 
 // Trust signals — honest reassurances only (no invented testimonials/logos).
@@ -33,11 +34,7 @@ export default function Trust() {
   const { t } = useLang();
   return (
     <section id="perche" className="trust" aria-label={t("trust.title")}>
-      <header className="trust-head">
-        <span className="trust-eyebrow">{t("trust.eyebrow")}</span>
-        <h2 className="trust-title">{t("trust.title")}</h2>
-        <p className="trust-sub">{t("trust.sub")}</p>
-      </header>
+      <SectionHeader eyebrow={t("trust.eyebrow")} title={t("trust.title")} sub={t("trust.sub")} />
 
       <ul className="trust-grid">
         {POINTS.map((k) => (

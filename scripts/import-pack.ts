@@ -54,7 +54,7 @@ const FILL: Record<string, string> = {
   "[LINK-PAGAMENTO]": "/membership",
   "[LINK-CONSULENZA]": "/#contact",
   "[PREZZO]": PREZZO[lang] ?? PREZZO.IT,
-  "[NOME-SITO]": "lorenzo.studio",
+  "[NOME-SITO]": "Lorenzo.studio",
 };
 
 function fill(s: string): string {

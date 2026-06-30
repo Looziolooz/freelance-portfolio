@@ -3,7 +3,7 @@
 Un componente che avvolge una o più parole in un filtro SVG di turbolenza e le fa
 *ondeggiare* in continuazione, ciclando una serie di filtri `feTurbulence`
 pre-renderizzati nel tempo. Perfetto per far risaltare la parola chiave di un
-titolo — qui, in versione lorenzo.studio, è un headline italiano dove **vendite**
+titolo — qui, in versione Lorenzo.studio, è un headline italiano dove **vendite**
 (e **lento**) si increspano nell'oro ocra del brand, ink scuro su pergamena.
 
 L'effetto è puramente CSS/SVG a runtime: nessun canvas, nessuna immagine. `motion`
@@ -129,7 +129,7 @@ export function SquigglyText({
 
 ## 3. Il demo personalizzato — `components/squiggly-text-demo.tsx`
 
-Versione lorenzo.studio: headline italiano centrato, **vendite** ondeggia
+Versione Lorenzo.studio: headline italiano centrato, **vendite** ondeggia
 nell'oro ocra del brand (`text-[#E8A12C]`) con un wobble più marcato, e **lento**
 ondeggia in modo più sobrio. Testo ink scuro su pergamena, tipo grande e
 responsive.

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Motif } from "./BrandKit";
 import type { BrandKit as Kit } from "@/lib/brand-kits";
 
@@ -131,8 +132,7 @@ export default function BrandBento({
         </div>
         <div className="bb-site__media" style={{ background: mix(primary, paper, 0.14) }}>
           {siteImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={siteImage} alt={`${name} — sito web`} loading="lazy" decoding="async" />
+            <Image src={siteImage} alt={`${name} — sito web`} fill sizes="(max-width: 900px) 90vw, 420px" loading="lazy" style={{ objectFit: "cover", objectPosition: "top center" }} />
           ) : siteVideo ? (
             <video src={siteVideo} muted loop autoPlay playsInline preload="none" aria-label={`${name} — sito web`} />
           ) : (
@@ -258,7 +258,7 @@ export default function BrandBento({
         .bb-site__dots { display: inline-flex; gap: 5px; flex-shrink: 0; }
         .bb-site__dots i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
         .bb-site__url { flex: 1; font-size: 10px; padding: 4px 10px; border-radius: 6px; letter-spacing: .02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .bb-site__media { flex: 1; min-height: 130px; overflow: hidden; }
+        .bb-site__media { position: relative; flex: 1; min-height: 130px; overflow: hidden; }
         .bb-site__media img, .bb-site__media video { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
         .bb-wire { height: 100%; min-height: 150px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
         .bb-wire__nav { display: flex; align-items: center; gap: 8px; padding: 9px 11px; border-radius: 7px; }

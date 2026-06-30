@@ -1,4 +1,4 @@
-Build an **Expandable Card** (the Aceternity "standard" list variant) in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**, animated with **motion/react**. A centered list of row cards (small image, title, subtitle, a pill CTA) expands on click via a **shared-layout `layoutId` transition** into a centered modal: large image on top, title/subtitle, CTA, and a scrollable description under a fade mask, over a dimmed backdrop. Close it with the **X** button, **Escape**, or an **outside-click** (a `use-outside-click` hook). Reproduce all three files below faithfully. The demo is personalized for **lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
+Build an **Expandable Card** (the Aceternity "standard" list variant) in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**, animated with **motion/react**. A centered list of row cards (small image, title, subtitle, a pill CTA) expands on click via a **shared-layout `layoutId` transition** into a centered modal: large image on top, title/subtitle, CTA, and a scrollable description under a fade mask, over a dimmed backdrop. Close it with the **X** button, **Escape**, or an **outside-click** (a `use-outside-click` hook). Reproduce all three files below faithfully. The demo is personalized for **Lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
 
 ## Setup checklist
 
@@ -287,7 +287,7 @@ export function ExpandableCardList({
 
 ## `components/expandable-card-demo.tsx`
 
-Our personalized demo: four lorenzo.studio services as rows, each opening into a modal with a short Italian description. The CTA reads **"Scopri"**.
+Our personalized demo: four Lorenzo.studio services as rows, each opening into a modal with a short Italian description. The CTA reads **"Scopri"**.
 
 ```tsx
 "use client";
@@ -346,7 +346,7 @@ export default function ExpandableCardDemo() {
 - **Scroll + fade mask.** The description region is `overflow-y-auto` with a `mask-image` linear-gradient that fades the text in at the top and out at the bottom, so long copy scrolls cleanly under the fixed header.
 - **Body scroll lock.** While a card is open, `document.body.style.overflow` is set to `hidden` so the page behind the backdrop can't scroll.
 
-### Brand notes (lorenzo.studio)
+### Brand notes (Lorenzo.studio)
 
 - Surfaces are warm parchment (`#faf7f0` cards on an `#f4efe4` canvas) with a hairline border and a soft shadow; rows `rounded-2xl`, modal `rounded-[22px]`, max width `~30rem`.
 - The modal CTA fill is ochre-gold `#c8972e` with **dark ink text** `#26221d` — never white text on gold. On the row the CTA is an outlined forest-green `#1f4d3a` pill that fills gold on hover.

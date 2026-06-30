@@ -40,7 +40,7 @@ const generalSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "lorenzo.studio — Siti, automazioni e agenti AI per la tua impresa",
+  title: "Lorenzo.studio — Siti, automazioni e agenti AI per la tua impresa",
   description:
     "Sviluppo siti su misura per piccole e grandi aziende, automazione dei processi ripetitivi, contenuti social e agenti AI. Più visibilità, meno lavoro manuale, dati dal web che generano valore.",
 };
@@ -52,7 +52,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${fraunces.variable} ${jetbrainsMono.variable} ${generalSans.variable}`}
       data-theme="light"
     >
-      <body className="antialiased" style={{ margin: 0, WebkitFontSmoothing: "antialiased" }}>
+      {/* No inline style here: globals.css already sets `html,body{margin:0}` and
+          body `-webkit-font-smoothing:antialiased`. An inline shorthand style on
+          <body> serialized differently on server vs client → hydration mismatch. */}
+      <body className="antialiased">
         <ThemeProvider>
           <LangProvider>
             <ClientLayout>{children}</ClientLayout>

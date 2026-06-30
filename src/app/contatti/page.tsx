@@ -6,7 +6,7 @@ import CinematicFooter from "@/components/CinematicFooter";
 import BookingCalendar from "@/components/BookingCalendar";
 import { useLang } from "@/components/LangProvider";
 
-const EMAIL = "hello@lorenzo.studio";
+const EMAIL = "hello@Lorenzo.studio";
 
 export default function ContattiPage() {
   const { t } = useLang();

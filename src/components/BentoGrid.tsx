@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useLang } from "./LangProvider";
 
 // The bento grid itself (no section wrapper), so it can be reused both as the
@@ -13,8 +14,14 @@ export default function BentoGrid() {
   return (
     <div className="bento">
       <div className="bento-cell bento-img">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/bento/shift.jpg" alt={t("bento.img.alt")} loading="lazy" />
+        <Image
+          src="/bento/shift.jpg"
+          alt={t("bento.img.alt")}
+          width={670}
+          height={700}
+          sizes="(max-width: 760px) 90vw, 300px"
+          loading="lazy"
+        />
       </div>
 
       <div className="bento-cell bento-head">

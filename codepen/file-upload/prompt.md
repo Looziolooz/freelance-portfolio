@@ -1,4 +1,4 @@
-Build the **FileUpload** component (Aceternity style) in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. It's a click-or-drag dropzone sitting over an animated checkerboard **GridPattern** (under a soft radial mask). An upload-icon tile lifts and animates on hover; dropping or selecting files adds each one as an animated card showing the file name, size in MB, type and modified date. Reproduce both files below faithfully. The demo is personalized for **lorenzo.studio** (Italian copy, parchment surface, ink text, ochre-gold drop highlight, forest/teal accents).
+Build the **FileUpload** component (Aceternity style) in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. It's a click-or-drag dropzone sitting over an animated checkerboard **GridPattern** (under a soft radial mask). An upload-icon tile lifts and animates on hover; dropping or selecting files adds each one as an animated card showing the file name, size in MB, type and modified date. Reproduce both files below faithfully. The demo is personalized for **Lorenzo.studio** (Italian copy, parchment surface, ink text, ochre-gold drop highlight, forest/teal accents).
 
 ## Setup checklist
 
@@ -277,7 +277,7 @@ export default function FileUploadDemo() {
 - **File cards.** Each selected file is a `motion.div` sharing the `file-upload` `layoutId` so the tile morphs into the first card. Inside, name / size / type / date each fade in (`opacity 0 → 1`) with `layout` so they reflow smoothly. Size is `(file.size / 1024 / 1024).toFixed(2)` MB; the date is `new Date(file.lastModified).toLocaleDateString("it-IT")`.
 - **Drag highlight.** When `isDragActive` is true the shell border switches to ochre-gold with a soft gold ring, and the tile copy flips to "Rilascia".
 
-### Brand notes (lorenzo.studio)
+### Brand notes (Lorenzo.studio)
 
 - Surface is warm parchment `#f4efe4` / `#efe9dc`; title is ink `#26221d` in Fraunces, subtitle ink-muted `#6b6256`.
 - The drag highlight is ochre-gold `#c8972e` (border + soft ring). The size pill uses a translucent gold fill with **dark ink text** — never white text on gold.

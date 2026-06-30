@@ -64,11 +64,7 @@ export default function AssistantHero() {
   }, [reduce]);
 
   return (
-    <section
-      className="ah"
-      aria-label={t("home.assist.title")}
-      style={{ ["--ah-bg"]: "#EA9B04", ["--ah-ink"]: "#241A0B", ["--ah-deep"]: "#3E2C0C" } as React.CSSProperties}
-    >
+    <section className="ah" aria-label={t("home.assist.title")}>
       <div className="ah-grid">
         <div className="ah-left">
           <span className="ah-eyebrow">{t("home.assist.tag")}</span>
@@ -108,7 +104,15 @@ export default function AssistantHero() {
       </div>
 
       <style>{`
-        .ah { position: relative; background: var(--ah-bg); color: var(--ah-ink); }
+        .ah {
+          /* Warm ochre theme for the assistant page — matches the image's own
+             backdrop so the video dissolves seamlessly into the page. Defined in
+             the component's scoped CSS (not an inline per-element override). */
+          --ah-bg: #EA9B04;
+          --ah-ink: #241A0B;
+          --ah-deep: #3E2C0C;
+          position: relative; background: var(--ah-bg); color: var(--ah-ink);
+        }
         .ah-grid { display: grid; grid-template-columns: 1fr; }
         .ah-left {
           display: flex; flex-direction: column; gap: 12px; min-width: 0;
@@ -138,8 +142,12 @@ export default function AssistantHero() {
         }
         /* Desktop: true split, video sticky full-height on the right. */
         @media (min-width: 980px) {
-          .ah-grid { grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr); min-height: 100svh; align-items: start; }
-          .ah-left { padding-top: calc(var(--topbar-h) + clamp(28px, 4vw, 56px)); justify-content: center; }
+          .ah-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 100svh; align-items: start; }
+          /* Cap the text + chat to a calm reading column so the chat never crowds
+             the image — clear parchment breathing room sits between them. */
+          /* Centre the text + chat within the left half so it sits more toward the
+             middle, with even breathing room on both sides (no edge-hugging). */
+          .ah-left { max-width: 560px; justify-self: center; padding-top: calc(var(--topbar-h) + clamp(28px, 4vw, 56px)); justify-content: center; }
           .ah-right { height: 100svh; position: sticky; top: 0; }
           /* Dissolve the video's left edge into the parchment column — no hard seam. */
           .ah-video { -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 14%, #000 34%); mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 14%, #000 34%); }

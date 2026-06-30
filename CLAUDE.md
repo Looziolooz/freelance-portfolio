@@ -12,7 +12,7 @@ forest green for links, teal/sage as cool accents; emerald is retired; display t
 Fraunces, body is General Sans, never Inter/system).
 
 ## Product
-`lorenzo.studio` — an Italian-market freelance studio portfolio that sells outcomes
+`Lorenzo.studio` — an Italian-market freelance studio portfolio that sells outcomes
 (websites & e-commerce, visibility, social content, automation, web data, AI agents
 for solo founders). Funnel: content → membership → consulting. Copy priority is
 **IT**, with EN/SV mirrored. Keep the brand discreet — never reference the user's

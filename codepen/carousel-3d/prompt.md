@@ -1,4 +1,4 @@
-Build the Aceternity **Carousel** (3D perspective slider) in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. Full-bleed square slides sit inside a `perspective` stage: the active slide is flat and large, the inactive ones scale down and tilt back a few degrees on the X axis, and the active slide's image parallax-shifts toward the cursor. A title and a white pill button overlay the active slide; round prev/next controls below slide the deck between cards on a `translateX` track. Reproduce both files below faithfully. The demo is personalized for **lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
+Build the Aceternity **Carousel** (3D perspective slider) in React + TypeScript styled with **shadcn/ui** + **Tailwind CSS v4**. Full-bleed square slides sit inside a `perspective` stage: the active slide is flat and large, the inactive ones scale down and tilt back a few degrees on the X axis, and the active slide's image parallax-shifts toward the cursor. A title and a white pill button overlay the active slide; round prev/next controls below slide the deck between cards on a `translateX` track. Reproduce both files below faithfully. The demo is personalized for **Lorenzo.studio** (Italian copy, parchment surface, ochre-gold and forest-green accents).
 
 ## Setup checklist
 
@@ -292,7 +292,7 @@ export default function Carousel3DDemo() {
 - **Controls + autoplay.** Round prev/next buttons call `go(current ± 1)` with wrap-around. Autoplay advances every `interval` ms (default 4000) and pauses while the pointer is over the component, so it's lively on its own but never fights the visitor.
 - **Tuning.** Larger `rotateX` and a smaller inactive `scale` deepen the recession. The `/30` divisor sets parallax strength (smaller = stronger drift). Bump `interval` for a slower deck.
 
-### Brand notes (lorenzo.studio)
+### Brand notes (Lorenzo.studio)
 
 - Canvas is light **parchment** (`#efe9dc`/`#f4efe4`); text is **ink** `#26221d`.
 - The **Esplora** pill is parchment-white with dark ink text. On this component the pill is deliberately light, not gold; reserve ochre-gold `#c8972e` (always with dark text, never white) for solid CTAs elsewhere.

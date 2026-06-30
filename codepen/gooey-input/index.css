@@ -2,7 +2,7 @@
    renders live in the sandboxed preview. A pill-shaped search control expands
    from a small button into a wider input, while a detached circular search-icon
    bubble visually MELTS into the pill through an SVG gooey filter (Gaussian blur
-   + a high-contrast alpha matrix + composite). Personalized for lorenzo.studio:
+   + a high-contrast alpha matrix + composite). Personalized for Lorenzo.studio:
    ink pill with parchment text, ochre-gold search bubble, centered on parchment.
    Fonts in the preview <head> are Inter + Playfair; we use Inter for the UI. */
 

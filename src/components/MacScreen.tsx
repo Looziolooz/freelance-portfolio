@@ -53,7 +53,7 @@ export default function MacScreen({ uid = "mc" }: { uid?: string }) {
         <circle cx="66" cy="41" r="6.5" className="mc-sage-f" />
         <circle cx="88" cy="41" r="6.5" className="mc-ink-f" />
         <text x="600" y="46" textAnchor="middle" className="mc-wordmark" fontSize="15" letterSpacing="6" opacity="0.7">
-          lorenzo.studio
+          Lorenzo.studio
         </text>
 
         {/* left text column */}

@@ -9,7 +9,7 @@ import MacScreen from "./MacScreen";
 
 // Scroll-driven MacBook that opens to reveal a bespoke screen telling one idea:
 // the value travels from my computer to your business. Adapted from the Aceternity
-// component to the brand (parchment stage, Fraunces title, lorenzo.studio mark on
+// component to the brand (parchment stage, Fraunces title, Lorenzo.studio mark on
 // the lid, framer-motion). Full-bleed, under the hero.
 //
 // Desktop (≥1100): the Aceternity laptop. Below: a compact laptop (lid + deck)

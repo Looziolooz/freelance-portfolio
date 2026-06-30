@@ -9,7 +9,7 @@ import MagneticButton from "./MagneticButton";
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 // On-brand rebuild of the "cinematic curtain-reveal footer": the page scrolls
-// away to reveal a fixed footer underneath. Restyled for lorenzo.studio —
+// away to reveal a fixed footer underneath. Restyled for Lorenzo.studio —
 // Parchment & Forest, Fraunces/General Sans/mono, neo-brutalist (hard ink
 // borders + offset shadows, NO blur/glass/gradients). Reuses MagneticButton +
 // i18n + the ticker terms. Lenis owns native scroll, so position:fixed is safe.
@@ -131,7 +131,7 @@ export default function CinematicFooter() {
             color: "var(--ink-body)",
             fontFamily: "var(--font-ui)",
           }}
-          aria-label="lorenzo.studio"
+          aria-label="Lorenzo.studio"
         >
           {/* Giant background wordmark */}
           <div

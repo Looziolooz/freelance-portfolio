@@ -9,6 +9,11 @@ const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   turbopack: { root: projectRoot },
+  // Serve next/image output as AVIF first (≈20% smaller than WebP), falling back
+  // to WebP. Encoding is cached after the first request, so the cost is paid once.
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
   // Keep Prisma + the Postgres driver external to the bundler.
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg", "pg"],
   // The component gallery reads the raw pens from /codepen at request time; make

@@ -1,4 +1,4 @@
-/* SquigglyText — framework-free port for the lorenzo.studio live preview.
+/* SquigglyText — framework-free port for the Lorenzo.studio live preview.
    The React original wraps text in an SVG turbulence/displacement filter and
    cycles a set of pre-rendered feTurbulence filters over time (motion useTime).
    Here we build N <filter> defs per word and swap style.filter every step on a
