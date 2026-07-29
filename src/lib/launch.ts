@@ -21,6 +21,7 @@ export const HIDDEN_ROUTES = [
   "/register",
   "/account",
   "/members-only",
+  "/admin",
 ] as const;
 
 // Public site origin (used by robots.txt + sitemap). Override per environment.

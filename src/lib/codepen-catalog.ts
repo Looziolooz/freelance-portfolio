@@ -111,7 +111,7 @@ const META: Record<string, { title: string; description: string; tags: string[] 
   "globe-3d": {
     title: "Globe3D — Mappamondo 3D dei clienti",
     description:
-      "Terra 3D testurizzata che ruota da sola, si trascina con il mouse e ha un alone d'atmosfera teal. Segnaposto dorati nelle citta dei clienti, da Milano a Stoccolma. React Three Fiber + drei + three su shadcn/ui e Tailwind v4. Il prompt completo si sblocca con il Pro.",
+      "Terra 3D testurizzata che ruota da sola, si trascina con il mouse e ha un alone d'atmosfera teal. Segnaposto dorati nelle citta dei clienti, da Milano a Madrid. React Three Fiber + drei + three su shadcn/ui e Tailwind v4. Il prompt completo si sblocca con il Pro.",
     tags: ["React", "Three.js", "3D"],
   },
   "dither-shader": {

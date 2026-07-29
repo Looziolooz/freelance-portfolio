@@ -28,6 +28,16 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "23",
+    key: "brado",
+    slug: "brado",
+    demo: "https://brado-vert.vercel.app/",
+    repo: "https://github.com/Looziolooz/brado",
+    image: "/projects/brado.png",
+    featured: true,
+    swatch: "#241a14",
+  },
+  {
     id: "22",
     key: "22",
     slug: "gelateria",
@@ -71,6 +81,7 @@ export const PROJECTS: Project[] = [
     id: "20",
     key: "20",
     slug: "bella-calabria",
+    demo: "https://bella-calabria.vercel.app/",
     repo: "https://github.com/Looziolooz/bella-calabria",
     image: "/projects/bella-calabria.png",
     imagePosition: "left center", // 2.06:1 screenshot — keep the headline, crop the right
@@ -109,14 +120,6 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/fotografo.mp4",
     featured: true,
     swatch: "#f0e6d8",
-  },
-  {
-    id: "12",
-    key: "12",
-    slug: "real-estate",
-    repo: "https://github.com/Looziolooz/real-estate",
-    featured: true,
-    swatch: "#dce8f0",
   },
   {
     id: "13",

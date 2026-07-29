@@ -47,6 +47,30 @@ export type BrandKit = {
 const SANS = "var(--font-ui), system-ui, sans-serif";
 
 export const BRAND_KITS: Record<string, BrandKit> = {
+  brado: {
+    slug: "brado",
+    name: "Brado",
+    monogram: "B",
+    tagline: "Carne brada, fuoco vero.",
+    domain: "brado.it",
+    shape: "square",
+    motif: "flame",
+    display: '"Arial Black", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    body: SANS,
+    tracking: "0.16em",
+    paper: "#F3E9D8",
+    ink: "#1A1310",
+    primary: "#D93A22",
+    accent: "#E9A93C",
+    palette: [
+      { name: "Fuoco", hex: "#D93A22", role: "primary", on: "#F3E9D8" },
+      { name: "Brace", hex: "#7A2E1C", role: "secondary", on: "#F3E9D8" },
+      { name: "Oro", hex: "#E9A93C", role: "accent", on: "#1A1310" },
+      { name: "Pane", hex: "#F3E9D8", role: "paper", on: "#1A1310" },
+      { name: "Carbone", hex: "#1A1310", role: "ink", on: "#F3E9D8" },
+    ],
+  },
+
   fotografo: {
     slug: "fotografo",
     name: "Atelier Solari",
@@ -68,30 +92,6 @@ export const BRAND_KITS: Record<string, BrandKit> = {
       { name: "Oro foglia", hex: "#C8A24B", role: "accent", on: "#2A1A1F" },
       { name: "Avorio", hex: "#F7EFE6", role: "paper", on: "#2A1A1F" },
       { name: "Bruno", hex: "#2A1A1F", role: "ink", on: "#F7EFE6" },
-    ],
-  },
-
-  "real-estate": {
-    slug: "real-estate",
-    name: "Nordhem",
-    monogram: "N",
-    tagline: "Nordic homes, quiet luxury.",
-    domain: "nordhem.se",
-    shape: "square",
-    motif: "none",
-    display: '"Futura", "Century Gothic", "Trebuchet MS", sans-serif',
-    body: SANS,
-    tracking: "0.28em",
-    paper: "#EEF2F2",
-    ink: "#1A2630",
-    primary: "#1F3A4D",
-    accent: "#B58A5E",
-    palette: [
-      { name: "Fjord", hex: "#1F3A4D", role: "primary", on: "#EEF2F2" },
-      { name: "Slate", hex: "#5E7C8C", role: "secondary", on: "#FFFFFF" },
-      { name: "Oak", hex: "#B58A5E", role: "accent", on: "#1A2630" },
-      { name: "Frost", hex: "#EEF2F2", role: "paper", on: "#1A2630" },
-      { name: "Charcoal", hex: "#1A2630", role: "ink", on: "#EEF2F2" },
     ],
   },
 

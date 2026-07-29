@@ -27,10 +27,10 @@ export default function ProcessoPage() {
   const { t } = useLang();
 
   const IMAGES = [
-    "/processo/p1.png",
-    "/processo/p2.jpg",
-    "/processo/p3.jpg",
-    "/processo/p4.jpg",
+    { src: "/processo/p1.png", w: 1065, h: 1008 },
+    { src: "/processo/p2.png", w: 1024, h: 1024 },
+    { src: "/processo/p3.jpg", w: 1280, h: 800 },
+    { src: "/processo/p4.jpg", w: 1280, h: 800 },
   ];
 
   const entries: TimelineEntry[] = [1, 2, 3, 4].map((n, i) => {
@@ -41,8 +41,10 @@ export default function ProcessoPage() {
       statement: t(`${k}.statement`),
       body: t(`${k}.body`),
       bullets: [t(`${k}.b1`), t(`${k}.b2`), t(`${k}.b3`)],
-      image: IMAGES[i],
+      image: IMAGES[i].src,
       alt: t(`${k}.name`),
+      w: IMAGES[i].w,
+      h: IMAGES[i].h,
     };
   });
 

@@ -2,19 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useTheme } from "./ThemeProvider";
 import { useLang } from "./LangProvider";
 import { useAuth } from "./auth/AuthProvider";
 import { isPreLaunch } from "@/lib/launch";
 import type { Lang } from "@/i18n";
 
 export default function Nav() {
-  const [t2, setT2] = useState(Date.now());
   const [menuOpen, setMenuOpen] = useState(false);
-  const [themeOpen, setThemeOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { theme, setTheme } = useTheme();
   const { lang, setLang, t } = useLang();
   const { user } = useAuth();
   const pathname = usePathname();
@@ -24,25 +20,11 @@ export default function Nav() {
   const hideTop = pathname === "/" && !scrolled;
 
   useEffect(() => {
-    // The topbar clock only shows hh:mm, so a 1s tick re-rendered the whole Nav
-    // 60×/min for nothing and kept the main thread from going idle. 30s keeps the
-    // minute accurate while letting the page settle (better TTI on throttled CPUs).
-    const id = setInterval(() => setT2(Date.now()), 30000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const hhmm = new Date(t2).toLocaleTimeString(lang === "sv" ? "sv-SE" : lang === "en" ? "en-GB" : "it-IT", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Europe/Stockholm",
-  });
 
   const langs: { k: Lang; label: string }[] = [
     { k: "it", label: "IT" },
@@ -90,7 +72,7 @@ export default function Nav() {
             </>
           )}
 
-          {/* Mobile-only: language + theme live here since the desktop locale
+          {/* Mobile-only: language switcher lives here since the desktop locale
               extras are hidden below 768px. */}
           <div className="nav-mobile-extras" style={{ display: "none" }}>
             {langs.map((l) => (
@@ -108,21 +90,6 @@ export default function Nav() {
                 {l.label}
               </button>
             ))}
-            <button
-              onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-              className="status-pill"
-              style={{ border: BORDER, fontFamily: "var(--font-ui)", display: "inline-flex", alignItems: "center", gap: 6 }}
-              aria-label={t("nav.theme")}
-            >
-              <span
-                style={{
-                  width: 8, height: 8, borderRadius: 0,
-                  background: theme === "light" ? "var(--accent-peach)" : "var(--ink-border)",
-                  border: "2px solid var(--ink-border)", display: "inline-block",
-                }}
-              />
-              {theme === "light" ? t("nav.theme.light") : t("nav.theme.dark")}
-            </button>
           </div>
         </div>
 
@@ -180,89 +147,6 @@ export default function Nav() {
               </div>
             )}
           </div>
-
-          <div style={{ position: "relative" }}>
-            <button
-              onClick={() => setThemeOpen(!themeOpen)}
-              className="status-pill"
-              style={{
-                border: BORDER,
-                fontFamily: "var(--font-ui)",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-              aria-label={t("nav.theme")}
-            >
-              <span
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: 0,
-                  background: theme === "light" ? "var(--accent-peach)" : "var(--ink-border)",
-                  border: "2px solid var(--ink-border)",
-                  display: "inline-block",
-                }}
-              />
-              {theme === "light" ? t("nav.theme.light") : t("nav.theme.dark")}
-            </button>
-            {themeOpen && (
-              <div
-                className="neo-panel-cream"
-                style={{
-                  position: "absolute",
-                  right: 0,
-                  top: "calc(100% + 6px)",
-                  border: BORDER,
-                  borderRadius: "var(--radius)",
-                  padding: 4,
-                  boxShadow: "6px 6px 0 var(--ink-shadow)",
-                  minWidth: 130,
-                  zIndex: 60,
-                }}
-              >
-                {(["light", "dark"] as const).map((t2) => (
-                  <button
-                    key={t2}
-                    onClick={() => { setTheme(t2); setThemeOpen(false); }}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 8,
-                      padding: "8px 10px",
-                      width: "100%",
-                      border: theme === t2 ? BORDER : "3px solid transparent",
-                      borderRadius: "var(--radius)",
-                      cursor: "pointer",
-                      background: theme === t2 ? "var(--accent-peach)" : "transparent",
-                      fontSize: 12,
-                      fontFamily: "var(--font-ui)",
-                      color: "var(--ink-body)",
-                      textAlign: "left",
-                      fontWeight: theme === t2 ? 600 : 400,
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: 0,
-                        background: t2 === "light" ? "var(--canvas-page)" : "var(--ink-border)",
-                        border: "2px solid var(--ink-border)",
-                        display: "inline-block",
-                        flexShrink: 0,
-                      }}
-                    />
-                    {t2 === "light" ? t("nav.theme.light") : t("nav.theme.dark")}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          <span suppressHydrationWarning style={{ fontFamily: "var(--font-mono)", fontSize: 12 }}>
-            {t("nav.sto")} · {hhmm}
-          </span>
         </div>
 
         <button

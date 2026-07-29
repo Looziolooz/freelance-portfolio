@@ -1,8 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, useContext, useEffect } from "react";
 
-type Theme = "light" | "dark";
+// Light-only. The dark theme was removed — this provider keeps the light theme
+// applied and clears any previously-stored "dark" preference (so returning
+// visitors who had dark on get light). The useTheme() API is preserved as a
+// no-op so existing consumers keep working.
+type Theme = "light";
 
 interface ThemeCtx {
   theme: Theme;
@@ -10,52 +14,19 @@ interface ThemeCtx {
   toggle: () => void;
 }
 
-const ctx = createContext<ThemeCtx>({
-  theme: "light",
-  setTheme: () => {},
-  toggle: () => {},
-});
+const ctx = createContext<ThemeCtx>({ theme: "light", setTheme: () => {}, toggle: () => {} });
 
 export const useTheme = () => useContext(ctx);
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    const saved = localStorage.getItem("theme") as Theme | null;
-    if (saved === "light" || saved === "dark") {
-      setThemeState(saved);
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setThemeState("dark");
-    }
-    setMounted(true);
+    document.documentElement.setAttribute("data-theme", "light");
+    try { localStorage.setItem("theme", "light"); } catch { /* private mode */ }
   }, []);
 
-  const apply = useCallback((t: Theme) => {
-    document.documentElement.setAttribute("data-theme", t);
-    localStorage.setItem("theme", t);
-  }, []);
-
-  const setTheme = useCallback(
-    (t: Theme) => {
-      setThemeState(t);
-      apply(t);
-    },
-    [apply]
+  return (
+    <ctx.Provider value={{ theme: "light", setTheme: () => {}, toggle: () => {} }}>
+      {children}
+    </ctx.Provider>
   );
-
-  const toggle = useCallback(() => {
-    setTheme(theme === "light" ? "dark" : "light");
-  }, [theme, setTheme]);
-
-  useEffect(() => {
-    if (mounted) apply(theme);
-  }, [theme, mounted, apply]);
-
-  if (!mounted) {
-    return <>{children}</>;
-  }
-
-  return <ctx.Provider value={{ theme, setTheme, toggle }}>{children}</ctx.Provider>;
 }

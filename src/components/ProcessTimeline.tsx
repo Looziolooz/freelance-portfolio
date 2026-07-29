@@ -17,6 +17,10 @@ export type TimelineEntry = {
   bullets: string[];
   image: string;
   alt: string;
+  // Intrinsic pixel size — the frame takes the photo's natural aspect ratio so
+  // it fills edge-to-edge with the WHOLE image (no cropping, no letterbox bars).
+  w: number;
+  h: number;
 };
 
 export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] }) {
@@ -74,13 +78,20 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
               </ul>
               <div className="ptl-photo">
                 {e.image && (
-                  <Image
-                    src={e.image}
-                    alt={e.alt}
-                    fill
-                    sizes="(max-width: 880px) 100vw, 620px"
-                    style={{ objectFit: "cover", objectPosition: "center" }}
-                  />
+                  <>
+                    <Image
+                      src={e.image}
+                      alt={e.alt}
+                      width={e.w}
+                      height={e.h}
+                      sizes="(max-width: 880px) 100vw, 620px"
+                      style={{ width: "100%", height: "auto", display: "block" }}
+                    />
+                    {/* Dark corner scrim + caption in the bottom-right — doubles as
+                        a signature and masks the generator watermark that sits there. */}
+                    <span className="ptl-photo__scrim" aria-hidden="true" />
+                    <span className="ptl-photo__cap">lorenzo.studio</span>
+                  </>
                 )}
               </div>
             </div>
@@ -132,10 +143,23 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
         .ptl-tick { color: var(--accent-green-deep); font-weight: 800; flex-shrink: 0; }
 
         .ptl-photo {
-          position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden;
+          /* No fixed aspect-ratio: the frame takes the image's natural height, so
+             the whole photo fills it edge-to-edge with no cropping and no bars. */
+          position: relative; width: 100%; overflow: hidden; line-height: 0;
           border: 3px solid var(--ink-border); border-radius: var(--radius-lg);
-          background: linear-gradient(150deg, color-mix(in oklch, var(--accent-green) 30%, var(--canvas-page)), color-mix(in oklch, var(--accent-green-deep) 22%, var(--canvas-page)));
           box-shadow: var(--shadow-card);
+        }
+        .ptl-photo__scrim {
+          position: absolute; inset: 0; z-index: 1; pointer-events: none;
+          background:
+            radial-gradient(160px 160px at 100% 100%, rgba(20,17,13,0.72), transparent 72%),
+            linear-gradient(to top, rgba(20,17,13,0.5), transparent 40%),
+            linear-gradient(to left, rgba(20,17,13,0.4), transparent 36%);
+        }
+        .ptl-photo__cap {
+          position: absolute; right: 14px; bottom: 12px; z-index: 2; pointer-events: none;
+          font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+          line-height: 1; color: var(--canvas-page); text-shadow: 0 1px 4px rgba(0,0,0,0.45);
         }
 
         /* the rail sits at the dot's centre (left 6px + 44/2 = 28px) */

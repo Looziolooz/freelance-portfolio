@@ -23,7 +23,7 @@ function PointIcon({ k }: { k: (typeof POINTS)[number] }) {
       return (<svg {...p}><path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9z" /><circle cx="8" cy="8" r="1.4" fill="var(--accent-green-deep)" stroke="none" /></svg>);
     case "speed": // clock (24h reply)
       return (<svg {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>);
-    case "lang": // globe (Stockholm, 3 languages)
+    case "lang": // globe (3 languages)
       return (<svg {...p}><circle cx="12" cy="12" r="9" /><path d="M3 12h18" /><ellipse cx="12" cy="12" rx="4" ry="9" /></svg>);
     default:
       return null;

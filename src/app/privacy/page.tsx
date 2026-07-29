@@ -62,8 +62,7 @@ export default function PrivacyPage() {
         Hai diritto di accesso, rettifica, cancellazione, limitazione, opposizione e portabilità dei dati,
         e di revocare in ogni momento il consenso prestato. Per esercitarli scrivi a
         {" "}<a href="mailto:hello@lorenzo.studio">hello@lorenzo.studio</a>. Puoi inoltre proporre reclamo
-        all'autorità di controllo competente (in Italia il Garante per la protezione dei dati personali;
-        in Svezia l'IMY).
+        all'autorità di controllo competente (in Italia, il Garante per la protezione dei dati personali).
       </p>
 
       <h2>8. Assistente AI — trasparenza (Regolamento UE sull'IA)</h2>

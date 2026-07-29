@@ -77,9 +77,9 @@ const AVAILABLE: Record<Lang, string> = {
 };
 
 const LOCATION: Record<Lang, string> = {
-  IT: "Stoccolma, Svezia · Lavoro in Europa · Remoto",
-  EN: "Stockholm, Sweden · Works in Europe · Remote",
-  SV: "Stockholm, Sverige · Arbetar i Europa · Distans",
+  IT: "Lavoro in Europa · Remoto",
+  EN: "Works in Europe · Remote",
+  SV: "Arbetar i Europa · Distans",
 };
 
 /**
