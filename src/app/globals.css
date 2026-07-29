@@ -1048,14 +1048,17 @@ select:focus-visible,
 /* Hero copy is a full SENTENCE (long), so it uses a restrained size — NOT
    --fs-display-xl, which is sized for short page titles. Big enough to lead,
    small enough to read in ~4 lines inside the 560px statement column. */
-.hm-h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(36px, 4vw, 64px); line-height: 1.0; letter-spacing: -0.02em; margin: 0; color: var(--fg); }
+.hm-h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(36px, 4vw, 64px); line-height: 1.04; letter-spacing: -0.02em; margin: 0; color: var(--fg); overflow-wrap: break-word; }
 /* Encrypted/scramble characters before they resolve (EncryptedText). */
 .hm-enc { color: var(--ink-muted); opacity: 0.5; }
 /* Ghost reserves the final h1 box; the scramble overlays it absolutely so its
    per-frame reflow never shifts the siblings below (zero CLS from the effect). */
 .hm-h1--enc { position: relative; }
 .hm-h1__ghost { visibility: hidden; }
-.hm-h1__live { position: absolute; inset: 0; }
+/* Clip the scramble to the final-text box: random glyphs are wider than the real
+   letters, so mid-decrypt the title can wrap to an extra line and spill over the
+   statement below. overflow:hidden keeps it inside its own box until it resolves. */
+.hm-h1__live { position: absolute; inset: 0; overflow: hidden; }
 .hm-statement { font-family: var(--font-display); font-weight: 500; font-size: clamp(19px, 1.9vw, 27px); line-height: 1.28; letter-spacing: -0.01em; margin: 0; color: var(--fg); }
 .hm-lede { font-family: var(--font-ui); font-size: clamp(15px, 1.05vw, 16.5px); line-height: 1.6; margin: 2px 0 0; color: var(--ink-body); opacity: 0.82; max-width: 48ch; }
 .hm-cta { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 8px; }
@@ -1073,7 +1076,7 @@ select:focus-visible,
   .hm-stage { position: relative; height: auto; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 26px; padding: 96px 22px 48px; }
   .hm-video { position: relative; right: auto; top: auto; bottom: auto; width: 100%; height: clamp(240px, 42vh, 380px); order: -1; border-radius: 14px; -webkit-mask-image: none; mask-image: none; }
   .hm-content { position: relative; inset: auto; left: auto; top: auto; transform: none; width: 100%; gap: 14px; max-width: 640px; }
-  .hm-h1 { font-size: clamp(36px, 9.5vw, 58px); line-height: 0.97; }
+  .hm-h1 { font-size: clamp(34px, 9vw, 54px); line-height: 1.03; }
   .hm-statement { font-size: clamp(18px, 5vw, 24px); }
 }
 

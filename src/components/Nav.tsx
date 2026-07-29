@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useTheme } from "./ThemeProvider";
 import { useLang } from "./LangProvider";
 import { useAuth } from "./auth/AuthProvider";
+import { isPreLaunch } from "@/lib/launch";
 import type { Lang } from "@/i18n";
 
 export default function Nav() {
@@ -66,22 +67,28 @@ export default function Nav() {
           <a href="/work" onClick={() => setMenuOpen(false)}>{t("nav.work")}</a>
           <a href="/processo" onClick={() => setMenuOpen(false)}>{t("nav.process")}</a>
           <a href="/agents" onClick={() => setMenuOpen(false)}>{t("nav.agents")}</a>
-          <a href="/blog" onClick={() => setMenuOpen(false)}>{t("nav.blog")}</a>
-          <a href="/componenti" onClick={() => setMenuOpen(false)}>{t("nav.components")}</a>
-          <a href="/membership" onClick={() => setMenuOpen(false)}>{t("nav.membership")}</a>
-          <a
-            href={user ? "/account" : "/login"}
-            className="neo-btn neo-btn-sm"
-            style={{
-              textDecoration: "none",
-              color: "var(--btn-ink)",
-              padding: "6px 16px",
-              fontSize: 13,
-            }}
-            onClick={() => setMenuOpen(false)}
-          >
-            {user ? t("nav.account") : t("nav.login")}
-          </a>
+          {/* Pre-launch: blog, components shop, memberships and auth stay hidden
+              (flip LAUNCH_MODE in lib/launch.ts to reveal them). */}
+          {!isPreLaunch && (
+            <>
+              <a href="/blog" onClick={() => setMenuOpen(false)}>{t("nav.blog")}</a>
+              <a href="/componenti" onClick={() => setMenuOpen(false)}>{t("nav.components")}</a>
+              <a href="/membership" onClick={() => setMenuOpen(false)}>{t("nav.membership")}</a>
+              <a
+                href={user ? "/account" : "/login"}
+                className="neo-btn neo-btn-sm"
+                style={{
+                  textDecoration: "none",
+                  color: "var(--btn-ink)",
+                  padding: "6px 16px",
+                  fontSize: 13,
+                }}
+                onClick={() => setMenuOpen(false)}
+              >
+                {user ? t("nav.account") : t("nav.login")}
+              </a>
+            </>
+          )}
 
           {/* Mobile-only: language + theme live here since the desktop locale
               extras are hidden below 768px. */}

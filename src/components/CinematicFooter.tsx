@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLang } from "./LangProvider";
 import MagneticButton from "./MagneticButton";
+import { isPreLaunch, HIDDEN_ROUTES } from "@/lib/launch";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
@@ -104,11 +105,12 @@ export default function CinematicFooter() {
 
   const navPills: { href: string; label: string }[] = [
     { href: "/work", label: t("nav.work") },
+    { href: "/processo", label: t("nav.process") },
     { href: "/agents", label: t("nav.agents") },
     { href: "/componenti", label: t("nav.components") },
     { href: "/membership", label: t("nav.membership") },
     { href: "/blog", label: t("nav.blog") },
-  ];
+  ].filter((p) => !(isPreLaunch && (HIDDEN_ROUTES as readonly string[]).includes(p.href)));
 
   return (
     <>
@@ -187,6 +189,11 @@ export default function CinematicFooter() {
             </div>
             <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--ink-muted)" }}>
               {t("contact.footer.made")}
+            </div>
+            {/* Legal — always reachable (not gated by the pre-launch flag). */}
+            <div style={{ display: "flex", gap: 16, fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+              <a href="/privacy" style={{ color: "var(--ink-muted)", textDecoration: "none" }}>{t("nav.privacy")}</a>
+              <a href="/cookie" style={{ color: "var(--ink-muted)", textDecoration: "none" }}>{t("nav.cookie")}</a>
             </div>
           </div>
         </footer>

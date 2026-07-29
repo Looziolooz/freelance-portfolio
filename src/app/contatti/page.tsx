@@ -5,8 +5,9 @@ import Nav from "@/components/Nav";
 import CinematicFooter from "@/components/CinematicFooter";
 import BookingCalendar from "@/components/BookingCalendar";
 import { useLang } from "@/components/LangProvider";
+import { submitLead } from "@/lib/leadForm";
 
-const EMAIL = "hello@Lorenzo.studio";
+const EMAIL = "hello@lorenzo.studio";
 
 export default function ContattiPage() {
   const { t } = useLang();
@@ -14,9 +15,9 @@ export default function ContattiPage() {
   const [workemail, setWorkemail] = useState("");
   const [website, setWebsite] = useState("");
   const [describe, setDescribe] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
 
-  const send = (e: React.FormEvent) => {
-    e.preventDefault();
+  const mailtoFallback = () => {
     const subject = t("contatti.inquiry.subject");
     const body =
       `${t("contatti.inquiry.intro")}\n\n` +
@@ -25,6 +26,32 @@ export default function ContattiPage() {
       `${t("contatti.f.website")}: ${website}\n\n` +
       `${t("contatti.f.describe")}:\n${describe}`;
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const send = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+    const ok = await submitLead({
+      subject: t("contatti.inquiry.subject"),
+      from_name: `lorenzo.studio · contatti — ${fullname || "—"}`,
+      replyto: workemail,
+      name: fullname,
+      email: workemail,
+      website,
+      message:
+        `${t("contatti.inquiry.intro")}\n\n` +
+        `${t("contatti.f.fullname")}: ${fullname}\n` +
+        `${t("contatti.f.workemail")}: ${workemail}\n` +
+        `${t("contatti.f.website")}: ${website}\n\n` +
+        `${t("contatti.f.describe")}:\n${describe}`,
+    });
+    if (ok) {
+      setStatus("done");
+    } else {
+      setStatus("idle");
+      mailtoFallback();
+    }
   };
 
   return (
@@ -45,15 +72,44 @@ export default function ContattiPage() {
           <div className="ct-card">
             <h2 className="ct-card__title">{t("contatti.way1.title")}</h2>
             <p className="ct-card__body">{t("contatti.way1.body")}</p>
-            <form onSubmit={send} className="ct-form">
-              <input className="ct-input" type="text" required placeholder={t("contatti.f.fullname")} value={fullname} onChange={(e) => setFullname(e.target.value)} />
-              <input className="ct-input" type="email" required placeholder={t("contatti.f.workemail")} value={workemail} onChange={(e) => setWorkemail(e.target.value)} />
-              <input className="ct-input" type="text" placeholder={t("contatti.f.website")} value={website} onChange={(e) => setWebsite(e.target.value)} />
-              <textarea className="ct-input ct-textarea" required rows={4} placeholder={t("contatti.f.describe")} value={describe} onChange={(e) => setDescribe(e.target.value)} />
-              <button type="submit" className="neo-btn neo-btn--primary" style={{ alignSelf: "flex-start", padding: "13px 26px", fontSize: 15 }}>
-                {t("contatti.way1.cta")} <span aria-hidden="true">→</span>
-              </button>
-            </form>
+            {status === "done" ? (
+              <div
+                role="status"
+                style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 12, padding: "18px 0" }}
+              >
+                <span
+                  aria-hidden="true"
+                  style={{
+                    display: "grid", placeItems: "center", width: 44, height: 44, borderRadius: "50%",
+                    background: "var(--accent-green-deep)", color: "var(--canvas-page)",
+                    fontSize: 22, fontWeight: 700, border: "2px solid var(--ink-border)",
+                  }}
+                >
+                  ✓
+                </span>
+                <p style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 600, color: "var(--ink-body)" }}>
+                  {t("lead.done")}
+                </p>
+                <p style={{ margin: 0, fontFamily: "var(--font-mono)", fontSize: 12.5, color: "var(--ink-muted)" }}>
+                  {t("lead.done.sub")}
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={send} className="ct-form">
+                <input className="ct-input" type="text" required placeholder={t("contatti.f.fullname")} value={fullname} onChange={(e) => setFullname(e.target.value)} />
+                <input className="ct-input" type="email" required placeholder={t("contatti.f.workemail")} value={workemail} onChange={(e) => setWorkemail(e.target.value)} />
+                <input className="ct-input" type="text" placeholder={t("contatti.f.website")} value={website} onChange={(e) => setWebsite(e.target.value)} />
+                <textarea className="ct-input ct-textarea" required rows={4} placeholder={t("contatti.f.describe")} value={describe} onChange={(e) => setDescribe(e.target.value)} />
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="neo-btn neo-btn--primary"
+                  style={{ alignSelf: "flex-start", padding: "13px 26px", fontSize: 15, opacity: status === "sending" ? 0.65 : 1, cursor: status === "sending" ? "wait" : "pointer" }}
+                >
+                  {t("contatti.way1.cta")} <span aria-hidden="true">→</span>
+                </button>
+              </form>
+            )}
           </div>
 
           {/* Way 2 — book a discovery call */}

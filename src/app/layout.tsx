@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Fraunces, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import CookieConsent from "@/components/CookieConsent";
 import ThemeProvider from "@/components/ThemeProvider";
 import LangProvider from "@/components/LangProvider";
 import ClientLayout from "./ClientLayout";
+import { SITE_URL } from "@/lib/launch";
 import "./globals.css";
 
 // Display: Fraunces — an expressive "soft serif" with optical sizing. Carries
@@ -40,6 +42,7 @@ const generalSans = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Lorenzo.studio — Siti, automazioni e agenti AI per la tua impresa",
   description:
     "Sviluppo siti su misura per piccole e grandi aziende, automazione dei processi ripetitivi, contenuti social e agenti AI. Più visibilità, meno lavoro manuale, dati dal web che generano valore.",
@@ -59,6 +62,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <LangProvider>
             <ClientLayout>{children}</ClientLayout>
+            {/* GDPR/ePrivacy consent gate — shows the cookie banner and loads the
+                (cookieless) analytics only after the visitor accepts. Must live
+                inside LangProvider so its copy is translated. */}
+            <CookieConsent />
           </LangProvider>
         </ThemeProvider>
       </body>

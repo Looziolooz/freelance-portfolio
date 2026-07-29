@@ -316,6 +316,23 @@ export default function AgentChat({
           {t("agent.chat.send")}
         </button>
       </div>
+
+      {/* AI transparency (EU AI Act, art. 50): make clear this is an AI, not a person. */}
+      <p
+        style={{
+          margin: 0,
+          padding: "0 12px 8px",
+          fontFamily: "var(--font-mono)",
+          fontSize: 9.5,
+          lineHeight: 1.35,
+          letterSpacing: "0.02em",
+          color: "var(--ink-muted)",
+          textAlign: "center",
+          background: "var(--canvas-page)",
+        }}
+      >
+        {t("agent.chat.disclaimer")}
+      </p>
     </div>
   );
 }
