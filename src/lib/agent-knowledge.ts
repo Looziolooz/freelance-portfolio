@@ -222,6 +222,14 @@ const RAW: RawEntry[] = [
     sv: "Brado är webbplatsen för en hamburgerrestaurang i Modena (sedan 2016): 100% italienskt gräsbetat kött grillat över bokträ och hembakat bröd. Filmisk hero, meny, råvaruberättelse och bordsbokning. Byggd med Next.js 16 och Tailwind 4.",
   },
   {
+    id: "project-brasilena",
+    category: "project",
+    keywords: ["brasilena", "gassosa", "gazzosa", "soda", "läsk", "caffè", "coffee", "kaffe", "calabria", "kalabrien", "bibita", "drink", "dryck", "1930", "marchio storico", "heritage brand", "catalogo bibite", "drinks catalogue", "storia del marchio", "brand story", "next.js", "tailwind", "typescript"],
+    it: "Brasilena è il sito brand della gassosa al caffè calabrese, in commercio dal 1930: hero animato, storia del marchio, catalogo bibite e contatti. Costruito con Next.js 16, Tailwind 4 e TypeScript. Presenza online forte per un prodotto storico: racconta il marchio e mette in mostra il catalogo a nuovi clienti. Demo live: https://brasilena-website.vercel.app/",
+    en: "Brasilena is the brand site for the Calabrian coffee soda, on the market since 1930: animated hero, brand story, drinks catalogue and contact. Built with Next.js 16, Tailwind 4 and TypeScript. A strong online presence for a historic product: it tells the brand story and showcases the catalogue to new customers. Live demo: https://brasilena-website.vercel.app/",
+    sv: "Brasilena är varumärkessidan för den kalabriska kaffeläsken, på marknaden sedan 1930: animerad hero, varumärkeshistoria, dryckeskatalog och kontakt. Byggd med Next.js 16, Tailwind 4 och TypeScript. En stark närvaro online för en klassisk produkt: den berättar varumärkets historia och visar katalogen för nya kunder. Live-demo: https://brasilena-website.vercel.app/",
+  },
+  {
     id: "project-aurelia",
     category: "project",
     keywords: ["aurelia pro x1", "aurelia", "macchina caffè", "espresso machine", "espressomaskin", "caffè", "coffee", "kaffe", "configuratore 3d", "3d configurator", "3d-konfigurator", "landing page", "premium", "varianti colore", "colour variants", "färgvarianter", "next.js", "python", "3d"],

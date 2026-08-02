@@ -943,7 +943,13 @@ body.theme-dark ::-webkit-scrollbar-thumb,
 /* ─── Global element resets ─── */
 
 a { color: var(--ink-body); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; }
-a:hover { color: var(--accent-coral); }
+/* Link hover = forest (DESIGN.md: links are forest green; ochre is a FILL colour
+   and reads ~2.2:1 on parchment — too faint for text). */
+a:hover { color: var(--accent-coral-deep); }
+/* Filled, button-shaped anchors keep their dark ink label in EVERY state — the
+   link hover above must never bleed onto them (recoloured text on the ochre fill
+   of a primary button was illegible). */
+a.neo-btn:hover, a.cine-pill:hover { color: var(--btn-ink); }
 button, input, select, textarea { font-family: inherit; }
 hr { border: none; border-top: 3px solid var(--ink-border); margin: 2rem 0; }
 

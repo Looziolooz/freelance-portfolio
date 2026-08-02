@@ -49,6 +49,22 @@ export default function Nav() {
           <a href="/work" onClick={() => setMenuOpen(false)}>{t("nav.work")}</a>
           <a href="/processo" onClick={() => setMenuOpen(false)}>{t("nav.process")}</a>
           <a href="/agents" onClick={() => setMenuOpen(false)}>{t("nav.agents")}</a>
+          {/* Persistent conversion CTA — the free audit is the funnel's entry
+              point, so it stays reachable from every page. */}
+          <a
+            href="/contatti"
+            className="neo-btn neo-btn-sm neo-btn--primary"
+            style={{
+              textDecoration: "none",
+              color: "var(--btn-ink)", // .topbar__nav a would win the cascade otherwise
+              padding: "6px 16px",
+              fontSize: 13,
+              whiteSpace: "nowrap",
+            }}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t("nav.cta")} <span className="btn-arrow" aria-hidden="true">→</span>
+          </a>
           {/* Pre-launch: blog, components shop, memberships and auth stay hidden
               (flip LAUNCH_MODE in lib/launch.ts to reveal them). */}
           {!isPreLaunch && (

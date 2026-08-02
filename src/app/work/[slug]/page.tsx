@@ -133,6 +133,23 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
         </div>
       )}
 
+      {project.concept && (
+        <p
+          style={{
+            display: "flex",
+            gap: 8,
+            maxWidth: 680,
+            marginBottom: 28,
+            fontSize: "var(--fs-sm)",
+            lineHeight: 1.55,
+            color: "var(--ink-muted)",
+          }}
+        >
+          <span aria-hidden="true" style={{ flexShrink: 0 }}>ⓘ</span>
+          <span>{t("work.concept.note")}</span>
+        </p>
+      )}
+
       {project.demo ? (
         <>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12 }}>

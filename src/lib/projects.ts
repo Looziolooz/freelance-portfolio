@@ -24,6 +24,10 @@ export type Project = {
   // Temporarily pulled from the gallery AND its detail page (e.g. awaiting the
   // client's go-ahead to show it publicly). Data is kept; just not displayed.
   hidden?: boolean;
+  // Demo that references a real, third-party brand. Renders an explicit
+  // "independent concept, not affiliated/endorsed" disclaimer on the detail page
+  // so it can be shown safely as a portfolio concept piece.
+  concept?: boolean;
 };
 
 export const PROJECTS: Project[] = [
@@ -97,7 +101,7 @@ export const PROJECTS: Project[] = [
     image: "/projects/brasilena.png",
     featured: true,
     swatch: "#FFD21E",
-    hidden: true, // pending owners' OK — not shown for now
+    concept: true, // references a real brand — shown as an independent concept
   },
   {
     id: "17",
