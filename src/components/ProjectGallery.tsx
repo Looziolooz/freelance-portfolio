@@ -6,11 +6,12 @@ import Image from "next/image";
 import { useLang } from "./LangProvider";
 import { PROJECTS, type Project } from "@/lib/projects";
 
-// Projects as a card grid. Cover clips play ONCE when the card scrolls into
-// view, then hold their last frame (IntersectionObserver — off-screen clips
-// pause to save resources); clicking opens the in-site demo viewer at
-// /work/[slug]. Cards with only a screenshot show it static; repo-only cards
-// fall back to their brand swatch. Reduced-motion keeps the poster still.
+// Projects as a card grid. Cover clips are hover-driven on desktop (play under
+// the cursor, pause on leave, one run total — then they hold the last frame);
+// touch devices play them once on viewport entry instead. Clicking opens the
+// in-site demo viewer at /work/[slug]. Cards with only a screenshot show it
+// static; repo-only cards fall back to their brand swatch. Reduced-motion
+// keeps the poster still.
 export default function ProjectGallery() {
   const { t } = useLang();
   const items = PROJECTS.filter((p) => p.featured && !p.hidden);
@@ -34,13 +35,16 @@ function ProjectCard({ p }: { p: Project }) {
   const title = t(`work.proj.${p.key}`);
   const tags = t(`work.proj.${p.key}.tags`);
 
-  // Play the cover ONCE when the card first scrolls into view, then freeze on
-  // the last frame (no loop, no replay — v.ended guards against play() restarting
-  // a finished clip). Off-screen clips pause. Reduced-motion → stay on the poster.
+  // The cover clip is cursor-driven on desktop: it plays while the pointer is
+  // over the card and pauses on leave; once finished it freezes on the last
+  // frame and never replays (v.ended guard — play() would restart it). Touch
+  // devices have no cursor, so there the clip plays once when the card scrolls
+  // into view. Reduced-motion → stay on the poster in both cases.
   useEffect(() => {
     const v = vref.current;
     if (!v) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(hover: hover)").matches) return; // desktop: hover handlers below
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -57,6 +61,18 @@ function ProjectCard({ p }: { p: Project }) {
     return () => io.disconnect();
   }, []);
 
+  const hoverPlay = () => {
+    const v = vref.current;
+    if (!v || v.ended) return;
+    if (!window.matchMedia("(hover: hover)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    v.play().catch(() => {});
+  };
+  const hoverPause = () => {
+    const v = vref.current;
+    if (v && !v.ended) v.pause();
+  };
+
   return (
     <li className="pg-item">
       <Link
@@ -64,6 +80,8 @@ function ProjectCard({ p }: { p: Project }) {
         className="pg-card"
         style={{ ["--sw" as string]: p.swatch ?? "#16151a" } as React.CSSProperties}
         aria-label={`${title} — ${t("work.viewDemo")}`}
+        onMouseEnter={hoverPlay}
+        onMouseLeave={hoverPause}
       >
         <span className="pg-media">
           {p.coverVideo ? (
