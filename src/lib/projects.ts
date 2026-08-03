@@ -38,6 +38,7 @@ export const PROJECTS: Project[] = [
     demo: "https://pileggi-olio.vercel.app/",
     repo: "https://github.com/Looziolooz/pileggi-olio",
     image: "/projects/aliva.png",
+    coverVideo: "/projects/aliva.mp4",
     featured: true,
     swatch: "#5D6C45",
     concept: true, // Azienda Agricola Paone is a real producer — shown as an independent concept
@@ -49,6 +50,7 @@ export const PROJECTS: Project[] = [
     demo: "https://yoga-two-beryl.vercel.app/",
     repo: "https://github.com/Looziolooz/yoga",
     image: "/projects/yoga.png",
+    coverVideo: "/projects/yoga.mp4",
     featured: true,
     swatch: "#A4B0A0",
   },
