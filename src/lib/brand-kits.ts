@@ -47,6 +47,30 @@ export type BrandKit = {
 const SANS = "var(--font-ui), system-ui, sans-serif";
 
 export const BRAND_KITS: Record<string, BrandKit> = {
+  sushi: {
+    slug: "sushi",
+    name: "Golden Dragon",
+    monogram: "金",
+    tagline: "Fuoco al tavolo, sushi d'autore.",
+    domain: "goldendragonmilano.it",
+    shape: "square",
+    motif: "wave",
+    display: '"Didot", "Bodoni MT", "Playfair Display", Georgia, serif',
+    body: SANS,
+    tracking: "0.18em",
+    paper: "#0D0D0D",
+    ink: "#F2F2F2",
+    primary: "#C6A15B",
+    accent: "#213436",
+    palette: [
+      { name: "Oro", hex: "#C6A15B", role: "primary", on: "#0D0D0D" },
+      { name: "Notte", hex: "#181818", role: "secondary", on: "#F2F2F2" },
+      { name: "Giada", hex: "#213436", role: "accent", on: "#F2F2F2" },
+      { name: "Carbone", hex: "#0D0D0D", role: "paper", on: "#F2F2F2" },
+      { name: "Avorio", hex: "#F2F2F2", role: "ink", on: "#0D0D0D" },
+    ],
+  },
+
   brado: {
     slug: "brado",
     name: "Brado",

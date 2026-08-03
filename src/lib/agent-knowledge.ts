@@ -222,6 +222,14 @@ const RAW: RawEntry[] = [
     sv: "Brado är webbplatsen för en hamburgerrestaurang i Modena (sedan 2016): 100% italienskt gräsbetat kött grillat över bokträ och hembakat bröd. Filmisk hero, meny, råvaruberättelse och bordsbokning. Byggd med Next.js 16 och Tailwind 4.",
   },
   {
+    id: "project-sushi",
+    category: "project",
+    keywords: ["golden dragon", "sushi", "ristorante giapponese", "japanese restaurant", "japansk restaurang", "coreano", "korean", "koreansk", "fusion", "table grill", "yakiniku", "korean bbq", "nabemono", "milano", "milan", "prenotazione", "booking", "bokning", "gift card", "delivery", "consegna", "next.js", "tailwind"],
+    it: "Golden Dragon è il sito di un ristorante fusion giapponese e coreano a Milano: Table Grill senza fumo, Yakiniku, Korean BBQ, Nabemono, menù con oltre 50 specialità, gift card, consegna a domicilio e prenotazione del tavolo. Design scuro premium oro e carbone. Costruito con Next.js 16, Tailwind 4 e TypeScript. Demo live: https://sushi-lyart-ten.vercel.app/",
+    en: "Golden Dragon is the website of a Japanese-Korean fusion restaurant in Milan: smokeless Table Grill, Yakiniku, Korean BBQ, Nabemono, a 50+ dish menu, gift cards, home delivery and table booking. Premium dark gold-and-charcoal design. Built with Next.js 16, Tailwind 4 and TypeScript. Live demo: https://sushi-lyart-ten.vercel.app/",
+    sv: "Golden Dragon är webbplatsen för en japansk-koreansk fusionrestaurang i Milano: rökfri Table Grill, Yakiniku, Korean BBQ, Nabemono, meny med över 50 rätter, presentkort, hemleverans och bordsbokning. Mörk premiumdesign i guld och kol. Byggd med Next.js 16, Tailwind 4 och TypeScript. Live-demo: https://sushi-lyart-ten.vercel.app/",
+  },
+  {
     id: "project-brasilena",
     category: "project",
     keywords: ["brasilena", "gassosa", "gazzosa", "soda", "läsk", "caffè", "coffee", "kaffe", "calabria", "kalabrien", "bibita", "drink", "dryck", "1930", "marchio storico", "heritage brand", "catalogo bibite", "drinks catalogue", "storia del marchio", "brand story", "next.js", "tailwind", "typescript"],

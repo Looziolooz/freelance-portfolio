@@ -32,6 +32,16 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "24",
+    key: "sushi",
+    slug: "sushi",
+    demo: "https://sushi-lyart-ten.vercel.app/",
+    repo: "https://github.com/Looziolooz/sushi",
+    image: "/projects/sushi.png",
+    featured: true,
+    swatch: "#C6A15B",
+  },
+  {
     id: "23",
     key: "brado",
     slug: "brado",
