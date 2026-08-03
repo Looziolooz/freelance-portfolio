@@ -6,11 +6,11 @@ import Image from "next/image";
 import { useLang } from "./LangProvider";
 import { PROJECTS, type Project } from "@/lib/projects";
 
-// Projects as a card grid. Cover clips auto-loop while the card is on screen
-// (IntersectionObserver — off-screen clips pause to save resources); clicking
-// opens the in-site demo viewer at /work/[slug]. Cards with only a screenshot
-// show it static; repo-only cards fall back to their brand swatch. Reduced-motion
-// keeps the poster still.
+// Projects as a card grid. Cover clips play ONCE when the card scrolls into
+// view, then hold their last frame (IntersectionObserver — off-screen clips
+// pause to save resources); clicking opens the in-site demo viewer at
+// /work/[slug]. Cards with only a screenshot show it static; repo-only cards
+// fall back to their brand swatch. Reduced-motion keeps the poster still.
 export default function ProjectGallery() {
   const { t } = useLang();
   const items = PROJECTS.filter((p) => p.featured && !p.hidden);
@@ -34,8 +34,9 @@ function ProjectCard({ p }: { p: Project }) {
   const title = t(`work.proj.${p.key}`);
   const tags = t(`work.proj.${p.key}.tags`);
 
-  // Auto-loop the cover only while the card is on screen (and pause otherwise),
-  // so we don't run every clip at once. Reduced-motion → stay on the poster.
+  // Play the cover ONCE when the card first scrolls into view, then freeze on
+  // the last frame (no loop, no replay — v.ended guards against play() restarting
+  // a finished clip). Off-screen clips pause. Reduced-motion → stay on the poster.
   useEffect(() => {
     const v = vref.current;
     if (!v) return;
@@ -43,8 +44,11 @@ function ProjectCard({ p }: { p: Project }) {
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
-          if (e.isIntersecting) v.play().catch(() => {});
-          else v.pause();
+          if (e.isIntersecting) {
+            if (!v.ended) v.play().catch(() => {});
+          } else if (!v.ended) {
+            v.pause();
+          }
         }
       },
       { threshold: 0.2 },
@@ -68,7 +72,6 @@ function ProjectCard({ p }: { p: Project }) {
               src={p.coverVideo}
               poster={p.image ? `/_next/image?url=${encodeURIComponent(p.image)}&w=828&q=75` : undefined}
               muted
-              loop
               playsInline
               preload="metadata"
               aria-hidden="true"
