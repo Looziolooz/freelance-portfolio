@@ -32,6 +32,17 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "26",
+    key: "aliva",
+    slug: "aliva",
+    demo: "https://pileggi-olio.vercel.app/",
+    repo: "https://github.com/Looziolooz/pileggi-olio",
+    image: "/projects/aliva.png",
+    featured: true,
+    swatch: "#5D6C45",
+    concept: true, // Azienda Agricola Paone is a real producer — shown as an independent concept
+  },
+  {
     id: "25",
     key: "yoga",
     slug: "yoga",

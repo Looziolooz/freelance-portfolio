@@ -47,6 +47,30 @@ export type BrandKit = {
 const SANS = "var(--font-ui), system-ui, sans-serif";
 
 export const BRAND_KITS: Record<string, BrandKit> = {
+  aliva: {
+    slug: "aliva",
+    name: "Aliva",
+    monogram: "A",
+    tagline: "Passione per l'olio, ricchezza della nostra terra.",
+    domain: "aliva.it",
+    shape: "circle",
+    motif: "leaf",
+    display: '"Plantin MT Pro", Georgia, "Times New Roman", serif',
+    body: SANS,
+    tracking: "0.2em",
+    paper: "#F6F3EA",
+    ink: "#2A2D22",
+    primary: "#5D6C45",
+    accent: "#CCD4BF",
+    palette: [
+      { name: "Oliva", hex: "#5D6C45", role: "primary", on: "#F6F3EA" },
+      { name: "Terra", hex: "#43463A", role: "secondary", on: "#F6F3EA" },
+      { name: "Salvia", hex: "#CCD4BF", role: "accent", on: "#2A2D22" },
+      { name: "Avorio", hex: "#F6F3EA", role: "paper", on: "#2A2D22" },
+      { name: "Corteccia", hex: "#2A2D22", role: "ink", on: "#F6F3EA" },
+    ],
+  },
+
   yoga: {
     slug: "yoga",
     name: "YogaPlus",

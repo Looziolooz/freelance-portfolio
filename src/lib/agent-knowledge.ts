@@ -222,6 +222,14 @@ const RAW: RawEntry[] = [
     sv: "Brado är webbplatsen för en hamburgerrestaurang i Modena (sedan 2016): 100% italienskt gräsbetat kött grillat över bokträ och hembakat bröd. Filmisk hero, meny, råvaruberättelse och bordsbokning. Byggd med Next.js 16 och Tailwind 4.",
   },
   {
+    id: "project-aliva",
+    category: "project",
+    keywords: ["aliva", "olio", "olive oil", "olivolja", "extravergine", "extra virgin", "jungfruolja", "uliveti", "olive groves", "olivlundar", "maida", "calabria", "kalabrien", "azienda agricola", "farm", "gård", "biologico", "organic", "ekologisk", "carolea", "frantoio", "molitura", "milling", "storytelling", "scroll", "lenis", "next.js", "tailwind"],
+    it: "Aliva è un racconto immersivo per un olio extravergine d'oliva di Maida, Calabria: un viaggio a scorrimento in cinque tappe tra uliveti secolari coltivati in biologico, raccolta, molitura, cantina e confezionamento, con fotografia a tutto schermo e scroll fluido. Costruito con Next.js 16, Tailwind 4 e Lenis. Progetto concept indipendente. Demo live: https://pileggi-olio.vercel.app/",
+    en: "Aliva is an immersive story for an extra virgin olive oil from Maida, Calabria: a five-chapter scroll journey through organically farmed secular groves, harvest, milling, cellar and packaging, with full-screen photography and smooth scrolling. Built with Next.js 16, Tailwind 4 and Lenis. Independent concept project. Live demo: https://pileggi-olio.vercel.app/",
+    sv: "Aliva är ett immersivt berättande för en extra jungfruolivolja från Maida, Kalabrien: en scrollresa i fem kapitel genom ekologiskt odlade sekelgamla olivlundar, skörd, pressning, källare och förpackning, med helskärmsfotografi och mjuk scroll. Byggd med Next.js 16, Tailwind 4 och Lenis. Oberoende konceptprojekt. Live-demo: https://pileggi-olio.vercel.app/",
+  },
+  {
     id: "project-yoga",
     category: "project",
     keywords: ["yogaplus", "yoga", "benessere", "wellness", "friskvård", "meditazione", "meditation", "mindfulness", "studio yoga", "yoga studio", "yogastudio", "corsi", "courses", "kurser", "insegnanti", "teachers", "lärare", "shop", "carrello", "cart", "varukorg", "prenotazione lezioni", "class booking", "klassbokning", "eventi", "events", "next.js", "tailwind"],
