@@ -222,6 +222,14 @@ const RAW: RawEntry[] = [
     sv: "Brado är webbplatsen för en hamburgerrestaurang i Modena (sedan 2016): 100% italienskt gräsbetat kött grillat över bokträ och hembakat bröd. Filmisk hero, meny, råvaruberättelse och bordsbokning. Byggd med Next.js 16 och Tailwind 4.",
   },
   {
+    id: "project-yoga",
+    category: "project",
+    keywords: ["yogaplus", "yoga", "benessere", "wellness", "friskvård", "meditazione", "meditation", "mindfulness", "studio yoga", "yoga studio", "yogastudio", "corsi", "courses", "kurser", "insegnanti", "teachers", "lärare", "shop", "carrello", "cart", "varukorg", "prenotazione lezioni", "class booking", "klassbokning", "eventi", "events", "next.js", "tailwind"],
+    it: "YogaPlus è il sito completo di uno studio di yoga e benessere: corsi con dettaglio, insegnanti, eventi, blog, shop con carrello, prezzi, testimonianze, FAQ e prenotazione lezioni, con tre varianti di homepage. Design forest scuro con crema, oro e salvia. Costruito con Next.js 16, Tailwind 4 e TypeScript. Demo live: https://yoga-two-beryl.vercel.app/",
+    en: "YogaPlus is the complete website of a yoga and wellness studio: detailed courses, teachers, events, blog, shop with cart, pricing, testimonials, FAQ and class booking, with three homepage variants. Dark forest design with cream, gold and sage. Built with Next.js 16, Tailwind 4 and TypeScript. Live demo: https://yoga-two-beryl.vercel.app/",
+    sv: "YogaPlus är den kompletta webbplatsen för en yoga- och friskvårdsstudio: kurser med detaljsidor, lärare, evenemang, blogg, butik med varukorg, priser, omdömen, FAQ och klassbokning, med tre startsidevarianter. Mörk skogsdesign med kräm, guld och salvia. Byggd med Next.js 16, Tailwind 4 och TypeScript. Live-demo: https://yoga-two-beryl.vercel.app/",
+  },
+  {
     id: "project-sushi",
     category: "project",
     keywords: ["golden dragon", "sushi", "ristorante giapponese", "japanese restaurant", "japansk restaurang", "coreano", "korean", "koreansk", "fusion", "table grill", "yakiniku", "korean bbq", "nabemono", "milano", "milan", "prenotazione", "booking", "bokning", "gift card", "delivery", "consegna", "next.js", "tailwind"],

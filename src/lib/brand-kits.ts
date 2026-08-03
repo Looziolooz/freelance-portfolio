@@ -47,6 +47,30 @@ export type BrandKit = {
 const SANS = "var(--font-ui), system-ui, sans-serif";
 
 export const BRAND_KITS: Record<string, BrandKit> = {
+  yoga: {
+    slug: "yoga",
+    name: "YogaPlus",
+    monogram: "Y",
+    tagline: "Ritrova il tuo equilibrio.",
+    domain: "yogaplus.it",
+    shape: "circle",
+    motif: "sun",
+    display: '"Marcellus", Georgia, "Times New Roman", serif',
+    body: SANS,
+    tracking: "0.14em",
+    paper: "#141B16",
+    ink: "#ECE5D3",
+    primary: "#C29A5E",
+    accent: "#A4B0A0",
+    palette: [
+      { name: "Oro", hex: "#C29A5E", role: "primary", on: "#141B16" },
+      { name: "Muschio", hex: "#1D2620", role: "secondary", on: "#ECE5D3" },
+      { name: "Salvia", hex: "#A4B0A0", role: "accent", on: "#141B16" },
+      { name: "Foresta", hex: "#141B16", role: "paper", on: "#ECE5D3" },
+      { name: "Crema", hex: "#ECE5D3", role: "ink", on: "#141B16" },
+    ],
+  },
+
   sushi: {
     slug: "sushi",
     name: "Golden Dragon",
