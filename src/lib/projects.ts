@@ -61,6 +61,7 @@ export const PROJECTS: Project[] = [
     demo: "https://sushi-lyart-ten.vercel.app/",
     repo: "https://github.com/Looziolooz/sushi",
     image: "/projects/sushi.png",
+    coverVideo: "/projects/sushi.mp4",
     featured: true,
     swatch: "#C6A15B",
   },
