@@ -4,6 +4,11 @@ Guidance for Claude when working in this repository.
 
 ## Design System
 Always read [DESIGN.md](DESIGN.md) before making any visual or UI decision.
+[PRODUCT.md](PRODUCT.md) carries the product/audience context for design tooling.
+The **impeccable** skill (design guidance + deterministic detectors) is installed
+locally in `.claude/` (gitignored) — reinstall with `npx impeccable install`;
+run `npx impeccable detect src` before shipping UI changes. Accepted finding:
+Inter inside the codepen sandbox wrapper (pen demo content, not site UI).
 All font choices, colours, spacing, and aesthetic direction are defined there.
 Do not deviate without explicit user approval. When reviewing code, flag anything
 that doesn't match DESIGN.md (notably: the palette is Parchment & Forest — light

@@ -203,7 +203,7 @@ export default function BlogPage() {
               return (
                 <Reveal key={item.id} delay={(i % 3) * 0.05} style={{ display: "flex" }}>
                   <div
-                    className="neo-card neo-card--shine accent-rail"
+                    className="neo-card neo-card--shine"
                     style={{
                       position: "relative",
                       width: "100%",

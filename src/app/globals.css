@@ -1599,21 +1599,9 @@ select:focus-visible,
 }
 @media (prefers-reduced-motion: reduce) { .neo-card--shine:hover::after { animation: none; } }
 
-/* ── Accent rail: a thin emerald edge that grows on hover (opt-in) ── */
-.accent-rail { position: relative; }
-.accent-rail::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  height: 4px;
-  width: 38px;
-  background: var(--accent-green-sheen);
-  border-bottom-right-radius: var(--radius-sm);
-  transition: width 0.4s var(--ease);
-  z-index: 3;
-}
-.accent-rail:hover::before { width: 100%; }
-@media (prefers-reduced-motion: reduce) { .accent-rail::before { transition: none; } }
+/* (accent-rail removed: the 4px growing stripe on cards is a saturated
+   AI-generated-UI pattern — impeccable "side-tab" detector — and wasn't part
+   of the pinned design system. Cards keep borders + offset shadows + shine.) */
 
 /* ── Marquee: infinite track with edge fade + pause-on-hover ── */
 .marquee {
@@ -1695,7 +1683,10 @@ a:hover .btn-arrow, button:hover .btn-arrow, .magnetic:hover .btn-arrow { transf
 @media (prefers-reduced-motion: reduce) { .btn-arrow { transition: none; } }
 
 /* ── Scroll-aware top bar ── */
-.topbar { transition: box-shadow 0.3s var(--ease), height 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.4s var(--ease), opacity 0.3s var(--ease); }
+/* height is NOT in the transition list on purpose: animating it reflows the bar's
+   children every frame (impeccable detector); the 8px snap hides under the
+   box-shadow/background cross-fade. */
+.topbar { transition: box-shadow 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.4s var(--ease), opacity 0.3s var(--ease); }
 /* Hidden over the hero (homepage) until the first scroll; slides down on scroll. */
 .topbar.is-hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; }
 .topbar.is-scrolled {

@@ -178,13 +178,16 @@ export default function WayfindingNav() {
           position: absolute;
           right: 0;
           top: 50%;
-          transform: translateY(-50%);
+          /* Fixed 18px width scaled down: scaleX composites on the GPU where
+             animating width relayouts every frame (impeccable detector). */
+          transform: translateY(-50%) scaleX(.34);
+          transform-origin: right center;
           display: block;
-          width: 6px;
+          width: 18px;
           height: 1px;
           background: currentColor;
           opacity: .4;
-          transition: width .26s ease-out .12s, opacity .22s ease-out .12s;
+          transition: transform .26s ease-out .12s, opacity .22s ease-out .12s;
         }
 
         .wayfinding-link.is-active {
@@ -192,7 +195,7 @@ export default function WayfindingNav() {
         }
 
         .wayfinding-link.is-active .wayfinding-tick {
-          width: 18px;
+          transform: translateY(-50%) scaleX(1);
           opacity: 1;
         }
 
@@ -206,7 +209,7 @@ export default function WayfindingNav() {
 
         .wayfinding-nav:hover .wayfinding-tick,
         .wayfinding-nav:focus-within .wayfinding-tick {
-          width: 12px;
+          transform: translateY(-50%) scaleX(.67);
           opacity: .7;
           transition-delay: 0ms;
         }

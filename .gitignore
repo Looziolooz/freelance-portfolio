@@ -63,3 +63,6 @@ next-env.d.ts
 # Social/marketing scripts — local working material
 /content/social/
 .gstack/
+
+# Local AI-harness config (impeccable skill + hooks): reinstall with `npx impeccable install`
+.claude/

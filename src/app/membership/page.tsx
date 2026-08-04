@@ -228,7 +228,7 @@ export default function MembershipPage() {
                     </span>
                   )}
                   <div
-                    className="neo-card neo-card--shine accent-rail"
+                    className="neo-card neo-card--shine"
                     style={{
                       position: "relative",
                       width: "100%",

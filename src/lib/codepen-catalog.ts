@@ -248,6 +248,9 @@ export function buildPreviewDoc(src: Pick<ComponentSource, "html" | "css" | "js"
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Inter is intentional HERE: several pens are period-faithful demo artifacts
+     whose own CSS targets it. The SITE's ban on Inter (DESIGN.md) covers the
+     UI, not the sellable pen content rendered inside this sandboxed iframe. -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
 <script src="${cdn}/gsap.min.js"></script>
 <script src="${cdn}/ScrollTrigger.min.js"></script>
