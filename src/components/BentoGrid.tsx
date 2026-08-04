@@ -46,7 +46,11 @@ export default function BentoGrid() {
       {PILLARS.map((key) => {
         // Service cards become links as their landing pages come online
         // (SEO audit: six services sold, zero services with a URL).
-        const href = key === "sites" ? "/servizi/siti-web" : undefined;
+        const href =
+          key === "sites" ? "/servizi/siti-web"
+          : key === "automation" ? "/servizi/automazioni"
+          : key === "agents" ? "/servizi/agenti-ai"
+          : undefined;
         const inner = (
           <>
             <span className="bento-svc__icon">
