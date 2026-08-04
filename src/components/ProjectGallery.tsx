@@ -34,6 +34,7 @@ function ProjectCard({ p }: { p: Project }) {
   const vref = useRef<HTMLVideoElement>(null);
   const title = t(`work.proj.${p.key}`);
   const tags = t(`work.proj.${p.key}.tags`);
+  const blurb = t(`work.proj.${p.key}.blurb`);
 
   // The cover clip is cursor-driven on desktop: it plays while the pointer is
   // over the card and pauses on leave; once finished it freezes on the last
@@ -117,6 +118,9 @@ function ProjectCard({ p }: { p: Project }) {
           <span className="pg-name">{title}</span>
           {tags !== `work.proj.${p.key}.tags` && <span className="pg-tags">{tags}</span>}
         </span>
+        {/* One buyer-language line per card (SEO/SXO audit: the cards only spoke
+            in tech stacks, and crawlers learned nothing about the projects). */}
+        {blurb !== `work.proj.${p.key}.blurb` && <span className="pg-blurb">{blurb}</span>}
       </Link>
     </li>
   );

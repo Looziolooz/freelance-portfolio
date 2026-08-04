@@ -1183,7 +1183,11 @@ select:focus-visible,
 .pg-demo__arrow { transition: transform .2s var(--ease); }
 .pg-card:hover .pg-demo { background: var(--accent-green-bright); }
 .pg-card:hover .pg-demo__arrow { transform: translate(2px, -2px); }
-.pg-info { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 13px 16px 15px; }
+.pg-info { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 13px 16px 4px; }
+.pg-blurb {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  padding: 0 16px 15px; font-size: 13.5px; line-height: 1.45; color: var(--ink-muted);
+}
 .pg-name { font-family: var(--font-display); font-weight: 600; font-size: clamp(17px, 1.5vw, 21px); letter-spacing: -0.01em; line-height: 1.1; color: var(--fg); }
 .pg-tags { flex: 0 0 auto; font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-muted); text-align: right; }
 @media (max-width: 720px) {

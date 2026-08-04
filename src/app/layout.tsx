@@ -41,11 +41,97 @@ const generalSans = localFont({
   fallback: ["ui-sans-serif", "system-ui", "-apple-system", "Segoe UI", "sans-serif"],
 });
 
+const TITLE = "LOoz.design — Siti, automazioni e agenti AI per la tua impresa";
+// ≤160 chars so search results don't truncate it (the old one was 193).
+const DESCRIPTION =
+  "Siti su misura, automazioni e agenti AI per piccole imprese e solo founder. Più visibilità, meno lavoro manuale, e un sito che lavora per te.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "LOoz.design — Siti, automazioni e agenti AI per la tua impresa",
-  description:
-    "Sviluppo siti su misura per piccole e grandi aziende, automazione dei processi ripetitivi, contenuti social e agenti AI. Più visibilità, meno lavoro manuale, dati dal web che generano valore.",
+  // Child routes set their own short title; the template appends the brand.
+  title: { default: TITLE, template: "%s — LOoz.design" },
+  description: DESCRIPTION,
+  // "./" resolves per-path → every page gets a self-referencing canonical
+  // (protects against *.vercel.app preview deploys indexing as duplicates).
+  alternates: { canonical: "./" },
+  openGraph: {
+    type: "website",
+    siteName: "LOoz.design",
+    locale: "it_IT",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "LOoz.design — siti, automazioni e agenti AI" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/og.png"],
+  },
+};
+
+// Site-wide entity graph (SEO audit): Organization + Person + WebSite, all keyed
+// on SITE_URL so JSON-LD, sitemap and canonicals always agree. Deliberately no
+// street address / city (remote-first privacy posture): areaServed gives
+// country-level grounding without doxxing, and the Person stays first-name-only.
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#org`,
+      name: "LOoz.design",
+      url: `${SITE_URL}/`,
+      description:
+        "Studio freelance indipendente: siti web ed e-commerce su misura, automazioni dei processi ripetitivi, contenuti social e agenti AI per piccole imprese e solo founder.",
+      slogan: "Siti, automazioni e agenti AI che fanno crescere la tua impresa.",
+      founder: { "@id": `${SITE_URL}/#lorenzo` },
+      knowsLanguage: ["it", "en", "sv"],
+      areaServed: [
+        { "@type": "Country", name: "Italia" },
+        { "@type": "Country", name: "Sverige" },
+        { "@type": "Place", name: "Europa" },
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        email: "hello@looz.design",
+        url: `${SITE_URL}/contatti`,
+        availableLanguage: ["it", "en", "sv"],
+      },
+      sameAs: ["https://github.com/Looziolooz"],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Servizi",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Siti web ed e-commerce", description: "Siti e negozi online su misura, veloci e fatti per trasformare i visitatori in clienti." } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Visibilità online (SEO)", description: "SEO, struttura e presenza pensate per i motori di ricerca e per chi cerca te." } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Contenuti social", description: "Contenuti per i social semplici e a costo zero, per restare presente e riconoscibile." } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Automazioni", description: "I processi ripetitivi li fa la macchina: email, fatture, report. Meno errori, più tempo." } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Dati dal web", description: "Dati dal web raccolti e trasformati in informazioni utili per le decisioni di marketing." } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Agenti AI", description: "Agenti su misura per email e appuntamenti, fatturazione, scrittura mail e riassunti dei clienti." } },
+          { "@type": "Offer", price: "0", priceCurrency: "EUR", itemOffered: { "@type": "Service", name: "Audit gratuito del sito", description: "Tre cose concrete da migliorare subito per ottenere più clienti. Risposta entro 24 ore." } },
+        ],
+      },
+    },
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#lorenzo`,
+      name: "Lorenzo",
+      jobTitle: "Designer & Developer",
+      worksFor: { "@id": `${SITE_URL}/#org` },
+      knowsLanguage: ["it", "en", "sv"],
+      sameAs: ["https://github.com/Looziolooz"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: `${SITE_URL}/`,
+      name: "LOoz.design",
+      publisher: { "@id": `${SITE_URL}/#org` },
+      inLanguage: "it",
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -59,6 +145,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           body `-webkit-font-smoothing:antialiased`. An inline shorthand style on
           <body> serialized differently on server vs client → hydration mismatch. */}
       <body className="antialiased">
+        {/* Server-rendered so it's in the initial HTML (JS-injected schema faces
+            delayed processing). The < guard prevents </script> breakout. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD).replace(/</g, "\\u003c") }}
+        />
         <ThemeProvider>
           <LangProvider>
             <ClientLayout>{children}</ClientLayout>

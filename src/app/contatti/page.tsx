@@ -4,6 +4,7 @@ import { useState } from "react";
 import Nav from "@/components/Nav";
 import CinematicFooter from "@/components/CinematicFooter";
 import BookingCalendar from "@/components/BookingCalendar";
+import LeadMagnet from "@/components/LeadMagnet";
 import { useLang } from "@/components/LangProvider";
 import { submitLead } from "@/lib/leadForm";
 
@@ -65,7 +66,20 @@ export default function ContattiPage() {
           <span className="ct-kicker">{t("contatti.num")}</span>
           <h1 className="ct-title">{t("contatti.title")}</h1>
           <p className="ct-sub">{t("contatti.sub")}</p>
+          {/* Visible, copyable email + response promise at the point of action
+              (the mailto-only path lost leads on machines without a mail client). */}
+          <p style={{ margin: "14px 0 0", fontSize: "var(--fs-base)", color: "var(--ink-muted)" }}>
+            {t("contatti.email.line")}{" "}
+            <a href={`mailto:${EMAIL}`} style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}>
+              {EMAIL}
+            </a>
+            {" "}· {t("contatti.email.reply")}
+          </p>
         </header>
+
+        {/* The nav CTA promises a free audit — so the audit form comes FIRST,
+            before the higher-commitment project/call cards (SEO/SXO audit). */}
+        <LeadMagnet />
 
         <div className="ct-grid">
           {/* Way 1 — project inquiry */}

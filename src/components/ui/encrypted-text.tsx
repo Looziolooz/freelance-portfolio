@@ -156,7 +156,9 @@ export const EncryptedText: React.FC<EncryptedTextProps> = ({
             ? " "
             : mounted
               ? (scrambleCharsRef.current[index] ?? generateRandomCharacter(charset))
-              : charset[(index * 7) % charset.length]; // deterministic pre-mount
+              : char; // pre-mount (and in the SERVER HTML) show the real text —
+                      // crawlers/LLMs must never see gibberish in the H1 (SEO audit);
+                      // the scramble effect starts only after hydration
 
         return (
           <span

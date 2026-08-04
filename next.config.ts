@@ -9,6 +9,23 @@ const projectRoot = dirname(fileURLToPath(import.meta.url));
 
 const nextConfig: NextConfig = {
   turbopack: { root: projectRoot },
+  // Don't advertise the framework.
+  poweredByHeader: false,
+  // Baseline security headers (SEO audit): Vercel adds HSTS on its domains,
+  // the rest is on us. CSP is deliberately omitted for now — the inline styles
+  // and JSON-LD scripts would need nonces first.
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+        ],
+      },
+    ];
+  },
   // Serve next/image output as AVIF first (≈20% smaller than WebP), falling back
   // to WebP. Encoding is cached after the first request, so the cost is paid once.
   images: {

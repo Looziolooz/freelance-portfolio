@@ -185,8 +185,14 @@ export const Trackpad = () => {
 };
 
 export const Keypad = () => {
+  // Client-only + aria-hidden: the decorative key labels (esc, F1–F12, QWERTY…)
+  // were server-rendered as ~90 lines of real text near the top of the page,
+  // polluting what crawlers/LLMs extract (SEO audit). Purely visual — skip SSR.
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  if (!mounted) return <div className="mx-1 h-full rounded-md bg-[#050505] p-1" aria-hidden="true" />;
   return (
-    <div className="mx-1 h-full [transform:translateZ(0)] rounded-md bg-[#050505] p-1 [will-change:transform]">
+    <div aria-hidden="true" className="mx-1 h-full [transform:translateZ(0)] rounded-md bg-[#050505] p-1 [will-change:transform]">
       {/* First Row */}
       <div className="mb-[2px] flex w-full shrink-0 gap-[2px]">
         <KBtn className="w-10 items-end justify-start pb-[2px] pl-[4px]" childrenClassName="items-start">

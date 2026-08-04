@@ -11,9 +11,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     (p) => `/work/${p.slug}`,
   );
 
+  const lastModified = new Date();
   return [...staticRoutes, ...projectRoutes].map((path) => ({
     url: `${SITE_URL}${path}`,
-    changeFrequency: "weekly",
+    lastModified,
+    changeFrequency: path.startsWith("/privacy") || path.startsWith("/cookie") ? "yearly" : "weekly",
     priority: path === "" ? 1 : 0.7,
   }));
 }

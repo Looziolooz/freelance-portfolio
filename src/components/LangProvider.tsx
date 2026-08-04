@@ -21,14 +21,12 @@ export default function LangProvider({ children }: { children: React.ReactNode }
   const [lang, setLangState] = useState<Lang>("it");
 
   useEffect(() => {
+    // Only an EXPLICIT user choice switches language. No navigator.language
+    // auto-detect: Googlebot renders with an en-US locale, and auto-switching
+    // made it index English copy on pages that declare lang="it" (SEO audit).
     const saved = localStorage.getItem("lang") as Lang | null;
     if (saved && ["it", "en", "sv"].includes(saved)) {
       setLangState(saved);
-    } else {
-      const browser = navigator.language.slice(0, 2);
-      if (["it", "en", "sv"].includes(browser)) {
-        setLangState(browser as Lang);
-      }
     }
   }, []);
 
