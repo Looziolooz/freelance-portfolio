@@ -7,7 +7,7 @@ import { useLang } from "./LangProvider";
 // name/email, and it composes a mailto — zero backend, costs nothing (honours
 // the "free" constraint). Swap the submit for a Cal.com/Calendly link later.
 const SLOTS = ["09:00", "11:00", "14:00", "16:30"];
-const EMAIL = "hello@Lorenzo.studio";
+const EMAIL = "hello@looz.design";
 
 type Day = { key: string; dow: string; dom: string };
 

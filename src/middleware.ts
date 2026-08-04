@@ -45,7 +45,7 @@ export function middleware(req: NextRequest) {
   return new NextResponse("Autenticazione richiesta.", {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Basic realm="lorenzo.studio area riservata", charset="UTF-8"',
+      "WWW-Authenticate": 'Basic realm="LOoz.design area riservata", charset="UTF-8"',
     },
   });
 }

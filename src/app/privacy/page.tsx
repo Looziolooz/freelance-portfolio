@@ -16,7 +16,7 @@ export default function PrivacyPage() {
       <h2>1. Titolare del trattamento</h2>
       <p>
         Il titolare del trattamento dei dati è [NOME / RAGIONE SOCIALE], [INDIRIZZO], P.IVA [PARTITA IVA].
-        Per qualsiasi richiesta puoi scrivere a <a href="mailto:hello@lorenzo.studio">hello@lorenzo.studio</a>.
+        Per qualsiasi richiesta puoi scrivere a <a href="mailto:hello@looz.design">hello@looz.design</a>.
       </p>
 
       <h2>2. Quali dati raccolgo</h2>
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
       <p>
         Hai diritto di accesso, rettifica, cancellazione, limitazione, opposizione e portabilità dei dati,
         e di revocare in ogni momento il consenso prestato. Per esercitarli scrivi a
-        {" "}<a href="mailto:hello@lorenzo.studio">hello@lorenzo.studio</a>. Puoi inoltre proporre reclamo
+        {" "}<a href="mailto:hello@looz.design">hello@looz.design</a>. Puoi inoltre proporre reclamo
         all'autorità di controllo competente (in Italia, il Garante per la protezione dei dati personali).
       </p>
 
@@ -83,7 +83,7 @@ export default function PrivacyPage() {
       <p>Posso aggiornare questa informativa nel tempo; la data in alto indica l'ultima revisione.</p>
 
       <h2>11. Contatti</h2>
-      <p>[NOME] — <a href="mailto:hello@lorenzo.studio">hello@lorenzo.studio</a></p>
+      <p>[NOME] — <a href="mailto:hello@looz.design">hello@looz.design</a></p>
     </LegalPage>
   );
 }

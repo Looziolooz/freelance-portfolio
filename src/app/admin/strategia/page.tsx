@@ -184,7 +184,7 @@ export default function StrategiaAdmin() {
             </ul>
           </div>
 
-          <p className="stg-foot">lorenzo.studio · documento interno · aggiorna man mano che impari cosa funziona.</p>
+          <p className="stg-foot">LOoz.design · documento interno · aggiorna man mano che impari cosa funziona.</p>
         </div>
       </div>
     </>

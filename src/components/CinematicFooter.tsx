@@ -10,7 +10,7 @@ import { isPreLaunch, HIDDEN_ROUTES } from "@/lib/launch";
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
 // On-brand rebuild of the "cinematic curtain-reveal footer": the page scrolls
-// away to reveal a fixed footer underneath. Restyled for Lorenzo.studio —
+// away to reveal a fixed footer underneath. Restyled for LOoz.design —
 // Parchment & Forest, Fraunces/General Sans/mono, neo-brutalist (hard ink
 // borders + offset shadows, NO blur/glass/gradients). Reuses MagneticButton +
 // i18n + the ticker terms. Lenis owns native scroll, so position:fixed is safe.

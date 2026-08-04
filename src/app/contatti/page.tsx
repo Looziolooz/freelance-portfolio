@@ -7,7 +7,7 @@ import BookingCalendar from "@/components/BookingCalendar";
 import { useLang } from "@/components/LangProvider";
 import { submitLead } from "@/lib/leadForm";
 
-const EMAIL = "hello@lorenzo.studio";
+const EMAIL = "hello@looz.design";
 
 export default function ContattiPage() {
   const { t } = useLang();
@@ -34,7 +34,7 @@ export default function ContattiPage() {
     setStatus("sending");
     const ok = await submitLead({
       subject: t("contatti.inquiry.subject"),
-      from_name: `lorenzo.studio · contatti — ${fullname || "—"}`,
+      from_name: `LOoz.design · contatti — ${fullname || "—"}`,
       replyto: workemail,
       name: fullname,
       email: workemail,

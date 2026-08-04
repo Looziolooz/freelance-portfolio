@@ -43,7 +43,7 @@ const generalSans = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Lorenzo.studio — Siti, automazioni e agenti AI per la tua impresa",
+  title: "LOoz.design — Siti, automazioni e agenti AI per la tua impresa",
   description:
     "Sviluppo siti su misura per piccole e grandi aziende, automazione dei processi ripetitivi, contenuti social e agenti AI. Più visibilità, meno lavoro manuale, dati dal web che generano valore.",
 };

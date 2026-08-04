@@ -25,4 +25,4 @@ export const HIDDEN_ROUTES = [
 ] as const;
 
 // Public site origin (used by robots.txt + sitemap). Override per environment.
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://lorenzo.studio").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://looz.design").replace(/\/$/, "");

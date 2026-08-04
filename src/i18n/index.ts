@@ -163,7 +163,7 @@ export const dict: Record<Lang, Record<string, string>> = {
 
     // Assistant widget + homepage assistant band
     "assistant.label": "Assistente",
-    "assistantHero.intro1": "Ciao, sono l'assistente di Lorenzo.studio,",
+    "assistantHero.intro1": "Ciao, sono l'assistente di LOoz.design,",
     "assistantHero.intro2": "qui per capire cosa ti serve e indicarti il passo giusto.",
     "assistantHero.line": "Felice che tu sia passato. Il buon gusto tende a trovarci. Allora, cosa costruiamo?",
     "assistantHero.pill1": "Proponi un progetto",
@@ -325,7 +325,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "about.title": "Prima di tutto, un builder.",
 
     // About
-    "about.intro": "Dietro Lorenzo.studio ci sono io. Progetto e costruisco identità e prodotti digitali da zero, con un occhio sempre fisso sul risultato di business.",
+    "about.intro": "Dietro LOoz.design ci sono io. Progetto e costruisco identità e prodotti digitali da zero, con un occhio sempre fisso sul risultato di business.",
     "about.strengths.label": "Punti di forza",
     "about.strength.0": "Sistemi di brand scalabili",
     "about.strength.1": "UI creativa coerente col brand",
@@ -366,7 +366,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contatti.way1.cta": "Invia la richiesta",
     "contatti.way2.title": "Prenota una discovery call",
     "contatti.way2.body": "20 minuti per capire cosa stai costruendo, cosa ti serve e dove vuoi arrivare. Ti dico con onestà se è il caso giusto e qual è il passo successivo.",
-    "contatti.inquiry.subject": "Richiesta progetto · Lorenzo.studio",
+    "contatti.inquiry.subject": "Richiesta progetto · LOoz.design",
     "contatti.inquiry.intro": "Ciao Lorenzo, ecco la mia richiesta:",
     "work.meta": "Siti dimostrativi che costruisco per mostrarti come lavoro e il mio stile. Progetti concept, pensati per darti un'idea concreta del risultato che posso creare per te.",
     "work.archive": "Archivio.",
@@ -800,7 +800,7 @@ export const dict: Record<Lang, Record<string, string>> = {
 
     // Assistant widget + homepage assistant band
     "assistant.label": "Assistant",
-    "assistantHero.intro1": "Hi, I'm the Lorenzo.studio assistant,",
+    "assistantHero.intro1": "Hi, I'm the LOoz.design assistant,",
     "assistantHero.intro2": "here to figure out what you need and point you to the next step.",
     "assistantHero.line": "Glad you stopped in. Good taste tends to find us. So, what are we building?",
     "assistantHero.pill1": "Pitch a project",
@@ -1005,7 +1005,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "about.num": "04 / ABOUT",
     "about.title": "First of all, a builder.",
 
-    "about.intro": "Behind Lorenzo.studio it's just me. I design and build visual identities and digital products from scratch, with one eye always on the business result.",
+    "about.intro": "Behind LOoz.design it's just me. I design and build visual identities and digital products from scratch, with one eye always on the business result.",
     "about.strengths.label": "Core strengths",
     "about.strength.0": "Scalable brand systems",
     "about.strength.1": "Brand-aligned creative UI",
@@ -1045,7 +1045,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contatti.way1.cta": "Send the inquiry",
     "contatti.way2.title": "Book a discovery call",
     "contatti.way2.body": "A focused 20-minute call to understand what you're building, what you need, and where you want to take it. I'll tell you straight if it's a fit and what the right next step is.",
-    "contatti.inquiry.subject": "Project inquiry · Lorenzo.studio",
+    "contatti.inquiry.subject": "Project inquiry · LOoz.design",
     "contatti.inquiry.intro": "Hi Lorenzo, here's my inquiry:",
     "work.meta": "Demo sites I build to show you how I work and my style. Concept projects, made to give you a concrete idea of the result I can create for you.",
     "work.archive": "Archive.",
@@ -1477,7 +1477,7 @@ export const dict: Record<Lang, Record<string, string>> = {
 
     // Assistant widget + homepage assistant band
     "assistant.label": "Assistent",
-    "assistantHero.intro1": "Hej, jag är assistenten på Lorenzo.studio,",
+    "assistantHero.intro1": "Hej, jag är assistenten på LOoz.design,",
     "assistantHero.intro2": "här för att förstå vad du behöver och visa nästa steg.",
     "assistantHero.line": "Kul att du tittade in. God smak brukar hitta oss. Så, vad bygger vi?",
     "assistantHero.pill1": "Föreslå ett projekt",
@@ -1682,7 +1682,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "about.num": "04 / OM MIG",
     "about.title": "Först och främst, en byggare.",
 
-    "about.intro": "Bakom Lorenzo.studio är det bara jag. Jag formger och bygger visuella identiteter och digitala produkter från grunden, med blicken alltid på affärsresultatet.",
+    "about.intro": "Bakom LOoz.design är det bara jag. Jag formger och bygger visuella identiteter och digitala produkter från grunden, med blicken alltid på affärsresultatet.",
     "about.strengths.label": "Kärnstyrkor",
     "about.strength.0": "Skalbara varumärkessystem",
     "about.strength.1": "Varumärkesanpassad kreativ UI",
@@ -1722,7 +1722,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contatti.way1.cta": "Skicka förfrågan",
     "contatti.way2.title": "Boka ett discovery-samtal",
     "contatti.way2.body": "Ett fokuserat 20-minuters samtal för att förstå vad du bygger, vad du behöver och vart du vill. Jag säger rakt ut om det passar och vad nästa steg är.",
-    "contatti.inquiry.subject": "Projektförfrågan · Lorenzo.studio",
+    "contatti.inquiry.subject": "Projektförfrågan · LOoz.design",
     "contatti.inquiry.intro": "Hej Lorenzo, här är min förfrågan:",
     "work.meta": "Demosajter jag bygger för att visa hur jag jobbar och min stil. Konceptprojekt, gjorda för att ge dig en konkret idé om resultatet jag kan skapa åt dig.",
     "work.archive": "Arkiv.",
