@@ -84,8 +84,8 @@ export default function SitiWebPage() {
         <section className="sv-sec" aria-label="Esempi">
           <h2 className="sv-h2">Guarda con i tuoi occhi.</h2>
           <p style={{ margin: "0 0 20px", color: "var(--ink-muted)", maxWidth: 640, lineHeight: 1.6 }}>
-            Siti dimostrativi che ho costruito per mostrarti stile e possibilità — ognuno con demo
-            navigabile e identità di marca completa.
+            Siti dimostrativi che ho costruito per mostrarti stile e possibilità. Ognuno ha la
+            demo navigabile e un&apos;identità di marca completa.
           </p>
           <div className="sv-proof">
             {proof.map((p) => (
