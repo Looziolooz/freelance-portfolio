@@ -124,7 +124,7 @@ export default function HeroMotion() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="top" className="hero-motion" aria-label="Lorenzo.studio">
+    <section ref={sectionRef} id="top" className="hero-motion" aria-label="LOoz.design">
       {/* The poster is the LCP element — preload it at high priority so it paints
           immediately instead of waiting in the queue (React 19 hoists this to <head>). */}
       {/* eslint-disable-next-line @next/next/no-head-element */}

@@ -3,9 +3,9 @@ export type Lang = "it" | "en" | "sv";
 export const dict: Record<Lang, Record<string, string>> = {
   it: {
     // Nav
-    "nav.logo.before": "lorenzo",
+    "nav.logo.before": "LOoz",
     "nav.logo.dot": ".",
-    "nav.logo.after": "studio",
+    "nav.logo.after": "design",
     "nav.work": "Lavori",
     "nav.blog": "Blog",
     "nav.agents": "Assistente",
@@ -462,7 +462,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contact.form.or": "Oppure scrivimi direttamente",
     "contact.form.other": "Altro",
     "contact.form.sent": "Apro la tua email…",
-    "contact.footer.copy": "© 2026 Lorenzo.studio",
+    "contact.footer.copy": "© 2026 LOoz.design",
     "contact.footer.made": "Fatto con cura",
     "contact.footer.up": "Torna su ↑",
 
@@ -641,9 +641,9 @@ export const dict: Record<Lang, Record<string, string>> = {
   },
 
   en: {
-    "nav.logo.before": "lorenzo",
+    "nav.logo.before": "LOoz",
     "nav.logo.dot": ".",
-    "nav.logo.after": "studio",
+    "nav.logo.after": "design",
     "nav.work": "Work",
     "nav.blog": "Blog",
     "nav.agents": "Assistant",
@@ -1140,7 +1140,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contact.form.or": "Or write to me directly",
     "contact.form.other": "Other",
     "contact.form.sent": "Opening your email…",
-    "contact.footer.copy": "© 2026 Lorenzo.studio",
+    "contact.footer.copy": "© 2026 LOoz.design",
     "contact.footer.made": "Made with care",
     "contact.footer.up": "Back to top ↑",
 
@@ -1318,9 +1318,9 @@ export const dict: Record<Lang, Record<string, string>> = {
   },
 
   sv: {
-    "nav.logo.before": "lorenzo",
+    "nav.logo.before": "LOoz",
     "nav.logo.dot": ".",
-    "nav.logo.after": "studio",
+    "nav.logo.after": "design",
     "nav.work": "Arbeten",
     "nav.blog": "Blogg",
     "nav.agents": "Assistent",
@@ -1817,7 +1817,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "contact.form.or": "Eller skriv direkt till mig",
     "contact.form.other": "Annat",
     "contact.form.sent": "Öppnar din e-post…",
-    "contact.footer.copy": "© 2026 Lorenzo.studio",
+    "contact.footer.copy": "© 2026 LOoz.design",
     "contact.footer.made": "Gjord med omsorg",
     "contact.footer.up": "Tillbaka upp ↑",
 

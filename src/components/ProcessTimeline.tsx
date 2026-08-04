@@ -90,7 +90,7 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
                     {/* Dark corner scrim + caption in the bottom-right — doubles as
                         a signature and masks the generator watermark that sits there. */}
                     <span className="ptl-photo__scrim" aria-hidden="true" />
-                    <span className="ptl-photo__cap">lorenzo.studio</span>
+                    <span className="ptl-photo__cap">LOoz.design</span>
                   </>
                 )}
               </div>
