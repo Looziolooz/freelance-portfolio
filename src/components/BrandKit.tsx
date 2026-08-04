@@ -183,7 +183,9 @@ export default function BrandKit({
     <section className="bkit" style={vars} aria-label={t("brandkit.title")}>
       <header className="bkit-head">
         <span className="bkit-eyebrow">{t("brandkit.eyebrow")}</span>
-        <h2 className="bkit-title" style={{ fontFamily: kit.display, letterSpacing: kit.tracking }}>{kit.name}</h2>
+        {/* p, not h2: the brand wordmark duplicated the page H1 in the outline
+            (the section's aria-label carries the semantics). */}
+        <p className="bkit-title" style={{ fontFamily: kit.display, letterSpacing: kit.tracking, margin: 0 }}>{kit.name}</p>
         <p className="bkit-sub">{t("brandkit.sub")}</p>
       </header>
 

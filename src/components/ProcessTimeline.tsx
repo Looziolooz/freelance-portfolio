@@ -15,6 +15,8 @@ export type TimelineEntry = {
   statement: string;
   body: string;
   bullets: string[];
+  /** Concrete expectations per phase: deliverable, duration, what the client provides. */
+  meta?: { label: string; value: string }[];
   image: string;
   alt: string;
   // Intrinsic pixel size — the frame takes the photo's natural aspect ratio so
@@ -54,9 +56,11 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
               <span className="ptl-dot" aria-hidden="true">
                 <span className="ptl-dot__core" />
               </span>
-              <div className="ptl-marker__label">
+              {/* Visual duplicate of the content heading (sticky rail) — kept out
+                  of the document outline (the audit found every phase H2 twice). */}
+              <div className="ptl-marker__label" aria-hidden="true">
                 <span className="ptl-phase">{e.phase}</span>
-                <h2 className="ptl-title">{e.title}</h2>
+                <p className="ptl-title" style={{ margin: 0 }}>{e.title}</p>
               </div>
             </div>
 
@@ -68,6 +72,16 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
               </div>
               <p className="ptl-statement">{e.statement}</p>
               <p className="ptl-body">{e.body}</p>
+              {e.meta && (
+                <dl className="ptl-meta">
+                  {e.meta.map((m, mi) => (
+                    <div key={mi} className="ptl-meta__row">
+                      <dt>{m.label}</dt>
+                      <dd>{m.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
               <ul className="ptl-bullets">
                 {e.bullets.map((b, bi) => (
                   <li key={bi}>
@@ -137,6 +151,11 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
         .ptl-statement { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 30px); font-weight: 500; line-height: 1.18; letter-spacing: -0.01em; color: var(--ink-body); }
         .ptl-body { margin: 0 0 22px; font-size: clamp(15px, 1.3vw, 17px); line-height: 1.65; color: var(--ink-muted); max-width: 60ch; }
 
+        .ptl-meta { margin: 0 0 22px; border: 3px solid var(--ink-border); border-radius: var(--radius); background: var(--canvas-panel-yellow); box-shadow: 4px 4px 0 var(--ink-shadow); padding: 4px 16px; }
+        .ptl-meta__row { display: flex; gap: 14px; align-items: baseline; padding: 10px 0; }
+        .ptl-meta__row + .ptl-meta__row { border-top: 1.5px solid color-mix(in oklch, var(--ink-border) 16%, transparent); }
+        .ptl-meta dt { flex-shrink: 0; width: 132px; margin: 0; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-green-deep); }
+        .ptl-meta dd { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-body); }
         .ptl-bullets { list-style: none; margin: 0 0 26px; padding: 0; display: flex; flex-direction: column; }
         .ptl-bullets li { display: flex; align-items: baseline; gap: 12px; font-family: var(--font-mono); font-size: 13px; font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-body); padding: 11px 0; border-bottom: 1.5px solid color-mix(in oklch, var(--ink-border) 20%, transparent); }
         .ptl-bullets li:first-child { border-top: 1.5px solid color-mix(in oklch, var(--ink-border) 20%, transparent); }

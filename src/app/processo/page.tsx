@@ -41,6 +41,11 @@ export default function ProcessoPage() {
       statement: t(`${k}.statement`),
       body: t(`${k}.body`),
       bullets: [t(`${k}.b1`), t(`${k}.b2`), t(`${k}.b3`)],
+      meta: [
+        { label: t("processo.meta.deliver"), value: t(`${k}.d1`) },
+        { label: t("processo.meta.duration"), value: t(`${k}.d2`) },
+        { label: t("processo.meta.you"), value: t(`${k}.d3`) },
+      ],
       image: IMAGES[i].src,
       alt: t(`${k}.name`),
       w: IMAGES[i].w,

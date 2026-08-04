@@ -156,9 +156,11 @@ export default function CinematicFooter() {
           {/* Center content */}
           <div style={{ position: "relative", zIndex: 2, flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 24px", marginTop: 80, width: "100%", maxWidth: 1040, marginInline: "auto", textAlign: "center" }}>
             <div ref={linksRef} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22, width: "100%" }}>
-              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(34px, 6vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.02, margin: "0 0 6px" }}>
+              {/* p, not h2: a nav prompt repeated on every page was polluting
+                  every document outline (SEO audit). */}
+              <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(34px, 6vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.02, margin: "0 0 6px" }}>
                 {t("footer.discover")}
-              </h2>
+              </p>
               {/* Section links */}
               <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 12 }}>
                 {navPills.map((p) => (

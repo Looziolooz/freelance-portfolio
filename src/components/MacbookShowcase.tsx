@@ -51,7 +51,9 @@ export default function MacbookShowcase() {
       </div>
       {/* Tablet/phone: a compact laptop whose lid opens on scroll (rotateX). */}
       <div className="mbk-mobile">
-        <h2 className="mbk-mobile__title">{t("macbook.title")}</h2>
+        {/* p, not h2: the desktop MacbookScroll already renders this title as the
+            section heading — both live in the DOM, so it counted twice (audit). */}
+        <p className="mbk-mobile__title" style={{ margin: 0 }}>{t("macbook.title")}</p>
         <div className="mbk-mobile__device">
           <div className="mbk-mobile__lid" ref={lidRef}>
             <div className="mbk-mobile__screen">

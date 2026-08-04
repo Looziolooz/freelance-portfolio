@@ -43,16 +43,33 @@ export default function BentoGrid() {
         <span className="bento-stat__l">{t("bento.s3.label")}</span>
       </div>
 
-      {PILLARS.map((key) => (
-        <div key={key} className="bento-cell bento-svc">
-          <span className="bento-svc__icon">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`/services/${key}.svg`} alt="" aria-hidden="true" loading="lazy" />
-          </span>
-          <h3 className="bento-svc__title">{t(`home.svc.${key}.title`)}</h3>
-          <p className="bento-svc__desc">{t(`home.svc.${key}.desc`)}</p>
-        </div>
-      ))}
+      {PILLARS.map((key) => {
+        // Service cards become links as their landing pages come online
+        // (SEO audit: six services sold, zero services with a URL).
+        const href = key === "sites" ? "/servizi/siti-web" : undefined;
+        const inner = (
+          <>
+            <span className="bento-svc__icon">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/services/${key}.svg`} alt="" aria-hidden="true" loading="lazy" />
+            </span>
+            <h3 className="bento-svc__title">
+              {t(`home.svc.${key}.title`)}
+              {href && <span className="btn-arrow" aria-hidden="true"> →</span>}
+            </h3>
+            <p className="bento-svc__desc">{t(`home.svc.${key}.desc`)}</p>
+          </>
+        );
+        return href ? (
+          <Link key={key} href={href} className="bento-cell bento-svc" style={{ textDecoration: "none", color: "inherit" }}>
+            {inner}
+          </Link>
+        ) : (
+          <div key={key} className="bento-cell bento-svc">
+            {inner}
+          </div>
+        );
+      })}
 
       <div className="bento-cell bento-chart">
         <div className="bento-chart__top">
