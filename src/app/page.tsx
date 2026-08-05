@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
 import Nav from "@/components/Nav";
 import HeroMotion from "@/components/HeroMotion";
+import WorkMarquee from "@/components/WorkMarquee";
+import CursorTrail from "@/components/CursorTrail";
 import MacbookShowcase from "@/components/MacbookShowcase";
 import BentoShift from "@/components/BentoShift";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -24,6 +26,8 @@ export default function Home() {
       <Nav />
       <WayfindingNav />
       <HeroMotion />
+      {/* Proof before claims: the live demo covers run right under the hero. */}
+      <WorkMarquee />
       {/* Scroll-driven MacBook showcase (opens to a real project on screen). */}
       <MacbookShowcase />
       <main className="container">
@@ -35,7 +39,10 @@ export default function Home() {
         <ScrollReveal><Trust /></ScrollReveal>
         <Plans />
         <ScrollReveal><Faq /></ScrollReveal>
-        <ScrollReveal><LeadMagnet /></ScrollReveal>
+        {/* The work trails the cursor across the conversion moment. */}
+        <CursorTrail>
+          <ScrollReveal><LeadMagnet /></ScrollReveal>
+        </CursorTrail>
       </main>
       <CinematicFooter />
     </>
