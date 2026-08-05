@@ -8,6 +8,7 @@ import Nav from "@/components/Nav";
 import { TierBadge } from "@/components/auth/TierBadge";
 import { Reveal } from "@/components/Reveal";
 import { levelForContent, LEVELS, LEVEL_ORDER } from "@/lib/content-levels";
+import CoffeeSupport from "@/components/CoffeeSupport";
 
 interface ContentItem {
   id: string;
@@ -307,6 +308,7 @@ export default function BlogPage() {
             })}
           </div>
         )}
+        <CoffeeSupport />
       </main>
     </>
   );

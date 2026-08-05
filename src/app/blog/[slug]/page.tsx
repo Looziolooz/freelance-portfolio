@@ -8,6 +8,7 @@ import { TierBadge } from "@/components/auth/TierBadge";
 import { ProtectedContent } from "@/components/auth/ProtectedContent";
 import { levelForContent, LEVELS, programmingForContent, PROG } from "@/lib/content-levels";
 import { isPreviewUnlockAll } from "@/lib/preview";
+import CoffeeSupport from "@/components/CoffeeSupport";
 
 interface ContentDetail {
   id: string;
@@ -453,6 +454,9 @@ export default function ContentPage({
           >
             {renderArticleBody(content.body)}
           </div>
+          {/* Tip jar AFTER the article — the ask only makes sense once the value
+              has been delivered. Renders nothing while support is off. */}
+          <CoffeeSupport />
         </div>
       ) : (
         <ProtectedContent tier={content.tier}>
