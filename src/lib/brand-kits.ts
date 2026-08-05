@@ -215,30 +215,6 @@ export const BRAND_KITS: Record<string, BrandKit> = {
     ],
   },
 
-  bellitalia: {
-    slug: "bellitalia",
-    name: "Bell'Italia",
-    monogram: "BI",
-    tagline: "Il bello dell'Italia, una cartolina.",
-    domain: "bellitalia.travel",
-    shape: "circle",
-    motif: "boot",
-    display: '"Palatino Linotype", Palatino, Georgia, serif',
-    body: SANS,
-    tracking: "0.18em",
-    paper: "#F6EFDF",
-    ink: "#23303A",
-    primary: "#1E6E8C",
-    accent: "#C96B3F",
-    palette: [
-      { name: "Adriatico", hex: "#1E6E8C", role: "primary", on: "#F6EFDF" },
-      { name: "Oliva", hex: "#7C7A3A", role: "secondary", on: "#F6EFDF" },
-      { name: "Terracotta", hex: "#C96B3F", role: "accent", on: "#F6EFDF" },
-      { name: "Sabbia", hex: "#F6EFDF", role: "paper", on: "#23303A" },
-      { name: "Mare", hex: "#23303A", role: "ink", on: "#F6EFDF" },
-    ],
-  },
-
   "bella-calabria": {
     slug: "bella-calabria",
     name: "Bella Calabria",

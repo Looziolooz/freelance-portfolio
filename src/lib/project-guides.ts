@@ -51,13 +51,6 @@ export const GUIDES: Record<string, ProjectGuide> = {
       "Racconto heritage della Vespa Primavera 1968",
     ],
   },
-  bellitalia: {
-    highlights: [
-      "Carosello hero a tutto schermo con 8 destinazioni",
-      "Cartoline polaroid che si spargono allo scroll",
-      "Griglia di tradizioni e sapori che zooma",
-    ],
-  },
   "bella-calabria": {
     highlights: [
       "Listing alloggi con ricerca e filtri",

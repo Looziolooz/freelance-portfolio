@@ -182,14 +182,6 @@ const RAW: RawEntry[] = [
     sv: "Vespa Heritage är en scrollytelling-landningssida (concept) för en heritage-utgåva av Vespa Primavera 1968: en scrolldriven canvas-sekvens tar isär och sätter ihop Vespan medan bakgrunden färgas av varje bildrutas färg. Byggd med Next.js 14, Framer Motion och Canvas. En lanseringssida som gör produkten åtråvärd: animation och berättelse i stället för det vanliga databladet, för att presentera en premiumprodukt. Live-demo: https://vespa-heritage.vercel.app/",
   },
   {
-    id: "project-bellitalia",
-    category: "project",
-    keywords: ["bell'italia", "bellitalia", "italia", "italy", "italien", "turismo", "tourism", "turism", "viaggi", "travel", "resor", "destinazioni", "destinations", "landing animata", "animated landing", "polaroid", "cartoline", "postcards", "vykort", "gsap", "scrolltrigger", "lenis", "carosello", "carousel", "tradizioni", "sapori"],
-    it: "Bell'Italia è una landing animata sui luoghi più belli d'Italia: carosello hero a tutto schermo con 8 destinazioni, diario di cartoline polaroid che si spargono allo scroll e griglia di tradizioni e sapori che zooma. Costruita con GSAP, ScrollTrigger e Lenis. Vetrina emozionale che fa venire voglia di partire: racconta una meta con animazioni curate e invoglia a esplorare l'offerta.",
-    en: "Bell'Italia is an animated landing about Italy's most beautiful places: full-screen hero carousel with 8 destinations, a polaroid postcard diary that scatters on scroll, and a traditions-and-flavours grid that zooms. Built with GSAP, ScrollTrigger and Lenis. An emotional showcase that makes you want to travel: it tells a destination's story with crafted animation and invites visitors to explore the offer.",
-    sv: "Bell'Italia är en animerad landningssida om Italiens vackraste platser: helskärms hero-karusell med 8 destinationer, en polaroid-vykortsdagbok som sprids vid scroll och ett rutnät med traditioner och smaker som zoomar. Byggd med GSAP, ScrollTrigger och Lenis. En känslosam skyltning som får dig att vilja resa: den berättar en destinations historia med genomarbetad animation och bjuder in besökaren att utforska utbudet.",
-  },
-  {
     id: "project-bella-calabria",
     category: "project",
     keywords: ["bella calabria", "calabria", "kalabrien", "viaggi", "travel", "resor", "turismo", "tourism", "turism", "portale viaggi", "travel portal", "reseportal", "alloggi", "stays", "boenden", "prenotazione", "booking", "bokning", "airbnb", "voli", "flights", "flyg", "dashboard", "admin", "gsap", "lenis", "next.js", "tailwind"],

@@ -107,15 +107,6 @@ export const PROJECTS: Project[] = [
     swatch: "#cfc9bf",
   },
   {
-    id: "19",
-    key: "19",
-    slug: "bellitalia",
-    repo: "https://github.com/Looziolooz/bellitalia",
-    image: "/projects/bellitalia.png",
-    featured: true,
-    swatch: "#b9cdd6",
-  },
-  {
     id: "20",
     key: "20",
     slug: "bella-calabria",
