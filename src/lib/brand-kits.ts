@@ -73,10 +73,10 @@ export const BRAND_KITS: Record<string, BrandKit> = {
 
   yoga: {
     slug: "yoga",
-    name: "YogaPlus",
-    monogram: "Y",
+    name: "Prana",
+    monogram: "P",
     tagline: "Ritrova il tuo equilibrio.",
-    domain: "yogaplus.it",
+    domain: "prana-yoga.it",
     shape: "circle",
     motif: "sun",
     display: '"Marcellus", Georgia, "Times New Roman", serif',

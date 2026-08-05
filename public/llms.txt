@@ -23,7 +23,7 @@ automation or AI agent in days.
 ## Selected projects
 
 - [Aliva](https://looz.design/work/aliva): Immersive scroll story for a Calabrian extra-virgin olive oil, plus full brand identity.
-- [YogaPlus](https://looz.design/work/yoga): Complete yoga-studio site with courses, shop, booking and blog.
+- [Prana](https://looz.design/work/yoga): Complete yoga-studio site with courses, shop, booking and blog.
 - [Golden Dragon](https://looz.design/work/sushi): Japanese-Korean fusion restaurant in Milan with booking, delivery and gift cards.
 - [Artigiano Gelateria](https://looz.design/work/gelateria): Artisan gelateria with online pickup booking and owner admin panel.
 - [AI Visibility](https://looz.design/work/ai-visibility): Demo of an AI-search-visibility product tracking brand citations across ChatGPT, Gemini, Perplexity and Claude.
