@@ -133,6 +133,7 @@ export const PROJECTS: Project[] = [
     demo: "https://brasilena-website.vercel.app/",
     repo: "https://github.com/Looziolooz/brasilena-website",
     image: "/projects/brasilena.png",
+    coverVideo: "/projects/brasilena.mp4",
     featured: true,
     swatch: "#FFD21E",
     concept: true, // references a real brand — shown as an independent concept

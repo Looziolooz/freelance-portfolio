@@ -1161,7 +1161,9 @@ select:focus-visible,
 .pg-card:hover { transform: translate(-3px, -3px); box-shadow: var(--shadow-card-hover); }
 .pg-card:focus-visible { outline: 3px solid var(--accent-green-deep); outline-offset: 3px; }
 .pg-media {
-  position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden;
+  /* 16/9 matches both the recorded clips and the 1280x720 posters, so cover
+     crops nothing (16/10 was slicing the sides off every card). */
+  position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden;
   background: var(--sw, #16151a); border-bottom: 3px solid var(--ink-border);
 }
 .pg-media video, .pg-media img { width: 100%; height: 100%; object-fit: cover; display: block; }

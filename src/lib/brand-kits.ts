@@ -359,27 +359,31 @@ export const BRAND_KITS: Record<string, BrandKit> = {
     ],
   },
 
+  // Re-sampled from the live site after its redesign: the old yellow/green
+  // serif kit no longer matched anything on the page.
   brasilena: {
     slug: "brasilena",
     name: "Brasilena",
     monogram: "B",
-    tagline: "La gassosa al caffè, dal 1930.",
+    tagline: "Il caffè freddo prima che fosse hype.",
     domain: "brasilena.it",
     shape: "circle",
-    motif: "leaf",
-    display: "var(--font-display), Georgia, serif",
+    motif: "wave",
+    // The site sets condensed all-caps headlines (Teko); a narrow grotesque
+    // carries the same voice without another webfont.
+    display: '"Oswald", "Haettenschweiler", "Arial Narrow", Impact, sans-serif',
     body: SANS,
-    tracking: "0.2em",
-    paper: "#FFF6DD",
-    ink: "#241A0B",
-    primary: "#FFD21E",
-    accent: "#3E7A4E",
+    tracking: "0.06em",
+    paper: "#FFCC00",
+    ink: "#6A3F40",
+    primary: "#FFCC00",
+    accent: "#FE3E29",
     palette: [
-      { name: "Giallo", hex: "#FFD21E", role: "primary", on: "#241A0B" },
-      { name: "Caffè", hex: "#5A3A22", role: "secondary", on: "#FFF6DD" },
-      { name: "Foglia", hex: "#3E7A4E", role: "accent", on: "#FFF6DD" },
-      { name: "Crema", hex: "#FFF6DD", role: "paper", on: "#241A0B" },
-      { name: "Inchiostro", hex: "#241A0B", role: "ink", on: "#FFF6DD" },
+      { name: "Giallo", hex: "#FFCC00", role: "primary", on: "#6A3F40" },
+      { name: "Caffè", hex: "#6A3F40", role: "secondary", on: "#FFCC00" },
+      { name: "Rosso", hex: "#FE3E29", role: "accent", on: "#FFF6E5" },
+      { name: "Panna", hex: "#F4F2EA", role: "paper", on: "#6A3F40" },
+      { name: "Inchiostro", hex: "#2A1A16", role: "ink", on: "#FFCC00" },
     ],
   },
 };
