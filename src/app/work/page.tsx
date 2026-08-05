@@ -2,6 +2,7 @@
 
 import Nav from "@/components/Nav";
 import ProjectGallery from "@/components/ProjectGallery";
+import ProjectShowcase from "@/components/ProjectShowcase";
 import ScrollProgress from "@/components/ScrollProgress";
 import ContactClose from "@/components/ContactClose";
 import { useLang } from "@/components/LangProvider";
@@ -30,6 +31,11 @@ export default function WorkPage() {
         </div>
       </header>
       <ProjectGallery />
+      {/* After the grid: the three headline demos at full size, each one
+          clickable straight into its live viewer. */}
+      <div className="container">
+        <ProjectShowcase />
+      </div>
       <ContactClose />
     </>
   );

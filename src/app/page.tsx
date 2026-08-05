@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import Nav from "@/components/Nav";
 import HeroMotion from "@/components/HeroMotion";
 import WorkMarquee from "@/components/WorkMarquee";
-import CursorTrail from "@/components/CursorTrail";
 import MacbookShowcase from "@/components/MacbookShowcase";
 import BentoShift from "@/components/BentoShift";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -39,10 +38,7 @@ export default function Home() {
         <ScrollReveal><Trust /></ScrollReveal>
         <Plans />
         <ScrollReveal><Faq /></ScrollReveal>
-        {/* The work trails the cursor across the conversion moment. */}
-        <CursorTrail>
-          <ScrollReveal><LeadMagnet /></ScrollReveal>
-        </CursorTrail>
+        <ScrollReveal><LeadMagnet /></ScrollReveal>
       </main>
       <CinematicFooter />
     </>

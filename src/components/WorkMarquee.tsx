@@ -22,19 +22,34 @@ const CSS = `
 .wmq__note a { color: var(--accent-green-deep); font-weight: 600; text-decoration: none; border-bottom: 2px solid currentColor; }
 
 .wmq__card {
-  flex: 0 0 auto; margin-right: 18px; width: clamp(230px, 26vw, 340px);
+  flex: 0 0 auto; margin-right: 22px; width: clamp(320px, 38vw, 560px);
   border: 3px solid var(--ink-border); border-radius: var(--radius-lg);
-  background: var(--canvas-page); box-shadow: 5px 5px 0 var(--ink-shadow);
+  background: var(--canvas-page); box-shadow: 6px 6px 0 var(--ink-shadow);
   overflow: hidden; text-decoration: none; color: var(--ink-body);
-  transition: transform .16s ease-out, box-shadow .16s ease-out;
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease);
 }
-.wmq__card:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink-shadow); color: var(--ink-body); }
-.wmq__media { position: relative; aspect-ratio: 16 / 10; background: var(--canvas-panel); border-bottom: 3px solid var(--ink-border); }
+.wmq__card:hover { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--ink-shadow); color: var(--ink-body); }
+/* 16/9 matches the source clips (1280x720) exactly, so cover crops nothing. */
+/* display:block is required — aspect-ratio is ignored on inline elements, and
+   this is a <span> inside the card link. */
+.wmq__media { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--canvas-panel); border-bottom: 3px solid var(--ink-border); }
 .wmq__media video, .wmq__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.wmq__cap { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 9px 13px 11px; }
-.wmq__name { font-family: var(--font-display); font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
-.wmq__tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; color: var(--ink-muted); white-space: nowrap; }
-@media (max-width: 640px) { .wmq__card { width: 74vw; margin-right: 14px; } }
+/* Pinned bottom-right over the clip: doubles as the demo affordance and as the
+   mask for the Gemini mark the cover captures carry in that corner. */
+.wmq__demo {
+  position: absolute; right: 10px; bottom: 10px; z-index: 2; pointer-events: none;
+  display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em;
+  color: var(--btn-ink); background: var(--accent-green);
+  border: 2px solid var(--ink-border); border-radius: var(--radius-full);
+  padding: 7px 14px; box-shadow: 3px 3px 0 var(--ink-shadow);
+  transition: transform .18s var(--ease);
+}
+.wmq__card:hover .wmq__demo { transform: translate(-2px, -2px); }
+.wmq__cap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px 13px; }
+.wmq__name { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: -0.015em; }
+.wmq__tag { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--btn-ink); background: var(--accent-green); border: 2px solid var(--ink-border); border-radius: var(--radius-full); padding: 3px 10px; white-space: nowrap; }
+@media (max-width: 640px) { .wmq__card { width: 82vw; margin-right: 14px; } .wmq__name { font-size: 17px; } }
 `;
 
 function Card({ p }: { p: (typeof ITEMS)[number] }) {
@@ -74,6 +89,7 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
           preload="none"
           aria-hidden="true"
         />
+        <span className="wmq__demo">{t("work.viewDemo")} ↗</span>
       </span>
       <span className="wmq__cap">
         <span className="wmq__name">{title}</span>
