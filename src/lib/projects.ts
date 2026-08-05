@@ -72,6 +72,7 @@ export const PROJECTS: Project[] = [
     demo: "https://brado-vert.vercel.app/",
     repo: "https://github.com/Looziolooz/brado",
     image: "/projects/brado.png",
+    coverVideo: "/projects/brado.mp4",
     featured: true,
     swatch: "#241a14",
   },
