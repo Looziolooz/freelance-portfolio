@@ -82,6 +82,7 @@ export const PROJECTS: Project[] = [
     slug: "gelateria",
     demo: "https://gelateria-theta.vercel.app/",
     repo: "https://github.com/Looziolooz/gelateria-",
+    image: "/projects/gelateria.png",
     coverVideo: "/projects/gelateria.mp4",
     featured: true,
     swatch: "#e9ddc8",
