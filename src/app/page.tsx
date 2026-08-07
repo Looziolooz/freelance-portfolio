@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import Nav from "@/components/Nav";
 import HeroMotion from "@/components/HeroMotion";
 import WorkMarquee from "@/components/WorkMarquee";
-import MacbookShowcase from "@/components/MacbookShowcase";
 import BentoShift from "@/components/BentoShift";
 import ScrollProgress from "@/components/ScrollProgress";
 import WayfindingNav from "@/components/WayfindingNav";
@@ -27,8 +26,8 @@ export default function Home() {
       <HeroMotion />
       {/* Proof before claims: the live demo covers run right under the hero. */}
       <WorkMarquee />
-      {/* Scroll-driven MacBook showcase (opens to a real project on screen). */}
-      <MacbookShowcase />
+      {/* NB: the scroll-driven MacBook showcase used to sit here. Removed —
+          a replacement for this slot is still to be chosen. */}
       <main className="container">
         {/* Conversion funnel: hero → services (what I offer) → trust (proof) →
             method/pricing (the offer) → FAQ (answer objections) → lead magnet
