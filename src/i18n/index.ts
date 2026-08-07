@@ -3,9 +3,9 @@ export type Lang = "it" | "en" | "sv";
 export const dict: Record<Lang, Record<string, string>> = {
   it: {
     // Nav
-    "nav.logo.before": "LOoz",
+    "nav.logo.before": "LO",
     "nav.logo.dot": ".",
-    "nav.logo.after": "design",
+    "nav.logo.after": "oz",
     "nav.work": "Lavori",
     "nav.blog": "Blog",
     "nav.agents": "Assistente",
@@ -665,9 +665,9 @@ export const dict: Record<Lang, Record<string, string>> = {
   },
 
   en: {
-    "nav.logo.before": "LOoz",
+    "nav.logo.before": "LO",
     "nav.logo.dot": ".",
-    "nav.logo.after": "design",
+    "nav.logo.after": "oz",
     "nav.work": "Work",
     "nav.blog": "Blog",
     "nav.agents": "Assistant",
@@ -1366,9 +1366,9 @@ export const dict: Record<Lang, Record<string, string>> = {
   },
 
   sv: {
-    "nav.logo.before": "LOoz",
+    "nav.logo.before": "LO",
     "nav.logo.dot": ".",
-    "nav.logo.after": "design",
+    "nav.logo.after": "oz",
     "nav.work": "Arbeten",
     "nav.blog": "Blogg",
     "nav.agents": "Assistent",

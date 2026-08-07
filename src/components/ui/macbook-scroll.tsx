@@ -401,7 +401,7 @@ const LidMark = () => {
         color: "var(--accent-green-bright)",
       }}
     >
-      LOoz<span style={{ color: "var(--accent-peach)" }}>.design</span>
+      LO<span style={{ color: "var(--accent-peach)" }}>.</span>oz
     </span>
   );
 };

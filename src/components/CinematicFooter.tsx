@@ -133,7 +133,7 @@ export default function CinematicFooter() {
             color: "var(--ink-body)",
             fontFamily: "var(--font-ui)",
           }}
-          aria-label="LOoz.design"
+          aria-label="LO.oz"
         >
           {/* Giant background wordmark */}
           <div
@@ -142,7 +142,7 @@ export default function CinematicFooter() {
             aria-hidden
             style={{ position: "absolute", left: "50%", bottom: "-4vh", transform: "translateX(-50%)", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}
           >
-            LOoz
+            LO.oz
           </div>
 
           {/* Services marquee */}
