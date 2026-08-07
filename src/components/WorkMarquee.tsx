@@ -9,9 +9,9 @@ import { PROJECTS } from "@/lib/projects";
 // so they run before any claim about them. Parchment & Forest treatment — 3px ink
 // frames and hard offset shadows, not soft floating cards.
 //
-// Cost control: only the clips currently on screen play (IntersectionObserver),
-// preload="none" keeps them out of the initial network, and the whole strip is
-// static under prefers-reduced-motion.
+// Cost control: a clip plays only under the cursor (touch keeps in-view autoplay
+// — see Card), preload="none" keeps them out of the initial network, and the
+// whole strip is static under prefers-reduced-motion.
 const ITEMS = PROJECTS.filter((p) => p.featured && !p.hidden && p.coverVideo).slice(0, 8);
 
 const CSS = `
@@ -60,6 +60,32 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
     const v = vref.current;
     if (!v) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    // Hover-capable pointer: the clip runs ONLY while the cursor is on the card.
+    // The strip already pauses under the cursor (.marquee:hover), so one gesture
+    // both stops the ticker and starts the demo you stopped on.
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      const card = v.closest(".wmq__card");
+      if (!card) return;
+      const enter = () => { v.play().catch(() => {}); };
+      const leave = () => {
+        // pause() aborts a still-pending play() (its promise rejects, caught above).
+        v.pause();
+        // Rewind so the card goes back to its opening frame instead of freezing
+        // mid-clip — a strip of stopped-dead videos reads as broken.
+        try { v.currentTime = 0; } catch { /* nothing loaded yet */ }
+      };
+      card.addEventListener("pointerenter", enter);
+      card.addEventListener("pointerleave", leave);
+      return () => {
+        card.removeEventListener("pointerenter", enter);
+        card.removeEventListener("pointerleave", leave);
+      };
+    }
+
+    // Touch has no hover. Those devices keep the in-view autoplay — otherwise the
+    // "live demos" strip would be a wall of stills on phones, which is the one
+    // thing this section exists to disprove.
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
