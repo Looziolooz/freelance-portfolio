@@ -4,7 +4,24 @@ import Stripe from "stripe";
 // matching default, and the webhook reads period fields defensively (top-level
 // or per-item) so it keeps working across Stripe API versions. Pinning a string
 // the SDK doesn't recognise is a silent runtime footgun.
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "");
+//
+// Built ON DEMAND, never at module load. The SDK throws "Neither apiKey nor
+// config.authenticator provided" when constructed without a key, so an eager
+// `new Stripe(process.env.STRIPE_SECRET_KEY ?? "")` made merely IMPORTING this
+// file fatal wherever the secret is absent — which took `next build` down at
+// "Collecting page data" on any environment without it, even though the paid
+// surfaces are pre-launch (LAUNCH_MODE "minimal") and nothing on the public
+// site touches Stripe. Deferring it means a missing key is a clean 500 from the
+// one route that needed it, not a dead deploy.
+let client: Stripe | null = null;
+
+export function getStripe(): Stripe {
+  if (client) return client;
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY is not set");
+  client = new Stripe(key);
+  return client;
+}
 
 export const PRICE_IDS: Record<string, string> = {
   SUPPORTER: process.env.STRIPE_SUPPORTER_PRICE_ID ?? "",
@@ -27,7 +44,7 @@ export function tierForPrice(
 }
 
 export async function createCustomer(email: string, name?: string) {
-  return stripe.customers.create({ email, name });
+  return getStripe().customers.create({ email, name });
 }
 
 // Hosted Stripe Customer Portal — lets a subscriber update payment method,
@@ -36,7 +53,7 @@ export async function createBillingPortalSession(
   customerId: string,
   returnUrl: string
 ) {
-  return stripe.billingPortal.sessions.create({
+  return getStripe().billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
   });

@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
-import { stripe, PRICE_IDS, createCustomer } from "@/lib/stripe";
+import { getStripe, PRICE_IDS, createCustomer } from "@/lib/stripe";
 import { success, error } from "@/lib/api-response";
 
 export async function POST(req: NextRequest) {
@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
     const origin = req.headers.get("origin") || "http://localhost:3000";
 
-    const checkout = await stripe.checkout.sessions.create({
+    const checkout = await getStripe().checkout.sessions.create({
       mode: isLifetime ? "payment" : "subscription",
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],

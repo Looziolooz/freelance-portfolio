@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { stripe, tierForPrice, PRICE_IDS } from "@/lib/stripe";
+import { getStripe, tierForPrice, PRICE_IDS } from "@/lib/stripe";
 import { error } from "@/lib/api-response";
 
 // Period start/end + price id are read defensively: on newer Stripe API
@@ -29,6 +29,11 @@ export async function POST(req: NextRequest) {
 
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
     if (!webhookSecret) return error("Webhook secret not configured", 500);
+
+    // Resolved BEFORE the inner try: a missing STRIPE_SECRET_KEY is a config
+    // fault, and raised inside that catch it would be reported to Stripe as a
+    // bad signature — sending us hunting the wrong bug.
+    const stripe = getStripe();
 
     let event;
     try {
