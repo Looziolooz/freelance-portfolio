@@ -30,6 +30,12 @@ const nextConfig: NextConfig = {
   // to WebP. Encoding is cached after the first request, so the cost is paid once.
   images: {
     formats: ["image/avif", "image/webp"],
+    // Explicit even though [75] is the default, because the failure mode is
+    // nasty: since Next 15.4 a `q` NOT listed here returns 400
+    // (INVALID_IMAGE_OPTIMIZE_REQUEST) in production while dev happily serves
+    // it — so a stray q=70 ships green and breaks live. It did: the work
+    // marquee posters. Add a value here before using it anywhere.
+    qualities: [75],
   },
   // Keep Prisma + the Postgres driver external to the bundler.
   serverExternalPackages: ["@prisma/client", "@prisma/adapter-pg", "pg"],

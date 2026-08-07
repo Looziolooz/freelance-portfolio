@@ -108,7 +108,9 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
         <video
           ref={vref}
           src={p.coverVideo}
-          poster={p.image ? `/_next/image?url=${encodeURIComponent(p.image)}&w=640&q=70` : undefined}
+          // q=75, like the other hand-built poster URLs: any quality not listed in
+          // images.qualities 400s in PRODUCTION but passes in dev (see next.config.ts).
+          poster={p.image ? `/_next/image?url=${encodeURIComponent(p.image)}&w=640&q=75` : undefined}
           muted
           loop
           playsInline
