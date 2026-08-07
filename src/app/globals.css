@@ -1025,16 +1025,22 @@ select:focus-visible,
 /* ── Hero: studio portrait as scroll-scrubbed footage + statement & CTAs ──
    Light, on-brand. Desktop = tall sticky scrub (the video moves only via scroll);
    phones / reduced-motion = a static poster frame, content stacked. */
-.hero-motion { position: relative; width: 100%; height: 150vh; background: var(--canvas-page); }
+/* 220vh, not 150: the scrub is a long run. The statement clears over roughly the
+   first two thirds, then the footage evolves alone until the sticky stage
+   scrolls away into the marquee band. */
+.hero-motion { position: relative; width: 100%; height: 220vh; background: var(--canvas-page); }
 .hm-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--canvas-page); }
 /* the portrait is a full-height panel on the RIGHT; its left edge DISSOLVES into
    the parchment via a noise mask, so the page reads full-screen but the image
-   sits right and the left stays clean + readable for the statement. */
-.hm-video {
-  position: absolute; z-index: 0; display: block;
+   sits right and the left stays clean + readable for the statement.
+   .hm-media owns the box, the mask and the scroll push-in; the <video> and the
+   <canvas> only fill it. Two renderers, one frame: the video carries the poster
+   and the currentTime fallback, the canvas takes over once HeroMotion has
+   extracted the frames — they must share this box EXACTLY or the swap jumps. */
+.hm-media {
+  position: absolute; z-index: 0;
   top: 0; bottom: 0; right: 0; height: 100%;
   width: clamp(440px, 70%, 1220px);
-  object-fit: cover; object-position: center;
   transform-origin: center; will-change: transform;
   -webkit-mask-image:
     linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.5) 24%, #000 46%, #000 100%),
@@ -1045,6 +1051,15 @@ select:focus-visible,
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.4' intercept='0.72'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   mask-composite: intersect;
 }
+.hm-video, .hm-canvas {
+  position: absolute; inset: 0; display: block;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+}
+/* Crossfade between the two renderers. The canvas starts hidden and is faded in
+   by HeroMotion the moment its frames exist; the video fades out under it. */
+.hm-video, .hm-canvas { transition: opacity 420ms ease; }
+.hm-canvas { opacity: 0; }
 .hm-content {
   position: absolute; z-index: 2; left: clamp(20px, 7vw, 112px); top: 50%; transform: translateY(-50%);
   width: min(46%, 560px); display: flex; flex-direction: column; gap: 16px;
@@ -1080,7 +1095,8 @@ select:focus-visible,
 @media (max-width: 1439px), (prefers-reduced-motion: reduce) {
   .hero-motion { height: auto; min-height: 100svh; }
   .hm-stage { position: relative; height: auto; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 26px; padding: 96px 22px 48px; }
-  .hm-video { position: relative; right: auto; top: auto; bottom: auto; width: 100%; height: clamp(240px, 42vh, 380px); order: -1; border-radius: 14px; -webkit-mask-image: none; mask-image: none; }
+  /* overflow:hidden so the rounded corner clips the renderers inside the box. */
+  .hm-media { position: relative; right: auto; top: auto; bottom: auto; width: 100%; height: clamp(240px, 42vh, 380px); order: -1; border-radius: 14px; overflow: hidden; -webkit-mask-image: none; mask-image: none; }
   .hm-content { position: relative; inset: auto; left: auto; top: auto; transform: none; width: 100%; gap: 14px; max-width: 640px; }
   .hm-h1 { font-size: clamp(34px, 9vw, 54px); line-height: 1.03; }
   .hm-statement { font-size: clamp(18px, 5vw, 24px); }
