@@ -8,20 +8,7 @@ import { useLang } from "@/components/LangProvider";
 // /processo — "Come lavoro": the four-phase method as an Aceternity-style vertical
 // timeline, re-themed Parchment & Forest (ochre→forest scroll rail, sticky phase
 // labels, content + a realistic photo scrolling past on the right).
-const CTA_CSS = `
-.proc-cta {
-  margin-top: clamp(64px, 8vw, 110px);
-  border: 3px solid var(--ink-border);
-  border-radius: var(--radius);
-  background: var(--canvas-panel-yellow);
-  box-shadow: var(--shadow-card);
-  padding: clamp(34px, 5vw, 68px) clamp(24px, 4vw, 48px);
-  text-align: center;
-}
-.proc-cta__title { margin: 0 0 12px; font-family: var(--font-display); font-size: clamp(28px, 4vw, 54px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.03; }
-.proc-cta__body { margin: 0 auto 28px; max-width: 540px; font-size: 16px; line-height: 1.6; color: var(--ink-muted); }
-.proc-cta__btns { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
-`;
+// The closing CTA block styles now live in globals.css: /prezzi reuses them.
 
 export default function ProcessoPage() {
   const { t } = useLang();
@@ -55,7 +42,6 @@ export default function ProcessoPage() {
 
   return (
     <>
-      <style dangerouslySetInnerHTML={{ __html: CTA_CSS }} />
       <Nav />
       <main
         style={{

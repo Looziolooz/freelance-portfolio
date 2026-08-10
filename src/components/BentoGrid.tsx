@@ -43,7 +43,7 @@ export default function BentoGrid() {
         <span className="bento-stat__l">{t("bento.s3.label")}</span>
       </div>
 
-      {PILLARS.map((key) => {
+      {PILLARS.map((key, i) => {
         // Service cards become links as their landing pages come online
         // (SEO audit: six services sold, zero services with a URL).
         const href =
@@ -64,12 +64,19 @@ export default function BentoGrid() {
             <p className="bento-svc__desc">{t(`home.svc.${key}.desc`)}</p>
           </>
         );
+        // Ground variety so the six pillars don't read as one slab: neutrals
+        // alternate, and the flagship (agents) takes the dark accent. Assigned by
+        // index rather than :nth-child because these render as <a> OR <div>
+        // depending on whether the landing page exists yet, which makes
+        // type-based selectors quietly wrong.
+        const ground =
+          key === "agents" ? " bento-svc--deep" : i % 2 ? " bento-svc--alt" : "";
         return href ? (
-          <Link key={key} href={href} className="bento-cell bento-svc" style={{ textDecoration: "none", color: "inherit" }}>
+          <Link key={key} href={href} className={`bento-cell bento-svc${ground}`} style={{ textDecoration: "none", color: "inherit" }}>
             {inner}
           </Link>
         ) : (
-          <div key={key} className="bento-cell bento-svc">
+          <div key={key} className={`bento-cell bento-svc${ground}`}>
             {inner}
           </div>
         );

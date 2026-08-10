@@ -15,7 +15,10 @@ import { PROJECTS } from "@/lib/projects";
 const ITEMS = PROJECTS.filter((p) => p.featured && !p.hidden && p.coverVideo).slice(0, 8);
 
 const CSS = `
-.wmq { padding: clamp(26px, 4vw, 44px) 0 clamp(18px, 3vw, 30px); border-top: 3px solid var(--ink-border); border-bottom: 3px solid var(--ink-border); background: var(--canvas-panel-yellow); }
+/* --band-y both sides (globals.css): the old 44/30 left the card row landing
+   30px from the tech strip below, so the two densest blocks on the page ran
+   together. Symmetric padding also stops the band reading as top-heavy. */
+.wmq { padding: var(--band-y) 0; border-top: 3px solid var(--ink-border); border-bottom: 3px solid var(--ink-border); background: var(--canvas-panel-yellow); }
 .wmq__lead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto clamp(18px, 2.5vw, 26px); padding: 0 clamp(18px, 4vw, 40px); }
 .wmq__eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-green-deep); }
 .wmq__note { font-size: 14px; color: var(--ink-muted); }
@@ -34,6 +37,9 @@ const CSS = `
    this is a <span> inside the card link. */
 .wmq__media { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--canvas-panel); border-bottom: 3px solid var(--ink-border); }
 .wmq__media video, .wmq__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* First frame of the clip, under the video: what the loop dip reveals. */
+.wmq__under { position: absolute; inset: 0; z-index: 0; }
+.wmq__media video { position: relative; z-index: 1; }
 /* Pinned bottom-right over the clip: doubles as the demo affordance and as the
    mask for the Gemini mark the cover captures carry in that corner. */
 .wmq__demo {
@@ -61,6 +67,35 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
     if (!v) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    // ── Seamless loop ──────────────────────────────────────────────────────
+    // Native loop() cuts hard from the last frame to the first, and on a scroll
+    // capture those two frames are the bottom and the top of a page — the jump
+    // is unmissable if you hold the cursor still. So: dip the video's opacity
+    // over the closing moments, restart it while it is faded, and bring it back.
+    // The poster underneath is the frame it restarts on, so the dip reads as a
+    // soft breath rather than a cut. Adapted from a reference that faded to
+    // black; here the ground is a light panel, which would have flashed.
+    const FADE = 0.5;   // seconds of fade at each end
+    let raf = 0;
+    const setDim = (o: number) => { v.style.opacity = o.toFixed(3); };
+    const tick = () => {
+      const d = v.duration;
+      if (isFinite(d) && d > FADE * 2 && !v.paused) {
+        const left = d - v.currentTime;
+        // Ramp down over the last FADE seconds, ramp back up over the first.
+        const o = left < FADE ? left / FADE : Math.min(1, v.currentTime / FADE);
+        setDim(Math.max(0, Math.min(1, o)));
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    const onEnd = () => {
+      // Restart while invisible, so the seam is never on screen.
+      try { v.currentTime = 0; } catch { /* not seekable */ }
+      v.play().catch(() => {});
+    };
+    v.addEventListener("ended", onEnd);
+    raf = requestAnimationFrame(tick);
+
     // Hover-capable pointer: the clip runs ONLY while the cursor is on the card.
     // The strip already pauses under the cursor (.marquee:hover), so one gesture
     // both stops the ticker and starts the demo you stopped on.
@@ -74,10 +109,14 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
         // Rewind so the card goes back to its opening frame instead of freezing
         // mid-clip — a strip of stopped-dead videos reads as broken.
         try { v.currentTime = 0; } catch { /* nothing loaded yet */ }
+        // Back to full: leaving mid-dip would strand the card faded.
+        setDim(1);
       };
       card.addEventListener("pointerenter", enter);
       card.addEventListener("pointerleave", leave);
       return () => {
+        cancelAnimationFrame(raf);
+        v.removeEventListener("ended", onEnd);
         card.removeEventListener("pointerenter", enter);
         card.removeEventListener("pointerleave", leave);
       };
@@ -96,7 +135,11 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
       { threshold: 0.15 },
     );
     io.observe(v);
-    return () => io.disconnect();
+    return () => {
+      cancelAnimationFrame(raf);
+      v.removeEventListener("ended", onEnd);
+      io.disconnect();
+    };
   }, []);
 
   const title = t(`work.proj.${p.key}`);
@@ -105,6 +148,21 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
   return (
     <Link href={`/work/${p.slug}`} className="wmq__card" aria-label={title}>
       <span className="wmq__media">
+        {/* The clip's own first frame, sitting UNDER the video. The loop
+            crossfade dips the video's opacity, and this is what shows through —
+            the exact frame the clip restarts on, so the seam disappears. Fading
+            to transparent instead would flash --canvas-panel, a light panel, on
+            every dark cover. */}
+        {p.image && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className="wmq__under"
+            src={`/_next/image?url=${encodeURIComponent(p.image)}&w=640&q=75`}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
+        )}
         <video
           ref={vref}
           src={p.coverVideo}
@@ -112,7 +170,6 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
           // images.qualities 400s in PRODUCTION but passes in dev (see next.config.ts).
           poster={p.image ? `/_next/image?url=${encodeURIComponent(p.image)}&w=640&q=75` : undefined}
           muted
-          loop
           playsInline
           preload="none"
           aria-hidden="true"

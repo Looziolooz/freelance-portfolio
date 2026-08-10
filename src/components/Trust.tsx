@@ -34,6 +34,9 @@ export default function Trust() {
   const { t } = useLang();
   return (
     <section id="perche" className="trust" aria-label={t("trust.title")}>
+      {/* The section is full-bleed (colour break); this re-centres the content
+          on the same measure as every other section. */}
+      <div className="trust__inner">
       <SectionHeader eyebrow={t("trust.eyebrow")} title={t("trust.title")} sub={t("trust.sub")} />
 
       <ul className="trust-grid">
@@ -63,6 +66,7 @@ export default function Trust() {
       <Link href="/work" className="trust-proof">
         {t("trust.cta")} <span aria-hidden="true">→</span>
       </Link>
+      </div>
     </section>
   );
 }

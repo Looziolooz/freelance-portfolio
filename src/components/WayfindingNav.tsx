@@ -14,8 +14,15 @@ const SECTIONS = [
   { id: "audit", it: "Audit", en: "Audit", sv: "Audit" },
 ] as const;
 
+// Sections that run on a dark full-bleed ground. The rail is position:fixed, so
+// it cannot know what is behind it — over one of these its ink hairlines would
+// disappear completely, which is how a navigator becomes invisible exactly where
+// the page is most striking.
+const DEEP_GROUND = ["perche"];
+
 export default function WayfindingNav() {
   const { lang } = useLang();
+  const navRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
   const labelFor = (s: (typeof SECTIONS)[number]) => s[lang] ?? s.en;
@@ -23,6 +30,7 @@ export default function WayfindingNav() {
   useEffect(() => {
     const links = document.querySelectorAll<HTMLAnchorElement>(".wayfinding-link");
     const list = listRef.current;
+    const nav = navRef.current;
     const activeLabel = labelRef.current;
     if (!links.length || !list) return;
 
@@ -54,6 +62,20 @@ export default function WayfindingNav() {
         activeLabel.textContent = labelFor(SECTIONS[activeIdx]);
       }
 
+      // Not the active section: the rail is pinned to the viewport's vertical
+      // centre, so what matters is which ground covers THAT point — the active
+      // section is picked at a 40% threshold and the two disagree at every edge.
+      if (nav) {
+        const mid = window.innerHeight / 2;
+        const onDeep = DEEP_GROUND.some((id) => {
+          const el = document.getElementById(id);
+          if (!el) return false;
+          const r = el.getBoundingClientRect();
+          return r.top <= mid && r.bottom >= mid;
+        });
+        nav.toggleAttribute("data-on-deep", onDeep);
+      }
+
       const activeLink = links[activeIdx];
       const listHeight = list.offsetHeight;
       const linkCenter = activeLink.offsetTop + activeLink.offsetHeight / 2;
@@ -72,7 +94,7 @@ export default function WayfindingNav() {
   }, [lang]);
 
   return (
-    <nav className="wayfinding-nav" aria-label="Page sections">
+    <nav ref={navRef} className="wayfinding-nav" aria-label="Page sections">
       <span ref={labelRef} className="wayfinding-active-label" aria-hidden="true">Intro</span>
       <ul ref={listRef} className="wayfinding-list">
         {SECTIONS.map((s) => (
@@ -94,6 +116,18 @@ export default function WayfindingNav() {
           padding: 1.25rem 0;
           pointer-events: auto;
           display: none;
+          /* Every colour in the rail routes through these three, so flipping it
+             over a dark ground is one override instead of six. */
+          --wf-fg: var(--fg);
+          --wf-dim: var(--muted);
+          --wf-rule: var(--rule);
+        }
+
+        /* Set while a dark full-bleed section covers the rail's own position. */
+        .wayfinding-nav[data-on-deep] {
+          --wf-fg: var(--canvas-page);
+          --wf-dim: rgba(245, 238, 223, .62);
+          --wf-rule: rgba(245, 238, 223, .3);
         }
 
         .wayfinding-active-label {
@@ -135,7 +169,7 @@ export default function WayfindingNav() {
           top: 0;
           bottom: 0;
           width: 1px;
-          background: var(--rule);
+          background: var(--wf-rule);
           pointer-events: none;
         }
 
@@ -144,7 +178,7 @@ export default function WayfindingNav() {
           display: block;
           width: 120px;
           height: 28px;
-          color: var(--muted);
+          color: var(--wf-dim);
           font-family: var(--font-mono);
           font-size: 11px;
           letter-spacing: .02em;
@@ -154,7 +188,7 @@ export default function WayfindingNav() {
         }
 
         .wayfinding-link:focus-visible {
-          outline: 2px solid var(--fg);
+          outline: 2px solid var(--wf-fg);
           outline-offset: 4px;
           border-radius: 2px;
         }
@@ -180,18 +214,18 @@ export default function WayfindingNav() {
           top: 50%;
           /* Fixed 18px width scaled down: scaleX composites on the GPU where
              animating width relayouts every frame (impeccable detector). */
-          transform: translateY(-50%) scaleX(.34);
+          transform: translateY(-50%) scaleX(.5);
           transform-origin: right center;
           display: block;
-          width: 18px;
-          height: 1px;
+          width: 22px;
+          height: 2px;
           background: currentColor;
-          opacity: .4;
+          opacity: .58;
           transition: transform .26s ease-out .12s, opacity .22s ease-out .12s;
         }
 
         .wayfinding-link.is-active {
-          color: var(--fg);
+          color: var(--wf-fg);
         }
 
         .wayfinding-link.is-active .wayfinding-tick {
@@ -215,7 +249,7 @@ export default function WayfindingNav() {
         }
 
         .wayfinding-link:hover {
-          color: var(--fg);
+          color: var(--wf-fg);
         }
 
         .wayfinding-link:hover .wayfinding-tick {

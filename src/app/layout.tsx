@@ -16,6 +16,7 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
+
 // Mono: technical labels, code, stat readouts.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
