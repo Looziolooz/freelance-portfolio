@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Prezzi",
   description:
-    "Sito per piccola impresa da 300€ + IVA, prima versione in 7-10 giorni. Cosa ricevi, come funziona, hosting e dominio. Servizio mensile da 25€.",
+    "Sito per piccola impresa fino a 5 pagine da 700€ + IVA, prima versione in 7-10 giorni. Cosa ricevi, come funziona, hosting e dominio. Servizio mensile da 25€.",
 };
 
 export default function PrezziLayout({ children }: { children: React.ReactNode }) {

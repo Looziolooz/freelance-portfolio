@@ -41,7 +41,7 @@ export default function PrezziPage() {
 
           {/* Build, then the optional aftercare. The monthly used to live only
               inside a footnote, which left the two offers undefined against each
-              other: readers could not tell whether €25 replaced the €300 or came
+              other: readers could not tell whether the monthly replaced the build or came
               after it. Shown as its own tier, the order answers that by itself. */}
           <div className="prz-tiers prz-tiers--three">
             <div className="prz-tier">
