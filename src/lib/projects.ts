@@ -32,6 +32,28 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "28",
+    key: "nordbageriet",
+    slug: "nordbageriet",
+    demo: "https://bakery-tan-two.vercel.app",
+    repo: "https://github.com/Looziolooz/bakery",
+    image: "/projects/nordbageriet.png",
+    coverVideo: "/projects/nordbageriet.mp4",
+    featured: true,
+    swatch: "#17130D",
+  },
+  {
+    id: "27",
+    key: "buss-travel",
+    slug: "buss-travel",
+    demo: "https://buss-travel.vercel.app/",
+    repo: "https://github.com/Looziolooz/buss-travel",
+    image: "/projects/buss-travel.png",
+    coverVideo: "/projects/buss-travel.mp4",
+    featured: true,
+    swatch: "#26333B",
+  },
+  {
     id: "26",
     key: "aliva",
     slug: "aliva",
