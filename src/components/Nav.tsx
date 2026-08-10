@@ -48,6 +48,7 @@ export default function Nav() {
         >
           <a href="/work" onClick={() => setMenuOpen(false)}>{t("nav.work")}</a>
           <a href="/processo" onClick={() => setMenuOpen(false)}>{t("nav.process")}</a>
+          <a href="/prezzi" onClick={() => setMenuOpen(false)}>{t("nav.pricing")}</a>
           <a href="/agents" onClick={() => setMenuOpen(false)}>{t("nav.agents")}</a>
           {/* Persistent conversion CTA — the free audit is the funnel's entry
               point, so it stays reachable from every page. */}
