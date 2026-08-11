@@ -35,6 +35,24 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "34",
+    key: "mercato",
+    slug: "mappa-mercato",
+    image: "/projects/mappa-mercato.png",
+    coverVideo: "/projects/mappa-mercato.mp4",
+    featured: true,
+    swatch: "#143A2B",
+  },
+  {
+    id: "33",
+    key: "seo",
+    slug: "audit-visibilita",
+    image: "/projects/audit-seo.png",
+    coverVideo: "/projects/audit-seo.mp4",
+    featured: true,
+    swatch: "#143A2B",
+  },
+  {
     id: "32",
     key: "whatsapp",
     slug: "assistente-whatsapp",
