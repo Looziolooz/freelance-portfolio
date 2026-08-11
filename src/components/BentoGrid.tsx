@@ -91,11 +91,6 @@ export default function BentoGrid() {
         </svg>
         <span className="bento-chart__l">{t("bento.chart.label")}</span>
       </div>
-
-      <Link href="/contatti" className="bento-cell bento-cta">
-        <span className="bento-cta__arrow" aria-hidden="true">↗</span>
-        <span className="bento-cta__txt">{t("bento.cta")}</span>
-      </Link>
     </div>
   );
 }

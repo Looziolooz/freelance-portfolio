@@ -1518,7 +1518,8 @@ select:focus-visible,
 
 /* ── Bento grid (Shift + services) — neo-brutalist cells, Parchment & Forest ──
    Auto-flow: image spans 2 rows (left), headline spans 3 cols (top); the six
-   service pillars and the chart flow into the remaining cells, CTA closes. */
+   service pillars and the chart flow into the remaining cells and fill them
+   exactly — seven cells into the seven slots three rows leave over. */
 .bento-sec { padding: var(--section-y) 0; }
 .bento {
   display: grid;
@@ -1597,32 +1598,14 @@ a.bento-svc:hover .bento-svc__go { opacity: 1; transform: translate(3px, -3px); 
 .bento-chart svg { width: 100%; flex: 1 1 auto; min-height: 30px; }
 .bento-chart__l { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-green-deep); }
 
-/* Full width, because of the arithmetic: four columns, and after the image
-   (2 rows) + headline (3 cols) there are eight cells left. Six pillars + chart
-   fill rows 2–3 exactly, which would strand the CTA alone in a row of four with
-   three holes beside it. Spanning it closes the grid AND ends the section on the
-   one cell that asks for something — the same full-width close the piani bento
-   already uses. Mobile is two columns and comes out even, so it opts back out. */
-.bento-cta { grid-column: span 4; background: var(--accent-green); justify-content: space-between; text-decoration: none; min-height: 0; }
-/* A band, not a tall cell: the column layout was drawn for a 273px card, and at
-   1152px it parks the label at the floor and the arrow at the ceiling with a
-   dead middle. Row direction reads across instead of down, and the arrow lands
-   where the eye already is when it finishes the word. Order is reversed because
-   the arrow comes first in the DOM (it was the top-right mark). */
-.bento-cta { flex-direction: row-reverse; align-items: center; gap: 16px; }
-.bento-cta__arrow { align-self: auto; font-size: 32px; line-height: 1; color: var(--btn-ink); transition: transform .2s var(--ease); }
-.bento-cta:hover .bento-cta__arrow { transform: translate(3px, -3px); }
-.bento-cta__txt { font-family: var(--font-display); font-weight: 600; font-size: clamp(18px, 1.8vw, 26px); line-height: 1.05; color: var(--btn-ink); }
-
 @media (max-width: 760px) {
   .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(120px, auto); }
   .bento-img { grid-row: auto; grid-column: 1 / -1; height: clamp(260px, 76vw, 400px); }
   .bento-head { grid-column: 1 / -1; }
-  /* Two columns: six pillars are three even rows, chart + CTA are the fourth.
-     Spanning the CTA here would open the hole it closes on desktop — and back
-     in a half-width cell the band layout has no room, so it stacks again. */
-  .bento-cta { grid-column: auto; flex-direction: column; align-items: stretch; }
-  .bento-cta__arrow { align-self: flex-end; font-size: 26px; }
+  /* Two columns: the six pillars are three even rows and the chart is left over
+     on its own, so it takes the full width rather than leaving a gap beside it.
+     The sparkline reads better wide anyway. */
+  .bento-chart { grid-column: 1 / -1; }
 }
 
 /* ── Engagements bento (id="piani") — same neo-brutalist chrome as the Servizi
