@@ -84,6 +84,15 @@ export default function AgentiAiPage() {
               </p>
             </div>
           </div>
+          {/* The two AI services split cleanly by who they face, so the page that
+              sells the customer-facing one is the right place to name the other. */}
+          <p className="sv-lede" style={{ marginTop: 22 }}>
+            Questo è l&apos;agente rivolto ai tuoi clienti, sul sito. Se invece vuoi l&apos;AI al
+            lavoro sui tuoi file, dentro le tue cartelle, quello è un altro servizio:{" "}
+            <Link href="/servizi/claude-cowork" style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}>
+              installo e configuro Claude Cowork
+            </Link>.
+          </p>
           <div className="sv-guar" style={{ marginTop: 22 }}>
             <span>Risponde in più lingue</span>
             <span>Zero costi di modello possibili</span>
