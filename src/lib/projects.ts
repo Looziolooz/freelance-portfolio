@@ -28,9 +28,23 @@ export type Project = {
   // "independent concept, not affiliated/endorsed" disclaimer on the detail page
   // so it can be shown safely as a portfolio concept piece.
   concept?: boolean;
+  // Visible attribution for work built on someone else licensed material.
+  // CC BY requires the credit where the derived work is shown, not in a repo file.
+  credit?: string;
 };
 
 export const PROJECTS: Project[] = [
+  {
+    id: "29",
+    key: "solleciti",
+    slug: "solleciti-pagamento",
+    image: "/projects/solleciti.png",
+    coverVideo: "/projects/solleciti.mp4",
+    featured: true,
+    swatch: "#143A2B",
+    credit:
+      "Flusso adattato da un template open source di Enes Cingoz (awesome-n8n-templates), licenza CC BY 4.0. Logica di filtro e testo del messaggio modificati.",
+  },
   {
     id: "28",
     key: "nordbageriet",

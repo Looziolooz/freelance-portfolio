@@ -150,6 +150,26 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
         </p>
       )}
 
+      {/* Attribution for work built on someone else's licensed material. CC BY
+          requires the credit to be visible wherever the derived work is shown,
+          so it renders here rather than sitting in a repo file nobody opens. */}
+      {project.credit && (
+        <p
+          style={{
+            display: "flex",
+            gap: 8,
+            maxWidth: 680,
+            marginBottom: 28,
+            fontSize: "var(--fs-sm)",
+            lineHeight: 1.55,
+            color: "var(--ink-muted)",
+          }}
+        >
+          <span aria-hidden="true" style={{ flexShrink: 0 }}>↳</span>
+          <span>{project.credit}</span>
+        </p>
+      )}
+
       {project.demo ? (
         <>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12 }}>

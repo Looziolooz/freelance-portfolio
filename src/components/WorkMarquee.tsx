@@ -174,7 +174,10 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
           preload="none"
           aria-hidden="true"
         />
-        <span className="wmq__demo">{t("work.viewDemo")} ↗</span>
+        {/* No demo URL means the detail page shows the flow, not an embedded
+            site — promising "open demo" there would be a promise with nothing
+            behind it. */}
+        <span className="wmq__demo">{t(p.demo ? "work.viewDemo" : "work.viewFlow")} ↗</span>
       </span>
       <span className="wmq__cap">
         <span className="wmq__name">{title}</span>
