@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLang } from "./LangProvider";
 import { PROJECTS, type Project } from "@/lib/projects";
+import { useRotation } from "@/lib/useRotation";
 
 // Projects as a card grid. Cover clips are hover-driven on desktop (play under
 // the cursor, pause on leave, one run total — then they hold the last frame);
@@ -12,9 +13,15 @@ import { PROJECTS, type Project } from "@/lib/projects";
 // in-site demo viewer at /work/[slug]. Cards with only a screenshot show it
 // static; repo-only cards fall back to their brand swatch. Reduced-motion
 // keeps the poster still.
+// Module scope so the rotation hook gets a stable reference. Nothing is cut
+// here — the grid shows every featured project — so rotating only changes which
+// work greets you at the top of the page instead of it always being the same
+// three rows.
+const POOL = PROJECTS.filter((p) => p.featured && !p.hidden);
+
 export default function ProjectGallery() {
   const { t } = useLang();
-  const items = PROJECTS.filter((p) => p.featured && !p.hidden);
+  const items = useRotation(POOL);
 
   return (
     <section id="work" className="pg" aria-label={t("work.title")}>

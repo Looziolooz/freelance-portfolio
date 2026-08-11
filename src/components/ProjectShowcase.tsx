@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLang } from "./LangProvider";
 import { PROJECTS } from "@/lib/projects";
+import { useRotation } from "@/lib/useRotation";
 
 // Full-bleed project showcase near the end of the page: each demo plays large,
 // at its native 16/9, with the label offset to the left so the eye lands on the
@@ -12,7 +13,9 @@ import { PROJECTS } from "@/lib/projects";
 //
 // Each item reveals independently (its own IntersectionObserver) and its clip
 // only runs while on screen. Reduced-motion keeps the poster still.
-const ITEMS = PROJECTS.filter((p) => p.featured && !p.hidden && p.coverVideo).slice(0, 3);
+// Three slots, seventeen candidates — drawn fresh each visit (see useRotation).
+const POOL = PROJECTS.filter((p) => p.featured && !p.hidden && p.coverVideo);
+const SHOWN = 3;
 
 const CSS = `
 .psc { padding: clamp(48px, 8vw, 96px) 0 clamp(30px, 5vw, 60px); }
@@ -53,7 +56,7 @@ const CSS = `
 }
 `;
 
-function Item({ p, i }: { p: (typeof ITEMS)[number]; i: number }) {
+function Item({ p, i }: { p: (typeof POOL)[number]; i: number }) {
   const { t } = useLang();
   const ref = useRef<HTMLDivElement>(null);
   const vref = useRef<HTMLVideoElement>(null);
@@ -111,7 +114,8 @@ function Item({ p, i }: { p: (typeof ITEMS)[number]; i: number }) {
 
 export default function ProjectShowcase() {
   const { t } = useLang();
-  if (!ITEMS.length) return null;
+  const items = useRotation(POOL, SHOWN);
+  if (!POOL.length) return null;
 
   return (
     <section className="psc" aria-label={t("psc.title")}>
@@ -122,7 +126,7 @@ export default function ProjectShowcase() {
         <p className="psc__sub">{t("psc.sub")}</p>
       </header>
       <div className="psc__list">
-        {ITEMS.map((p, i) => <Item key={p.id} p={p} i={i} />)}
+        {items.map((p, i) => <Item key={p.id} p={p} i={i} />)}
       </div>
       <p style={{ marginTop: "clamp(34px, 5vw, 56px)" }}>
         <Link

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLang } from "./LangProvider";
 import { PROJECTS } from "@/lib/projects";
+import { useRotation } from "@/lib/useRotation";
 
 // A ticker of live project covers right under the hero: the demos ARE the proof,
 // so they run before any claim about them. Parchment & Forest treatment — 3px ink
@@ -12,7 +13,11 @@ import { PROJECTS } from "@/lib/projects";
 // Cost control: a clip plays only under the cursor (touch keeps in-view autoplay
 // — see Card), preload="none" keeps them out of the initial network, and the
 // whole strip is static under prefers-reduced-motion.
-const ITEMS = PROJECTS.filter((p) => p.featured && !p.hidden && p.coverVideo).slice(0, 8);
+// The whole eligible pool, not a slice: useRotation draws the visible 8 from
+// it on each visit. Sliced here, the same eight showed forever and the other
+// nine were published but unreachable from the home page.
+const POOL = PROJECTS.filter((p) => p.featured && !p.hidden && p.coverVideo);
+const SHOWN = 8;
 
 const CSS = `
 /* --band-y both sides (globals.css): the old 44/30 left the card row landing
@@ -58,7 +63,7 @@ const CSS = `
 @media (max-width: 640px) { .wmq__card { width: 82vw; margin-right: 14px; } .wmq__name { font-size: 17px; } }
 `;
 
-function Card({ p }: { p: (typeof ITEMS)[number] }) {
+function Card({ p }: { p: (typeof POOL)[number] }) {
   const { t } = useLang();
   const vref = useRef<HTMLVideoElement>(null);
 
@@ -189,7 +194,8 @@ function Card({ p }: { p: (typeof ITEMS)[number] }) {
 
 export default function WorkMarquee() {
   const { t } = useLang();
-  if (!ITEMS.length) return null;
+  const items = useRotation(POOL, SHOWN);
+  if (!POOL.length) return null;
 
   return (
     <section className="wmq" aria-label={t("workmq.eyebrow")}>
@@ -205,10 +211,10 @@ export default function WorkMarquee() {
       <div className="marquee" style={{ ["--marquee-dur" as string]: "52s" }}>
         <div className="marquee__track">
           <div style={{ display: "flex" }}>
-            {ITEMS.map((p) => <Card key={p.id} p={p} />)}
+            {items.map((p) => <Card key={p.id} p={p} />)}
           </div>
           <div style={{ display: "flex" }} aria-hidden="true">
-            {ITEMS.map((p) => <Card key={`c-${p.id}`} p={p} />)}
+            {items.map((p) => <Card key={`c-${p.id}`} p={p} />)}
           </div>
         </div>
       </div>
