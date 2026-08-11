@@ -16,11 +16,12 @@ import { SV_CSS } from "../shared-css";
 export const metadata: Metadata = {
   title: "Siti web per ristoranti e piccole attività",
   description:
-    "Siti su misura per ristoranti, gelaterie, bar e piccole attività: menù, prenotazioni e ordini, pronti in poche settimane. Preventivo fisso o abbonamento da 25€ al mese.",
+    "Siti su misura per ristoranti, gelaterie, bar e piccole attività: menù, prenotazioni e ordini. Da 700€ + IVA, prima versione in 7–10 giorni, oppure servizio mensile da 25€.",
 };
 
-// The proof: food & hospitality demos already in the gallery.
-const PROOF_SLUGS = ["sushi", "brado", "gelateria", "pizzeria-restaurant", "bella-calabria", "aliva"];
+// The proof: food & hospitality demos already in the gallery. Nordbageriet is a
+// bakery supplier, which is this page's query set exactly, so it leads.
+const PROOF_SLUGS = ["nordbageriet", "sushi", "brado", "gelateria", "pizzeria-restaurant", "aliva"];
 
 const JSON_LD = {
   "@context": "https://schema.org",
@@ -31,10 +32,10 @@ const JSON_LD = {
   provider: { "@id": `${SITE_URL}/#org` },
   areaServed: [{ "@type": "Country", name: "Italia" }, { "@type": "Place", name: "Europa" }],
   description:
-    "Siti su misura per la ristorazione e le piccole attività: menù, prenotazioni, ordini e visibilità su Google, con preventivo fisso concordato prima o abbonamento tutto incluso da 25€ al mese.",
+    "Siti su misura per la ristorazione e le piccole attività: menù, prenotazioni, ordini e visibilità su Google, da 700€ + IVA con prima versione in 7–10 giorni, o servizio mensile da 25€.",
   offers: [
-    { "@type": "Offer", name: "Pagamento unico", description: "Preventivo fisso concordato prima di iniziare, 3 mesi di supporto inclusi, nessun costo ricorrente." },
-    { "@type": "Offer", name: "Abbonamento tutto incluso", price: "25", priceCurrency: "EUR", description: "Da 25€ al mese: sito, hosting, dominio e aggiornamenti. 39€ al mese con gestione dei contenuti." },
+    { "@type": "Offer", name: "Pagamento unico", price: "700", priceCurrency: "EUR", description: "Fino a 5 pagine, prima versione in 7–10 giorni, 3 mesi di supporto inclusi, codice e account a tuo nome. Hosting e dominio esclusi." },
+    { "@type": "Offer", name: "Servizio mensile", price: "25", priceCurrency: "EUR", description: "25€ al mese: hosting, dominio e manutenzione. 39€ al mese con le modifiche a testi e immagini." },
   ],
 };
 
@@ -109,21 +110,32 @@ export default function SitiWebPage() {
           <div className="sv-price">
             <div className="sv-price__card">
               <span className="sv-price__name">Pagamento unico</span>
-              <p className="sv-price__big">Preventivo fisso, deciso prima.</p>
+              {/* This page used to say "preventivo fisso" and no number, which
+                  made the page that sells websites the vaguest place on the site
+                  about what a website costs — the home page, the FAQ and /prezzi
+                  all print the figure. */}
+              <p className="sv-price__big">Da 700€ + IVA.</p>
               <p className="sv-price__body">
-                Paghi una volta e il sito è tuo: codice, account e dominio a tuo nome, con 3 mesi
-                di supporto inclusi. Nessun costo ricorrente, nessun vincolo.
+                Fino a 5 pagine, prima versione in 7–10 giorni. Paghi una volta e il sito è tuo:
+                codice e account a tuo nome, 3 mesi di supporto inclusi. Hosting e dominio non
+                sono compresi.
               </p>
             </div>
             <div className="sv-price__card">
-              <span className="sv-price__name">Abbonamento tutto incluso</span>
-              <p className="sv-price__big">Da 25€ al mese.</p>
+              <span className="sv-price__name">Servizio mensile</span>
+              <p className="sv-price__big">25€ al mese.</p>
               <p className="sv-price__body">
-                Sito, hosting, dominio e aggiornamenti compresi. Con 39€ al mese aggiungo la
-                gestione dei contenuti: testi, foto e piccole modifiche ogni mese.
+                Dopo la consegna, se non vuoi pensarci tu: hosting, dominio e manutenzione. Con
+                39€ al mese aggiungo le modifiche a testi e immagini su richiesta.
               </p>
             </div>
           </div>
+          <p style={{ margin: "18px 0 0", color: "var(--ink-muted)", lineHeight: 1.6 }}>
+            <Link href="/prezzi" style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}>
+              Tutti i dettagli su prezzi e tempi
+            </Link>{" "}
+            — cosa ricevi, come funziona, hosting e dominio.
+          </p>
           <div className="sv-guar" style={{ marginTop: 22 }}>
             <span>Prezzo deciso prima</span>
             <span>Il codice è tuo</span>

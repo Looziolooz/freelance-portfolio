@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import Nav from "@/components/Nav";
 import CinematicFooter from "@/components/CinematicFooter";
 import { SITE_URL } from "@/lib/launch";
+import { getProject } from "@/lib/projects";
+import { dict } from "@/i18n";
 import { SV_CSS } from "../shared-css";
 
 // Second service landing (SEO audit: the automation persona had the best
@@ -11,7 +14,7 @@ import { SV_CSS } from "../shared-css";
 export const metadata: Metadata = {
   title: "Automazioni per piccole imprese e partite IVA",
   description:
-    "Email, fatture, report e appuntamenti in automatico: le automazioni assorbono il lavoro ripetitivo di chi manda avanti tutto da solo. Pronte in pochi giorni, preventivo su misura.",
+    "Email, fatture, report e appuntamenti in automatico: le automazioni assorbono il lavoro ripetitivo di chi manda avanti tutto da solo. Quattro esempi da guardare, pronte in pochi giorni, preventivo su misura.",
 };
 
 const JSON_LD = {
@@ -26,7 +29,22 @@ const JSON_LD = {
     "Automazione dei processi ripetitivi per piccole imprese e partite IVA: email, fatture, report, appuntamenti e dati dal web. Consulenza personalizzata e preventivo dedicato; un'automazione è pronta anche in pochi giorni.",
 };
 
+// This page sold automations while the site had none to show. The four demos
+// exist now, each with the three-stage read of how it works, so the page that
+// makes the claim is the page that should carry the evidence.
+const PROOF_SLUGS = ["solleciti-pagamento", "risposte-email", "contenuti-social", "assistente-whatsapp"];
+
 export default function AutomazioniPage() {
+  const proof = PROOF_SLUGS
+    .map((slug) => getProject(slug))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p && !p.hidden))
+    .map((p) => ({
+      slug: p.slug,
+      image: p.image,
+      name: dict.it[`work.proj.${p.key}`] ?? p.slug,
+      blurb: dict.it[`work.proj.${p.key}.blurb`] ?? "",
+    }));
+
   return (
     <>
       <script
@@ -55,6 +73,29 @@ export default function AutomazioniPage() {
             <div className="sv-card"><h3>Appuntamenti</h3><p>Prenotazioni, conferme e promemoria ai clienti: l&apos;agenda si riempie senza telefonate.</p></div>
             <div className="sv-card"><h3>Dati dal web</h3><p>Prezzi dei concorrenti, recensioni, mercato: raccolti e ordinati in un foglio che si aggiorna.</p></div>
             <div className="sv-card"><h3>Documenti a posto</h3><p>Allegati, ricevute e contratti archiviati nel posto giusto appena arrivano.</p></div>
+          </div>
+        </section>
+
+        <section className="sv-sec" aria-label="Esempi">
+          <h2 className="sv-h2">Quattro, già in funzione.</h2>
+          <p style={{ margin: "0 0 20px", color: "var(--ink-muted)", maxWidth: 640, lineHeight: 1.6 }}>
+            Automazioni dimostrative: aziende inventate e dati finti, ma il flusso è quello vero.
+            Ognuna mostra da dove parte, che regola applica e cosa produce.
+          </p>
+          <div className="sv-proof">
+            {proof.map((p) => (
+              <Link key={p.slug} href={`/work/${p.slug}`} className="sv-proof__card">
+                {p.image && (
+                  <span className="sv-proof__img" style={{ display: "block" }}>
+                    <Image src={p.image} alt={p.name} fill sizes="(max-width: 720px) 100vw, 33vw" style={{ objectFit: "cover" }} />
+                  </span>
+                )}
+                <span className="sv-proof__body" style={{ display: "block" }}>
+                  <span className="sv-proof__name">{p.name}</span>
+                  <span className="sv-proof__blurb" style={{ display: "-webkit-box" }}>{p.blurb}</span>
+                </span>
+              </Link>
+            ))}
           </div>
         </section>
 
