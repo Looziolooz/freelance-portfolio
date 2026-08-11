@@ -30,19 +30,6 @@ export default function BentoGrid() {
         <p className="bento-body">{t("bento.body")}</p>
       </div>
 
-      <div className="bento-cell bento-stat">
-        <span className="bento-stat__n">{t("bento.s1.n")}</span>
-        <span className="bento-stat__l">{t("bento.s1.label")}</span>
-      </div>
-      <div className="bento-cell bento-stat">
-        <span className="bento-stat__n">{t("bento.s2.n")}</span>
-        <span className="bento-stat__l">{t("bento.s2.label")}</span>
-      </div>
-      <div className="bento-cell bento-stat">
-        <span className="bento-stat__n">{t("bento.s3.n")}</span>
-        <span className="bento-stat__l">{t("bento.s3.label")}</span>
-      </div>
-
       {PILLARS.map((key, i) => {
         // Service cards become links as their landing pages come online
         // (SEO audit: six services sold, zero services with a URL).
