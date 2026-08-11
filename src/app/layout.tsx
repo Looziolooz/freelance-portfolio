@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Fraunces, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import CookieConsent from "@/components/CookieConsent";
 import ThemeProvider from "@/components/ThemeProvider";
@@ -10,19 +9,23 @@ import "./globals.css";
 
 // Display: Fraunces — an expressive "soft serif" with optical sizing. Carries
 // the craft/taste signal that a neutral sans (the old Inter Tight) flattened.
-const fraunces = Fraunces({
-  subsets: ["latin"],
+// Self-hosted via next/font/local: a variable woff2 shipped from our own
+// origin, so the build no longer reaches fonts.gstatic.com. That CDN 404'd on
+// 2026-08-11 and failed a build; a site's fonts should not depend on a third
+// party for reasons nobody controls.
+const fraunces = localFont({
+  src: "./fonts/fraunces/fraunces-variable.woff2",
   variable: "--font-fraunces",
   display: "swap",
+  fallback: ["Georgia", "'Times New Roman'", "serif"],
 });
 
-
 // Mono: technical labels, code, stat readouts.
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const jetbrainsMono = localFont({
+  src: "./fonts/jetbrains-mono/jetbrains-mono-400.woff2",
   variable: "--font-mono",
   display: "swap",
-  weight: ["400", "500"],
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
 });
 
 // Body/UI face: General Sans — self-hosted via next/font/local. Removes the
