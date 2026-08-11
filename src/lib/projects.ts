@@ -42,8 +42,6 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/whatsapp-ai.mp4",
     featured: true,
     swatch: "#143A2B",
-    credit:
-      "Flusso adattato da un template open source di Enes Cingoz (awesome-n8n-templates), licenza CC BY 4.0. Logica e testi modificati.",
   },
   {
     id: "31",
@@ -53,8 +51,6 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/social-ai.mp4",
     featured: true,
     swatch: "#143A2B",
-    credit:
-      "Flusso adattato da un template open source di Enes Cingoz (awesome-n8n-templates), licenza CC BY 4.0. Logica e testi modificati.",
   },
   {
     id: "30",
@@ -64,8 +60,6 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/email-ai.mp4",
     featured: true,
     swatch: "#143A2B",
-    credit:
-      "Flusso adattato da un template open source di Enes Cingoz (awesome-n8n-templates), licenza CC BY 4.0. Logica e testi modificati.",
   },
   {
     id: "29",
@@ -75,8 +69,6 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/solleciti.mp4",
     featured: true,
     swatch: "#143A2B",
-    credit:
-      "Flusso adattato da un template open source di Enes Cingoz (awesome-n8n-templates), licenza CC BY 4.0. Logica di filtro e testo del messaggio modificati.",
   },
   {
     id: "28",

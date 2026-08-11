@@ -4,6 +4,7 @@ import { use } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import BrandKit from "@/components/BrandKit";
+import FlowDiagram from "@/components/FlowDiagram";
 import { useLang } from "@/components/LangProvider";
 import { getProject } from "@/lib/projects";
 import { getBrandKit } from "@/lib/brand-kits";
@@ -83,54 +84,39 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
           >
             {title}
           </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "var(--fs-xs)",
-              color: "var(--ink-muted)",
-              textTransform: "uppercase",
-              letterSpacing: 1,
-              marginTop: 10,
-            }}
-          >
-            {tags}
-          </p>
+          {/* The stack belongs to the diagram's first stage when there is one.
+              Printed here as well it read as a stutter: the same line twice,
+              forty pixels apart. */}
+          {!hasValue && (
+            <p
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "var(--fs-xs)",
+                color: "var(--ink-muted)",
+                textTransform: "uppercase",
+                letterSpacing: 1,
+                marginTop: 10,
+              }}
+            >
+              {tags}
+            </p>
+          )}
         </div>
       </header>
 
-      <p style={{ fontSize: "var(--fs-lg)", lineHeight: "var(--lh-loose)", maxWidth: 680, marginBottom: hasValue ? 18 : 28 }}>
-        {blurb}
-      </p>
-
-      {hasValue && (
-        <div
-          style={{
-            maxWidth: 680,
-            marginBottom: 28,
-            padding: "16px 20px",
-            border: "3px solid var(--ink-border)",
-            borderRadius: "var(--radius-lg)",
-            background: "var(--canvas-panel-yellow)",
-            boxShadow: "4px 4px 0 var(--ink-shadow)",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 10,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: 1.4,
-              color: "var(--accent-green-deep)",
-              marginBottom: 6,
-            }}
-          >
-            {t("work.value.label")}
-          </div>
-          <p style={{ margin: 0, fontSize: "var(--fs-base)", lineHeight: "var(--lh-normal)", color: "var(--ink-body)" }}>
-            {value}
-          </p>
-        </div>
+      {/* The blurb and the VALORE panel used to stack here as two separate
+          blocks: what the project is, then what it changed, stated without a
+          link between them. The diagram carries exactly that copy with the
+          order and the causality drawn in, so it replaces them — when it was
+          first added below them the visitor read the identical sentences twice
+          in a row. A project with no value line keeps the plain paragraph,
+          because the diagram needs all three stages to mean anything. */}
+      {hasValue ? (
+        <FlowDiagram project={project} />
+      ) : (
+        <p style={{ fontSize: "var(--fs-lg)", lineHeight: "var(--lh-loose)", maxWidth: 680, marginBottom: 28 }}>
+          {blurb}
+        </p>
       )}
 
       {project.concept && (
