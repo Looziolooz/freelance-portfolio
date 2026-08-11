@@ -53,6 +53,11 @@ export default function BentoGrid() {
 
             </h3>
             <p className="bento-svc__desc">{t(`home.svc.${key}.desc`)}</p>
+            {href && (
+              <span className="bento-svc__cta" aria-hidden="true">
+                {t("bento.svc.go")} →
+              </span>
+            )}
           </>
         );
         // Ground variety so the six pillars don't read as one slab: neutrals

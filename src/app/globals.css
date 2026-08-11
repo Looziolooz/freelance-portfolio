@@ -1585,6 +1585,17 @@ a.bento-svc:hover .bento-svc__go { opacity: 1; transform: translate(3px, -3px); 
 .bento-svc__icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .bento-svc__title { font-family: var(--font-display); font-weight: 500; font-size: clamp(15px, 1.3vw, 19px); line-height: 1.12; letter-spacing: -0.01em; margin: 4px 0 0; color: var(--fg); }
 .bento-svc__desc { font-size: 12px; line-height: 1.42; color: var(--ink-muted); margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+/* "Vai →" — the corner arrow says a cell is a link, but only on hover; this
+   label says it at rest, for touch and for the visitor who never moves the
+   cursor over the grid. Same mono voice as the kicker, so it reads as chrome
+   and not as another line of copy. Pinned to the cell bottom so all three
+   labels align across the row. */
+.bento-svc__cta {
+  margin-top: auto; padding-top: 8px; display: flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-green-deep);
+}
+.bento-svc--deep .bento-svc__cta { color: var(--accent-green); }
 
 /* Sage: the cell is "time I hand back to you", and sage is the palette's growth
    green — the accent carries the meaning rather than just breaking the beige.
