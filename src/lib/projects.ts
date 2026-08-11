@@ -35,6 +35,39 @@ export type Project = {
 
 export const PROJECTS: Project[] = [
   {
+    id: "32",
+    key: "whatsapp",
+    slug: "assistente-whatsapp",
+    image: "/projects/whatsapp-ai.png",
+    coverVideo: "/projects/whatsapp-ai.mp4",
+    featured: true,
+    swatch: "#143A2B",
+    credit:
+      "Flusso adattato da un template open source di Enes Cingoz (awesome-n8n-templates), licenza CC BY 4.0. Logica e testi modificati.",
+  },
+  {
+    id: "31",
+    key: "social",
+    slug: "contenuti-social",
+    image: "/projects/social-ai.png",
+    coverVideo: "/projects/social-ai.mp4",
+    featured: true,
+    swatch: "#143A2B",
+    credit:
+      "Flusso adattato da un template open source di Enes Cingoz (awesome-n8n-templates), licenza CC BY 4.0. Logica e testi modificati.",
+  },
+  {
+    id: "30",
+    key: "email",
+    slug: "risposte-email",
+    image: "/projects/email-ai.png",
+    coverVideo: "/projects/email-ai.mp4",
+    featured: true,
+    swatch: "#143A2B",
+    credit:
+      "Flusso adattato da un template open source di Enes Cingoz (awesome-n8n-templates), licenza CC BY 4.0. Logica e testi modificati.",
+  },
+  {
     id: "29",
     key: "solleciti",
     slug: "solleciti-pagamento",

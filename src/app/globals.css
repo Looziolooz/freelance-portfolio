@@ -1533,7 +1533,19 @@ select:focus-visible,
   padding: clamp(15px, 1.5vw, 22px); display: flex; flex-direction: column; overflow: hidden;
   transition: transform .2s var(--ease), box-shadow .2s var(--ease);
 }
-.bento-cell:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink-shadow); }
+/* Only LINKS lift. This applied to every cell, so the stats and the chart
+   rose under the cursor exactly like the three cells that actually go
+   somewhere — which teaches that everything is clickable, and so that nothing
+   is. Anchors only, and the arrow below says it at rest too, for touch. */
+a.bento-cell:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink-shadow); }
+.bento-svc { position: relative; }
+.bento-svc__go {
+  position: absolute; top: 12px; right: 14px; font-size: 17px; line-height: 1;
+  color: var(--accent-green-deep); opacity: .55;
+  transition: transform .2s var(--ease), opacity .2s var(--ease);
+}
+a.bento-svc:hover .bento-svc__go { opacity: 1; transform: translate(3px, -3px); }
+.bento-svc--deep .bento-svc__go { color: var(--accent-green); opacity: .8; }
 
 .bento-img { grid-row: span 2; padding: 0; background: #F4E9D3; }
 /* contain (not cover) so the SHIFT key is never cut; the image's own cream

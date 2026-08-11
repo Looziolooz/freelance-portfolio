@@ -53,13 +53,17 @@ export default function BentoGrid() {
           : undefined;
         const inner = (
           <>
+            {/* Corner arrow = this cell is a link. Same mark the Parliamone cell
+                uses, so the grid teaches one rule instead of leaving the visitor
+                to notice a small arrow inside a heading. */}
+            {href && <span className="bento-svc__go" aria-hidden="true">↗</span>}
             <span className="bento-svc__icon">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={`/services/${key}.svg`} alt="" aria-hidden="true" loading="lazy" />
             </span>
             <h3 className="bento-svc__title">
               {t(`home.svc.${key}.title`)}
-              {href && <span className="btn-arrow" aria-hidden="true"> →</span>}
+
             </h3>
             <p className="bento-svc__desc">{t(`home.svc.${key}.desc`)}</p>
           </>
