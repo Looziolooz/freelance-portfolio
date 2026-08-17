@@ -1,0 +1,23 @@
+[
+  {
+    "created_at": "2026-08-12T12:13:39.053824Z",
+    "display_name": "Nano Banana Pro",
+    "id": "0081f68a-4f2f-4b40-a142-311c12f3161c",
+    "job_type": "nano_banana_pro",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_121339_0081f68a-4f2f-4b40-a142-311c12f3161c_min.webp",
+    "params": {
+      "application": null,
+      "aspect_ratio": "1:1",
+      "batch_size": 1,
+      "height": 2048,
+      "input_image": null,
+      "input_images": [],
+      "prompt": "A smartphone propped against a stack of paper cups on a gelateria marble counter, its screen glowing with an abstract unreadable booking interface, a small printed order ticket lying beside it, warm shop light, cream and pistachio green palette, shallow depth of field, documentary photograph, no legible text, no faces.",
+      "resolution": "2k",
+      "surface": null,
+      "width": 2048
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_121339_0081f68a-4f2f-4b40-a142-311c12f3161c.png",
+    "status": "completed"
+  }
+]

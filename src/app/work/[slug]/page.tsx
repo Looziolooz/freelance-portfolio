@@ -3,11 +3,26 @@
 import { use } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
-import BrandKit from "@/components/BrandKit";
+import BrandDeck from "@/components/BrandDeck";
+import DemoFrame from "@/components/DemoFrame";
 import FlowDiagram from "@/components/FlowDiagram";
+import WorkflowDemo from "@/components/WorkflowDemo";
+import SocialDemo from "@/components/SocialDemo";
+import VisibilityDemo from "@/components/VisibilityDemo";
+import WebDataDemo from "@/components/WebDataDemo";
 import { useLang } from "@/components/LangProvider";
 import { getProject } from "@/lib/projects";
 import { getBrandKit } from "@/lib/brand-kits";
+import { brandShots } from "@/lib/brand-shots";
+import { hasWorkflow } from "@/lib/workflows";
+
+// Projects whose output is a THING (posts, a search result, a sheet) rather than
+// a message, and so earns a second panel showing the thing itself.
+const ARTEFACT_DEMOS: Record<string, React.ComponentType> = {
+  social: SocialDemo,
+  seo: VisibilityDemo,
+  mercato: WebDataDemo,
+};
 
 // In-site project viewer. Live demos are embedded in an iframe so the visitor
 // stays on the portfolio instead of being sent to the external deploy. The
@@ -18,6 +33,7 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
   const { t } = useLang();
   const project = getProject(slug);
   const kit = getBrandKit(slug);
+  const Artefact = project ? ARTEFACT_DEMOS[project.key] : undefined;
 
   const pagePad: React.CSSProperties = {
     paddingTop: "calc(var(--topbar-h) + var(--space-10))",
@@ -156,9 +172,24 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
         </p>
       )}
 
+      {/* The brand manual comes BEFORE the demo, because that is the order of
+          the job: the identity is agreed on paper, then the site gets built.
+          Projects with no client brand (the automation demos) have no kit and
+          skip it. */}
+      {kit && (
+        <BrandDeck
+          kit={kit}
+          slug={slug}
+          demo={project.demo}
+          stack={tags}
+          siteImage={project.image}
+          siteVideo={project.coverVideo}
+        />
+      )}
+
       {project.demo ? (
         <>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12 }}>
+          <div style={{ marginTop: 44, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12 }}>
             <span className="label">{t("work.demohint")}</span>
             <a
               href={project.demo}
@@ -173,15 +204,41 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
           <div className="offset block offset--panel" style={{ display: "block", width: "100%" }}>
             <div className="offset__layer" />
             <div className="offset__fg" style={{ overflow: "hidden" }}>
-              <iframe
+              <DemoFrame
                 src={project.demo}
                 title={title}
-                loading="lazy"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                style={{ display: "block", width: "100%", height: "74vh", border: 0, background: "#fff" }}
+                poster={brandShots(slug)[0] ?? project.image}
               />
             </div>
           </div>
+        </>
+      ) : hasWorkflow(project.key) ? (
+        // The automations have nothing to iframe, but they are not cover-image
+        // projects either: the thing being sold is the decision the workflow
+        // makes, so the visitor drives it here instead of reading a caption
+        // promising a demo that never arrives.
+        <>
+          <div className="offset block offset--panel" style={{ display: "block", width: "100%" }}>
+            <div className="offset__layer" />
+            <div className="offset__fg neo-panel-cream" style={{ padding: "clamp(18px, 2.6vw, 32px)" }}>
+              <WorkflowDemo projectKey={project.key} />
+            </div>
+          </div>
+
+          {/* Three of the six automations also have an ARTEFACT worth showing.
+              The workflow above answers "what does it decide"; this answers
+              "what do I actually receive", which is the question a buyer asks
+              second and the one no diagram can settle. The other three produce
+              an email or a WhatsApp reply, already rendered in full inside the
+              workflow's third stage, so a second panel would just repeat it. */}
+          {Artefact && (
+            <div className="offset block offset--panel" style={{ display: "block", width: "100%", marginTop: "clamp(24px, 3vw, 40px)" }}>
+              <div className="offset__layer" />
+              <div className="offset__fg neo-panel-cream" style={{ padding: "clamp(18px, 2.6vw, 32px)" }}>
+                <Artefact />
+              </div>
+            </div>
+          )}
         </>
       ) : (
         <div className="offset block offset--panel" style={{ display: "block", width: "100%", maxWidth: 920 }}>
@@ -199,12 +256,6 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
               {t("work.codeonly")}
             </p>
           </div>
-        </div>
-      )}
-
-      {kit && (
-        <div style={{ marginTop: 44 }}>
-          <BrandKit kit={kit} siteImage={project.image} siteVideo={project.coverVideo} />
         </div>
       )}
 

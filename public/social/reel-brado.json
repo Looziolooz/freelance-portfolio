@@ -1,0 +1,30 @@
+﻿[
+  {
+    "created_at": "2026-08-12T11:32:30.463302Z",
+    "display_name": "Kling v3.0",
+    "id": "d5eaeba2-b908-408e-92b7-fb716b3624a8",
+    "job_type": "kling3_0",
+    "min_result_url": null,
+    "params": {
+      "aspect_ratio": "9:16",
+      "cfg_scale": 0.5,
+      "duration": 5,
+      "enhance_prompt": false,
+      "height": 1280,
+      "kling_element_ids": [],
+      "kling_elements": [],
+      "medias": [],
+      "mode": "std",
+      "multi_prompt": [],
+      "multi_shot_mode": "custom",
+      "multi_shots": false,
+      "prompt": "Vertical food film: a thick beef burger patty searing over glowing beechwood charcoal, close macro, embers pulsing, smoke drifting through a warm side light against a dark kitchen. Slow push in on the crust forming, then a soft rack focus to a hand placing a house-leavened bun beside it. Warm amber and deep brown palette, shallow depth of field, natural grain, no text, no logos, no faces.",
+      "reference_elements": [],
+      "sound": "on",
+      "width": 720
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_113230_d5eaeba2-b908-408e-92b7-fb716b3624a8.mp4",
+    "status": "completed",
+    "thumbnail_url": "https://cdn.higgsfield.ai/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_113230_d5eaeba2-b908-408e-92b7-fb716b3624a8_thumbnail.webp"
+  }
+]

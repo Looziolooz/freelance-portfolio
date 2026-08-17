@@ -1,16 +1,18 @@
 "use client";
 
-import Link from "next/link";
+import Image from "next/image";
 import { useLang } from "./LangProvider";
-import BrandBento from "./BrandBento";
+import { merchPick, merchSrc } from "@/lib/brand-merch";
 import type { BrandKit as Kit, BrandMotif } from "@/lib/brand-kits";
 
-// On-page brand identity showcase for a project detail page: a custom monogram
-// system, the full colour palette with roles, and print-ready stationery mockups.
-// Brand colours are scoped to this section via CSS variables (set on the root),
-// so the rest of the site keeps its own palette. The shared presentational pieces
-// (Monogram / Motif / BrandPalette / Stationery) are reused by the printable
-// brand sheet at /work/[slug]/brand-sheet.
+// Shared presentational pieces of a brand identity: the motif, the monogram in
+// its three variants, the palette with roles, and the stationery mockups.
+//
+// They are drawn from a BrandKit and consumed by the navigable brand manual
+// (BrandDeck, on /work/[slug]), the printable sheet (/work/[slug]/brand-sheet)
+// and the applications mood board (BrandBento). Nothing here sets a section
+// wrapper: each surface scopes the brand colours itself via --bk-* variables, so
+// the rest of the site keeps its own palette.
 
 type Variant = "solid" | "reverse" | "outline";
 
@@ -40,6 +42,16 @@ export function Motif({ name, size = 26 }: { name: BrandMotif; size?: number }) 
       return (<svg {...p}><path d="M12 3c1 3 4 4 4 8a4 4 0 0 1-8 0c0-2 1-3 2-4 0 1 1 2 2 2 0-2-0-4 0-6z" {...s}/></svg>);
     case "leaf":
       return (<svg {...p}><g {...s}><path d="M5 19C5 11 11 5 19 5c0 8-6 14-14 14z"/><path d="M5 19c4-4 7-6 11-8"/></g></svg>);
+    case "wheat":
+      return (<svg {...p}><g {...s}><path d="M12 21V9"/><path d="M12 9c0-2 1.4-3.4 3-4 .3 2-.6 3.6-3 4z"/><path d="M12 9c0-2-1.4-3.4-3-4-.3 2 .6 3.6 3 4z"/><path d="M12 14c0-2 1.4-3.4 3-4 .3 2-.6 3.6-3 4z"/><path d="M12 14c0-2-1.4-3.4-3-4-.3 2 .6 3.6 3 4z"/></g></svg>);
+    case "route":
+      return (<svg {...p}><g {...s}><circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/><path d="M8.4 6.6c3.4.6 4.6 2 4.6 4.4s-1.4 3.8-4 4.4" strokeDasharray="2.6 2.6"/></g></svg>);
+    case "cloud":
+      return (<svg {...p}><g {...s}><path d="M7.5 18h8.2a3.4 3.4 0 0 0 .3-6.8 5 5 0 0 0-9.3-1.3A3.6 3.6 0 0 0 7.5 18z"/><path d="M17 7.5 18.6 6"/><path d="M15.4 5.6V3.6"/></g></svg>);
+    case "bolt":
+      return (<svg {...p}><path d="M13.4 2.6 6.2 13.4h4.3l-1 8 7.4-11h-4.4z" {...s}/></svg>);
+    case "scissors":
+      return (<svg {...p}><g {...s}><circle cx="6.4" cy="17.6" r="2.2"/><circle cx="17.6" cy="17.6" r="2.2"/><path d="M8 16 18 4"/><path d="M16 16 6 4"/></g></svg>);
     default:
       return null;
   }
@@ -98,11 +110,51 @@ export function BrandPalette({ kit }: { kit: Kit }) {
 }
 
 // ---- Stationery (CSS mockups) -------------------------------------------------
-export function Stationery({ kit }: { kit: Kit }) {
+// The names a photograph can go by, per slot. The three printed pieces are the
+// ones a client actually takes to a printer, so where a brand has real
+// photographs of its own card, letterhead and envelope, those go in the slots
+// and the drawing steps aside. Slot by slot, not all-or-nothing: a brand with a
+// photographed card and no photographed envelope shows one of each.
+const PRINTED = {
+  cardFront: ["businesscard", "card"],
+  // Only names that really are a BACK. `businesscard-2` was in this list and
+  // on Atelier Solari it is a second shot of the same front, so the card and
+  // its "back" were the same photograph under two captions.
+  cardBack: ["businesscard-back", "cardback", "cardholder"],
+  letterhead: ["letterhead", "letter"],
+  envelope: ["envelope", "cardenvelope", "envelope-dl"],
+} as const;
+
+export function Stationery({ kit, slug }: { kit: Kit; slug?: string }) {
   const { t } = useLang();
+
+  const shot = (names: readonly string[]) => (slug ? merchPick(slug, names) : null);
+  const Photo = ({ names, caption }: { names: readonly string[]; caption: string }) => {
+    const photo = shot(names);
+    if (!photo || !slug) return null;
+    return (
+      <figure className="bk-mock">
+        <span className="bk-photo" style={{ background: photo.bg }}>
+          <Image
+            src={merchSrc(slug, photo)}
+            alt={`${kit.name} — ${caption}`}
+            fill
+            sizes="(max-width: 760px) 45vw, 260px"
+            loading="lazy"
+            style={{ objectFit: "contain" }}
+          />
+        </span>
+        <figcaption className="bk-mock__cap">{caption}</figcaption>
+      </figure>
+    );
+  };
+
   return (
     <div className="bk-stationery">
       {/* Business card — front */}
+      {shot(PRINTED.cardFront) ? (
+        <Photo names={PRINTED.cardFront} caption={t("brandkit.card.front")} />
+      ) : (
       <figure className="bk-mock">
         <div className="bk-card bk-card--front" style={{ background: kit.paper, color: kit.ink }}>
           <div className="bk-card__top" style={{ color: kit.primary }}>
@@ -115,16 +167,24 @@ export function Stationery({ kit }: { kit: Kit }) {
         </div>
         <figcaption className="bk-mock__cap">{t("brandkit.card.front")}</figcaption>
       </figure>
+      )}
 
       {/* Business card — back */}
+      {shot(PRINTED.cardBack) ? (
+        <Photo names={PRINTED.cardBack} caption={t("brandkit.card.back")} />
+      ) : (
       <figure className="bk-mock">
         <div className="bk-card bk-card--back" style={{ background: kit.primary, color: kit.paper }}>
           <Monogram kit={kit} variant="reverse" size={46} />
         </div>
         <figcaption className="bk-mock__cap">{t("brandkit.card.back")}</figcaption>
       </figure>
+      )}
 
       {/* Letterhead */}
+      {shot(PRINTED.letterhead) ? (
+        <Photo names={PRINTED.letterhead} caption={t("brandkit.letterhead")} />
+      ) : (
       <figure className="bk-mock">
         <div className="bk-letter" style={{ background: kit.paper, color: kit.ink }}>
           <div className="bk-letter__head">
@@ -140,8 +200,12 @@ export function Stationery({ kit }: { kit: Kit }) {
         </div>
         <figcaption className="bk-mock__cap">{t("brandkit.letterhead")}</figcaption>
       </figure>
+      )}
 
       {/* Envelope */}
+      {shot(PRINTED.envelope) ? (
+        <Photo names={PRINTED.envelope} caption={t("brandkit.envelope")} />
+      ) : (
       <figure className="bk-mock">
         <div className="bk-env" style={{ background: kit.paper, color: kit.ink, borderColor: kit.ink }}>
           <span className="bk-env__flap" style={{ borderTopColor: kit.accent }} />
@@ -157,95 +221,7 @@ export function Stationery({ kit }: { kit: Kit }) {
         </div>
         <figcaption className="bk-mock__cap">{t("brandkit.envelope")}</figcaption>
       </figure>
+      )}
     </div>
-  );
-}
-
-// ---- Section ------------------------------------------------------------------
-export default function BrandKit({
-  kit,
-  siteImage,
-  siteVideo,
-}: {
-  kit: Kit;
-  siteImage?: string;
-  siteVideo?: string;
-}) {
-  const { t } = useLang();
-  const vars = {
-    ["--bk-paper"]: kit.paper,
-    ["--bk-ink"]: kit.ink,
-    ["--bk-primary"]: kit.primary,
-    ["--bk-accent"]: kit.accent,
-  } as React.CSSProperties;
-
-  return (
-    <section className="bkit" style={vars} aria-label={t("brandkit.title")}>
-      <header className="bkit-head">
-        <span className="bkit-eyebrow">{t("brandkit.eyebrow")}</span>
-        {/* p, not h2: the brand wordmark duplicated the page H1 in the outline
-            (the section's aria-label carries the semantics). */}
-        <p className="bkit-title" style={{ fontFamily: kit.display, letterSpacing: kit.tracking, margin: 0 }}>{kit.name}</p>
-        <p className="bkit-sub">{t("brandkit.sub")}</p>
-      </header>
-
-      {/* Monogram system */}
-      <div className="bkit-block">
-        <span className="bkit-block__label"><i>01</i> {t("brandkit.monogram")}</span>
-        <div className="bk-marks">
-          <div className="bk-mark-cell" style={{ background: kit.paper }}><Monogram kit={kit} variant="solid" size={120} /></div>
-          <div className="bk-mark-cell" style={{ background: kit.ink }}><Monogram kit={kit} variant="reverse" size={88} /></div>
-          <div className="bk-mark-cell" style={{ background: kit.paper }}><Monogram kit={kit} variant="outline" size={88} /></div>
-          <div className="bk-mark-cell bk-mark-cell--word" style={{ background: kit.paper, color: kit.primary }}>
-            <span style={{ display: "inline-flex", color: kit.accent }}><Motif name={kit.motif} size={28} /></span>
-            <span className="bk-wordmark" style={{ fontFamily: kit.display, letterSpacing: kit.tracking, color: kit.ink }}>{kit.name}</span>
-            <span className="bk-wordmark__tag" style={{ color: kit.primary }}>{kit.tagline}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Type direction */}
-      <div className="bkit-block">
-        <span className="bkit-block__label"><i>02</i> {t("brandkit.type")}</span>
-        <div className="bkit-type">
-          <div className="bkit-type__col">
-            <span className="bkit-type__aa" style={{ fontFamily: kit.display, color: kit.primary }}>Aa</span>
-            <div className="bkit-type__meta">
-              <span className="bkit-type__role">{t("brandkit.type.display")}</span>
-              <span className="bkit-type__spec" style={{ fontFamily: kit.display, letterSpacing: kit.tracking, color: kit.ink }}>{kit.name}</span>
-            </div>
-          </div>
-          <div className="bkit-type__col">
-            <span className="bkit-type__aa" style={{ fontFamily: kit.body, color: kit.ink }}>Aa</span>
-            <div className="bkit-type__meta">
-              <span className="bkit-type__role">{t("brandkit.type.body")}</span>
-              <span className="bkit-type__spec" style={{ fontFamily: kit.body, color: kit.ink }}>ABCDEFG abcdefg 0123456789</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Palette */}
-      <div className="bkit-block">
-        <span className="bkit-block__label"><i>03</i> {t("brandkit.palette")}</span>
-        <BrandPalette kit={kit} />
-      </div>
-
-      {/* Stationery */}
-      <div className="bkit-block">
-        <span className="bkit-block__label"><i>04</i> {t("brandkit.stationery")}</span>
-        <Stationery kit={kit} />
-      </div>
-
-      {/* Applications showcase (bento mood board) */}
-      <div className="bkit-block">
-        <span className="bkit-block__label"><i>05</i> {t("brandkit.applications")}</span>
-        <BrandBento kit={kit} siteImage={siteImage} siteVideo={siteVideo} />
-      </div>
-
-      <Link href={`/work/${kit.slug}/brand-sheet`} className="bkit-download">
-        {t("brandkit.download")} <span aria-hidden="true">↓</span>
-      </Link>
-    </section>
   );
 }

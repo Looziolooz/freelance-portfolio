@@ -66,3 +66,25 @@ next-env.d.ts
 
 # Local AI-harness config (impeccable skill + hooks): reinstall with `npx impeccable install`
 .claude/
+
+# Third-party reference material downloaded while designing the brand manual —
+# a Freepik template and a pitch-deck example. Not ours to redistribute.
+/brand-manual-template-design/
+/brand-manual-template-design.zip
+/Brand guidelines and deck mockups.zip
+/Leadership Pitch Deck.html
+
+# Throwaway measurement artefacts
+/lh-report.json
+/page.png
+
+# Merch photographs that were judged and pulled: a misspelled or broken
+# wordmark, another brand's monogram, the wrong palette, a Gemini watermark, or
+# a second shot of an object already in the set. The reasons are recorded in
+# DESIGN.md; the files themselves are ~2.5MB of material that must never ship,
+# and `scripts/merch-manifest.py` already refuses to list them.
+public/brand-merch/*/_rejected/
+public/brand-merch/*/_rejected-text/
+public/brand-merch/*/_offpalette/
+public/brand-merch/*/_watermark/
+public/brand-merch/*/_duplicate/

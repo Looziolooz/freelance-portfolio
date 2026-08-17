@@ -36,7 +36,7 @@ export default function BrandSheetPage({ params }: { params: Promise<{ slug: str
         </button>
       </div>
       <main style={{ padding: "clamp(16px, 4vw, 32px) clamp(12px, 4vw, 24px) 64px", background: "var(--canvas-grad)" }}>
-        <BrandSheet kit={kit} />
+        <BrandSheet kit={kit} slug={slug} />
       </main>
     </>
   );

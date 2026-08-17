@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import CookieConsent from "@/components/CookieConsent";
 import ThemeProvider from "@/components/ThemeProvider";
 import LangProvider from "@/components/LangProvider";
+import PerfProbe from "@/components/PerfProbe";
 import ClientLayout from "./ClientLayout";
 import { SITE_URL } from "@/lib/launch";
 import "./globals.css";
@@ -107,13 +108,19 @@ const JSON_LD = {
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Servizi",
+        // Every offer carries its floor price. Without them this catalogue told
+        // any machine reading it that six services have no price and one costs
+        // nothing — worse than shipping no schema at all, because an assistant
+        // asked "what does LOoz charge?" would answer from a structured claim
+        // that contradicts the prices printed on /prezzi. lowPrice + a spec is
+        // the honest shape for "from X": a real floor, no invented ceiling.
         itemListElement: [
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Siti web ed e-commerce", description: "Siti e negozi online su misura, veloci e fatti per trasformare i visitatori in clienti." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Visibilità online (SEO)", description: "SEO, struttura e presenza pensate per i motori di ricerca e per chi cerca te." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Contenuti social", description: "Contenuti per i social semplici e a costo zero, per restare presente e riconoscibile." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Automazioni", description: "I processi ripetitivi li fa la macchina: email, fatture, report. Meno errori, più tempo." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Dati dal web", description: "Dati dal web raccolti e trasformati in informazioni utili per le decisioni di marketing." } },
-          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Agenti AI", description: "Agenti su misura per email e appuntamenti, fatturazione, scrittura mail e riassunti dei clienti." } },
+          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 1500, priceCurrency: "EUR", valueAddedTaxIncluded: false }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Siti web ed e-commerce", description: "Siti e negozi online su misura, veloci e fatti per trasformare i visitatori in clienti." } },
+          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 600, priceCurrency: "EUR", valueAddedTaxIncluded: false, billingIncrement: 1, unitCode: "MON" }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Visibilità online (SEO)", description: "SEO, struttura e presenza pensate per i motori di ricerca e per chi cerca te." } },
+          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 400, priceCurrency: "EUR", valueAddedTaxIncluded: false, billingIncrement: 1, unitCode: "MON" }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Contenuti social", description: "Contenuti per i social semplici e a costo zero, per restare presente e riconoscibile." } },
+          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 600, priceCurrency: "EUR", valueAddedTaxIncluded: false }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Automazioni", description: "I processi ripetitivi li fa la macchina: email, fatture, report. Meno errori, più tempo." } },
+          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 600, priceCurrency: "EUR", valueAddedTaxIncluded: false }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Dati dal web", description: "Dati dal web raccolti e trasformati in informazioni utili per le decisioni di marketing." } },
+          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 1800, priceCurrency: "EUR", valueAddedTaxIncluded: false }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Agenti AI", description: "Agenti su misura per email e appuntamenti, fatturazione, scrittura mail e riassunti dei clienti." } },
           { "@type": "Offer", price: "0", priceCurrency: "EUR", itemOffered: { "@type": "Service", name: "Audit gratuito del sito", description: "Tre cose concrete da migliorare subito per ottenere più clienti. Risposta entro 24 ore." } },
         ],
       },
@@ -158,6 +165,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <LangProvider>
             <ClientLayout>{children}</ClientLayout>
+            {/* Dev-only performance timeline; compiles out of the prod bundle. */}
+            <PerfProbe />
             {/* GDPR/ePrivacy consent gate — shows the cookie banner and loads the
                 (cookieless) analytics only after the visitor accepts. Must live
                 inside LangProvider so its copy is translated. */}

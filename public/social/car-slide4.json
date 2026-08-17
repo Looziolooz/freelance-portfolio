@@ -1,0 +1,23 @@
+[
+  {
+    "created_at": "2026-08-12T12:14:25.653407Z",
+    "display_name": "Nano Banana Pro",
+    "id": "62b508e5-f5fe-4ebf-9926-9ac48c1c9457",
+    "job_type": "nano_banana_pro",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_121425_62b508e5-f5fe-4ebf-9926-9ac48c1c9457_min.webp",
+    "params": {
+      "application": null,
+      "aspect_ratio": "1:1",
+      "batch_size": 1,
+      "height": 2048,
+      "input_image": null,
+      "input_images": [],
+      "prompt": "An artisan gelateria seen from the street through its window at closing time, warm lights still on inside, the counter tidy and empty, a neat row of prepared paper bags waiting for pickup on the marble, deep blue evening outside, cream and pistachio palette, documentary photograph, no text, no faces.",
+      "resolution": "2k",
+      "surface": null,
+      "width": 2048
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_121425_62b508e5-f5fe-4ebf-9926-9ac48c1c9457.png",
+    "status": "completed"
+  }
+]

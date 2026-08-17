@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useLang } from "./LangProvider";
 import MagneticButton from "./MagneticButton";
@@ -23,10 +23,11 @@ import { EncryptedText } from "./ui/encrypted-text";
 const VIDEO = "/hero-motion/clouds.mp4";
 const POSTER = "/hero-motion/clouds-poster.jpg";
 
-// Extraction budget for the canvas path: 64 × 768×432 RGBA ≈ 85 MB of bitmaps.
-// The clip is ~3.4s, so 64 frames is near its native temporal resolution.
-// Desktop-only precisely because of that footprint (see `overlay` below).
-const FRAMES = 64;
+// Extraction budget for the canvas path: 20 × 768×432 RGBA ≈ 20–25 MB of
+// bitmaps is enough to keep the scrub smooth without paying the full 64-frame
+// decode cost on every desktop viewport. The hero still keeps its motion, but
+// we only enable the expensive path on very large screens.
+const FRAMES = 20;
 const FRAME_W = 768;
 // Per-frame lerp constant. Lower = heavier trail; 0.12 lands on "footage".
 const SMOOTHING = 0.12;
@@ -48,10 +49,10 @@ export default function HeroMotion() {
     if (!section || !media || !video || !canvas) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // ≥1440: full-bleed OVERLAY (text over the dissolved portrait, no stacking).
-    // Below: STACKED (portrait on top, text below) so nothing overlaps — but the
-    // portrait still scroll-scrubs exactly like desktop.
-    const overlay = window.matchMedia("(min-width: 1440px)").matches && !reduce;
+    // Only the very largest desktops pay the full scrub decode budget. On the
+    // rest, the hero stays in the static-poster path so the page can keep a
+    // healthy LCP and TBT budget.
+    const overlay = window.matchMedia("(min-width: 1600px)").matches && !reduce;
     section.dataset.mode = overlay ? "scrub" : "poster";
 
     if (reduce) return; // static poster, no motion
@@ -289,7 +290,21 @@ export default function HeroMotion() {
               />
             </span>
           </h1>
-          <h2 className="hm-statement">{t("heroMotion.statement")}</h2>
+          <h2 className="hm-statement">
+            {t("heroMotion.statement").split("Looz").map((part, i, arr) => (
+              <Fragment key={i}>
+                {part}
+                {/* Same mark as the nav: wm-dot, not the old forest .accent.
+                    The brand appearing twice on one screen in two different
+                    colours reads as a mistake, not as a variation. */}
+                {i < arr.length - 1 && (
+                  <span className="hm-brand">
+                    LO<span className="wm-dot">.</span>oz
+                  </span>
+                )}
+              </Fragment>
+            ))}
+          </h2>
           <p className="hm-lede">{t("heroMotion.lede")}</p>
           <div className="hm-cta">
             <MagneticButton

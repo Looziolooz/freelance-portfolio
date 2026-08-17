@@ -142,6 +142,10 @@ export default function CinematicFooter() {
             aria-hidden
             style={{ position: "absolute", left: "50%", bottom: "-4vh", transform: "translateX(-50%)", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}
           >
+            {/* Plain text on purpose: this mark is drawn as an OUTLINE at ~200px,
+                and the wm-dot treatment (ochre fill + ink ring) renders as a
+                solid blob against hairline letters. The coloured dot belongs to
+                the small solid mark in the nav, not to the watermark. */}
             LO.oz
           </div>
 

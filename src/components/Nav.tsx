@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useLang } from "./LangProvider";
+import Wordmark from "./Wordmark";
 import { useAuth } from "./auth/AuthProvider";
 import { isPreLaunch } from "@/lib/launch";
 import type { Lang } from "@/i18n";
@@ -39,7 +40,7 @@ export default function Nav() {
       <div className="topbar__inner">
         {/* Wordmark */}
         <a href="/" className="wordmark-link">
-          {t("nav.logo.before")}<span className="accent">{t("nav.logo.dot")}</span>{t("nav.logo.after")}
+          <Wordmark />
         </a>
 
         {/* Desktop nav links */}

@@ -1,0 +1,30 @@
+﻿[
+  {
+    "created_at": "2026-08-12T11:40:13.544813Z",
+    "display_name": "Kling v3.0",
+    "id": "d9cea6bb-7e32-4c03-aaf5-5de3707f901a",
+    "job_type": "kling3_0",
+    "min_result_url": null,
+    "params": {
+      "aspect_ratio": "9:16",
+      "cfg_scale": 0.5,
+      "duration": 5,
+      "enhance_prompt": false,
+      "height": 1280,
+      "kling_element_ids": [],
+      "kling_elements": [],
+      "medias": [],
+      "mode": "std",
+      "multi_prompt": [],
+      "multi_shot_mode": "custom",
+      "multi_shots": false,
+      "prompt": "Vertical food film: a steel spatula folding fresh pistachio gelato in a chilled artisan tray, slow and heavy, cold vapour lifting off the surface. Warm shop light from the left, cream and green palette, close macro, gentle push in ending on the finished swirl. Analogue warmth, shallow depth of field, no text, no logos, no faces.",
+      "reference_elements": [],
+      "sound": "on",
+      "width": 720
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_114013_d9cea6bb-7e32-4c03-aaf5-5de3707f901a.mp4",
+    "status": "completed",
+    "thumbnail_url": "https://cdn.higgsfield.ai/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_114013_d9cea6bb-7e32-4c03-aaf5-5de3707f901a_thumbnail.webp"
+  }
+]

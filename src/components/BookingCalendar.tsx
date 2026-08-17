@@ -83,8 +83,8 @@ export default function BookingCalendar() {
       </div>
 
       <div className="bk-fields">
-        <input className="bk-input" type="text" placeholder={t("booking.f.name")} value={name} onChange={(e) => setName(e.target.value)} />
-        <input className="bk-input" type="email" placeholder={t("booking.f.email")} value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input name="bk-name" className="bk-input" type="text" placeholder={t("booking.f.name")} value={name} onChange={(e) => setName(e.target.value)} />
+        <input name="bk-email" className="bk-input" type="email" placeholder={t("booking.f.email")} value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
 
       <button type="button" className="bk-submit neo-btn neo-btn--primary" onClick={book} disabled={!ready}>

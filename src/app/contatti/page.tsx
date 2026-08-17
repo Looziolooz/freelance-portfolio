@@ -15,6 +15,10 @@ export default function ContattiPage() {
   const [fullname, setFullname] = useState("");
   const [workemail, setWorkemail] = useState("");
   const [website, setWebsite] = useState("");
+  // Optional on purpose: a required budget field is the fastest way to lose a
+  // good lead who has never bought a site before, which is why the last option
+  // is "non lo so ancora". It still qualifies everyone who does have a figure.
+  const [budget, setBudget] = useState("");
   const [describe, setDescribe] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
 
@@ -24,7 +28,8 @@ export default function ContattiPage() {
       `${t("contatti.inquiry.intro")}\n\n` +
       `${t("contatti.f.fullname")}: ${fullname}\n` +
       `${t("contatti.f.workemail")}: ${workemail}\n` +
-      `${t("contatti.f.website")}: ${website}\n\n` +
+      `${t("contatti.f.website")}: ${website}\n` +
+      `${t("contatti.f.budget")}: ${budget || "—"}\n\n` +
       `${t("contatti.f.describe")}:\n${describe}`;
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
@@ -44,7 +49,8 @@ export default function ContattiPage() {
         `${t("contatti.inquiry.intro")}\n\n` +
         `${t("contatti.f.fullname")}: ${fullname}\n` +
         `${t("contatti.f.workemail")}: ${workemail}\n` +
-        `${t("contatti.f.website")}: ${website}\n\n` +
+        `${t("contatti.f.website")}: ${website}\n` +
+        `${t("contatti.f.budget")}: ${budget || "—"}\n\n` +
         `${t("contatti.f.describe")}:\n${describe}`,
     });
     if (ok) {
@@ -110,10 +116,25 @@ export default function ContattiPage() {
               </div>
             ) : (
               <form onSubmit={send} className="ct-form">
-                <input className="ct-input" type="text" required placeholder={t("contatti.f.fullname")} value={fullname} onChange={(e) => setFullname(e.target.value)} />
-                <input className="ct-input" type="email" required placeholder={t("contatti.f.workemail")} value={workemail} onChange={(e) => setWorkemail(e.target.value)} />
-                <input className="ct-input" type="text" placeholder={t("contatti.f.website")} value={website} onChange={(e) => setWebsite(e.target.value)} />
-                <textarea className="ct-input ct-textarea" required rows={4} placeholder={t("contatti.f.describe")} value={describe} onChange={(e) => setDescribe(e.target.value)} />
+                <input name="fullname" className="ct-input" type="text" required placeholder={t("contatti.f.fullname")} value={fullname} onChange={(e) => setFullname(e.target.value)} />
+                <input name="workemail" className="ct-input" type="email" required placeholder={t("contatti.f.workemail")} value={workemail} onChange={(e) => setWorkemail(e.target.value)} />
+                <input name="website" className="ct-input" type="text" placeholder={t("contatti.f.website")} value={website} onChange={(e) => setWebsite(e.target.value)} />
+                <span className="ct-select">
+                  <select
+                    className="ct-input"
+                    aria-label={t("contatti.f.budget")}
+                    name="budget"
+                    data-empty={budget === "" ? "true" : "false"}
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
+                  >
+                    <option value="">{t("contatti.f.budget")}</option>
+                    {t("contatti.f.budget.opts").split("|").map((o) => (
+                      <option key={o} value={o}>{o}</option>
+                    ))}
+                  </select>
+                </span>
+                <textarea name="describe" className="ct-input ct-textarea" required rows={4} placeholder={t("contatti.f.describe")} value={describe} onChange={(e) => setDescribe(e.target.value)} />
                 <button
                   type="submit"
                   disabled={status === "sending"}

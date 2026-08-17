@@ -1,0 +1,30 @@
+﻿[
+  {
+    "created_at": "2026-08-12T11:41:51.539326Z",
+    "display_name": "Kling v3.0",
+    "id": "62d447c5-cf8f-461e-ba9e-4ea71a970d8d",
+    "job_type": "kling3_0",
+    "min_result_url": null,
+    "params": {
+      "aspect_ratio": "9:16",
+      "cfg_scale": 0.5,
+      "duration": 5,
+      "enhance_prompt": false,
+      "height": 1280,
+      "kling_element_ids": [],
+      "kling_elements": [],
+      "medias": [],
+      "mode": "std",
+      "multi_prompt": [],
+      "multi_shot_mode": "custom",
+      "multi_shots": false,
+      "prompt": "Vertical bakery film: trays of golden cardamom buns and crusty sourdough loaves sliding out of a large industrial oven, steam rising in cold morning light through a tall window. Nordic and restrained, pale wood and grey steel, slow lateral camera move along the trays ending on a single loaf in focus. No text, no logos, no faces.",
+      "reference_elements": [],
+      "sound": "on",
+      "width": 720
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_114151_62d447c5-cf8f-461e-ba9e-4ea71a970d8d.mp4",
+    "status": "completed",
+    "thumbnail_url": "https://cdn.higgsfield.ai/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_114151_62d447c5-cf8f-461e-ba9e-4ea71a970d8d_thumbnail.webp"
+  }
+]

@@ -150,22 +150,33 @@ export const EncryptedText: React.FC<EncryptedTextProps> = ({
     >
       {text.split("").map((char, index) => {
         const isRevealed = index < revealCount;
-        const displayChar = isRevealed
-          ? char
-          : char === " "
-            ? " "
-            : mounted
-              ? (scrambleCharsRef.current[index] ?? generateRandomCharacter(charset))
-              : char; // pre-mount (and in the SERVER HTML) show the real text —
-                      // crawlers/LLMs must never see gibberish in the H1 (SEO audit);
-                      // the scramble effect starts only after hydration
 
+        // Revealed, a space, or not yet mounted: plain text, normal flow.
+        // Pre-mount (and in the SERVER HTML) that means the REAL text — crawlers
+        // and LLMs must never see gibberish in the H1 (SEO audit); the scramble
+        // starts only after hydration. Spaces stay unwrapped so the line-break
+        // opportunities are exactly those of the final text.
+        if (isRevealed || char === " " || !mounted) {
+          return (
+            <span key={index} className={cn(isRevealed ? revealedClassName : encryptedClassName)}>
+              {char}
+            </span>
+          );
+        }
+
+        // Unrevealed: the cell reserves the FINAL character's advance width and
+        // the random glyph is painted over it, out of flow.
+        //
+        // Random glyphs are not the same width as the letters they stand in for,
+        // so putting them in the flow re-wrapped the headline on every flip: 52
+        // layout shifts and a CLS of 0.40 on the homepage, all from this effect.
+        // The ghost in HeroMotion already stops the siblings BELOW from moving,
+        // but CLS also counts the headline's own lines moving inside that box.
+        const glyph = scrambleCharsRef.current[index] ?? generateRandomCharacter(charset);
         return (
-          <span
-            key={index}
-            className={cn(isRevealed ? revealedClassName : encryptedClassName)}
-          >
-            {displayChar}
+          <span key={index} className={cn("enc-cell", encryptedClassName)}>
+            <span className="enc-cell__slot">{char}</span>
+            <span className="enc-cell__glyph" aria-hidden="true">{glyph}</span>
           </span>
         );
       })}

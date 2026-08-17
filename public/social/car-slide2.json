@@ -1,0 +1,23 @@
+[
+  {
+    "created_at": "2026-08-12T12:12:52.832571Z",
+    "display_name": "Nano Banana Pro",
+    "id": "6ca93906-8fd8-4291-8c95-4206540b7e48",
+    "job_type": "nano_banana_pro",
+    "min_result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_121252_6ca93906-8fd8-4291-8c95-4206540b7e48_min.webp",
+    "params": {
+      "application": null,
+      "aspect_ratio": "1:1",
+      "batch_size": 1,
+      "height": 2048,
+      "input_image": null,
+      "input_images": [],
+      "prompt": "Interior of a small Italian artisan gelateria at a busy hour, seen from behind the marble counter: an old landline phone left off the hook on the counter top, a blurred queue of customers waiting beyond it, warm afternoon light, cream tiles and brass details, shallow depth of field, documentary photograph, no text, no readable faces.",
+      "resolution": "2k",
+      "surface": null,
+      "width": 2048
+    },
+    "result_url": "https://d8j0ntlcm91z4.cloudfront.net/user_3618dfpACZI2VTFL0QeXmZCLGrh/hf_20260812_121252_6ca93906-8fd8-4291-8c95-4206540b7e48.png",
+    "status": "completed"
+  }
+]

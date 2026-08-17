@@ -63,7 +63,7 @@ const CSS = `
 @media (max-width: 640px) { .wmq__card { width: 82vw; margin-right: 14px; } .wmq__name { font-size: 17px; } }
 `;
 
-function Card({ p }: { p: (typeof POOL)[number] }) {
+function Card({ p, isClone }: { p: (typeof POOL)[number]; isClone?: boolean }) {
   const { t } = useLang();
   const vref = useRef<HTMLVideoElement>(null);
 
@@ -150,8 +150,11 @@ function Card({ p }: { p: (typeof POOL)[number] }) {
   const title = t(`work.proj.${p.key}`);
   const tags = t(`work.proj.${p.key}.tags`);
 
+  const demoLabel = t(p.demo ? "work.viewDemo" : "work.viewFlow");
+  const accessibleLabel = `${demoLabel} ↗: ${title}`;
+
   return (
-    <Link href={`/work/${p.slug}`} className="wmq__card" aria-label={title}>
+    <Link href={`/work/${p.slug}`} prefetch={false} className="wmq__card" aria-label={accessibleLabel} tabIndex={isClone ? -1 : undefined}>
       <span className="wmq__media">
         {/* The clip's own first frame, sitting UNDER the video. The loop
             crossfade dips the video's opacity, and this is what shows through —
@@ -182,7 +185,7 @@ function Card({ p }: { p: (typeof POOL)[number] }) {
         {/* No demo URL means the detail page shows the flow, not an embedded
             site — promising "open demo" there would be a promise with nothing
             behind it. */}
-        <span className="wmq__demo">{t(p.demo ? "work.viewDemo" : "work.viewFlow")} ↗</span>
+        <span className="wmq__demo">{demoLabel} <span aria-hidden="true">↗</span></span>
       </span>
       <span className="wmq__cap">
         <span className="wmq__name">{title}</span>
@@ -214,7 +217,7 @@ export default function WorkMarquee() {
             {items.map((p) => <Card key={p.id} p={p} />)}
           </div>
           <div style={{ display: "flex" }} aria-hidden="true">
-            {items.map((p) => <Card key={`c-${p.id}`} p={p} />)}
+            {items.map((p) => <Card key={`c-${p.id}`} p={p} isClone />)}
           </div>
         </div>
       </div>

@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLang } from "./LangProvider";
-import { PROJECTS, type Project } from "@/lib/projects";
-import { useRotation } from "@/lib/useRotation";
+import { PROJECTS, CATEGORIES, type Project, type ProjectCategory } from "@/lib/projects";
 
 // Projects as a card grid. Cover clips are hover-driven on desktop (play under
 // the cursor, pause on leave, one run total — then they hold the last frame);
@@ -19,18 +18,72 @@ import { useRotation } from "@/lib/useRotation";
 // three rows.
 const POOL = PROJECTS.filter((p) => p.featured && !p.hidden);
 
+// Pick a readable ink for a swatch: light text on dark/rich colours, dark text
+// on pale ones. Keeps the brand-coloured chip legible without a per-project
+// manual override.
+function inkFor(hex: string | undefined): string {
+  if (!hex) return "#fff";
+  const m = hex.replace("#", "");
+  const r = parseInt(m.slice(0, 2), 16) / 255;
+  const g = parseInt(m.slice(2, 4), 16) / 255;
+  const b = parseInt(m.slice(4, 6), 16) / 255;
+  const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  const L = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
+  return L > 0.6 ? "#16151a" : "#fff";
+}
+
 export default function ProjectGallery() {
   const { t } = useLang();
-  const items = useRotation(POOL);
+  // NOT rotated, unlike the marquee and the showcase. useRotation answers with
+  // the authored order on the server and a shuffle after hydration, which is the
+  // only hydration-safe way to randomise — but React then reorders all 23 DOM
+  // nodes at once, and every card changes position. Measured on a production
+  // build: one layout shift of 0.318, i.e. the whole of /work's CLS, from a
+  // reshuffle that buys nothing here. The hook exists for surfaces that show a
+  // FEW of many (the marquee takes 8, the showcase 3) and where the rotation is
+  // what stops the rest of the work from never being seen. This grid shows
+  // every featured project, so there is nothing for a rotation to rescue.
+  const items = POOL;
+  const [cat, setCat] = useState<ProjectCategory | "all">("all");
+
+  const visible = cat === "all" ? items : items.filter((p) => p.category === cat);
+
+  const filters: (ProjectCategory | "all")[] = ["all", ...CATEGORIES];
+
+  // The count rides on the chip. Without it a tab holding one project reads as
+  // broken; with it, the number is information you had before you clicked.
+  const countFor = (f: ProjectCategory | "all") =>
+    f === "all" ? items.length : items.filter((p) => p.category === f).length;
 
   return (
     <section id="work" className="pg" aria-label={t("work.title")}>
       <div className="container">
-        <ul className="pg-grid">
-          {items.map((p) => (
-            <ProjectCard key={p.id} p={p} />
-          ))}
-        </ul>
+        <div className="pg-filters" role="group" aria-label={t("work.filter.label")}>
+          {filters.map((f) => {
+            const active = f === cat;
+            const label = f === "all" ? t("work.filter.all") : t(`work.filter.${f}`);
+            return (
+              <button
+                key={f}
+                type="button"
+                className={`pg-filter${active ? " is-active" : ""}`}
+                aria-pressed={active}
+                onClick={() => setCat(f)}
+              >
+                {label} <i>{countFor(f)}</i>
+              </button>
+            );
+          })}
+        </div>
+        {visible.length > 0 ? (
+          <ul className="pg-grid">
+            {visible.map((p) => (
+              <ProjectCard key={p.id} p={p} />
+            ))}
+          </ul>
+        ) : (
+          <p className="pg-empty">{t("work.filter.empty")}</p>
+        )}
       </div>
     </section>
   );
@@ -42,6 +95,8 @@ function ProjectCard({ p }: { p: Project }) {
   const title = t(`work.proj.${p.key}`);
   const tags = t(`work.proj.${p.key}.tags`);
   const blurb = t(`work.proj.${p.key}.blurb`);
+  const catLabel = p.category ? t(`work.filter.${p.category}`) : "";
+  const ink = inkFor(p.swatch);
 
   // The cover clip is cursor-driven on desktop: it plays while the pointer is
   // over the card and pauses on leave; once finished it freezes on the last
@@ -81,39 +136,66 @@ function ProjectCard({ p }: { p: Project }) {
     if (v && !v.ended) v.pause();
   };
 
+  const hasCover = Boolean(p.coverVideo || p.image);
+
   return (
     <li className="pg-item">
+      {/* Brand stripe + swatch give every card its own colour identity instead
+          of the uniform template look: the colour comes from the project, not
+          the card chrome. */}
+      {/* prefetch={false} — the App Router prefetches every Link in the viewport,
+          which on a gallery of two dozen cards is two dozen RSC round trips the
+          moment the page opens: measured 63 requests for 72 KB and a `load` at
+          2385 ms against a domReady of 44 ms. False does not mean never; it means
+          on hover, which is the moment the visitor shows an intention. */}
       <Link
         href={`/work/${p.slug}`}
+        prefetch={false}
         className="pg-card"
-        style={{ ["--sw" as string]: p.swatch ?? "#16151a" } as React.CSSProperties}
+        style={{ ["--sw" as string]: p.swatch ?? "#16151a", ["--sw-ink" as string]: ink } as React.CSSProperties}
         aria-label={`${title} — ${t("work.viewDemo")}`}
         onMouseEnter={hoverPlay}
         onMouseLeave={hoverPause}
       >
+        <span className="pg-stripe" aria-hidden="true" />
         <span className="pg-media">
-          {p.coverVideo ? (
-            <video
-              ref={vref}
-              src={p.coverVideo}
-              poster={p.image ? `/_next/image?url=${encodeURIComponent(p.image)}&w=828&q=75` : undefined}
-              muted
-              playsInline
-              preload="metadata"
-              aria-hidden="true"
-              style={{ objectPosition: p.imagePosition ?? "center" }}
-            />
-          ) : p.image ? (
-            <Image
-              src={p.image}
-              alt={title}
-              fill
-              sizes="(max-width: 720px) 100vw, 50vw"
-              loading="lazy"
-              style={{ objectFit: "cover", objectPosition: p.imagePosition ?? "center top" }}
-            />
+          {hasCover ? (
+            p.coverVideo ? (
+              <video
+                ref={vref}
+                src={p.coverVideo}
+                poster={p.image ? `/_next/image?url=${encodeURIComponent(p.image)}&w=828&q=75` : undefined}
+                muted
+                playsInline
+                preload="metadata"
+                aria-hidden="true"
+                style={{ objectPosition: p.imagePosition ?? "center" }}
+              />
+            ) : (
+              <Image
+                src={p.image as string}
+                alt={title}
+                fill
+                sizes="(max-width: 720px) 100vw, 50vw"
+                loading="lazy"
+                style={{ objectFit: "cover", objectPosition: p.imagePosition ?? "center top" }}
+              />
+            )
           ) : (
-            <span className="pg-tex" aria-hidden="true" />
+            // No cover asset yet: show the brand colour as a living placeholder
+            // with the project name, so the card reads as intentional rather
+            // than an empty frame.
+            <span className="pg-brand">
+              <span className="pg-brand__name">{title}</span>
+              <span className="pg-brand__hint">{t("work.viewDemo")} ↗</span>
+            </span>
+          )}
+          {/* Category chip, coloured by the project's brand swatch — the single
+              clearest signal that these are different kinds of work. */}
+          {catLabel && (
+            <span className="pg-cat" style={{ background: p.swatch ?? "#16151a", color: ink }}>
+              {catLabel}
+            </span>
           )}
           {/* Demo button pinned bottom-right — also masks the obscured Gemini
               mark that the cover clips carry in that corner. */}

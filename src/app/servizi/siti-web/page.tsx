@@ -16,7 +16,7 @@ import { SV_CSS } from "../shared-css";
 export const metadata: Metadata = {
   title: "Siti web per ristoranti e piccole attività",
   description:
-    "Siti su misura per ristoranti, gelaterie, bar e piccole attività: menù, prenotazioni e ordini. Da 700€ + IVA, prima versione in 7–10 giorni, oppure servizio mensile da 25€.",
+    "Siti su misura per ristoranti, gelaterie, bar e piccole attività: menù, prenotazioni e ordini. Da 1.500€ + IVA, prima versione in 7–10 giorni, oppure servizio mensile da 25€.",
 };
 
 // The proof: food & hospitality demos already in the gallery. Nordbageriet is a
@@ -32,9 +32,9 @@ const JSON_LD = {
   provider: { "@id": `${SITE_URL}/#org` },
   areaServed: [{ "@type": "Country", name: "Italia" }, { "@type": "Place", name: "Europa" }],
   description:
-    "Siti su misura per la ristorazione e le piccole attività: menù, prenotazioni, ordini e visibilità su Google, da 700€ + IVA con prima versione in 7–10 giorni, o servizio mensile da 25€.",
+    "Siti su misura per la ristorazione e le piccole attività: menù, prenotazioni, ordini e visibilità su Google, da 1.500€ + IVA con prima versione in 7–10 giorni, o servizio mensile da 25€.",
   offers: [
-    { "@type": "Offer", name: "Pagamento unico", price: "700", priceCurrency: "EUR", description: "Fino a 5 pagine, prima versione in 7–10 giorni, 3 mesi di supporto inclusi, codice e account a tuo nome. Hosting e dominio esclusi." },
+    { "@type": "Offer", name: "Pagamento unico", price: "1500", priceCurrency: "EUR", description: "Fino a 5 pagine, prima versione in 7–10 giorni, 3 mesi di supporto inclusi, codice e account a tuo nome. Hosting e dominio esclusi." },
     { "@type": "Offer", name: "Servizio mensile", price: "25", priceCurrency: "EUR", description: "25€ al mese: hosting, dominio e manutenzione. 39€ al mese con le modifiche a testi e immagini." },
   ],
 };
@@ -114,7 +114,7 @@ export default function SitiWebPage() {
                   made the page that sells websites the vaguest place on the site
                   about what a website costs — the home page, the FAQ and /prezzi
                   all print the figure. */}
-              <p className="sv-price__big">Da 700€ + IVA.</p>
+              <p className="sv-price__big">Da 1.500€ + IVA.</p>
               <p className="sv-price__body">
                 Fino a 5 pagine, prima versione in 7–10 giorni. Paghi una volta e il sito è tuo:
                 codice e account a tuo nome, 3 mesi di supporto inclusi. Hosting e dominio non

@@ -4,6 +4,13 @@
 // - `repo`  = source code (opened externally)
 // - `image` = cover screenshot (used when there is no embeddable demo)
 // Titles/tags/blurbs live in i18n under work.proj.{key}[.tags|.blurb].
+//
+// `category` drives the filter bar on /work. It is derived from each
+// project's nature, not its tech stack: "website" (siti vetrina/landing),
+// "saas" (prodotti/app con area utente), "automazione" (flussi dati/regole),
+// "ai" (agenti e automazioni guidate da LLM).
+
+export type ProjectCategory = "website" | "saas" | "automazione" | "ai";
 
 export type Project = {
   id: string;
@@ -21,6 +28,8 @@ export type Project = {
   imagePosition?: string;
   featured?: boolean;
   swatch?: string;
+  // Filter category shown on /work.
+  category?: ProjectCategory;
   // Temporarily pulled from the gallery AND its detail page (e.g. awaiting the
   // client's go-ahead to show it publicly). Data is kept; just not displayed.
   hidden?: boolean;
@@ -33,6 +42,10 @@ export type Project = {
   credit?: string;
 };
 
+// Order shown in the filter bar (after "Tutti"). The labels themselves live in
+// i18n under work.filter.{id}.
+export const CATEGORIES: ProjectCategory[] = ["website", "saas", "automazione", "ai"];
+
 export const PROJECTS: Project[] = [
   {
     id: "34",
@@ -42,6 +55,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/mappa-mercato.mp4",
     featured: true,
     swatch: "#143A2B",
+    category: "automazione",
   },
   {
     id: "33",
@@ -51,6 +65,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/audit-seo.mp4",
     featured: true,
     swatch: "#143A2B",
+    category: "automazione",
   },
   {
     id: "32",
@@ -60,6 +75,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/whatsapp-ai.mp4",
     featured: true,
     swatch: "#143A2B",
+    category: "ai",
   },
   {
     id: "31",
@@ -69,6 +85,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/social-ai.mp4",
     featured: true,
     swatch: "#143A2B",
+    category: "ai",
   },
   {
     id: "30",
@@ -78,6 +95,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/email-ai.mp4",
     featured: true,
     swatch: "#143A2B",
+    category: "ai",
   },
   {
     id: "29",
@@ -87,6 +105,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/solleciti.mp4",
     featured: true,
     swatch: "#143A2B",
+    category: "automazione",
   },
   {
     id: "28",
@@ -98,6 +117,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/nordbageriet.mp4",
     featured: true,
     swatch: "#17130D",
+    category: "website",
   },
   {
     id: "27",
@@ -109,6 +129,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/buss-travel.mp4",
     featured: true,
     swatch: "#26333B",
+    category: "website",
   },
   {
     id: "26",
@@ -121,6 +142,7 @@ export const PROJECTS: Project[] = [
     featured: true,
     swatch: "#5D6C45",
     concept: true, // Azienda Agricola Paone is a real producer — shown as an independent concept
+    category: "website",
   },
   {
     id: "25",
@@ -132,6 +154,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/yoga.mp4",
     featured: true,
     swatch: "#A4B0A0",
+    category: "website",
   },
   {
     id: "24",
@@ -143,6 +166,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/sushi.mp4",
     featured: true,
     swatch: "#C6A15B",
+    category: "website",
   },
   {
     id: "23",
@@ -154,6 +178,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/brado.mp4",
     featured: true,
     swatch: "#241a14",
+    category: "website",
   },
   {
     id: "22",
@@ -165,6 +190,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/gelateria.mp4",
     featured: true,
     swatch: "#e9ddc8",
+    category: "website",
   },
   {
     id: "21",
@@ -176,6 +202,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/ai-visibility.mp4",
     featured: true,
     swatch: "#1b1a2e",
+    category: "saas",
   },
   {
     id: "18",
@@ -186,6 +213,7 @@ export const PROJECTS: Project[] = [
     image: "/projects/vespa-heritage.png",
     featured: true,
     swatch: "#cfc9bf",
+    category: "website",
   },
   {
     id: "20",
@@ -197,6 +225,7 @@ export const PROJECTS: Project[] = [
     imagePosition: "left center", // 2.06:1 screenshot — keep the headline, crop the right
     featured: true,
     swatch: "#d8b896",
+    category: "website",
   },
   {
     id: "16",
@@ -209,6 +238,7 @@ export const PROJECTS: Project[] = [
     featured: true,
     swatch: "#FFD21E",
     concept: true, // references a real brand — shown as an independent concept
+    category: "website",
   },
   {
     id: "17",
@@ -220,6 +250,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/barberia.mp4",
     featured: true,
     swatch: "#cdbfa6",
+    category: "website",
   },
   {
     id: "11",
@@ -231,6 +262,7 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/fotografo.mp4",
     featured: true,
     swatch: "#f0e6d8",
+    category: "website",
   },
   {
     id: "13",
@@ -242,24 +274,28 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/aurelia.mp4",
     featured: true,
     swatch: "#e8d8d8",
+    category: "website",
   },
   {
     id: "05",
     key: "05",
     slug: "pizzeria-lorenzo",
     demo: "https://lorenzospizzaria.netlify.app/",
+    category: "website",
   },
   {
     id: "07",
     key: "07",
     slug: "weather-se",
     demo: "https://weather-se.netlify.app/",
+    category: "saas",
   },
   {
     id: "14",
     key: "14",
     slug: "couffer",
     repo: "https://github.com/Looziolooz/couffer",
+    category: "saas",
   },
   {
     id: "15",
@@ -271,6 +307,27 @@ export const PROJECTS: Project[] = [
     coverVideo: "/projects/pizzeria-restaurant.mp4",
     featured: true,
     swatch: "#e8c4a0",
+    category: "website",
+  },
+  {
+    id: "35",
+    key: "ferrari",
+    slug: "ferrari-f8-tributo",
+    demo: "https://ferrari-delta-rose.vercel.app/",
+    featured: true,
+    swatch: "#C8102E",
+    concept: true, // references the Ferrari brand — shown as an independent concept
+    category: "website",
+  },
+  {
+    id: "36",
+    key: "mirzz",
+    slug: "mirzz",
+    demo: "https://energy-drink-mocha-ten.vercel.app/",
+    featured: true,
+    swatch: "#FF7A1A",
+    concept: true, // references the MIRZZ brand — shown as an independent concept
+    category: "website",
   },
 ];
 

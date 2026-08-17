@@ -7,14 +7,18 @@ import type { BrandKit as Kit } from "@/lib/brand-kits";
 // Print-ready brand sheet (A4) for a project. Rendered at /work/[slug]/brand-sheet
 // and printed to PDF via the browser. Reuses the shared BrandKit pieces. Brand
 // colours are scoped via --bk-* vars; print-color-adjust keeps fills in the PDF.
-export default function BrandSheet({ kit }: { kit: Kit }) {
-  const { t } = useLang();
+export default function BrandSheet({ kit, slug }: { kit: Kit; slug?: string }) {
+  const { t, lang } = useLang();
   const vars = {
     ["--bk-paper"]: kit.paper,
     ["--bk-ink"]: kit.ink,
     ["--bk-primary"]: kit.primary,
     ["--bk-accent"]: kit.accent,
   } as React.CSSProperties;
+  const story = kit.story?.[lang] ?? kit.story?.it ?? "";
+  const voice = kit.voice?.[lang] ?? kit.voice?.it ?? "";
+  const principles = kit.principles?.[lang] ?? kit.principles?.it ?? [];
+  const usage = kit.usage?.[lang] ?? kit.usage?.it ?? [];
 
   return (
     <div className="bsheet" style={vars}>
@@ -27,8 +31,28 @@ export default function BrandSheet({ kit }: { kit: Kit }) {
         <span className="bsheet-cover__domain" style={{ borderTop: `2px solid ${kit.accent}` }}>{kit.domain}</span>
       </section>
 
-      {/* Page 2 — marks, palette, type */}
+      {/* Page 2 — foundation, marks, palette, type */}
       <section className="bsheet-page" style={{ background: kit.paper, color: kit.ink }}>
+        {(story || voice || principles.length || usage.length) && (
+          <>
+            <h2 className="bsheet-h" style={{ color: kit.primary, fontFamily: kit.display }}>{t("brandkit.foundation")}</h2>
+            <div style={{ display: "grid", gap: 12, marginBottom: 20 }}>
+              {story && <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7 }}>{story}</p>}
+              {voice && <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7 }}><strong style={{ fontFamily: kit.display }}>{t("brandkit.voice")}:</strong> {voice}</p>}
+              {principles.length > 0 && (
+                <ul style={{ margin: 0, paddingLeft: 18, display: "grid", gap: 6, fontSize: 14 }}>
+                  {principles.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              )}
+              {usage.length > 0 && (
+                <ul style={{ margin: 0, paddingLeft: 18, display: "grid", gap: 6, fontSize: 14 }}>
+                  {usage.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              )}
+            </div>
+          </>
+        )}
+
         <h2 className="bsheet-h" style={{ color: kit.primary, fontFamily: kit.display }}>{t("brandkit.monogram")}</h2>
         <div className="bk-marks">
           <div className="bk-mark-cell" style={{ background: kit.paper }}><Monogram kit={kit} variant="solid" size={108} /></div>
@@ -55,7 +79,7 @@ export default function BrandSheet({ kit }: { kit: Kit }) {
       {/* Page 3 — stationery */}
       <section className="bsheet-page" style={{ background: kit.paper, color: kit.ink }}>
         <h2 className="bsheet-h" style={{ color: kit.primary, fontFamily: kit.display }}>{t("brandkit.stationery")}</h2>
-        <Stationery kit={kit} />
+        <Stationery kit={kit} slug={slug} />
         <span className="bsheet-foot">{kit.name} · {kit.domain} · {t("brandkit.sheet.title")}</span>
       </section>
 
