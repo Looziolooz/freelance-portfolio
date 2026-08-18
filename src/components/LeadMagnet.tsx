@@ -12,9 +12,10 @@ import { submitLead } from "@/lib/leadForm";
 const isFullUrl = (v: string) => /^https?:\/\/\S+$/i.test(v.trim());
 
 // Lead magnet: a free site audit in exchange for an email. The form sends the
-// lead by email via Web3Forms (see lib/leadForm) and shows an inline thank-you.
-// If no backend key is configured (or the request fails) it falls back to a
-// prefilled mailto, so a lead is never lost. Honest offer: a real audit within 24h.
+// lead via the in-house /api/lead route (see lib/leadForm) and shows an inline
+// thank-you. If no backend key is configured (or the request fails) it falls
+// back to a prefilled mailto, so a lead is never lost. Honest offer: a real
+// audit within 24h.
 const CONTACT = "hello@looz.design";
 
 export default function LeadMagnet() {

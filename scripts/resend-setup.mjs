@@ -80,13 +80,21 @@ for (const r of domain.records ?? []) {
 
 // ── 3. verify ───────────────────────────────────────────────────────────────
 console.log("3) Verifica…");
-await resend("POST", `/domains/${domain.id}/verify`);
-for (let i = 0; i < 24; i += 1) {
-  const d = await resend("GET", `/domains/${domain.id}`);
-  if (d.status === "verified") { console.log("   verificato."); break; }
-  if (i === 23) throw new Error(`Non verificato dopo 4 minuti (stato: ${d.status}). Riesegui fra poco: riprende da qui.`);
-  await new Promise((ok) => setTimeout(ok, 10000));
-  process.stdout.write(`   attendo (${d.status})…\r`);
+const pre = await resend("GET", `/domains/${domain.id}`);
+if (pre.status === "verified") {
+  console.log("   gia' verificato.");
+} else {
+  // POST /verify resets the status to pending and it takes ~5 min to settle,
+  // so never re-trigger it when already verified (the poll window is 6 min).
+  await resend("POST", `/domains/${domain.id}/verify`);
+  let d = pre;
+  for (let i = 0; i < 36; i += 1) {
+    d = await resend("GET", `/domains/${domain.id}`);
+    if (d.status === "verified") { console.log("   verificato."); break; }
+    if (i === 35) throw new Error(`Non verificato dopo 6 minuti (stato: ${d.status}). Riesegui fra poco: riprende da qui.`);
+    await new Promise((ok) => setTimeout(ok, 10000));
+    process.stdout.write(`   attendo (${d.status})…\r`);
+  }
 }
 
 // ── 4. the branded template, managed in Resend ─────────────────────────────

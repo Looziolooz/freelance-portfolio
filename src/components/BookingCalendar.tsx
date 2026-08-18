@@ -5,9 +5,9 @@ import { useLang } from "./LangProvider";
 import { submitLead } from "@/lib/leadForm";
 
 // Lightweight "book a discovery call" widget: pick a weekday + a slot, leave
-// name/email, and the request goes to hello@looz.design via /api/lead (Brevo
-// free SMTP), with a mailto fallback so no request is ever lost. Swap the submit
-// for a Cal.com/Calendly link later.
+// name/email, and the request goes to hello@looz.design via /api/lead (Resend),
+// with a mailto fallback so no request is ever lost. Swap the submit for a
+// Cal.com/Calendly link later.
 const SLOTS = ["09:00", "11:00", "14:00", "16:30"];
 const EMAIL = "hello@looz.design";
 

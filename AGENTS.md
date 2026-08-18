@@ -132,19 +132,19 @@ route that looked broken purely because the deploy was mid-swap. `https://looz.d
    `v=DMARC1; p=none; rua=mailto:hello@looz.design`. DKIM absent on purpose —
    only needed to *send* from the domain, not to receive.
 
-10. **Forms send via Resend, blocked on one owner action.** The route
-    (`/api/lead`), the form wiring and the fallbacks are live; without a key the
-    forms fall back to mailto, so nothing is lost. To finish: create an API key
-    at resend.com (signup + "Create API Key", full access — two minutes), then
-    from the repo root run
+10. ~~**Forms send via Resend, blocked on one owner action.**~~ **Done 2026-08-18**:
+    `node scripts/resend-setup.mjs` ran to the end: domain `looz.design` registered
+    in Resend (EU, id `7331df66-439a-46ac-94e5-ff1a9c71d455`) and verified, DKIM/SPF
+    records in the Vercel zone, branded `lead-notification` template created and
+    published, `RESEND_API_KEY` stored for production + preview, production
+    redeployed, and a real proof lead returned HTTP 200. Two robustness fixes live
+    in the script from that run: it treats Resend's 403 "registered already" as
+    "exists, resume", and it never re-triggers `/verify` on an already-verified
+    domain (that POST flips the status back to `pending` for ~5 minutes). The
+    script remains safe to re-run; it skips whatever already exists.
 
-        node scripts/resend-setup.mjs re_LA_TUA_CHIAVE
-
-    The script does everything else: registers the domain in Resend (EU),
-    writes the DKIM/SPF records into the Vercel zone, waits for verification,
-    stores `RESEND_API_KEY` (production + preview), redeploys, and posts a real
-    test lead to prove the loop. Safe to re-run; it skips whatever already
-    exists.
+    To refresh the branded email after editing `src/lib/email-template.ts`, re-run
+    the same command with the current key.
 
 Both were done from a coding session with `vercel login` on the **Looziolooz**
 account. CLI domain/API calls must pass the team scope explicitly
