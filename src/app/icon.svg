@@ -1,0 +1,13 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <style>
+    @font-face{font-family:'Fraunces';src:url('/fonts/fraunces/fraunces-variable.woff2') format('woff2');font-weight:400 900;}
+  </style>
+  <rect width="512" height="512" fill="#F5EEDF"/>
+  <text x="256" y="344" text-anchor="middle" font-family="Fraunces, Georgia, 'Times New Roman', serif"
+        font-weight="600" font-size="232" fill="#221E17" letter-spacing="-0.02em">
+    <tspan>LO</tspan>
+    <tspan font-size="1.2em" fill="#E8A12C" stroke="#221E17" stroke-width="10" paint-order="stroke">.</tspan>
+    <tspan>oz</tspan>
+  </text>
+</svg>
