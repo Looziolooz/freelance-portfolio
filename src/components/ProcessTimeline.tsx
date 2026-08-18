@@ -1,14 +1,51 @@
 "use client";
 
-import { useScroll, useTransform, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useScroll, useTransform, motion, useMotionValueEvent } from "framer-motion";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 
 // Aceternity-style vertical timeline, re-themed to Parchment & Forest.
-// A thin rail on the left fills with an ochre→forest gradient as you scroll;
-// sticky dots + large phase labels stay fixed while the content scrolls past on
+// Sticky dots + large phase labels stay fixed while the content scrolls past on
 // the right. Each phase carries a realistic photo. framer-motion (the package
 // installed here) — same API as motion/react.
+//
+// The rail is a JOURNEY LINE: one SVG path that draws itself forward with the
+// reader's scroll, in the same connector language as the automation canvas on
+// the project pages (WorkflowCanvas), so the two surfaces read as one system.
+//
+// It was a div whose height animated, which cannot curve, cannot carry a drawing
+// head, and cannot be dashed. Two constraints shaped the curve:
+//
+//   1. The dots are `position: sticky`. They slide ALONG the rail, so the line
+//      has to be exactly vertical at every dot or it drifts off them. The
+//      serpentine therefore bows out only in the empty stretches BETWEEN phases
+//      and returns to the spine at each dot's centre.
+//   2. `pathLength={1}` normalises the path, so one `strokeDashoffset` from 1 to
+//      0 draws the whole journey in order regardless of how long the page is —
+//      no re-measuring when a phase's photo changes height.
+const MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+const subscribeMotion = (onChange: () => void) => {
+  const mq = window.matchMedia(MOTION_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+};
+const readMotion = () => window.matchMedia(MOTION_QUERY).matches;
+const readMotionOnServer = () => false;
+
+// SVG-local geometry. The svg sits at left 4px, so the spine at x=24 lands on
+// the dot centre (left 6 + 44/2 = 28).
+// The spine sits at the middle of the svg, so the same path data works whether
+// CSS puts the route hard left (phones) or dead centre (desktop): only the box
+// moves. Wide enough that the zig never leaves the viewBox.
+const SPINE_X = 100;
+const SVG_W = 200;
+// Two waypoints per empty stretch, alternating sides, so the route zig-zags
+// rather than leaning. Amplitude scales with the track: at 390px a big swing
+// would cross into the body text, which starts 64px in from the row.
+const ZIG_MIN = 16;
+const ZIG_MAX = 64;
+const ZIG_RATIO = 0.055;
+
 export type TimelineEntry = {
   phase: string;
   title: string;
@@ -25,32 +62,149 @@ export type TimelineEntry = {
   h: number;
 };
 
+const round = (n: number) => Math.round(n * 10) / 10;
+
+// How much the curve is allowed to lean out of a corner. 0 is the polyline this
+// started as; much above 1 and the route loops back on itself.
+const SMOOTHING = 0.9;
+
+/**
+ * A rounded path through every waypoint, in order.
+ *
+ * Catmull-Rom converted to cubic Béziers: it passes exactly through each point,
+ * which is what keeps the dots on the line, while the corners between them come
+ * out as curves rather than as kinks. A plain polyline read as a folded ribbon.
+ */
+function smooth(pts: [number, number][]): string {
+  if (pts.length < 2) return "";
+  const at = (i: number) => pts[Math.max(0, Math.min(pts.length - 1, i))];
+  let d = `M${round(pts[0][0])} ${round(pts[0][1])}`;
+  for (let i = 0; i < pts.length - 1; i += 1) {
+    const [x0, y0] = at(i - 1);
+    const [x1, y1] = at(i);
+    const [x2, y2] = at(i + 1);
+    const [x3, y3] = at(i + 2);
+    const k = SMOOTHING / 6;
+    const c1x = x1 + (x2 - x0) * k;
+    const c1y = y1 + (y2 - y0) * k;
+    const c2x = x2 - (x3 - x1) * k;
+    const c2y = y2 - (y3 - y1) * k;
+    d += ` C${round(c1x)} ${round(c1y)} ${round(c2x)} ${round(c2y)} ${round(x2)} ${round(y2)}`;
+  }
+  return d;
+}
+
 export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const drawnRef = useRef<SVGPathElement>(null);
+  const beadRef = useRef<SVGCircleElement>(null);
   const [height, setHeight] = useState(0);
+  const [dotYs, setDotYs] = useState<number[]>([]);
+  const [trackW, setTrackW] = useState(0);
+  const reduced = useSyncExternalStore(subscribeMotion, readMotion, readMotionOnServer);
 
+  // The line has to pass through each dot, so it needs to know where they are.
+  // Measured from the DOM rather than derived from the CSS padding scale, because
+  // every phase is a different height (the photos keep their own aspect ratio).
   useEffect(() => {
     const measure = () => {
-      if (ref.current) setHeight(ref.current.getBoundingClientRect().height);
+      const track = ref.current;
+      if (!track) return;
+      setHeight(track.getBoundingClientRect().height);
+      setTrackW(track.getBoundingClientRect().width);
+      setDotYs(
+        rowRefs.current.map((row) => {
+          const dot = row?.querySelector<HTMLElement>(".ptl-dot");
+          if (!dot) return 0;
+          // offsetTop, deliberately, not getBoundingClientRect: the dot is
+          // `position: sticky`, so its painted box is wherever the reader has
+          // scrolled it to, while the path needs its RESTING position. Sticky
+          // does not move layout offsets, so walking the offsetParent chain
+          // gives the same answer at any scroll depth.
+          let y = 0;
+          let el: HTMLElement | null = dot;
+          while (el && el !== track) {
+            y += el.offsetTop;
+            el = el.offsetParent as HTMLElement | null;
+          }
+          return y + dot.offsetHeight / 2;
+        }),
+      );
     };
     measure();
     window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    // Photos land after first paint and move every dot below them.
+    const imgs = ref.current?.querySelectorAll("img") ?? [];
+    imgs.forEach((img) => img.addEventListener("load", measure));
+    return () => {
+      window.removeEventListener("resize", measure);
+      imgs.forEach((img) => img.removeEventListener("load", measure));
+    };
   }, [entries]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 18%", "end 78%"],
   });
-  const fillHeight = useTransform(scrollYProgress, [0, 1], [0, height]);
-  const fillOpacity = useTransform(scrollYProgress, [0, 0.04], [0, 1]);
+
+  // One dash, the length of the whole path, pulled back into view as you scroll.
+  const dashOffset = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const lineOpacity = useTransform(scrollYProgress, [0, 0.04], [0, 1]);
+
+  // The route, as waypoints: the spine at every dot, and two zig points across
+  // each empty stretch. Every dot is a waypoint on the spine, which is the
+  // constraint the sticky dots impose; the zig happens in between, where there
+  // is nothing to knock out of alignment.
+  const d = (() => {
+    if (height <= 0 || dotYs.length === 0) return `M${SPINE_X} 0 L${SPINE_X} ${Math.max(height, 1)}`;
+    const amp = Math.max(ZIG_MIN, Math.min(ZIG_MAX, trackW * ZIG_RATIO));
+    const pts: [number, number][] = [[SPINE_X, 0], [SPINE_X, dotYs[0]]];
+    for (let i = 1; i < dotYs.length; i += 1) {
+      const from = dotYs[i - 1];
+      const span = dotYs[i] - from;
+      // Leaning right first on odd stretches and left first on even ones stops
+      // the zig reading as a repeating sawtooth.
+      const first = i % 2 === 1 ? amp : -amp * 0.55;
+      const second = i % 2 === 1 ? -amp * 0.55 : amp;
+      pts.push([SPINE_X + first, from + span / 3]);
+      pts.push([SPINE_X + second, from + (span * 2) / 3]);
+      pts.push([SPINE_X, dotYs[i]]);
+    }
+    pts.push([SPINE_X, height]);
+    return smooth(pts);
+  })();
+
+  // The drawing head. Placed from the real path with getPointAtLength, the same
+  // way the automation canvas moves its bead, so the two behave identically.
+  const placeBead = useCallback((progress: number) => {
+    const path = drawnRef.current;
+    const bead = beadRef.current;
+    if (!path || !bead) return;
+    const total = path.getTotalLength();
+    if (!total) return;
+    const p = path.getPointAtLength(total * Math.min(1, Math.max(0, progress)));
+    bead.setAttribute("cx", String(p.x));
+    bead.setAttribute("cy", String(p.y));
+  }, []);
+
+  useMotionValueEvent(scrollYProgress, "change", placeBead);
+  useEffect(() => {
+    placeBead(reduced ? 1 : scrollYProgress.get());
+  }, [d, placeBead, reduced, scrollYProgress]);
 
   return (
     <div ref={containerRef} className="ptl">
       <div ref={ref} className="ptl-track">
         {entries.map((e, i) => (
-          <div key={i} className="ptl-row">
+          <div
+            key={i}
+            className={`ptl-row ${i % 2 === 1 ? "ptl-row--right" : "ptl-row--left"}`}
+            ref={(el) => {
+              rowRefs.current[i] = el;
+            }}
+          >
             {/* sticky marker: dot + big phase label */}
             <div className="ptl-marker">
               <span className="ptl-dot" aria-hidden="true">
@@ -112,17 +266,55 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
           </div>
         ))}
 
-        {/* the rail — faint track + scroll-driven ochre→forest fill */}
-        <div className="ptl-rail" style={{ height }}>
-          <motion.div
-            className="ptl-rail__fill"
-            style={{ height: fillHeight, opacity: fillOpacity }}
+        {/* The journey line. Decorative: the phases are numbered in real text,
+            so nothing here carries meaning a screen reader needs. */}
+        <svg
+          className="ptl-line"
+          width={SVG_W}
+          height={Math.max(height, 1)}
+          viewBox={`0 0 ${SVG_W} ${Math.max(height, 1)}`}
+          fill="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <defs>
+            <linearGradient id="ptlDraw" x1="0" y1="0" x2="0" y2={Math.max(height, 1)} gradientUnits="userSpaceOnUse">
+              <stop offset="0" stopColor="var(--accent-green)" />
+              <stop offset="1" stopColor="var(--accent-green-deep)" />
+            </linearGradient>
+          </defs>
+
+          {/* the route not yet travelled */}
+          <path className="ptl-line__track" d={d} />
+
+          {/* the route travelled, drawn by pulling one full-length dash into view */}
+          <motion.path
+            ref={drawnRef}
+            className="ptl-line__drawn"
+            d={d}
+            pathLength={1}
+            strokeDasharray="1 1"
+            style={
+              reduced
+                ? { strokeDashoffset: 0, opacity: 1 }
+                : { strokeDashoffset: dashOffset, opacity: lineOpacity }
+            }
           />
-        </div>
+
+          {/* the drawing head, hidden when the reader has asked for less motion */}
+          {!reduced && <circle ref={beadRef} className="ptl-line__bead" r="5" cx={SPINE_X} cy="0" />}
+        </svg>
       </div>
 
       <style>{`
-        .ptl { position: relative; width: 100%; }
+        .ptl {
+          position: relative; width: 100%;
+          /* Where the route runs. On a phone there is only one column, so it
+             hugs the left the way a timeline does; from 880px the content
+             alternates either side of it and it runs down the middle. */
+          --ptl-spine: calc(clamp(16px, 5vw, 40px) + 28px);
+          --ptl-gutter: 96px;
+        }
         .ptl-track { position: relative; max-width: 1100px; margin: 0 auto; padding: 0 clamp(16px, 5vw, 40px); }
 
         .ptl-row { display: flex; justify-content: flex-start; padding-top: clamp(40px, 7vw, 110px); }
@@ -181,34 +373,67 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
           line-height: 1; color: var(--canvas-page); text-shadow: 0 1px 4px rgba(0,0,0,0.45);
         }
 
-        /* the rail sits at the dot's centre (left 6px + 44/2 = 28px) */
-        .ptl-rail {
-          position: absolute; left: 28px; top: 0; width: 3px; overflow: hidden;
-          background: linear-gradient(to bottom, transparent 0%, color-mix(in oklch, var(--ink-border) 16%, transparent) 8%, color-mix(in oklch, var(--ink-border) 16%, transparent) 92%, transparent 100%);
-          -webkit-mask-image: linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
-          mask-image: linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
+        /* The line sits behind the sticky dots. The spine at x=24 plus the svg's
+           own 4px offset lands on the dot centre (left 6 + 44/2 = 28). The mask
+           fades both ends so the route does not start and stop with a hard cut. */
+        .ptl-line {
+          /* The track is padded, and the dots are positioned INSIDE that padding,
+             so an absolute left offset measured from the track's own box lands a
+             whole padding-width to the left of them. Measured 40px out at 1440. */
+          position: absolute; left: calc(var(--ptl-spine) - ${SPINE_X}px);
+          top: 0; z-index: 1; overflow: visible;
+          pointer-events: none;
+          -webkit-mask-image: linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 5%, #000 95%, transparent);
         }
-        .ptl-rail__fill {
-          position: absolute; left: 0; top: 0; width: 3px; border-radius: 9999px;
-          background: linear-gradient(to bottom, var(--accent-green), var(--accent-green-deep));
+        .ptl-line__track {
+          stroke: color-mix(in oklch, var(--ink-border) 18%, transparent);
+          stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+        }
+        .ptl-line__drawn {
+          stroke: url(#ptlDraw);
+          stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+        }
+        .ptl-line__bead {
+          fill: var(--accent-green); stroke: var(--ink-border); stroke-width: 2;
         }
 
         @media (min-width: 880px) {
-          .ptl-row { gap: 56px; padding-top: clamp(80px, 9vw, 150px); }
-          .ptl-marker { gap: 0; min-width: 360px; max-width: 360px; }
-          .ptl-dot { left: 6px; }
-          .ptl-marker__label { display: block; padding-left: 72px; }
-          /* Sized so the longest single word ("Costruzione") fits inside the marker
-             column; overflow-wrap is a safety net so nothing can spill over the
-             content text on the right. */
-          .ptl-marker__label .ptl-title { font-size: clamp(32px, 3.4vw, 46px); overflow-wrap: anywhere; }
+          /* Three columns: content, the gutter the route runs down, content.
+             Phases alternate sides so the eye crosses the line at every step
+             instead of running down one edge of the page. */
+          .ptl { --ptl-spine: 50%; }
+          .ptl-row {
+            display: grid;
+            grid-template-columns: 1fr var(--ptl-gutter) 1fr;
+            gap: 0; padding-top: clamp(80px, 9vw, 150px);
+          }
+          .ptl-marker { grid-column: 2; grid-row: 1; min-width: 0; justify-content: center; }
+          /* Static, so the dot centres itself in the gutter and therefore on the
+             route. On phones it is absolutely placed against the left edge. */
+          .ptl-dot { position: static; }
+          /* The big phase label now travels WITH its content, on whichever side
+             that content is, so it stays next to the text it titles. */
+          .ptl-marker__label { display: none; }
           .ptl-content { padding-left: 0; min-width: 0; }
-          .ptl-content__head { display: none; }
-          .ptl-photo { max-width: 620px; }
+          .ptl-content__head { display: block; margin-bottom: 18px; }
+          .ptl-content__head .ptl-title { font-size: clamp(30px, 3.2vw, 44px); overflow-wrap: anywhere; }
+
+          .ptl-row--left .ptl-content { grid-column: 1; grid-row: 1; padding-right: 20px; }
+          .ptl-row--right .ptl-content { grid-column: 3; grid-row: 1; padding-left: 20px; }
+
+          /* Body copy stays left-aligned on both sides: alternating the rag is
+             the one thing that would genuinely cost readability. Only the block
+             and the photo change side. */
+          .ptl-row--left .ptl-photo { margin-left: auto; }
+          .ptl-photo { max-width: 100%; }
         }
 
+        /* Belt and braces: the React path already renders complete under
+           reduced motion, and this covers the first paint before the store reads. */
         @media (prefers-reduced-motion: reduce) {
-          .ptl-rail__fill { opacity: 1 !important; height: 100% !important; }
+          .ptl-line__drawn { stroke-dashoffset: 0 !important; opacity: 1 !important; }
+          .ptl-line__bead { display: none; }
         }
       `}</style>
     </div>
