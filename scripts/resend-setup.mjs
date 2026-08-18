@@ -7,9 +7,11 @@
 //   2. writes the DNS records Resend demands into the Vercel zone (team scope
 //      passed explicitly: without it every domain call 403s, see AGENTS.md);
 //   3. asks Resend to verify and polls until it does;
-//   4. stores RESEND_API_KEY in the project env (production + preview);
-//   5. redeploys production;
-//   6. POSTs a real lead to https://looz.design/api/lead as proof.
+//   4. creates/updates and publishes the branded "lead-notification" template
+//      in Resend (src/lib/email-template.ts is the single source of the markup);
+//   5. stores RESEND_API_KEY in the project env (production + preview);
+//   6. redeploys production;
+//   7. POSTs a real lead to https://looz.design/api/lead as proof.
 //
 // Safe to re-run: existing domain, records, env and deploys are all detected
 // and skipped rather than duplicated.
@@ -39,7 +41,10 @@ const resend = async (method, path, body) => {
     body: body ? JSON.stringify(body) : undefined,
   });
   const json = await res.json().catch(() => ({}));
-  if (!res.ok && res.status !== 409) {
+  // 409 = already created by us in this run; 403 "registered already" = a
+  // previous run registered the domain, so treat it as exists and resume.
+  const alreadyRegistered = res.status === 403 && String(json.message ?? "").includes("registered already");
+  if (!res.ok && res.status !== 409 && !alreadyRegistered) {
     throw new Error(`Resend ${method} ${path} -> ${res.status}: ${JSON.stringify(json).slice(0, 300)}`);
   }
   return json;
@@ -84,8 +89,45 @@ for (let i = 0; i < 24; i += 1) {
   process.stdout.write(`   attendo (${d.status})…\r`);
 }
 
-// ── 4. the env ──────────────────────────────────────────────────────────────
-console.log("4) RESEND_API_KEY negli env del progetto…");
+// ── 4. the branded template, managed in Resend ─────────────────────────────
+// The markup lives in src/lib/email-template.ts (TypeScript), which this .mjs
+// cannot import directly: esbuild bundles it to a temp CJS file on the fly, so
+// the template in Resend can never drift from the one the route sends inline.
+console.log("4) Template 'lead-notification'…");
+try {
+  const { buildSync } = await import("esbuild");
+  const { mkdtempSync } = await import("node:fs");
+  const { tmpdir } = await import("node:os");
+  const { join } = await import("node:path");
+  const { pathToFileURL } = await import("node:url");
+  const dir = mkdtempSync(join(tmpdir(), "looz-email-"));
+  const out = join(dir, "email-template.mjs");
+  buildSync({ entryPoints: ["src/lib/email-template.ts"], bundle: true, platform: "node", format: "esm", outfile: out });
+  const { leadEmailTemplate } = await import(pathToFileURL(out).href);
+  const tpl = leadEmailTemplate();
+
+  const listed = await resend("GET", "/templates");
+  const found = (listed.data ?? []).find((t) => t.name === tpl.name);
+  let tplId;
+  if (found) {
+    await resend("PATCH", `/templates/${found.id}`, tpl);
+    tplId = found.id;
+    console.log(`   aggiornato (${tplId})`);
+  } else {
+    const created = await resend("POST", "/templates", tpl);
+    tplId = created.id;
+    console.log(`   creato (${tplId})`);
+  }
+  await resend("POST", `/templates/${tplId}/publish`);
+  console.log("   pubblicato.");
+} catch (e) {
+  // The template is a nicety; delivery must not die on it. The route sends the
+  // same design inline regardless.
+  console.log(`   SALTATO (${String(e).slice(0, 140)}) - la rotta invia comunque l'HTML inline.`);
+}
+
+// ── 5. the env ──────────────────────────────────────────────────────────────
+console.log("5) RESEND_API_KEY negli env del progetto…");
 const envs = vercel(["env", "ls"]);
 if (envs.includes("RESEND_API_KEY")) {
   console.log("   gia' presente, non tocco.");
@@ -97,13 +139,13 @@ if (envs.includes("RESEND_API_KEY")) {
 }
 
 // ── 5. redeploy ─────────────────────────────────────────────────────────────
-console.log("5) Deploy di produzione…");
+console.log("6) Deploy di produzione…");
 const out = vercel(["deploy", "--prod", "--yes"]);
 const url = (out.match(/https:\/\/\S+vercel\.app/) ?? [""])[0];
 console.log(`   ${url || "fatto"}`);
 
 // ── 6. proof ────────────────────────────────────────────────────────────────
-console.log("6) Lead di prova su https://looz.design/api/lead…");
+console.log("7) Lead di prova su https://looz.design/api/lead…");
 const probe = await fetch("https://looz.design/api/lead", {
   method: "POST",
   headers: { "Content-Type": "application/json" },

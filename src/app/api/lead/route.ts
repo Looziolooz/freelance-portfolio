@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { success, error } from "@/lib/api-response";
+import { leadEmailHtml } from "@/lib/email-template";
 
 // Lead delivery to hello@looz.design via Resend (https://resend.com).
 // Resend is the chosen transport because Brevo blocks every key (API and SMTP)
@@ -44,7 +45,10 @@ export async function POST(req: NextRequest) {
         to: [SENDER_EMAIL],
         reply_to: `${fromName} <${replyto}>`,
         subject,
+        // Both parts on purpose: html is the branded card, text keeps the mail
+        // readable in clients that strip it and keeps spam scores honest.
         text,
+        html: leadEmailHtml({ subject, message: text, replyto, fromName }),
       }),
     });
 
