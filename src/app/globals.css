@@ -159,7 +159,10 @@
      --band-y     the thin bands under the hero (work marquee, tech strip) —
                   deliberately smaller, or two short bands read as two whole
                   sections and the top of the page feels like a list. */
-  --section-y: clamp(56px, 8vw, 128px);
+  /* Cap raised 128 -> 152: the vault sources (Luxury, Minimalism, Japandi)
+     converge on 140-160 for the premium register, and the extra void between
+     chapters is the oldest expensive signal there is. */
+  --section-y: clamp(56px, 8vw, 152px);
   --band-y:    clamp(36px, 5vw, 72px);
 
   /* Ground for a full-bleed colour break (see .trust). Its OWN token, not
@@ -1174,7 +1177,7 @@ select:focus-visible,
 }
 
 /* ── Tech strip: the tools the demos above are built with ──
-   Parchment ground, not another panel-yellow band: WorkMarquee sits directly
+   Parchment ground, not another panel-yellow band: WorkGrid sits directly
    above with exactly that treatment, and two identical bands stacked read as
    one long smear. Only a bottom rule here — the marquee already draws the line
    between them. */
@@ -2718,3 +2721,86 @@ body.theme-dark .topbar.is-scrolled,
   .demoframe__cta strong { font-size: 16px; }
   .demoframe__cta em { display: none; }
 }
+
+
+/* ============================== PREMIUM PASS ==============================
+   Site-wide editorial devices from the vault distillation (docs/premium-
+   homepage-plan.md). Shared selectors only, so every page inherits them:
+   the funnel headers (.sec-head) and the inner-page headers (.ct-head). */
+
+/* The eyebrow opens its chapter like a magazine label: a 1px rule running from
+   the text to the margin. Hairline mix, not full ink: the 3px ink borders are
+   structure, the filetto is typography. */
+.sec-head__eyebrow, .ct-kicker { display: flex; align-items: center; gap: 14px; }
+.sec-head__eyebrow::after, .ct-kicker::after {
+  content: ""; flex: 1; height: 1px;
+  background: color-mix(in oklch, var(--ink-border) 30%, transparent);
+}
+/* Same device on the two band leads that lay eyebrow + note in one row. */
+.wgr__lead::after, .tech__lead::after { content: ""; flex: 1; height: 1px; background: color-mix(in oklch, var(--ink-border) 30%, transparent); }
+
+/* Headings refuse widows; standfirsts wrap evenly. Free, and site-wide. */
+.sec-head__title, .ct-title { text-wrap: balance; }
+.sec-head__sub, .ct-sub { text-wrap: pretty; }
+
+/* Drawn underline, opt-in: grows from the left on hover. */
+.u-draw { text-decoration: none; background: linear-gradient(currentColor, currentColor) no-repeat left 100% / 0% 2px; transition: background-size .3s var(--ease); padding-bottom: 2px; }
+.u-draw:hover, .u-draw:focus-visible { background-size: 100% 2px; }
+
+/* FAQ as an editorial index: the boxed cards give way to hairline rows with a
+   mono folio. The most anonymous block on the page becomes a summary. */
+.faq-item { border: 0; border-top: 1px solid color-mix(in oklch, var(--ink-border) 30%, transparent); border-radius: 0; background: transparent; box-shadow: none; }
+.faq-list { border-bottom: 1px solid color-mix(in oklch, var(--ink-border) 30%, transparent); }
+.faq-n { font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--accent-green-deep); margin-right: 14px; flex: 0 0 auto; }
+.faq-q > span:nth-child(2) { font-family: var(--font-display); font-size: clamp(17px, 1.5vw, 20px); font-weight: 600; letter-spacing: -0.01em; }
+
+/* Chapter folio: the big number as a graphic element (vault: Editorial).
+   Outlined in currentColor so it adapts to any band it sits on: ink-mix on
+   parchment, light on the forest Trust band, ink on the ochre Audit panel. */
+.sec-head { position: relative; }
+.sec-head__folio {
+  position: absolute; right: 0; top: -0.08em; z-index: 0;
+  font-family: var(--font-display); font-weight: 600; line-height: 1;
+  font-size: clamp(56px, 7vw, 96px);
+  color: transparent; -webkit-text-stroke: 1.5px color-mix(in oklch, currentColor 34%, transparent);
+  pointer-events: none; user-select: none;
+}
+/* On the forest band the header's inherited color is still ink, so the 24% mix
+   vanished into the green. Stroke from the light page tone instead. */
+.trust .sec-head__folio { -webkit-text-stroke-color: color-mix(in oklch, var(--canvas-page) 32%, transparent); }
+
+/* The one italic line on the page: authorial voice over the Trust band,
+   set as a pullquote with a side rule (vault: Editorial + Luxury). */
+.trust-pull {
+  margin: clamp(18px, 2.5vw, 30px) 0 clamp(26px, 3.5vw, 44px);
+  max-width: 30ch;
+  font-family: var(--font-display); font-style: italic; font-weight: 500;
+  font-size: clamp(21px, 2.6vw, 31px); line-height: 1.25; letter-spacing: -0.01em;
+  color: var(--canvas-page);
+  border-left: 2px solid var(--accent-green); padding-left: clamp(14px, 1.8vw, 22px);
+}
+
+/* /prezzi: one dark movement in an all-parchment page. The owner read the page
+   as one colour and too much text; the five steps become the forest band, the
+   same register as Trust on the home, so the page breathes in three grounds
+   (parchment, forest, ochre CTA) instead of one. */
+.prz-sec--how {
+  background: var(--ground-deep); color: var(--canvas-page);
+  border: 3px solid var(--ink-border); border-radius: var(--radius-lg);
+  box-shadow: 6px 6px 0 var(--ink-shadow);
+  padding: clamp(22px, 3vw, 40px);
+}
+.prz-sec--how .prz-sec__title { color: var(--canvas-page); }
+.prz-sec--how [class*="mono"], .prz-sec--how dt { color: var(--accent-green); }
+/* The steps inherit their ink from the parchment context and vanished on the
+   forest. Numbers in ochre, text in the page tone, hairline in the light mix. */
+.prz-sec--how .plans-how__n { color: var(--accent-green); }
+.prz-sec--how .plans-how__step { color: var(--canvas-page); border-color: color-mix(in oklch, var(--canvas-page) 30%, transparent); }
+
+/* FAQ rows pack left: space-between was centring the question between the
+   folio and the chevron. The mark alone keeps the right edge; the hairline
+   restyle also drops the inherited side padding so rows sit flush with the
+   section title. */
+.faq-q { justify-content: flex-start; padding-left: 0; padding-right: 0; }
+.faq-mark { margin-left: auto; }
+.faq-item .faq-a { padding-left: 0; padding-right: 0; }

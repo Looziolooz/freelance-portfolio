@@ -55,9 +55,9 @@ export default function Plans() {
               className={`plan-card${feature ? " plan-card--feature" : ""}`}
             >
               <div className="plan-card__head">
-                <span className="plan-card__badge">
-                  {String(i + 1).padStart(2, "0")} · {t("home.plans.tag")}
-                </span>
+                {/* Just the folio: the old chip repeated the section eyebrow
+                    on every card (vault: Minimalism, remove before adding). */}
+                <span className="plan-card__badge">{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="plan-card__title">{t(`home.eng.${e.key}.title`)}</h3>
                 {/* The figure sits right under the title, before the pitch: the
                     card next door promises "Prezzo deciso prima", and until now

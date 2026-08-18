@@ -39,6 +39,7 @@ export default function Trust() {
       <div className="trust__inner">
       <SectionHeader eyebrow={t("trust.eyebrow")} title={t("trust.title")} sub={t("trust.sub")} />
 
+
       <ul className="trust-grid">
         {POINTS.map((k) => (
           <li key={k} className="trust-card">

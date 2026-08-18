@@ -14,9 +14,11 @@ export default function Faq() {
       <SectionHeader eyebrow={t("faq.eyebrow")} title={t("faq.title")} />
 
       <div className="faq-list">
-        {QUESTIONS.map((q) => (
+        {QUESTIONS.map((q, i) => (
           <details key={q} className="faq-item" name="faq">
             <summary className="faq-q">
+              {/* Folio number, mono: the questions read as a table of contents. */}
+              <span className="faq-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
               <span>{t(`faq.${q}.q`)}</span>
               <span className="faq-mark" aria-hidden="true" />
             </summary>

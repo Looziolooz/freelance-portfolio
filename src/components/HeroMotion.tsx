@@ -238,8 +238,11 @@ export default function HeroMotion() {
     let ctxg: gsap.Context | undefined;
     if (!overlay && content) {
       ctxg = gsap.context(() => {
+        // The slow register (vault: Luxury). Micro-hovers stay at 150-200ms;
+        // the opening statement is the one place the page is allowed to take
+        // its time, and the fade makes the cascade legible as direction.
         gsap.from(Array.from(content.children), {
-          y: 22, duration: 0.6, stagger: 0.09, ease: "power3.out",
+          y: 30, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out",
         });
       }, section);
     }

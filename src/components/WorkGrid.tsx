@@ -4,50 +4,99 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLang } from "./LangProvider";
 import { PROJECTS } from "@/lib/projects";
-import { useRotation } from "@/lib/useRotation";
 
-// A ticker of live project covers right under the hero: the demos ARE the proof,
-// so they run before any claim about them. Parchment & Forest treatment — 3px ink
-// frames and hard offset shadows, not soft floating cards.
+// Six live demos under the hero, standing still.
 //
-// Cost control: a clip plays only under the cursor (touch keeps in-view autoplay
-// — see Card), preload="none" keeps them out of the initial network, and the
-// whole strip is static under prefers-reduced-motion.
-// The whole eligible pool, not a slice: useRotation draws the visible 8 from
-// it on each visit. Sliced here, the same eight showed forever and the other
-// nine were published but unreachable from the home page.
+// This replaces the ticker that used to sit here. The covers scrolled away
+// before you could read a name, and once a second moving band shared the page
+// the two competed. A grid shows more work at once and asks nothing of the
+// reader's timing.
+//
+// What carried over unchanged is the Card: hover-only playback, in-view autoplay
+// on touch, preload="none", and the opacity dip that hides the loop seam. Those
+// choices are all load-bearing and their reasons are in the comments below.
 const POOL = PROJECTS.filter((p) => p.featured && !p.hidden && p.coverVideo);
-const SHOWN = 8;
+const SHOWN = 6;
+
+/**
+ * Six that show the RANGE, chosen deterministically.
+ *
+ * The pool is authored automation-first, so the plain first six came back as six
+ * automations: six near-identical flow diagrams, every card reading "vedi il
+ * flusso", and not one built site on a strip whose whole job is proving that
+ * sites get built. It also runs 12 websites to 3 automations, so picking at
+ * random would swing the other way.
+ *
+ * So: one per category first, in the order a visitor cares about, then fill from
+ * the sites. Deterministic on purpose — the strip that used to shuffle here is
+ * how /work earned a 0.318 CLS, because reordering keyed nodes after hydration
+ * moves every card at once.
+ */
+function pickRange() {
+  const order = ["website", "automazione", "ai", "saas"];
+  const seen = new Set<string>();
+  const out: typeof POOL = [];
+  for (const category of order) {
+    const first = POOL.find((p) => p.category === category);
+    if (first) {
+      out.push(first);
+      seen.add(first.slug);
+    }
+  }
+  for (const p of POOL) {
+    if (out.length >= SHOWN) break;
+    if (!seen.has(p.slug)) {
+      out.push(p);
+      seen.add(p.slug);
+    }
+  }
+  return out.slice(0, SHOWN);
+}
 
 const CSS = `
-/* --band-y both sides (globals.css): the old 44/30 left the card row landing
-   30px from the tech strip below, so the two densest blocks on the page ran
-   together. Symmetric padding also stops the band reading as top-heavy. */
-.wmq { padding: var(--band-y) 0; border-top: 3px solid var(--ink-border); border-bottom: 3px solid var(--ink-border); background: var(--canvas-panel-yellow); }
-.wmq__lead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto clamp(18px, 2.5vw, 26px); padding: 0 clamp(18px, 4vw, 40px); }
-.wmq__eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-green-deep); }
-.wmq__note { font-size: 14px; color: var(--ink-muted); }
-.wmq__note a { color: var(--accent-green-deep); font-weight: 600; text-decoration: none; border-bottom: 2px solid currentColor; }
+.wgr { padding: var(--band-y) 0; border-top: 3px solid var(--ink-border); border-bottom: 3px solid var(--ink-border); background: var(--canvas-panel-yellow); }
 
-.wmq__card {
-  flex: 0 0 auto; margin-right: 22px; width: clamp(320px, 38vw, 560px);
+/* A grid, not a ticker. The page already had a moving strip here and the covers
+   slid away before you could read a name; six of them standing still say the
+   same thing and let you compare. Nothing animates on its own: a clip runs only
+   while the cursor is on its card (touch keeps in-view autoplay, see Card).
+   No rotation either. The strip used to draw its eight from the pool on every
+   visit, which is how /work earned a 0.318 CLS: reordering keyed nodes after
+   hydration moves every card at once. The first six, always, and the link goes
+   to the rest. */
+.wgr__grid {
+  display: grid; gap: clamp(16px, 2vw, 26px);
+  grid-template-columns: 1fr;
+  max-width: 1200px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 40px);
+}
+.wgr__card {
   border: 3px solid var(--ink-border); border-radius: var(--radius-lg);
   background: var(--canvas-page); box-shadow: 6px 6px 0 var(--ink-shadow);
   overflow: hidden; text-decoration: none; color: var(--ink-body);
   transition: transform .18s var(--ease), box-shadow .18s var(--ease);
 }
-.wmq__card:hover { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--ink-shadow); color: var(--ink-body); }
+.wgr__card:hover { transform: translate(-3px, -3px); box-shadow: 10px 10px 0 var(--ink-shadow); color: var(--ink-body); }
+
+@media (min-width: 660px) { .wgr__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .wgr__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.wgr__lead { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto clamp(18px, 2.5vw, 26px); padding: 0 clamp(18px, 4vw, 40px); }
+.wgr__eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-green-deep); }
+.wgr__note { font-size: 14px; color: var(--ink-muted); }
+/* Drawn underline (u-draw in globals): grows from the left on hover. */
+.wgr__note a { color: var(--accent-green-deep); font-weight: 600; text-decoration: none; background: linear-gradient(currentColor, currentColor) no-repeat left 100% / 0% 2px; transition: background-size .3s var(--ease); padding-bottom: 2px; }
+.wgr__note a:hover, .wgr__note a:focus-visible { background-size: 100% 2px; }
+
 /* 16/9 matches the source clips (1280x720) exactly, so cover crops nothing. */
 /* display:block is required — aspect-ratio is ignored on inline elements, and
    this is a <span> inside the card link. */
-.wmq__media { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--canvas-panel); border-bottom: 3px solid var(--ink-border); }
-.wmq__media video, .wmq__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wgr__media { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--canvas-panel); border-bottom: 3px solid var(--ink-border); }
+.wgr__media video, .wgr__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* First frame of the clip, under the video: what the loop dip reveals. */
-.wmq__under { position: absolute; inset: 0; z-index: 0; }
-.wmq__media video { position: relative; z-index: 1; }
+.wgr__under { position: absolute; inset: 0; z-index: 0; }
+.wgr__media video { position: relative; z-index: 1; }
 /* Pinned bottom-right over the clip: doubles as the demo affordance and as the
    mask for the Gemini mark the cover captures carry in that corner. */
-.wmq__demo {
+.wgr__demo {
   position: absolute; right: 10px; bottom: 10px; z-index: 2; pointer-events: none;
   display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
   font-family: var(--font-mono); font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em;
@@ -56,14 +105,16 @@ const CSS = `
   padding: 7px 14px; box-shadow: 3px 3px 0 var(--ink-shadow);
   transition: transform .18s var(--ease);
 }
-.wmq__card:hover .wmq__demo { transform: translate(-2px, -2px); }
-.wmq__cap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px 13px; }
-.wmq__name { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: -0.015em; }
-.wmq__tag { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--btn-ink); background: var(--accent-green); border: 2px solid var(--ink-border); border-radius: var(--radius-full); padding: 3px 10px; white-space: nowrap; }
-@media (max-width: 640px) { .wmq__card { width: 82vw; margin-right: 14px; } .wmq__name { font-size: 17px; } }
+.wgr__card:hover .wgr__demo { transform: translate(-2px, -2px); }
+.wgr__cap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px 13px; }
+.wgr__name { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: -0.015em; }
+/* Mono ink, not a second ochre pill: with the demo badge already ochre, two
+   accents per card diluted both. One accent per card, and ochre means action. */
+.wgr__tag { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--ink-muted); background: transparent; border: 1px solid color-mix(in oklch, var(--ink-border) 38%, transparent); border-radius: var(--radius-full); padding: 3px 10px; white-space: nowrap; }
+@media (max-width: 640px) { .wgr__card { width: 82vw; margin-right: 14px; } .wgr__name { font-size: 17px; } }
 `;
 
-function Card({ p, isClone }: { p: (typeof POOL)[number]; isClone?: boolean }) {
+function Card({ p }: { p: (typeof POOL)[number] }) {
   const { t } = useLang();
   const vref = useRef<HTMLVideoElement>(null);
 
@@ -105,7 +156,7 @@ function Card({ p, isClone }: { p: (typeof POOL)[number]; isClone?: boolean }) {
     // The strip already pauses under the cursor (.marquee:hover), so one gesture
     // both stops the ticker and starts the demo you stopped on.
     if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-      const card = v.closest(".wmq__card");
+      const card = v.closest(".wgr__card");
       if (!card) return;
       const enter = () => { v.play().catch(() => {}); };
       const leave = () => {
@@ -154,8 +205,8 @@ function Card({ p, isClone }: { p: (typeof POOL)[number]; isClone?: boolean }) {
   const accessibleLabel = `${demoLabel} ↗: ${title}`;
 
   return (
-    <Link href={`/work/${p.slug}`} prefetch={false} className="wmq__card" aria-label={accessibleLabel} tabIndex={isClone ? -1 : undefined}>
-      <span className="wmq__media">
+    <Link href={`/work/${p.slug}`} prefetch={false} className="wgr__card" aria-label={accessibleLabel}>
+      <span className="wgr__media">
         {/* The clip's own first frame, sitting UNDER the video. The loop
             crossfade dips the video's opacity, and this is what shows through —
             the exact frame the clip restarts on, so the seam disappears. Fading
@@ -164,7 +215,7 @@ function Card({ p, isClone }: { p: (typeof POOL)[number]; isClone?: boolean }) {
         {p.image && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            className="wmq__under"
+            className="wgr__under"
             src={`/_next/image?url=${encodeURIComponent(p.image)}&w=640&q=75`}
             alt=""
             aria-hidden="true"
@@ -185,41 +236,49 @@ function Card({ p, isClone }: { p: (typeof POOL)[number]; isClone?: boolean }) {
         {/* No demo URL means the detail page shows the flow, not an embedded
             site — promising "open demo" there would be a promise with nothing
             behind it. */}
-        <span className="wmq__demo">{demoLabel} <span aria-hidden="true">↗</span></span>
+        <span className="wgr__demo">{demoLabel} <span aria-hidden="true">↗</span></span>
       </span>
-      <span className="wmq__cap">
-        <span className="wmq__name">{title}</span>
-        {tags !== `work.proj.${p.key}.tags` && <span className="wmq__tag">{tags.split("·")[0].trim()}</span>}
+      <span className="wgr__cap">
+        <span className="wgr__name">{title}</span>
+        <span className="wgr__tag">{t(`work.filter.${p.category ?? "website"}`)}</span>
       </span>
     </Link>
   );
 }
 
-export default function WorkMarquee() {
+export default function WorkGrid() {
   const { t } = useLang();
-  const items = useRotation(POOL, SHOWN);
-  if (!POOL.length) return null;
+  // "Random" without the hydration reshuffle that cost /work its CLS: the
+  // shuffle is seeded by the day, so server and client agree and the mix
+  // changes per day, not per render.
+  const day = Math.floor(Date.now() / 86400000);
+  const shuffled = [...POOL]
+    .map((p, i) => ({ p, k: Math.sin(day * 97 + i * 31) }))
+    .sort((a, b) => a.k - b.k)
+    .map((x) => x.p);
+  // Spread first, then fill: without this one seed showed six of a kind, which
+  // is the exact failure the deterministic picker existed to prevent.
+  const seen = new Set<string>();
+  const lead = shuffled.filter((p) => {
+    const c = p.category ?? "altro";
+    if (seen.has(c)) return false;
+    seen.add(c);
+    return true;
+  });
+  const items = [...lead, ...shuffled.filter((p) => !lead.includes(p))].slice(0, SHOWN);
+  if (!items.length) return null;
 
   return (
-    <section className="wmq" aria-label={t("workmq.eyebrow")}>
+    <section className="wgr" aria-label={t("workmq.eyebrow")}>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <div className="wmq__lead">
-        <span className="wmq__eyebrow">{t("workmq.eyebrow")}</span>
-        <span className="wmq__note">
+      <div className="wgr__lead">
+        <span className="wgr__eyebrow">{t("workmq.eyebrow")}</span>
+        <span className="wgr__note">
           {t("workmq.note")} <Link href="/work">{t("workmq.link")}</Link>
         </span>
       </div>
-      {/* Duplicated track: the ticker keyframe translates -50%, so the copy makes
-          the loop seamless. The clone is hidden from a11y and from crawlers. */}
-      <div className="marquee" style={{ ["--marquee-dur" as string]: "52s" }}>
-        <div className="marquee__track">
-          <div style={{ display: "flex" }}>
-            {items.map((p) => <Card key={p.id} p={p} />)}
-          </div>
-          <div style={{ display: "flex" }} aria-hidden="true">
-            {items.map((p) => <Card key={`c-${p.id}`} p={p} isClone />)}
-          </div>
-        </div>
+      <div className="wgr__grid">
+        {items.map((p) => <Card key={p.id} p={p} />)}
       </div>
     </section>
   );

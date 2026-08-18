@@ -8,6 +8,8 @@
 
 type Props = {
   eyebrow: string;
+  /** Chapter number, drawn huge and outlined behind the header's right edge. */
+  folio?: string;
   title: string;
   sub?: string;
   variant?: "plain" | "badge";
@@ -17,6 +19,7 @@ type Props = {
 
 export default function SectionHeader({
   eyebrow,
+  folio,
   title,
   sub,
   variant = "plain",
@@ -43,6 +46,7 @@ export default function SectionHeader({
         .filter(Boolean)
         .join(" ")}
     >
+      {folio && <span className="sec-head__folio" aria-hidden="true">{folio}</span>}
       <span className="sec-head__eyebrow">{eyebrow}</span>
       <h2 className="sec-head__title">{title}</h2>
       {sub && <p className="sec-head__sub">{sub}</p>}
