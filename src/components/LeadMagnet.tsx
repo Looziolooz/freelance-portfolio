@@ -1,9 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLang } from "./LangProvider";
 import SectionHeader from "./SectionHeader";
 import { submitLead } from "@/lib/leadForm";
+
+// The URL field needs a full http(s) address. Browsers treat a bare "iltuosito.it"
+// as a valid type=url value (they auto-prepend http:// during validation), so the
+// native check never fires and a scheme-less address goes out as a broken link.
+// Validate it here and tell the visitor exactly what's missing.
+const isFullUrl = (v: string) => /^https?:\/\/\S+$/i.test(v.trim());
 
 // Lead magnet: a free site audit in exchange for an email. The form sends the
 // lead by email via Web3Forms (see lib/leadForm) and shows an inline thank-you.
@@ -15,7 +21,12 @@ export default function LeadMagnet() {
   const { t } = useLang();
   const [url, setUrl] = useState("");
   const [email, setEmail] = useState("");
+  const [urlBlurred, setUrlBlurred] = useState(false);
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
+  const urlRef = useRef<HTMLInputElement>(null);
+
+  const urlInvalid = url.trim() !== "" && !isFullUrl(url);
+  const showUrlWarn = urlInvalid && urlBlurred;
 
   const mailtoFallback = () => {
     const subject = encodeURIComponent(t("lead.mail.subject"));
@@ -25,9 +36,15 @@ export default function LeadMagnet() {
     window.location.href = `mailto:${CONTACT}?subject=${subject}&body=${body}`;
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (status === "sending") return;
+    if (urlInvalid) {
+      setUrlBlurred(true);
+      urlRef.current?.focus();
+      return;
+    }
+    const honey = String(new FormData(e.currentTarget).get("_honey") ?? "");
     setStatus("sending");
     const ok = await submitLead({
       subject: `Audit gratuito richiesto — ${url}`,
@@ -35,6 +52,7 @@ export default function LeadMagnet() {
       replyto: email,
       email,
       site: url,
+      honey,
       message: `Richiesta di audit gratuito del sito.\n\nSito: ${url}\nEmail: ${email}`,
     });
     if (ok) {
@@ -83,17 +101,27 @@ export default function LeadMagnet() {
           </div>
         ) : (
           <form className="lead-form" onSubmit={onSubmit}>
+            <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="lead-hp" />
             <label className="lead-field">
               <span className="lead-field__label">{t("lead.url")}</span>
               <input
+                ref={urlRef}
                 type="url"
                 required
                 inputMode="url"
                 placeholder="https://iltuosito.it"
                 value={url}
+                aria-invalid={urlInvalid || undefined}
+                aria-describedby={urlInvalid ? "lead-url-warn" : undefined}
                 onChange={(e) => setUrl(e.target.value)}
+                onBlur={() => setUrlBlurred(true)}
                 className="lead-input"
               />
+              {showUrlWarn && (
+                <p id="lead-url-warn" className="lead-warn" role="alert">
+                  {t("lead.url.warn")}
+                </p>
+              )}
             </label>
             <label className="lead-field">
               <span className="lead-field__label">{t("lead.email")}</span>

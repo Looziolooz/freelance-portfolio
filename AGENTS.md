@@ -121,12 +121,23 @@ route that looked broken purely because the deploy was mid-swap. `https://looz.d
 
 ### Owner-only, cannot be done from a coding session
 
-8. **`www.looz.design` throws a browser security warning.** Fix: Vercel →
-   Settings → Domains → add `www.looz.design` → redirect to `looz.design`.
-9. **`hello@looz.design` does not exist** — no MX record. The address appears in
-   site copy, so mail to it currently bounces.
+8. ~~**`www.looz.design` throws a browser security warning.**~~ **Done 2026-08-18**:
+   `www.looz.design` is attached to the `freelance-portfolio` project with a 308
+   redirect to `looz.design`, certificate issued.
+9. ~~**`hello@looz.design` does not exist — no MX record.**~~ **Done 2026-08-18**:
+   ImprovMX account configured via its API, domain added and `active: true`,
+   alias `hello@looz.design` → `lorenzo.dastoli@gmail.com`. Zone records live:
+   MX 10 `mx1.improvmx.com`, MX 20 `mx2.improvmx.com`, SPF
+   `v=spf1 include:spf.improvmx.com ~all`, DMARC
+   `v=DMARC1; p=none; rua=mailto:hello@looz.design`. DKIM absent on purpose —
+   only needed to *send* from the domain, not to receive.
 
-Both need `vercel login` on the **Looziolooz** account.
+Both were done from a coding session with `vercel login` on the **Looziolooz**
+account. CLI domain/API calls must pass the team scope explicitly
+(`--scope loozioloozs-projects`, or `teamId=team_h4Ey4sXXkpFVLP91QwZD0tVu` in
+the REST API): without it, Vercel resolves to the user's personal scope and
+every domain call returns 403 "You don't have access", even though the domain
+is owned by the team.
 
 ## 5. Traps that have already cost time
 

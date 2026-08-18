@@ -34,9 +34,10 @@ export default function ContattiPage() {
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
-  const send = async (e: React.FormEvent) => {
+  const send = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (status === "sending") return;
+    const honey = String(new FormData(e.currentTarget).get("_honey") ?? "");
     setStatus("sending");
     const ok = await submitLead({
       subject: t("contatti.inquiry.subject"),
@@ -45,6 +46,7 @@ export default function ContattiPage() {
       name: fullname,
       email: workemail,
       website,
+      honey,
       message:
         `${t("contatti.inquiry.intro")}\n\n` +
         `${t("contatti.f.fullname")}: ${fullname}\n` +
@@ -116,6 +118,7 @@ export default function ContattiPage() {
               </div>
             ) : (
               <form onSubmit={send} className="ct-form">
+                <input type="text" name="_honey" tabIndex={-1} autoComplete="off" aria-hidden="true" className="lead-hp" />
                 <input name="fullname" className="ct-input" type="text" required placeholder={t("contatti.f.fullname")} value={fullname} onChange={(e) => setFullname(e.target.value)} />
                 <input name="workemail" className="ct-input" type="email" required placeholder={t("contatti.f.workemail")} value={workemail} onChange={(e) => setWorkemail(e.target.value)} />
                 <input name="website" className="ct-input" type="text" placeholder={t("contatti.f.website")} value={website} onChange={(e) => setWebsite(e.target.value)} />
