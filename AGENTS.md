@@ -132,6 +132,20 @@ route that looked broken purely because the deploy was mid-swap. `https://looz.d
    `v=DMARC1; p=none; rua=mailto:hello@looz.design`. DKIM absent on purpose —
    only needed to *send* from the domain, not to receive.
 
+10. **Forms send via Resend, blocked on one owner action.** The route
+    (`/api/lead`), the form wiring and the fallbacks are live; without a key the
+    forms fall back to mailto, so nothing is lost. To finish: create an API key
+    at resend.com (signup + "Create API Key", full access — two minutes), then
+    from the repo root run
+
+        node scripts/resend-setup.mjs re_LA_TUA_CHIAVE
+
+    The script does everything else: registers the domain in Resend (EU),
+    writes the DKIM/SPF records into the Vercel zone, waits for verification,
+    stores `RESEND_API_KEY` (production + preview), redeploys, and posts a real
+    test lead to prove the loop. Safe to re-run; it skips whatever already
+    exists.
+
 Both were done from a coding session with `vercel login` on the **Looziolooz**
 account. CLI domain/API calls must pass the team scope explicitly
 (`--scope loozioloozs-projects`, or `teamId=team_h4Ey4sXXkpFVLP91QwZD0tVu` in
