@@ -13,6 +13,14 @@ import { leadEmailHtml } from "@/lib/email-template";
 // to the person who asked.
 const RESEND_KEY = process.env.RESEND_API_KEY;
 const SENDER_EMAIL = process.env.RESEND_FROM_EMAIL ?? "hello@looz.design";
+// Where the notification actually lands. Defaulting to hello@ meant every lead
+// took the long way round: Resend sends AS hello@ TO hello@, ImprovMX catches
+// it and forwards to Gmail. That forwarding hop is the fragile link (same
+// domain as sender and recipient, a re-delivery Gmail loves to junk or drop),
+// and it is where "the form says Ricevuto but no mail arrives" lived. With
+// LEAD_TO_EMAIL set to the real mailbox, Resend delivers direct with its own
+// DKIM and no forward in between.
+const TO_EMAIL = process.env.LEAD_TO_EMAIL ?? SENDER_EMAIL;
 
 export async function POST(req: NextRequest) {
   try {
@@ -42,7 +50,7 @@ export async function POST(req: NextRequest) {
       headers: { Authorization: `Bearer ${RESEND_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: `LOoz.design <${SENDER_EMAIL}>`,
-        to: [SENDER_EMAIL],
+        to: [TO_EMAIL],
         reply_to: `${fromName} <${replyto}>`,
         subject,
         // Both parts on purpose: html is the branded card, text keeps the mail
