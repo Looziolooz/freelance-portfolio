@@ -89,7 +89,8 @@ const JSON_LD = {
       url: `${SITE_URL}/`,
       description:
         "Studio freelance indipendente: siti web ed e-commerce su misura, automazioni dei processi ripetitivi, contenuti social e agenti AI per piccole imprese e solo founder.",
-      slogan: "Siti, automazioni e agenti AI che fanno crescere la tua impresa.",
+      // The owner picked this over four rounds of candidates.
+      slogan: "Il sito che ti ripaga.",
       founder: { "@id": `${SITE_URL}/#lorenzo` },
       knowsLanguage: ["it", "en", "sv"],
       areaServed: [
@@ -108,19 +109,26 @@ const JSON_LD = {
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Servizi",
-        // Every offer carries its floor price. Without them this catalogue told
-        // any machine reading it that six services have no price and one costs
-        // nothing — worse than shipping no schema at all, because an assistant
-        // asked "what does LOoz charge?" would answer from a structured claim
-        // that contradicts the prices printed on /prezzi. lowPrice + a spec is
-        // the honest shape for "from X": a real floor, no invented ceiling.
+        // The floor prices are gone, on purpose, and the reason the earlier
+        // comment gave for having them has gone with them.
+        //
+        // That comment said a priceless catalogue would contradict the prices
+        // printed on /prezzi. It would have. Now /prezzi prints none: the owner
+        // took every figure off the site so the cost is decided in a call, so
+        // silence here is the CONSISTENT answer rather than the contradictory
+        // one. The services stay enumerated and typed, which is the half of
+        // this node that was never about money.
+        //
+        // The free audit keeps its price of zero. Free is not a quote, it is the
+        // whole lead magnet, and stripping "free" off something that is free
+        // would be the opposite of the change being asked for.
         itemListElement: [
-          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 1500, priceCurrency: "EUR", valueAddedTaxIncluded: false }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Siti web ed e-commerce", description: "Siti e negozi online su misura, veloci e fatti per trasformare i visitatori in clienti." } },
-          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 600, priceCurrency: "EUR", valueAddedTaxIncluded: false, billingIncrement: 1, unitCode: "MON" }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Visibilità online (SEO)", description: "SEO, struttura e presenza pensate per i motori di ricerca e per chi cerca te." } },
-          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 400, priceCurrency: "EUR", valueAddedTaxIncluded: false, billingIncrement: 1, unitCode: "MON" }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Contenuti social", description: "Contenuti per i social semplici e a costo zero, per restare presente e riconoscibile." } },
-          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 600, priceCurrency: "EUR", valueAddedTaxIncluded: false }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Automazioni", description: "I processi ripetitivi li fa la macchina: email, fatture, report. Meno errori, più tempo." } },
-          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 600, priceCurrency: "EUR", valueAddedTaxIncluded: false }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Dati dal web", description: "Dati dal web raccolti e trasformati in informazioni utili per le decisioni di marketing." } },
-          { "@type": "Offer", priceSpecification: { "@type": "PriceSpecification", minPrice: 1800, priceCurrency: "EUR", valueAddedTaxIncluded: false }, url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Agenti AI", description: "Agenti su misura per email e appuntamenti, fatturazione, scrittura mail e riassunti dei clienti." } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Siti web ed e-commerce", description: "Siti e negozi online su misura, veloci e fatti per trasformare i visitatori in clienti." } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Visibilità online (SEO)", description: "SEO, struttura e presenza pensate per i motori di ricerca e per chi cerca te." } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Contenuti social", description: "Contenuti per i social semplici e a costo zero, per restare presente e riconoscibile." } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Automazioni", description: "I processi ripetitivi li fa la macchina: email, fatture, report. Meno errori, più tempo." } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Dati dal web", description: "Dati dal web raccolti e trasformati in informazioni utili per le decisioni di marketing." } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Agenti AI", description: "Agenti su misura per email e appuntamenti, fatturazione, scrittura mail e riassunti dei clienti." } },
           { "@type": "Offer", price: "0", priceCurrency: "EUR", itemOffered: { "@type": "Service", name: "Audit gratuito del sito", description: "Tre cose concrete da migliorare subito per ottenere più clienti. Risposta entro 24 ore." } },
         ],
       },

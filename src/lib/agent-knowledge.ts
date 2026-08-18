@@ -110,7 +110,7 @@ export function rankByQuery<T>(query: string, items: T[], getText: (it: T) => st
 const CATEGORY_HEADING: Record<string, string> = {
   bio: "About Lorenzo",
   contact: "Contact & how to start",
-  pricing: "Pricing & how Lorenzo charges",
+  pricing: "Cost: what drives it, and how quoting works (no published figures)",
   engagement: "Engagements",
   membership: "Membership",
   service: "Services",
@@ -306,22 +306,23 @@ const RAW: RawEntry[] = [
     id: "service-social-content",
     category: "service",
     keywords: ["contenuti social", "social media", "creazione contenuti", "costo zero", "social content", "content creation", "zero cost", "sociala innehåll", "sociala medier", "innehåll", "utan kostnad", "riconoscibilità", "brand"],
-    it: "Creo contenuti per i social in modo semplice e a costo zero, così resti presente e riconoscibile senza perderci ore.",
-    en: "I create social content simply and at zero cost, so you stay present and recognisable without losing hours.",
-    sv: "Jag skapar innehåll för sociala medier enkelt och utan kostnad, så att du syns och känns igen utan att lägga timmar.",
+    it: "Contenuti social pronti da pubblicare, senza dover mettere budget in pubblicità: resti presente e riconoscibile senza perderci ore.",
+    en: "Ready-to-post social content with no ad budget required: you stay present and recognisable without losing hours.",
+    sv: "Färdigt innehåll för sociala medier att publicera, utan annonsbudget: du syns och känns igen utan att lägga timmar.",
   },
   {
     // The method question ("do you actually film this?") arrives the moment a
-    // visitor sees a reel next to a EUR 400 price. Answering it straight is the
-    // stronger move: no crew is why the number works. NB this is NOT a return of
-    // the standalone video-editing service that was deliberately dropped from
-    // the price list — video exists only inside the content retainer.
+    // visitor sees a reel on a project page. Answering it straight is the
+    // stronger move: no crew is why the work is feasible at all. NB this is NOT
+    // a standalone video-editing service; video exists only inside the ongoing
+    // content work. No figures here: the site publishes none, and the assistant
+    // states none.
     id: "service-video-ai",
     category: "service",
     keywords: ["video", "reel", "reels", "effetti", "effects", "effekter", "montaggio", "editing", "riprese", "footage", "girato", "shooting", "troupe", "crew", "filmteam", "come fai i video", "how do you make the videos", "hur gör du videorna", "ai video", "generato", "generated", "genererad", "prompt", "foto"],
-    it: "I video Lorenzo li costruisce con l'AI partendo da quello che c'è già: una foto, un video girato dal cliente, oppure solo un prompt. Da lì escono le riprese e gli effetti. Non è un servizio di montaggio a sé: il video vive dentro l'abbonamento contenuti, ed è proprio il non avere troupe e giornate di shooting che permette di tenere quel prezzo. I clip di esempio sui progetti sono generati così, e sul sito è scritto.",
-    en: "Lorenzo builds the video with AI starting from whatever already exists: a photo, footage the client shot, or just a prompt. The shots and the effects come out of that. It is not a standalone editing service: video lives inside the content retainer, and having no crew and no shoot days is exactly what keeps that price possible. The sample clips on the projects are made this way, and the site says so.",
-    sv: "Videon bygger Lorenzo med AI utifrån det som redan finns: ett foto, material kunden filmat, eller bara en prompt. Tagningarna och effekterna kommer därifrån. Det är ingen fristående redigeringstjänst: video ligger inom innehållsabonnemanget, och att slippa filmteam och inspelningsdagar är precis det som gör priset möjligt. Exempelklippen på projekten är gjorda så, och det står på sajten.",
+    it: "I video Lorenzo li costruisce con l'AI partendo da quello che c'è già: una foto, un video girato dal cliente, oppure solo un prompt. Da lì escono le riprese e gli effetti. Non è un servizio di montaggio a sé: il video vive dentro il lavoro continuativo sui contenuti, e non avere troupe né giornate di shooting è quello che lo rende sostenibile. I clip di esempio sui progetti sono generati così, e sul sito è scritto.",
+    en: "Lorenzo builds the video with AI starting from whatever already exists: a photo, footage the client shot, or just a prompt. The shots and the effects come out of that. It is not a standalone editing service: video lives inside the ongoing content work, and having no crew and no shoot days is what makes it sustainable. The sample clips on the projects are made this way, and the site says so.",
+    sv: "Videon bygger Lorenzo med AI utifrån det som redan finns: ett foto, material kunden filmat, eller bara en prompt. Tagningarna och effekterna kommer därifrån. Det är ingen fristående redigeringstjänst: video ligger inom det löpande innehållsarbetet, och att slippa filmteam och inspelningsdagar är det som gör det hållbart. Exempelklippen på projekten är gjorda så, och det står på sajten.",
   },
   {
     id: "service-automation",
@@ -418,33 +419,33 @@ const RAW: RawEntry[] = [
     id: "pricing-one-off-payment",
     category: "pricing",
     keywords: ["pagamento unico", "una tantum", "una volta", "one-off", "pay once", "engångsbetalning", "betala en gång", "prezzo progetto", "costo", "quanto costa", "preventivo", "supporto incluso", "3 mesi supporto", "nessun ricorrente", "no recurring", "lavoro finito", "finished work", "price", "pris", "kostnad", "offert"],
-    it: "Una delle opzioni è il pagamento unico: il sito parte da 1.500€ + IVA, paghi una volta e ricevi il lavoro finito, con 3 mesi di supporto inclusi; dopodiché è tuo, senza costi ricorrenti. Hosting e dominio non sono compresi. La cifra finale viene preventivata progetto per progetto.",
-    en: "One option is a one-off payment: the site starts at €1,500 + VAT, you pay once and get the finished work, with 3 months of support included, then it's yours with no recurring cost. Hosting and domain are not included. The final figure is quoted per project.",
-    sv: "Ett alternativ är en engångsbetalning: sajten börjar på 21 000 kr + moms, du betalar en gång och får det färdiga arbetet, med 3 månaders support inkluderat, och sedan är det ditt utan löpande kostnad. Hosting och domän ingår inte. Slutsumman offereras per projekt.",
+    it: "Una delle opzioni è il pagamento unico: paghi una volta, ricevi il lavoro finito e hai 3 mesi di supporto inclusi, poi il sito è tuo e non ci sono costi ricorrenti. Hosting e dominio restano fuori. La cifra si preventiva progetto per progetto dopo la call, perché dipende da quante pagine e quante integrazioni servono.",
+    en: "One option is a one-off payment: you pay once, get the finished work and 3 months of support included, then the site is yours with no recurring cost. Hosting and domain sit outside it. The figure is quoted project by project after the call, because it depends on how many pages and how many integrations are involved.",
+    sv: "Ett alternativ är en engångsbetalning: du betalar en gång, får det färdiga arbetet och 3 månaders support inkluderat, sedan är sajten din utan löpande kostnad. Hosting och domän ligger utanför. Summan offereras projekt för projekt efter samtalet, eftersom den beror på hur många sidor och hur många integrationer som behövs.",
   },
   {
     id: "pricing-subscription-tiers",
     category: "pricing",
-    keywords: ["abbonamento", "subscription", "abonnemang", "all-inclusive", "tutto incluso", "25 euro al mese", "25€/mese", "39 euro al mese", "39€/mese", "hosting", "dominio", "domain", "domän", "aggiornamenti", "updates", "supporto", "gestione contenuti", "content management", "innehållshantering", "mensile", "monthly", "månad", "sito web incluso", "quanto costa un sito", "prezzo sito", "pris webbplats"],
-    it: "C'è anche un abbonamento tutto incluso: 25€/mese coprono sito, hosting, dominio, aggiornamenti e supporto; oppure 39€/mese che aggiungono la gestione attiva dei contenuti (modifiche mensili a testi e sezioni, aggiornamento foto, piccole modifiche).",
-    en: "There's also an all-inclusive subscription: 25€/month covers the site, hosting, domain, updates and support; or 39€/month which adds active content management (monthly text and section changes, photo updates, small tweaks).",
-    sv: "Det finns även ett allt-inkluderat abonnemang: 330 kr/månad täcker webbplatsen, hosting, domän, uppdateringar och support; eller 510 kr/månad som lägger till aktiv innehållshantering (månatliga text- och sektionsändringar, fotouppdateringar, små justeringar).",
+    keywords: ["abbonamento", "subscription", "abonnemang", "all-inclusive", "tutto incluso", "quota mensile", "canone mensile", "costo mensile", "monthly fee", "monthly cost", "månadsavgift", "hosting", "dominio", "domain", "domän", "aggiornamenti", "updates", "supporto", "gestione contenuti", "content management", "innehållshantering", "mensile", "monthly", "månad", "sito web incluso", "quanto costa un sito", "prezzo sito", "pris webbplats"],
+    it: "C'è anche la strada dell'abbonamento tutto incluso: una quota mensile che copre sito, hosting, dominio, aggiornamenti e supporto. Il livello sopra aggiunge la gestione attiva dei contenuti, cioè modifiche mensili a testi e sezioni, aggiornamento delle foto e piccoli interventi. Quale delle due strade convenga dipende da quanto vuoi seguire il sito da solo, e si vede insieme in call.",
+    en: "There's also the all-inclusive subscription route: a monthly fee covering the site, hosting, domain, updates and support. The level above adds active content management, meaning monthly changes to text and sections, photo updates and small fixes. Which route suits you depends on how much of the site you want to run yourself, and that gets worked out in the call.",
+    sv: "Det finns även vägen med allt-inkluderat abonnemang: en månadsavgift som täcker sajt, hosting, domän, uppdateringar och support. Nivån över lägger till aktiv innehållshantering, alltså månatliga ändringar i texter och sektioner, uppdaterade bilder och små justeringar. Vilken väg som passar beror på hur mycket av sajten du vill sköta själv, och det går vi igenom i samtalet.",
   },
   {
     id: "pricing-complex-work-consultation",
     category: "pricing",
     keywords: ["lavoro complesso", "complex work", "komplext arbete", "automazioni", "automation", "agenti ai", "ai agents", "integrazioni", "integrations", "integrationer", "preventivo personalizzato", "tailored quote", "skräddarsydd offert", "consulenza", "consultation", "konsultation", "prezzo automazione", "quanto costa un agente ai"],
-    it: "Per il lavoro complesso — automazioni, agenti AI, integrazioni su misura — si parte da una consulenza personalizzata e un preventivo dedicato. Per numeri esatti, meglio una chiamata veloce o hello@looz.design.",
-    en: "For complex work — automations, AI agents, custom integrations — it starts with a personalised consultation and a tailored quote. For exact numbers, a quick call or hello@looz.design is best.",
-    sv: "För komplext arbete — automatiseringar, AI-agenter, skräddarsydda integrationer — börjar det med en personlig konsultation och en skräddarsydd offert. För exakta siffror är ett snabbt samtal eller hello@looz.design bäst.",
+    it: "Per il lavoro complesso, come automazioni, agenti AI e integrazioni su misura, si parte da una consulenza dedicata: prima si capisce cosa deve fare il sistema e a quali strumenti si collega, poi arriva il preventivo. Per una stima reale il modo più rapido è una chiamata o hello@looz.design.",
+    en: "For complex work, like automations, AI agents and custom integrations, it starts with a dedicated consultation: first what the system has to do and which tools it connects to, then the quote. For a real estimate the fastest way is a call or hello@looz.design.",
+    sv: "För komplext arbete, som automationer, AI-agenter och skräddarsydda integrationer, börjar det med en särskild konsultation: först vad systemet ska göra och vilka verktyg det kopplas till, sedan offerten. För en riktig uppskattning är ett samtal eller hello@looz.design snabbaste vägen.",
   },
   {
     id: "pricing-no-fixed-figure",
     category: "pricing",
-    keywords: ["prezzo fisso", "fixed price", "fast pris", "quanto costa", "how much", "hur mycket kostar", "preventivo", "quote", "offert", "caso per caso", "case by case", "fall till fall", "stima", "estimate", "uppskattning", "chiamata", "call", "samtal", "contatto", "contact", "kontakt"],
-    it: "Ogni servizio ha una soglia di partenza pubblicata su /prezzi (tutte + IVA): sito da 1.500€, e-commerce da 4.000€, landing page da 1.200€, automazioni da 600€, agenti AI da 1.800€, visibilità in abbonamento da 600€/mese, contenuti in abbonamento da 400€/mese. Quelle sono soglie, non listini: la cifra finale si decide nella call, perché dipende da quante pagine servono, quante integrazioni e quanto lavoro c'è sui contenuti. Invece di inventare un numero preciso, Lorenzo spiega cosa determina il costo e propone una chiamata veloce o hello@looz.design per una stima reale.",
-    en: "Every service has a starting point published on /prezzi (all plus VAT): site from €1,500, e-commerce from €4,000, landing page from €1,200, automations from €600, AI agents from €1,800, monthly visibility from €600/month, monthly content from €400/month. Those are floors, not list prices: the final figure is settled in the call, because it depends on how many pages, how many integrations and how much content work is involved. Rather than inventing an exact number, Lorenzo explains what drives the cost and offers a quick call or hello@looz.design for a real estimate.",
-    sv: "Varje tjänst har en utgångspunkt publicerad på /prezzi (alla exklusive moms): sajt från 21 000 kr, e-handel från 55 000 kr, landningssida från 16 000 kr, automationer från 8 000 kr, AI-agenter från 25 000 kr, löpande synlighet från 8 000 kr/mån, löpande innehåll från 5 500 kr/mån. Det är golv, inte listpriser: slutsumman bestäms i samtalet, eftersom den beror på hur många sidor som behövs, hur många integrationer och hur mycket innehållsarbete det handlar om. I stället för att hitta på en exakt siffra förklarar Lorenzo vad som driver kostnaden och erbjuder ett snabbt samtal eller hello@looz.design för en riktig uppskattning.",
+    keywords: ["prezzo", "prezzi", "prezzo fisso", "listino", "costo", "costi", "budget", "fixed price", "price", "pricing", "fast pris", "pris", "priser", "kostnad", "kostar", "quanto costa", "quanto costerebbe", "how much", "how much does it cost", "hur mycket kostar", "preventivo", "quote", "offert", "caso per caso", "case by case", "fall till fall", "stima", "estimate", "uppskattning", "chiamata", "call", "samtal", "contatto", "contact", "kontakt"],
+    it: "Sul sito non c'è un listino e non ci sono cifre da citare. Il costo di un lavoro dipende sempre dalle stesse cose: quante pagine servono, quante integrazioni ci sono da collegare (pagamenti, prenotazioni, gestionale, spedizioni), se testi e foto esistono già o vanno scritti e prodotti, se serve un negozio online o delle automazioni, e quanto aiuto vuoi dopo il lancio. Due progetti che da fuori sembrano uguali possono richiedere lavoro molto diverso, quindi la cifra si decide in una call breve, quando è chiaro cosa serve davvero. Il modo di arrivarci è raccontare il progetto in chiamata o scrivere a hello@looz.design, e da lì arriva un preventivo su misura.",
+    en: "There is no price list on the site and no figures to quote. What a job costs always comes down to the same things: how many pages are needed, how many integrations have to be wired in (payments, bookings, back office, shipping), whether the text and photos already exist or have to be written and produced, whether an online shop or automations are part of it, and how much help you want after launch. Two projects that look alike from outside can take very different work, so the figure is settled in a short call, once it's clear what is actually needed. The way to get there is to describe the project on a call or write to hello@looz.design, and a tailored quote follows.",
+    sv: "Det finns ingen prislista på sajten och inga siffror att citera. Vad ett jobb kostar beror alltid på samma saker: hur många sidor som behövs, hur många integrationer som ska kopplas in (betalningar, bokningar, affärssystem, frakt), om texter och bilder redan finns eller måste skrivas och produceras, om det ingår en webbutik eller automationer, och hur mycket hjälp du vill ha efter lansering. Två projekt som ser lika ut utifrån kan kräva helt olika arbete, så summan bestäms i ett kort samtal, när det är klart vad som verkligen behövs. Vägen dit är att berätta om projektet i ett samtal eller skriva till hello@looz.design, och sedan kommer en skräddarsydd offert.",
   },
   // ── Membership ─────────────────────────────────────────────────────────────
   {
@@ -566,9 +567,9 @@ const RAW: RawEntry[] = [
     id: "faq-hosting-maintenance",
     category: "faq",
     keywords: ["hosting", "manutenzione", "dopo il lancio", "supporto", "aggiornamenti", "dominio incluso", "maintenance", "after launch", "support", "updates", "underhåll", "efter lansering", "uppdateringar"],
-    it: "Dopo il lancio ci sono due strade: con il pagamento una tantum sono inclusi 3 mesi di supporto e poi il sito è tuo da gestire. In alternativa l'abbonamento all-inclusive da 25€/mese copre sito, hosting, dominio, aggiornamenti e supporto continui; a 39€/mese si aggiunge la gestione attiva dei contenuti.",
-    en: "After launch there are two paths: with the one-off payment you get 3 months of support included, then the site is yours to run. Alternatively the all-inclusive subscription at €25/month covers the site, hosting, domain, updates and ongoing support; at €39/month it adds active content management.",
-    sv: "Efter lansering finns två vägar: med engångsbetalningen ingår 3 månaders support, sedan är sajten din att sköta. Alternativt täcker det allt-inkluderade abonnemanget på 330 kr/mån sajt, hosting, domän, uppdateringar och löpande support; för 510 kr/mån tillkommer aktiv innehållshantering.",
+    it: "Dopo il lancio ci sono due strade: con il pagamento una tantum sono inclusi 3 mesi di supporto e poi il sito è tuo da gestire. In alternativa l'abbonamento tutto incluso copre sito, hosting, dominio, aggiornamenti e supporto continui, e al livello sopra aggiunge la gestione attiva dei contenuti. Quale delle due abbia senso dipende da quanto vuoi occuparti del sito dopo il lancio, e si decide in call.",
+    en: "After launch there are two paths: with the one-off payment you get 3 months of support included, then the site is yours to run. Alternatively the all-inclusive subscription covers the site, hosting, domain, updates and ongoing support, and at the level above it adds active content management. Which of the two makes sense depends on how much of the site you want to handle after launch, and that gets decided in the call.",
+    sv: "Efter lansering finns två vägar: med engångsbetalningen ingår 3 månaders support, sedan är sajten din att sköta. Alternativt täcker det allt-inkluderade abonnemanget sajt, hosting, domän, uppdateringar och löpande support, och nivån över lägger till aktiv innehållshantering. Vilken av de två som är rimlig beror på hur mycket av sajten du vill sköta efter lansering, och det bestäms i samtalet.",
   },
   {
     id: "faq-ecommerce-platforms",
@@ -590,9 +591,9 @@ const RAW: RawEntry[] = [
     id: "faq-payment-invoicing",
     category: "faq",
     keywords: ["pagamento", "fattura", "fatturazione", "come si paga", "metodi di pagamento", "stripe", "carta", "payment", "invoice", "billing", "how to pay", "card", "betalning", "faktura", "betalningssätt", "kort"],
-    it: "Per i progetti il pagamento è una tantum (lavoro finito) oppure un abbonamento mensile all-inclusive (25€ o 39€ al mese). Gli abbonamenti al sito (Supporter, Pro) si pagano in modo sicuro con carta tramite Stripe e si possono disdire quando vuoi; per i progetti su misura le condizioni si concordano nella call conoscitiva.",
-    en: "For projects, payment is either one-off (finished work) or a monthly all-inclusive subscription (€25 or €39/month). The site memberships (Supporter, Pro) are paid securely by card via Stripe and can be cancelled anytime; for custom projects the terms are agreed in the intro call.",
-    sv: "För projekt är betalningen antingen en engångsbetalning (färdigt arbete) eller ett månadsvis allt-inkluderat abonnemang (25€ eller 39€/mån). Sajtens medlemskap (Supporter, Pro) betalas säkert med kort via Stripe och kan sägas upp när som helst; för skräddarsydda projekt avtalas villkoren i introsamtalet.",
+    it: "Per i progetti il pagamento è una tantum (lavoro finito) oppure un abbonamento mensile tutto incluso. Le condizioni, cifra compresa, si concordano nella call conoscitiva e finiscono nel preventivo. Gli abbonamenti al sito (Supporter, Pro) sono un'altra cosa: si pagano con carta tramite Stripe e si possono disdire quando vuoi.",
+    en: "For projects, payment is either one-off (finished work) or a monthly all-inclusive subscription. The terms, figure included, are agreed in the intro call and written into the quote. The site memberships (Supporter, Pro) are a separate thing: they're paid by card via Stripe and can be cancelled anytime.",
+    sv: "För projekt är betalningen antingen en engångsbetalning (färdigt arbete) eller ett månadsvis allt-inkluderat abonnemang. Villkoren, summan inkluderad, avtalas i introsamtalet och skrivs in i offerten. Sajtens medlemskap (Supporter, Pro) är något annat: de betalas med kort via Stripe och kan sägas upp när som helst.",
   },
   {
     id: "faq-remote-onsite-countries",

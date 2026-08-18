@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Prezzi",
   description:
-    "Sito per piccola impresa fino a 5 pagine da 1.500€ + IVA, prima versione in 7-10 giorni, servizio mensile da 25€. E-commerce da 4.000€, automazioni da 600€, agenti AI da 1.800€, visibilità e contenuti da 400€ al mese.",
+    "Cosa determina il costo di un sito, di un e-commerce, di un'automazione o di un agente AI: quante pagine, quante integrazioni, se i contenuti ci sono già. La cifra si decide in una chiamata.",
 };
 
 // FAQPage for the four objections the page now answers. Italian only, matching
@@ -18,7 +18,7 @@ const FAQ_LD = {
   "@type": "FAQPage",
   mainEntity: [
     ["Posso disdire il servizio mensile?", "Sì, quando vuoi. Non c'è vincolo di durata e non ci sono penali: paghi il mese in corso e chiudi."],
-    ["E se un giorno voglio andarmene?", "Ti porti tutto. Codice e account sono a tuo nome dal primo giorno. Il trasferimento sul tuo hosting costa 130€ ed è scritto in pagina proprio perché non sia una sorpresa il giorno che serve."],
+    ["E se un giorno voglio andarmene?", "Ti porti tutto. Codice e account sono a tuo nome dal primo giorno. Il trasferimento sul tuo hosting ha un costo, te lo dico prima di iniziare proprio perché non sia una sorpresa il giorno che serve."],
     ["Il prezzo può cambiare a lavoro iniziato?", "No. Il preventivo si concorda prima di cominciare e resta quello. Se in corsa cambi tu quello che serve, ti dico cosa comporta prima di andare avanti."],
     ["Quanto ci vuole per essere online?", "Prima versione in 7–10 giorni da quando ho testi, immagini e logo. Un giro di feedback è incluso."],
   ].map(([q, a]) => ({

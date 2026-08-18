@@ -5,22 +5,24 @@ import CinematicFooter from "@/components/CinematicFooter";
 import MagneticButton from "@/components/MagneticButton";
 import { useLang } from "@/components/LangProvider";
 
-// /prezzi — the figures, what they cover, and what happens after you pay.
+// /prezzi — how the cost is decided, what it covers, and what happens after you pay.
 //
-// Split off the homepage on purpose: "Come lavoro" was absorbing the offer, the
-// deliverables, the process, hosting options and the add-ons, and would have
-// become the longest block on the page, pushing FAQ and contact far down the
-// scroll. The homepage keeps the three figures and links here.
+// The published figures were removed on the owner's call: they were reading as
+// too blunt an opening for a studio whose quotes come out of a conversation.
+// The page did NOT become "contact me for a quote", which would have been worth
+// nothing and would have cost it the ranking it has. Every figure was replaced
+// by the thing that decided that figure — page count, integrations, whether the
+// copy exists or has to be written, whether it needs a shop, how much ongoing
+// help is wanted — so a reader still finishes the page able to place themselves,
+// and still knows which of their own decisions moves them up.
 //
 // Copy is deliverable-level throughout (five pages / SSL / titles and
 // descriptions), not activity-level (UX design, CRO): a buyer can count the
 // first kind and cannot evaluate the second.
-// Order is deliberate: the two build services first (highest intent, highest
-// figure), then the two automation ones, then the two subscriptions last. A
-// reader scanning the price column meets the numbers descending, so the
-// monthly figures land as relief rather than as another cost.
+// Order is deliberate: the two build services first (highest intent), then the
+// two automation ones, then the two subscriptions last.
 // `proof` is the demo that already exists for that service. The page had a real
-// trust gap — zero evidence next to any figure — and the honest fix was never
+// trust gap — zero evidence next to any claim — and the honest fix was never
 // testimonials (there are none, deliberately) but the work itself, which was
 // sitting two clicks away with nothing pointing at it from here. Landing pages
 // have no demo yet, so that card carries no link rather than a hollow one.
@@ -33,7 +35,9 @@ const SERVICES: { k: string; n: string; monthly?: boolean; proof?: string }[] = 
   { k: "content", n: "06", monthly: true, proof: "/work/contenuti-social" },
 ];
 
-const FAQ = ["1", "2", "3", "4"];
+// q1 repeated the header ("perche non c'e un listino" IS the page title) and
+// q5 repeated the home FAQ's ownership answer. Four remain, each earning its row.
+const FAQ = ["2", "3", "4", "6"];
 
 export default function PrezziPage() {
   const { t } = useLang();
@@ -47,14 +51,17 @@ export default function PrezziPage() {
           <span className="prz-head__kicker">{t("prezzi.kicker")}</span>
           <h1 className="prz-head__title">{t("prezzi.title")}</h1>
           <p className="prz-head__sub">{t("prezzi.sub")}</p>
+          {/* Its own key rather than the homepage's `home.plans.signals`: that
+              list opened with "clear price", which is no longer what this page
+              promises. It promises a quote before anything starts. */}
           <ul className="plans-signals">
-            {t("home.plans.signals").split("|").map((sig) => (
+            {t("prezzi.signals").split("|").map((sig) => (
               <li key={sig} className="plans-signals__item">{sig}</li>
             ))}
           </ul>
         </header>
 
-        {/* Offer + the two figures side by side */}
+        {/* Offer + the three shapes a collaboration can take */}
         <section className="prz-sec" aria-label={t("prezzi.offer.title")}>
           <h2 className="prz-sec__title">{t("prezzi.offer.title")}</h2>
           <p className="prz-lead">{t("prezzi.offer.body")}</p>
@@ -62,32 +69,35 @@ export default function PrezziPage() {
           {/* Build, then the optional aftercare. The monthly used to live only
               inside a footnote, which left the two offers undefined against each
               other: readers could not tell whether the monthly replaced the build or came
-              after it. Shown as its own tier, the order answers that by itself. */}
+              after it. Shown as its own tier, the order answers that by itself.
+              Each card's strong line now names what the quote is measured in,
+              and the footnote under it names what moves it — the two facts the
+              figure used to stand in for. */}
           <div className="prz-tiers prz-tiers--three">
-            {/* The web build is flagged as the recommended tier: the rubric's
-                "no anchor" gap was real — three cards with no entry point means
-                the eye picks by price alone, and the cheapest thing on the page
-                is a 25€ subscription that is not the product. */}
+            {/* The web build is flagged as the recommended tier: with three
+                cards and no entry point the eye picks by scanning order alone,
+                and the subscription that is not the product sits in the middle. */}
             <div className="prz-tier prz-tier--rec">
               <span className="prz-tier__badge">{t("prezzi.rec")}</span>
               <h3 className="prz-tier__name">{t("home.eng.web.title")}</h3>
               <p className="prz-tier__for"><em>{t("prezzi.forLabel")}</em> {t("prezzi.for.web")}</p>
               <p className="prz-tier__price">
-                {t("home.eng.web.price")}
-                <span className="prz-tier__note">{t("home.eng.web.priceNote")}</span>
+                {t("prezzi.tier.web.basis")}
+                <span className="prz-tier__note">{t("prezzi.tier.web.note")}</span>
               </p>
               <ul className="prz-list">
                 {t("home.eng.web.features").split("|").map((f) => (
                   <li key={f}>{f}</li>
                 ))}
               </ul>
+              <p className="prz-tier__plus">{t("prezzi.tier.web.moves")}</p>
             </div>
 
             <div className="prz-tier">
               <h3 className="prz-tier__name">{t("prezzi.monthly.title")}</h3>
               <p className="prz-tier__for"><em>{t("prezzi.forLabel")}</em> {t("prezzi.for.monthly")}</p>
               <p className="prz-tier__price">
-                {t("prezzi.monthly.price")}
+                {t("prezzi.monthly.basis")}
                 <span className="prz-tier__note">{t("prezzi.monthly.note")}</span>
               </p>
               <ul className="prz-list">
@@ -102,42 +112,40 @@ export default function PrezziPage() {
               <h3 className="prz-tier__name">{t("home.eng.retainer.title")}</h3>
               <p className="prz-tier__for"><em>{t("prezzi.forLabel")}</em> {t("prezzi.for.retainer")}</p>
               <p className="prz-tier__price">
-                {t("home.eng.retainer.price")}
-                <span className="prz-tier__note">{t("home.eng.retainer.priceNote")}</span>
+                {t("prezzi.tier.retainer.basis")}
+                <span className="prz-tier__note">{t("prezzi.tier.retainer.note")}</span>
               </p>
               <ul className="prz-list">
                 {t("home.eng.retainer.features").split("|").map((f) => (
                   <li key={f}>{f}</li>
                 ))}
               </ul>
+              <p className="prz-tier__plus">{t("prezzi.tier.retainer.moves")}</p>
             </div>
           </div>
-          <p className="plans-costnote">{t("home.plans.costnote")}</p>
+          <p className="plans-costnote">{t("prezzi.offer.note")}</p>
         </section>
 
         {/* Everything the studio sells that is NOT the website.
-            This page was titled "quanto costa, scritto qui" while answering for
-            one service out of the six on the homepage: a visitor arriving from
-            the e-commerce or the AI-agent cell found the promise and no figure.
-            Starting points only, per the hybrid we settled on — a published
-            floor filters the enquiries that were never going to fit, and the
-            final number still comes out of the call. */}
+            A visitor arriving from the e-commerce or the AI-agent cell used to
+            find a promise and no answer on cost. The answer here is not a
+            figure: it is the two ends of each service — what the simplest
+            version looks like, and what pushes it up — which is the part a
+            reader can apply to their own case. */}
         <section className="prz-sec" aria-label={t("prezzi.svc.title")}>
           <h2 className="prz-sec__title">{t("prezzi.svc.title")}</h2>
           <p className="prz-lead">{t("prezzi.svc.sub")}</p>
-          {/* Each card carries a three-row spec table. A bare figure invites the
-              question it cannot answer ("why that number, and what makes it go
-              up?"), which is the question that would otherwise arrive by email
-              before anyone books a call. Answering it on the page turns the
-              price from an assertion into a rule the reader can apply to their
-              own case. */}
+          {/* Four spec rows per card. A bare figure used to invite the question
+              it could not answer ("why that number, and what makes it go up?"),
+              which is the question that would otherwise arrive by email before
+              anyone booked a call. `base` and `driver` are the low and high
+              anchors: between them a reader places themselves without a number. */}
           <div className="prz-svcs">
             {SERVICES.map(({ k, n, monthly, proof }) => (
               <article key={k} className="prz-svc">
                 <span className="prz-svc__n">{n}</span>
                 <h3 className="prz-svc__name">{t(`prezzi.svc.${k}.title`)}</h3>
                 <p className="prz-svc__scope">{t(`prezzi.svc.${k}.scope`)}</p>
-                <p className="prz-svc__for"><em>{t("prezzi.forLabel")}</em> {t(`prezzi.svc.${k}.for`)}</p>
 
                 <dl className="prz-svc__spec">
                   {(["inc", "time", "driver"] as const).map((row) => (
@@ -148,10 +156,16 @@ export default function PrezziPage() {
                   ))}
                 </dl>
 
+                {/* The slot that held the figure now holds the commitment shape.
+                    It is the other thing the two figures encoded — one-off
+                    project against a monthly subscription — and leaving the
+                    slot empty would have dropped the card's bottom rule and let
+                    the six cards ragged out at different heights. */}
                 <p className="prz-svc__price">
-                  <span className="prz-svc__from">{t("prezzi.svc.from")}</span>
-                  <span className="prz-svc__fig">{t(`prezzi.svc.${k}.price`)}</span>
-                  {monthly && <span className="prz-svc__per">{t("prezzi.svc.permonth")}</span>}
+                  <span className="prz-svc__from">{t("prezzi.svc.l.shape")}</span>
+                  <span className="prz-svc__per">
+                    {t(monthly ? "prezzi.svc.shape.monthly" : "prezzi.svc.shape.once")}
+                  </span>
                 </p>
                 {proof && (
                   <a className="prz-svc__proof" href={proof}>
@@ -165,7 +179,7 @@ export default function PrezziPage() {
         </section>
 
         {/* How it works */}
-        <section className="prz-sec" aria-label={t("home.plans.how.title")}>
+        <section className="prz-sec prz-sec--how" aria-label={t("home.plans.how.title")}>
           <h2 className="prz-sec__title">{t("home.plans.how.title")}</h2>
           <ol className="plans-how__steps">
             {t("home.plans.how.steps").split("|").map((step, i) => (
@@ -196,15 +210,20 @@ export default function PrezziPage() {
           <p className="plans-costnote">{t("prezzi.hosting.note")}</p>
         </section>
 
-        {/* Paid add-ons, priced so leaving is a known cost rather than a
-            negotiation. Figures converted from the reference at ~11.5 SEK/EUR. */}
+        {/* Paid add-ons. These two are the one place on the page where the work
+            does not vary, so the honest thing to say is that the rate is fixed
+            and told to you before it starts. Leaving stays a known cost rather
+            than a negotiation, which was the whole point of listing them. */}
         <section className="prz-sec" aria-label={t("prezzi.addon.title")}>
           <h2 className="prz-sec__title">{t("prezzi.addon.title")}</h2>
           <div className="prz-tiers prz-tiers--two">
             {(["move", "domain"] as const).map((a) => (
               <div key={a} className="prz-tier">
                 <h3 className="prz-tier__name">{t(`prezzi.addon.${a}.title`)}</h3>
-                <p className="prz-tier__price">{t(`prezzi.addon.${a}.price`)}</p>
+                <p className="prz-tier__price">
+                  {t(`prezzi.addon.${a}.basis`)}
+                  <span className="prz-tier__note">{t(`prezzi.addon.${a}.note`)}</span>
+                </p>
                 <ul className="prz-list">
                   {t(`prezzi.addon.${a}.items`).split("|").map((x) => (
                     <li key={x}>{x}</li>
@@ -216,10 +235,11 @@ export default function PrezziPage() {
           <p className="plans-costnote">{t("prezzi.addon.note")}</p>
         </section>
 
-        {/* The four objections that otherwise arrive by email before anyone
-            books. Answering them on the page also gives an AI assistant fetching
-            /prezzi something to quote for "can I cancel" and "what if I leave",
-            which it previously could not find anywhere on this URL. */}
+        {/* The objections that otherwise arrive by email before anyone books.
+            Two were added when the figures came off, because taking them off
+            provokes two new questions: why there is no list, and when the reader
+            actually finds out. Answering them on the page also gives an AI
+            assistant fetching /prezzi something to quote. */}
         <section className="prz-sec" aria-label={t("prezzi.faq.title")}>
           <h2 className="prz-sec__title">{t("prezzi.faq.title")}</h2>
           <dl className="prz-faq">

@@ -16,7 +16,7 @@ import { SV_CSS } from "../shared-css";
 export const metadata: Metadata = {
   title: "Siti web per ristoranti e piccole attività",
   description:
-    "Siti su misura per ristoranti, gelaterie, bar e piccole attività: menù, prenotazioni e ordini. Da 1.500€ + IVA, prima versione in 7–10 giorni, oppure servizio mensile da 25€.",
+    "Siti su misura per ristoranti, gelaterie, bar e piccole attività: menù, prenotazioni e ordini. Prima versione in 7–10 giorni, poi il sito resta tuo. Il costo si decide in una chiamata.",
 };
 
 // The proof: food & hospitality demos already in the gallery. Nordbageriet is a
@@ -32,10 +32,10 @@ const JSON_LD = {
   provider: { "@id": `${SITE_URL}/#org` },
   areaServed: [{ "@type": "Country", name: "Italia" }, { "@type": "Place", name: "Europa" }],
   description:
-    "Siti su misura per la ristorazione e le piccole attività: menù, prenotazioni, ordini e visibilità su Google, da 1.500€ + IVA con prima versione in 7–10 giorni, o servizio mensile da 25€.",
+    "Siti su misura per la ristorazione e le piccole attività: menù, prenotazioni, ordini e visibilità su Google. Prima versione in 7–10 giorni, con la possibilità di lasciare a me hosting e manutenzione.",
   offers: [
-    { "@type": "Offer", name: "Pagamento unico", price: "1500", priceCurrency: "EUR", description: "Fino a 5 pagine, prima versione in 7–10 giorni, 3 mesi di supporto inclusi, codice e account a tuo nome. Hosting e dominio esclusi." },
-    { "@type": "Offer", name: "Servizio mensile", price: "25", priceCurrency: "EUR", description: "25€ al mese: hosting, dominio e manutenzione. 39€ al mese con le modifiche a testi e immagini." },
+    { "@type": "Offer", name: "Pagamento unico", description: "Fino a 5 pagine, prima versione in 7–10 giorni, 3 mesi di supporto inclusi, codice e account a tuo nome. Hosting e dominio esclusi. Il costo si decide in una chiamata." },
+    { "@type": "Offer", name: "Servizio mensile", description: "Hosting, dominio e manutenzione dopo la consegna, con le modifiche a testi e immagini su richiesta. Si disdice quando vuoi." },
   ],
 };
 
@@ -105,39 +105,39 @@ export default function SitiWebPage() {
           </div>
         </section>
 
-        <section className="sv-sec" aria-label="Prezzi">
+        <section className="sv-sec" aria-label="Come funziona il costo">
           <h2 className="sv-h2">Due formule, nessuna sorpresa.</h2>
           <div className="sv-price">
             <div className="sv-price__card">
               <span className="sv-price__name">Pagamento unico</span>
-              {/* This page used to say "preventivo fisso" and no number, which
-                  made the page that sells websites the vaguest place on the site
-                  about what a website costs — the home page, the FAQ and /prezzi
-                  all print the figure. */}
-              <p className="sv-price__big">Da 1.500€ + IVA.</p>
+              {/* No figure here any more. The owner took every price off the
+                  site so the cost is decided in a call; what replaces a number
+                  is what MOVES it, which is the part a reader can actually use
+                  before picking up the phone. */}
+              <p className="sv-price__big">Paghi una volta, poi è tuo.</p>
               <p className="sv-price__body">
-                Fino a 5 pagine, prima versione in 7–10 giorni. Paghi una volta e il sito è tuo:
-                codice e account a tuo nome, 3 mesi di supporto inclusi. Hosting e dominio non
-                sono compresi.
+                Fino a 5 pagine, prima versione in 7–10 giorni. Codice e account a tuo nome, 3
+                mesi di supporto inclusi. Hosting e dominio non sono compresi. Quanto costa lo
+                decide quante pagine servono e se i testi e le foto ci sono già.
               </p>
             </div>
             <div className="sv-price__card">
               <span className="sv-price__name">Servizio mensile</span>
-              <p className="sv-price__big">25€ al mese.</p>
+              <p className="sv-price__big">Oppure me ne occupo io.</p>
               <p className="sv-price__body">
-                Dopo la consegna, se non vuoi pensarci tu: hosting, dominio e manutenzione. Con
-                39€ al mese aggiungo le modifiche a testi e immagini su richiesta.
+                Dopo la consegna, se non vuoi pensarci tu: hosting, dominio e manutenzione. Su
+                richiesta aggiungo anche le modifiche a testi e immagini. Si disdice quando vuoi.
               </p>
             </div>
           </div>
           <p style={{ margin: "18px 0 0", color: "var(--ink-muted)", lineHeight: 1.6 }}>
             <Link href="/prezzi" style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}>
-              Tutti i dettagli su prezzi e tempi
+              Come si decide il costo, e i tempi
             </Link>{" "}
-            — cosa ricevi, come funziona, hosting e dominio.
+            insieme a cosa ricevi, come funziona, hosting e dominio.
           </p>
           <div className="sv-guar" style={{ marginTop: 22 }}>
-            <span>Prezzo deciso prima</span>
+            <span>Il costo lo sai prima di iniziare</span>
             <span>Il codice è tuo</span>
             <span>Rispondo entro 24h</span>
             <span>Lavoro a tappe: vedi tutto prima di pagare</span>

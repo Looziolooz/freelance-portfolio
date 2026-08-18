@@ -95,7 +95,7 @@ const COPY: Record<Lang, SocialDemoCopy> = {
         "Un carosello funziona quando ogni slide regge da sola: chi si ferma alla seconda deve comunque aver capito qualcosa. Per questo il problema arriva prima della soluzione, e il risultato è l’ultima cosa che si legge.",
     },
     reel: {
-      generated: "I video li costruisco con l’AI partendo da quello che c’è: una foto, un video già girato, o solo un prompt. Da lì escono le riprese e gli effetti. È il motivo per cui un reel al mese sta dentro un abbonamento da 400€, senza troupe e senza giornata di shooting.",
+      generated: "I video li costruisco con l’AI partendo da quello che c’è: una foto, un video già girato, o solo un prompt. Da lì escono le riprese e gli effetti. È il motivo per cui un reel al mese sta dentro un abbonamento, senza troupe e senza giornata di shooting.",
       note:
         "Il reel non spiega, mostra. Il testo in sovrimpressione non è una didascalia: è l’unica cosa che arriva a chi guarda senza audio, cioè quasi tutti. L’ultima riga è sempre l’unica che chiede qualcosa.",
       items: [
@@ -162,7 +162,7 @@ const COPY: Record<Lang, SocialDemoCopy> = {
         "A carousel works when every slide stands on its own: someone who stops at the second must still have learned something. That is why the problem comes before the solution, and the result is the last thing read.",
     },
     reel: {
-      generated: "I build the video with AI from whatever already exists: a photo, footage you have, or just a prompt. The shots and the effects come out of that. It is the reason a reel a month fits inside a €400 retainer, with no crew and no shoot day.",
+      generated: "I build the video with AI from whatever already exists: a photo, footage you have, or just a prompt. The shots and the effects come out of that. It is the reason a reel a month fits inside a retainer, with no crew and no shoot day.",
       note:
         "A reel does not explain, it shows. The on-screen text is not a caption: it is the only thing that reaches a viewer with the sound off, which is nearly all of them. The last line is always the only one that asks for anything.",
       items: [
@@ -229,7 +229,7 @@ const COPY: Record<Lang, SocialDemoCopy> = {
         "En karusell fungerar när varje bild bär sig själv: den som stannar vid den andra ska ändå ha lärt sig något. Därför kommer problemet före lösningen, och resultatet är det sista man läser.",
     },
     reel: {
-      generated: "Videon bygger jag med AI utifrån det som redan finns: ett foto, material du har, eller bara en prompt. Tagningarna och effekterna kommer därifrån. Det är därför en reel i månaden ryms i ett abonnemang från 5 500 kr, utan filmteam och utan inspelningsdag.",
+      generated: "Videon bygger jag med AI utifrån det som redan finns: ett foto, material du har, eller bara en prompt. Tagningarna och effekterna kommer därifrån. Det är därför en reel i månaden ryms i ett abonnemang, utan filmteam och utan inspelningsdag.",
       note:
         "En reel förklarar inte, den visar. Texten i bild är ingen bildtext: den är det enda som når den som tittar utan ljud, alltså nästan alla. Sista raden är alltid den enda som ber om något.",
       items: [
