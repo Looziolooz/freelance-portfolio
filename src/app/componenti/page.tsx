@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import { useLang } from "@/components/LangProvider";
+import SiteFooter from "@/components/SiteFooter";
 
 interface ComponentMeta {
   slug: string;
@@ -100,6 +101,7 @@ export default function ComponentiPage() {
           </div>
         )}
       </main>
+      <SiteFooter />
     </>
   );
 }

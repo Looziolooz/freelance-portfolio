@@ -2,6 +2,7 @@
 
 import Nav from "@/components/Nav";
 import AssistantHero from "@/components/AssistantHero";
+import SiteFooter from "@/components/SiteFooter";
 
 // One assistant. The site-wide widget is the main way in; this page is the
 // dedicated, linkable home for it — a split hero with the live chat on the left
@@ -11,6 +12,7 @@ export default function AgentsPage() {
     <>
       <Nav />
       <AssistantHero />
+      <SiteFooter />
     </>
   );
 }

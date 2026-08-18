@@ -7,6 +7,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import { RevealStagger, RevealItem } from "@/components/Reveal";
 import CountUp from "@/components/CountUp";
+import SiteFooter from "@/components/SiteFooter";
 
 const TIERS = [
   {
@@ -358,6 +359,7 @@ export default function MembershipPage() {
           </p>
         </div>
       </main>
+      <SiteFooter />
     </>
   );
 }

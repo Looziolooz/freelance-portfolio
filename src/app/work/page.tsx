@@ -6,6 +6,7 @@ import ProjectShowcase from "@/components/ProjectShowcase";
 import ScrollProgress from "@/components/ScrollProgress";
 import ContactClose from "@/components/ContactClose";
 import { useLang } from "@/components/LangProvider";
+import SiteFooter from "@/components/SiteFooter";
 
 // Dedicated "Lavori" page. A card grid: each card hover-plays its preview clip
 // (with a cursor-following "demo" chip) and clicks through to the in-site demo
@@ -37,6 +38,7 @@ export default function WorkPage() {
         <ProjectShowcase />
       </div>
       <ContactClose />
+      <SiteFooter />
     </>
   );
 }

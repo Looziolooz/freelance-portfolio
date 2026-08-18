@@ -9,6 +9,7 @@ import { TierBadge } from "@/components/auth/TierBadge";
 import { Reveal } from "@/components/Reveal";
 import { levelForContent, LEVELS, LEVEL_ORDER } from "@/lib/content-levels";
 import CoffeeSupport from "@/components/CoffeeSupport";
+import SiteFooter from "@/components/SiteFooter";
 
 interface ContentItem {
   id: string;
@@ -310,6 +311,7 @@ export default function BlogPage() {
         )}
         <CoffeeSupport />
       </main>
+      <SiteFooter />
     </>
   );
 }

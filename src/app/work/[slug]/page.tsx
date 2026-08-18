@@ -11,6 +11,7 @@ import SocialDemo from "@/components/SocialDemo";
 import VisibilityDemo from "@/components/VisibilityDemo";
 import WebDataDemo from "@/components/WebDataDemo";
 import { useLang } from "@/components/LangProvider";
+import SiteFooter from "@/components/SiteFooter";
 import { getProject } from "@/lib/projects";
 import { getBrandKit } from "@/lib/brand-kits";
 import { brandShots } from "@/lib/brand-shots";
@@ -291,6 +292,7 @@ export default function WorkDetail({ params }: { params: Promise<{ slug: string 
         </a>
       </div>
       </main>
+      <SiteFooter />
     </>
   );
 }
