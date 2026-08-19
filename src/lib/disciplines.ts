@@ -46,10 +46,12 @@ export type Discipline = {
   /** Which featured projects belong here. */
   select: (p: Project) => boolean;
   /**
-   * What each card should lead with. `manual` sends the reader to the brand
-   * fascicolo, `demo` to the built site, `flow` to the automation diagram.
+   * What the page shows. `gallery` is the card grid; `decks` stacks the brand
+   * manuals themselves, which is the whole point of the branding page — the
+   * fascicolo IS the work there, and a card that merely links to it was one
+   * click of nothing in between.
    */
-  lead: "manual" | "demo" | "flow";
+  body: "gallery" | "decks";
 };
 
 const live = (p: Project) => Boolean(p.featured) && !p.hidden;
@@ -63,28 +65,28 @@ export const DISCIPLINES: Discipline[] = [
     slug: "branding",
     key: "disc.branding",
     select: (p) => live(p) && Boolean(getBrandKit(p.slug)),
-    lead: "manual",
+    body: "decks",
   },
   {
     id: "web-design",
     slug: "web-design",
     key: "disc.web-design",
     select: (p) => live(p) && p.category === "website",
-    lead: "demo",
+    body: "gallery",
   },
   {
     id: "marketing",
     slug: "marketing",
     key: "disc.marketing",
     select: (p) => live(p) && MARKETING_SLUGS.includes(p.slug),
-    lead: "flow",
+    body: "gallery",
   },
   {
     id: "automazioni-ai",
     slug: "automazioni-ai",
     key: "disc.automazioni-ai",
     select: (p) => live(p) && (p.category === "automazione" || p.category === "ai"),
-    lead: "flow",
+    body: "gallery",
   },
 ];
 

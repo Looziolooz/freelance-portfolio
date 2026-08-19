@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Nav from "./Nav";
 import ProjectGallery from "./ProjectGallery";
+import BrandDeckList from "./BrandDeckList";
 import ScrollProgress from "./ScrollProgress";
 import ContactClose from "./ContactClose";
 import SiteFooter from "./SiteFooter";
@@ -24,27 +25,6 @@ const CSS = `
   opacity: 0.6;
 }
 
-/* Second line under a card: the brand manual, on the branding page. */
-.pg-second {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-  margin-top: 8px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent-green-deep);
-  text-decoration: none;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent-green-deep) 34%, transparent);
-  padding-bottom: 2px;
-  transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
-}
-.pg-second:hover,
-.pg-second:focus-visible {
-  color: var(--accent-green-deep);
-  border-color: var(--accent-green-deep);
-}
 
 
 /* The other disciplines, on the dark ground the skills list uses. */
@@ -98,7 +78,7 @@ const CSS = `
 .wd-more__link:focus-visible { outline: 2px solid var(--accent-green); outline-offset: 4px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .wd-more__name, .pg-second { transition: none; }
+  .wd-more__name { transition: none; }
 }
 `;
 
@@ -129,7 +109,11 @@ export default function WorkDiscipline({ d }: { d: Discipline }) {
         </div>
       </header>
 
-      <ProjectGallery items={items} showFilters={false} lead={d.lead} />
+      {d.body === "decks" ? (
+        <BrandDeckList items={items} />
+      ) : (
+        <ProjectGallery items={items} showFilters={false} />
+      )}
 
 
       <section className="wd-more" aria-label={t("disc.other")}>
