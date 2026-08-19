@@ -1,6 +1,6 @@
 "use client";
 
-import { useScroll, useTransform, motion, useMotionValueEvent } from "framer-motion";
+import { useTransform, useMotionValue, useMotionValueEvent, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 
@@ -23,6 +23,11 @@ import Image from "next/image";
 //   2. `pathLength={1}` normalises the path, so one `strokeDashoffset` from 1 to
 //      0 draws the whole journey in order regardless of how long the page is —
 //      no re-measuring when a phase's photo changes height.
+//
+// Each phase dot carries a `is-reached` class, toggled from the same scroll
+// progress that drives the dash: the core is hollow until the drawn head passes
+// its marker, then fills with the ochre→forest gradient. The head is a single
+// dot, placed on the path the way the automation canvas places its bead.
 const MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 const subscribeMotion = (onChange: () => void) => {
   const mq = window.matchMedia(MOTION_QUERY);
@@ -40,10 +45,12 @@ const readMotionOnServer = () => false;
 const SPINE_X = 100;
 const SVG_W = 200;
 // Two waypoints per empty stretch, alternating sides, so the route zig-zags
-// rather than leaning. Amplitude scales with the track: at 390px a big swing
-// would cross into the body text, which starts 64px in from the row.
-const ZIG_MIN = 16;
-const ZIG_MAX = 64;
+// rather than leaning. Both curves in a stretch are the same size; the whole
+// zig alternates left/right per stretch, so it reads as an even sawtooth.
+// Amplitude scales with the track: at 390px a big swing would cross into the
+// body text, which starts 64px in from the row.
+const ZIG_MIN = 18;
+const ZIG_MAX = 46;
 const ZIG_RATIO = 0.055;
 
 export type TimelineEntry = {
@@ -98,8 +105,13 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
   const ref = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const dotRefs = useRef<(HTMLElement | null)[]>([]);
   const drawnRef = useRef<SVGPathElement>(null);
   const beadRef = useRef<SVGCircleElement>(null);
+  // Mirrors of the measured state, read from scroll callbacks without making
+  // the callback depend on a re-render (and without reading state during render).
+  const heightRef = useRef(0);
+  const dotYsRef = useRef<number[]>([]);
   const [height, setHeight] = useState(0);
   const [dotYs, setDotYs] = useState<number[]>([]);
   const [trackW, setTrackW] = useState(0);
@@ -112,26 +124,29 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
     const measure = () => {
       const track = ref.current;
       if (!track) return;
-      setHeight(track.getBoundingClientRect().height);
-      setTrackW(track.getBoundingClientRect().width);
-      setDotYs(
-        rowRefs.current.map((row) => {
-          const dot = row?.querySelector<HTMLElement>(".ptl-dot");
-          if (!dot) return 0;
-          // offsetTop, deliberately, not getBoundingClientRect: the dot is
-          // `position: sticky`, so its painted box is wherever the reader has
-          // scrolled it to, while the path needs its RESTING position. Sticky
-          // does not move layout offsets, so walking the offsetParent chain
-          // gives the same answer at any scroll depth.
-          let y = 0;
-          let el: HTMLElement | null = dot;
-          while (el && el !== track) {
-            y += el.offsetTop;
-            el = el.offsetParent as HTMLElement | null;
-          }
-          return y + dot.offsetHeight / 2;
-        }),
-      );
+      const h = track.getBoundingClientRect().height;
+      heightRef.current = h;
+      setHeight(h);
+      const w = track.getBoundingClientRect().width;
+      setTrackW(w);
+      const ys = rowRefs.current.map((row) => {
+        const dot = row?.querySelector<HTMLElement>(".ptl-dot");
+        if (!dot) return 0;
+        // offsetTop, deliberately, not getBoundingClientRect: the dot is
+        // `position: sticky`, so its painted box is wherever the reader has
+        // scrolled it to, while the path needs its RESTING position. Sticky
+        // does not move layout offsets, so walking the offsetParent chain
+        // gives the same answer at any scroll depth.
+        let y = 0;
+        let el: HTMLElement | null = dot;
+        while (el && el !== track) {
+          y += el.offsetTop;
+          el = el.offsetParent as HTMLElement | null;
+        }
+        return y + dot.offsetHeight / 2;
+      });
+      dotYsRef.current = ys;
+      setDotYs(ys);
     };
     measure();
     window.addEventListener("resize", measure);
@@ -144,10 +159,43 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
     };
   }, [entries]);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 18%", "end 78%"],
-  });
+  // Journey progress, 0..1, computed by hand instead of with useScroll(target).
+  // framer-motion's useScroll measures the target's rect once and then does not
+  // reliably re-measure it when lazy photos load afterwards, which froze the
+  // whole line (the deployed site shipped with the bead parked at ~30%). The
+  // ResizeObserver below re-measures on every layout change, so the draw keeps
+  // in step with the actual track.
+  const scrollYProgress = useMotionValue(0);
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const compute = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      // The draw window: starts when the track's top passes 18% down the
+      // viewport, finishes when its bottom reaches 78%. Same window the old
+      // useScroll call used.
+      const topLine = vh * 0.18;
+      const bottomLine = vh * 0.78;
+      const travel = rect.height - (bottomLine - topLine);
+      if (travel <= 0) {
+        scrollYProgress.set(1);
+        return;
+      }
+      const t = (topLine - rect.top) / travel;
+      scrollYProgress.set(Math.min(1, Math.max(0, t)));
+    };
+    compute();
+    window.addEventListener("scroll", compute, { passive: true });
+    window.addEventListener("resize", compute);
+    const ro = new ResizeObserver(compute);
+    ro.observe(el);
+    return () => {
+      window.removeEventListener("scroll", compute);
+      window.removeEventListener("resize", compute);
+      ro.disconnect();
+    };
+  }, [scrollYProgress]);
 
   // One dash, the length of the whole path, pulled back into view as you scroll.
   const dashOffset = useTransform(scrollYProgress, [0, 1], [1, 0]);
@@ -185,14 +233,39 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
     const total = path.getTotalLength();
     if (!total) return;
     const p = path.getPointAtLength(total * Math.min(1, Math.max(0, progress)));
-    bead.setAttribute("cx", String(p.x));
-    bead.setAttribute("cy", String(p.y));
+    bead.setAttribute("cx", String(round(p.x)));
+    bead.setAttribute("cy", String(round(p.y)));
   }, []);
 
-  useMotionValueEvent(scrollYProgress, "change", placeBead);
+  // Each phase dot fills in as the drawn head passes its marker. The head's
+  // path hugs the spine (the zig is small against the vertical run), so the
+  // fraction of the track the head has covered ≈ its vertical fraction — no
+  // arc-length bookkeeping needed to decide when a dot is reached.
+  const lightDots = useCallback((progress: number) => {
+    const h = heightRef.current;
+    const ys = dotYsRef.current;
+    if (h <= 0 || ys.length === 0) return;
+    const p = Math.min(1, Math.max(0, progress));
+    ys.forEach((y, i) => {
+      const dot = dotRefs.current[i];
+      if (dot) dot.classList.toggle("is-reached", p >= y / h);
+    });
+  }, []);
+
+  const onProgress = useCallback(
+    (latest: number) => {
+      placeBead(latest);
+      lightDots(latest);
+    },
+    [placeBead, lightDots],
+  );
+
+  useMotionValueEvent(scrollYProgress, "change", onProgress);
   useEffect(() => {
-    placeBead(reduced ? 1 : scrollYProgress.get());
-  }, [d, placeBead, reduced, scrollYProgress]);
+    const progress = reduced ? 1 : scrollYProgress.get();
+    placeBead(progress);
+    lightDots(progress);
+  }, [d, placeBead, lightDots, reduced, scrollYProgress]);
 
   return (
     <div ref={containerRef} className="ptl">
@@ -205,11 +278,17 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
               rowRefs.current[i] = el;
             }}
           >
-            {/* sticky marker: dot + big phase label */}
-            <div className="ptl-marker">
-              <span className="ptl-dot" aria-hidden="true">
-                <span className="ptl-dot__core" />
-              </span>
+              {/* sticky marker: dot + big phase label */}
+              <div className="ptl-marker">
+                <span
+                  className="ptl-dot"
+                  aria-hidden="true"
+                  ref={(el) => {
+                    dotRefs.current[i] = el;
+                  }}
+                >
+                  <span className="ptl-dot__core" />
+                </span>
               {/* Visual duplicate of the content heading (sticky rail) — kept out
                   of the document outline (the audit found every phase H2 twice). */}
               <div className="ptl-marker__label" aria-hidden="true">
@@ -244,19 +323,21 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
                   </li>
                 ))}
               </ul>
+
+              {/* The photo follows the texts, at the same width as the paragraph,
+                  in a fixed rectangular frame (aspect-ratio + cover, so every
+                  phase reads the same even though the sources differ in shape).
+                  A caption, not a hero: the corner scrim + LO.oz keep it quiet. */}
               <div className="ptl-photo">
                 {e.image && (
                   <>
                     <Image
                       src={e.image}
                       alt={e.alt}
-                      width={e.w}
-                      height={e.h}
-                      sizes="(max-width: 880px) 100vw, 620px"
-                      style={{ width: "100%", height: "auto", display: "block" }}
+                      fill
+                      sizes="(max-width: 880px) calc(100vw - 64px), 460px"
+                      style={{ objectFit: "cover" }}
                     />
-                    {/* Dark corner scrim + caption in the bottom-right — doubles as
-                        a signature and masks the generator watermark that sits there. */}
                     <span className="ptl-photo__scrim" aria-hidden="true" />
                     <span className="ptl-photo__cap">LO.oz</span>
                   </>
@@ -301,8 +382,17 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
             }
           />
 
-          {/* the drawing head, hidden when the reader has asked for less motion */}
-          {!reduced && <circle ref={beadRef} className="ptl-line__bead" r="5" cx={SPINE_X} cy="0" />}
+          {/* the drawing head: one dot, hidden when the reader has asked for
+              less motion. Placed on the path like the automation canvas. */}
+          {!reduced && (
+            <circle
+              ref={beadRef}
+              className="ptl-line__bead"
+              r="5"
+              cx={SPINE_X}
+              cy="0"
+            />
+          )}
         </svg>
       </div>
 
@@ -330,7 +420,14 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
         }
         .ptl-dot__core {
           width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink-border);
+          /* Hollow until the journey reaches this phase; the filled state is
+             driven by the scroll-linked .is-reached class. */
+          background: var(--canvas-page);
+          transition: background 0.45s var(--ease), box-shadow 0.45s var(--ease);
+        }
+        .ptl-dot.is-reached .ptl-dot__core {
           background: linear-gradient(145deg, var(--accent-green), var(--accent-green-deep));
+          box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent-green) 26%, transparent);
         }
         .ptl-marker__label { display: none; }
 
@@ -341,7 +438,7 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
         .ptl-title { margin: 4px 0 0; font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 5vw, 52px); line-height: 1.0; letter-spacing: -0.02em; color: var(--ink-body); }
 
         .ptl-statement { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(20px, 2.4vw, 30px); font-weight: 500; line-height: 1.18; letter-spacing: -0.01em; color: var(--ink-body); }
-        .ptl-body { margin: 0 0 22px; font-size: clamp(15px, 1.3vw, 17px); line-height: 1.65; color: var(--ink-muted); max-width: 60ch; }
+        .ptl-body { margin: 0 0 22px; font-size: clamp(15px, 1.3vw, 17px); line-height: 1.65; color: var(--ink-muted); max-width: none; }
 
         .ptl-meta { margin: 0 0 22px; border: 3px solid var(--ink-border); border-radius: var(--radius); background: var(--canvas-panel-yellow); box-shadow: 4px 4px 0 var(--ink-shadow); padding: 4px 16px; }
         .ptl-meta__row { display: flex; gap: 14px; align-items: baseline; padding: 10px 0; }
@@ -354,9 +451,10 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
         .ptl-tick { color: var(--accent-green-deep); font-weight: 800; flex-shrink: 0; }
 
         .ptl-photo {
-          /* No fixed aspect-ratio: the frame takes the image's natural height, so
-             the whole photo fills it edge-to-edge with no cropping and no bars. */
-          position: relative; width: 100%; overflow: hidden; line-height: 0;
+          /* A fixed rectangular frame at the paragraph's width: every phase
+             reads the same height even though the sources differ in shape, and
+             the image is cropped (cover) to fill it. A caption, not a hero. */
+          position: relative; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; line-height: 0;
           border: 3px solid var(--ink-border); border-radius: var(--radius-lg);
           box-shadow: var(--shadow-card);
         }
@@ -393,9 +491,15 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
         .ptl-line__drawn {
           stroke: url(#ptlDraw);
           stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+          /* A faint ochre glow under the travelled route, so the drawn stretch
+             reads as the lit path the way the automation canvas lights its. */
+          filter: drop-shadow(0 0 2.5px color-mix(in oklch, var(--accent-green) 45%, transparent));
         }
         .ptl-line__bead {
-          fill: var(--accent-green); stroke: var(--ink-border); stroke-width: 2;
+          fill: var(--accent-green);
+          stroke: var(--ink-border);
+          stroke-width: 2;
+          filter: drop-shadow(0 0 3px color-mix(in oklch, var(--accent-green) 60%, transparent));
         }
 
         @media (min-width: 880px) {
@@ -419,21 +523,32 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
           .ptl-content__head { display: block; margin-bottom: 18px; }
           .ptl-content__head .ptl-title { font-size: clamp(30px, 3.2vw, 44px); overflow-wrap: anywhere; }
 
-          .ptl-row--left .ptl-content { grid-column: 1; grid-row: 1; padding-right: 20px; }
-          .ptl-row--right .ptl-content { grid-column: 3; grid-row: 1; padding-left: 20px; }
+          /* Text keeps a small share of its side of the line: a narrow block
+             hugged against the route, with the empty column space on the outer
+             edge. The photo lives inside that block, so it lands at the same
+             width as the paragraph. */
+          .ptl-content { max-width: clamp(380px, 38vw, 460px); }
+          .ptl-row--left .ptl-content { grid-column: 1; grid-row: 1; justify-self: end; padding-right: 24px; }
+          .ptl-row--right .ptl-content { grid-column: 3; grid-row: 1; justify-self: start; padding-left: 24px; }
 
           /* Body copy stays left-aligned on both sides: alternating the rag is
-             the one thing that would genuinely cost readability. Only the block
-             and the photo change side. */
-          .ptl-row--left .ptl-photo { margin-left: auto; }
+             the one thing that would genuinely cost readability. The paragraph
+             is the photo's width, so the two read as one caption block. */
           .ptl-photo { max-width: 100%; }
         }
 
         /* Belt and braces: the React path already renders complete under
-           reduced motion, and this covers the first paint before the store reads. */
+           reduced motion, and this covers the first paint before the store reads.
+           The dots all read as reached too — nothing walks the line, so nothing
+           stays hollow. */
         @media (prefers-reduced-motion: reduce) {
           .ptl-line__drawn { stroke-dashoffset: 0 !important; opacity: 1 !important; }
           .ptl-line__bead { display: none; }
+          .ptl-dot__core,
+          .ptl-dot.is-reached .ptl-dot__core {
+            background: linear-gradient(145deg, var(--accent-green), var(--accent-green-deep));
+            transition: none;
+          }
         }
       `}</style>
     </div>

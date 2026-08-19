@@ -7,6 +7,7 @@ import BentoShift from "@/components/BentoShift";
 import ScrollProgress from "@/components/ScrollProgress";
 import WayfindingNav from "@/components/WayfindingNav";
 import ScrollReveal from "@/components/ScrollReveal";
+import SkillsList from "@/components/SkillsList";
 
 // Below-the-fold sections are code-split out of the initial bundle to cut the
 // first-load JS (and TBT). ssr stays on (default) so the HTML is still
@@ -25,6 +26,9 @@ export default function Home() {
       <Nav />
       <WayfindingNav />
       <HeroMotion />
+      {/* Five doors right under the hero: the entry crossing the viewport
+          centre lights up, and each one is a real link. */}
+      <SkillsList />
       {/* Proof before claims: the live demos sit right under the hero. A
           horizontal gallery rather than a grid — you walk the work, one card
           at a time, in the same order the reader meets it. NB: this pinned
