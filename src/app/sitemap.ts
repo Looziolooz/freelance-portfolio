@@ -6,12 +6,14 @@ import { DISCIPLINES } from "@/lib/disciplines";
 // Only the public (launched) surfaces. The hidden pre-launch routes are left out
 // on purpose; add them back when their section goes live.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/work", "/processo", "/prezzi", "/agents", "/contatti", "/servizi/siti-web", "/servizi/automazioni", "/servizi/agenti-ai", "/servizi/claude-cowork", "/privacy", "/cookie"];
+  // Le quattro pagine servizio arrivano dalla tassonomia, cosi' una disciplina
+  // nuova entra nel sitemap insieme al menu invece che con un commit dopo.
+  const staticRoutes = [
+    "", "/work", "/work/fascicoli", "/processo", "/prezzi", "/agents", "/contatti",
+    "/privacy", "/cookie",
+  ];
 
-  // The five discipline pages sit between /work and the projects: they are the
-  // pages that say what each kind of work IS, so they are worth indexing on
-  // their own rather than being reachable only through the nav.
-  const disciplineRoutes = DISCIPLINES.map((d) => `/work/${d.slug}`);
+  const disciplineRoutes = DISCIPLINES.map((d) => `/servizi/${d.slug}`);
 
   const projectRoutes = PROJECTS.filter((p) => p.featured && !p.hidden).map(
     (p) => `/work/${p.slug}`,

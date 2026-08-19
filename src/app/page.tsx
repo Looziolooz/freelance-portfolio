@@ -39,11 +39,16 @@ export default function Home() {
           showcase used to occupy: demos first, then the toolkit behind them. */}
       <TechStack />
       <main className="container">
-        {/* Conversion funnel: hero → services (what I offer) → trust (proof) →
+        {/* Conversion funnel: hero → doors (the four disciplines) → trust (proof) →
             method/pricing (the offer) → FAQ (answer objections) → lead magnet
             (capture) → final CTA (footer). The selected-works viewer lives on its
             own /work page (linked from the nav + hero CTA). */}
-        <ScrollReveal><BentoShift /></ScrollReveal>
+        {/* Il bento dei sei servizi stava qui e non c'e' piu'. Era la sesta
+            tassonomia del sito: la lista sotto la hero apre quattro porte, e
+            ottocento pixel piu' sotto il bento ne prometteva sei, diverse. Con
+            un asse solo l'offerta si racconta nelle quattro pagine servizio, e
+            la home smette di contraddirsi da sola. Il componente resta su
+            disco, le sue chiavi restano nel dizionario. */}
         <ScrollReveal><Trust /></ScrollReveal>
         <Plans />
         <ScrollReveal><Faq /></ScrollReveal>

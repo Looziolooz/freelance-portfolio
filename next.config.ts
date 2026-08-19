@@ -14,6 +14,22 @@ const nextConfig: NextConfig = {
   // Baseline security headers (SEO audit): Vercel adds HSTS on its domains,
   // the rest is on us. CSP is deliberately omitted for now — the inline styles
   // and JSON-LD scripts would need nonces first.
+  // I vecchi indirizzi restano validi. Le pagine-disciplina sotto /work sono
+  // state fuse dentro le pagine servizio, e le tre pagine automazioni/agenti/
+  // cowork in una sola: chi ha un vecchio link, o un motore che ha indicizzato
+  // il vecchio URL, arriva dove il contenuto e' andato a stare.
+  async redirects() {
+    return [
+      { source: "/work/branding", destination: "/work/fascicoli", permanent: true },
+      { source: "/work/web-design", destination: "/servizi/siti-web", permanent: true },
+      { source: "/work/marketing", destination: "/servizi/visibilita", permanent: true },
+      { source: "/work/automazioni-ai", destination: "/servizi/automazioni-ai", permanent: true },
+      { source: "/servizi/automazioni", destination: "/servizi/automazioni-ai", permanent: true },
+      { source: "/servizi/agenti-ai", destination: "/servizi/automazioni-ai", permanent: true },
+      { source: "/servizi/claude-cowork", destination: "/servizi/automazioni-ai", permanent: true },
+    ];
+  },
+
   async headers() {
     return [
       {

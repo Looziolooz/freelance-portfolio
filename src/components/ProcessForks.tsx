@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 import { useLang } from "./LangProvider";
+import { DISCIPLINES } from "@/lib/disciplines";
 
 // /processo used to draw one journey for everybody: four phases, and the third
 // one quietly held "site, e-commerce, automations and AI" in a single bullet
@@ -26,12 +27,15 @@ import { useLang } from "./LangProvider";
 
 const FORK_H = 96;
 
-const PATHS = [
-  { key: "brand", work: "/work/branding", service: null },
-  { key: "site", work: "/work/web-design", service: "/servizi/siti-web" },
-  { key: "autom", work: "/work/automazioni-ai", service: "/servizi/automazioni" },
-  { key: "visib", work: "/work/marketing", service: null },
-] as const;
+// Le corsie SONO le discipline: nome e destinazione vengono dalla tassonomia,
+// cosi la biforcazione non puo piu chiamare "Visibilita" quello che il menu
+// chiama "Marketing". Qui restano solo i testi che appartengono al percorso:
+// i passi, i tempi e cosa sposta il preventivo.
+const PATHS = DISCIPLINES.map((d) => ({
+  key: d.id,
+  labelKey: d.key + ".label",
+  href: "/servizi/" + d.slug,
+}));
 
 const CSS = `
 .pfk { padding-top: clamp(48px, 6vw, 92px); }
@@ -220,7 +224,7 @@ export default function ProcessForks() {
           {PATHS.map((p, n) => (
             <div key={p.key} className="pfk__lane">
               <span className="pfk__n">{String(n + 1).padStart(2, "0")}</span>
-              <h3 className="pfk__name">{i(`${p.key}.name`)}</h3>
+              <h3 className="pfk__name">{t(p.labelKey)}</h3>
               <p className="pfk__tag">{i(`${p.key}.tag`)}</p>
 
               <ol className="pfk__steps">
@@ -241,14 +245,9 @@ export default function ProcessForks() {
               </dl>
 
               <div className="pfk__links">
-                <Link href={p.work} className="pfk__link">
-                  {i("lbl.work")} ↗
+                <Link href={p.href} className="pfk__link">
+                  {i("lbl.service")} ↗
                 </Link>
-                {p.service && (
-                  <Link href={p.service} className="pfk__link">
-                    {i("lbl.service")} ↗
-                  </Link>
-                )}
               </div>
             </div>
           ))}

@@ -1,3 +1,5 @@
+import { DISCIPLINES } from "./disciplines";
+
 // The four service pages, in one place because two footers link to them.
 //
 // Measured against a production build before this existed:
@@ -7,13 +9,8 @@
 // deprioritise it and it inherits no internal authority — and these four are
 // the commercial core of the site.
 //
-// Labels stay Italian because the pages are Italian-only on purpose: they are
-// the crawlable surface for "sito web ristorante" class queries. Only the group
-// heading above them is translated, so the framing follows the visitor while
-// the destinations are named as what they are.
-export const SERVICE_LINKS: { href: string; label: string }[] = [
-  { href: "/servizi/siti-web", label: "Siti web" },
-  { href: "/servizi/automazioni", label: "Automazioni" },
-  { href: "/servizi/agenti-ai", label: "Agenti AI" },
-  { href: "/servizi/claude-cowork", label: "Claude Cowork" },
-];
+// I nomi ora vengono dalla tassonomia e seguono la lingua del visitatore,
+// perche le pagine servizio non sono piu italiane a codice fisso.
+export const SERVICE_LINKS: { href: string; labelKey: string }[] = DISCIPLINES.map(
+  (d) => ({ href: "/servizi/" + d.slug, labelKey: d.key + ".label" }),
+);

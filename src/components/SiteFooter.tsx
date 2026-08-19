@@ -53,7 +53,7 @@ export default function SiteFooter() {
           <ul className="sfoot__list">
             {SERVICE_LINKS.map((s) => (
               <li key={s.href}>
-                <a href={s.href}>{s.label}</a>
+                <a href={s.href}>{t(s.labelKey)}</a>
               </li>
             ))}
           </ul>

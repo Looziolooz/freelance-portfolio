@@ -22,7 +22,7 @@ import { DISCIPLINES } from "@/lib/disciplines";
 // The words and the pages are the same list, so it is defined once in
 // lib/disciplines and read here, in the nav submenu and by the pages themselves.
 // Adding a discipline there makes it appear in all three.
-const ENTRIES = DISCIPLINES.map((d) => ({ labelKey: `${d.key}.label`, href: `/work/${d.slug}` }));
+const ENTRIES = DISCIPLINES.map((d) => ({ labelKey: `${d.key}.label`, href: `/servizi/${d.slug}` }));
 
 const CSS = `
 .skl {

@@ -5,9 +5,11 @@ import { useLang } from "./LangProvider";
 
 // Full homepage section list, in the order they appear on the page, localized.
 // Keep ids in sync with the section ids rendered in page.tsx / the components.
+// La voce "Servizi" puntava al bento, che non e piu sulla home: l offerta
+// vive nelle quattro pagine servizio. Un rail che porta a un ancora morta e
+// peggio di un rail piu corto.
 const SECTIONS = [
   { id: "top", it: "Intro", en: "Intro", sv: "Intro" },
-  { id: "servizi", it: "Servizi", en: "Services", sv: "Tjänster" },
   { id: "perche", it: "Perché", en: "Why me", sv: "Varför" },
   { id: "piani", it: "Collaborazioni", en: "Ways to work", sv: "Samarbeten" },
   { id: "faq", it: "FAQ", en: "FAQ", sv: "FAQ" },

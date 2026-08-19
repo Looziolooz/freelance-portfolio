@@ -55,13 +55,14 @@ export default function Nav() {
         <div
           className={`topbar__nav nav-links ${menuOpen ? "open" : ""}`}
         >
-          {/* "Lavori" carries the disciplines. The panel opens on hover and
+          {/* "Servizi" carries the four disciplines: the submenu now sits under
+              the word that sells, and "Lavori" is a plain link to the archive. The panel opens on hover and
               on focus-within, so it is reachable by keyboard without any state;
               below 768px the whole nav is already a stacked column and the panel
               simply sits inline under its parent (see globals.css). */}
           <div className={`nav-sub${subOpen ? " is-open" : ""}`}>
-            <a href="/work" onClick={closeAll}>
-              {t("nav.work")}
+            <a href={"/servizi/" + DISCIPLINES[0].slug} onClick={closeAll}>
+              {t("nav.services")}
             </a>
             {/* The caret is a button, not decoration: on a touch screen there is
                 no hover to open with, and "Lavori" itself has to stay a link to
@@ -71,7 +72,7 @@ export default function Nav() {
               className="nav-sub__caret"
               aria-expanded={subOpen}
               aria-controls="nav-sub-panel"
-              aria-label={t("nav.work")}
+              aria-label={t("nav.services")}
               onClick={() => setSubOpen((v) => !v)}
             >
               <span aria-hidden="true">▾</span>
@@ -82,7 +83,7 @@ export default function Nav() {
             <div className="nav-sub__panel" id="nav-sub-panel">
               <div className="nav-sub__inner">
                 {DISCIPLINES.map((d) => (
-                  <a key={d.id} href={`/work/${d.slug}`} onClick={closeAll}>
+                  <a key={d.id} href={`/servizi/${d.slug}`} onClick={closeAll}>
                     {t(`${d.key}.label`)}
                     <span className="nav-sub__arrow" aria-hidden="true">↗</span>
                   </a>
@@ -90,6 +91,7 @@ export default function Nav() {
               </div>
             </div>
           </div>
+          <a href="/work" onClick={closeAll}>{t("nav.work")}</a>
           <a href="/processo" onClick={closeAll}>{t("nav.process")}</a>
           <a href="/prezzi" onClick={closeAll}>{t("nav.pricing")}</a>
           <a href="/agents" onClick={closeAll}>{t("nav.agents")}</a>

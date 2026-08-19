@@ -442,16 +442,9 @@ button { font-family: inherit; cursor: pointer; }
    never share one screen. Excluded on purpose: the Hero (#top, scroll-pinned)
    and the Work gallery (#work, sticky horizontal scroll). Phones keep the
    natural padded flow — there a short section as 100vh would just feel empty. */
-@media (min-width: 900px) {
-  /* #about, #agents, #blog e #contact non esistono piu sulla home: la regola
-     restava a puntare quattro ancore morte. */
-  #servizi {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
+/* La regola 100vh viveva qui e puntava a #servizi, #about, #agents, #blog e
+   #contact. Sulla home non ne esiste piu nessuno: il bento se ne e andato con
+   la tassonomia unica e le altre quattro sezioni erano gia sparite prima. */
 
 .section-head {
   display: grid; grid-template-columns: auto 1fr auto;

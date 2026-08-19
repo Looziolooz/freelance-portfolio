@@ -220,7 +220,7 @@ export default function CinematicFooter() {
                 <span className="cine-svc__label">{t("footer.services")}</span>
                 <span className="cine-svc__links">
                   {SERVICE_LINKS.map((sv) => (
-                    <a key={sv.href} href={sv.href} className="cine-svc__link">{sv.label}</a>
+                    <a key={sv.href} href={sv.href} className="cine-svc__link">{t(sv.labelKey)}</a>
                   ))}
                 </span>
               </nav>

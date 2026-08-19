@@ -132,51 +132,12 @@ export default function PrezziPage() {
             figure: it is the two ends of each service — what the simplest
             version looks like, and what pushes it up — which is the part a
             reader can apply to their own case. */}
-        <section className="prz-sec" aria-label={t("prezzi.svc.title")}>
-          <h2 className="prz-sec__title">{t("prezzi.svc.title")}</h2>
-          <p className="prz-lead">{t("prezzi.svc.sub")}</p>
-          {/* Four spec rows per card. A bare figure used to invite the question
-              it could not answer ("why that number, and what makes it go up?"),
-              which is the question that would otherwise arrive by email before
-              anyone booked a call. `base` and `driver` are the low and high
-              anchors: between them a reader places themselves without a number. */}
-          <div className="prz-svcs">
-            {SERVICES.map(({ k, n, monthly, proof }) => (
-              <article key={k} className="prz-svc">
-                <span className="prz-svc__n">{n}</span>
-                <h3 className="prz-svc__name">{t(`prezzi.svc.${k}.title`)}</h3>
-                <p className="prz-svc__scope">{t(`prezzi.svc.${k}.scope`)}</p>
-
-                <dl className="prz-svc__spec">
-                  {(["inc", "time", "driver"] as const).map((row) => (
-                    <div key={row} className="prz-svc__row">
-                      <dt>{t(`prezzi.svc.l.${row}`)}</dt>
-                      <dd>{t(`prezzi.svc.${k}.${row}`)}</dd>
-                    </div>
-                  ))}
-                </dl>
-
-                {/* The slot that held the figure now holds the commitment shape.
-                    It is the other thing the two figures encoded — one-off
-                    project against a monthly subscription — and leaving the
-                    slot empty would have dropped the card's bottom rule and let
-                    the six cards ragged out at different heights. */}
-                <p className="prz-svc__price">
-                  <span className="prz-svc__from">{t("prezzi.svc.l.shape")}</span>
-                  <span className="prz-svc__per">
-                    {t(monthly ? "prezzi.svc.shape.monthly" : "prezzi.svc.shape.once")}
-                  </span>
-                </p>
-                {proof && (
-                  <a className="prz-svc__proof" href={proof}>
-                    {t("prezzi.svc.proof")} <span aria-hidden="true">→</span>
-                  </a>
-                )}
-              </article>
-            ))}
-          </div>
-          <p className="plans-costnote">{t("prezzi.svc.note")}</p>
-        </section>
+        {/* Le sei schede servizio stavano qui. Erano la quarta tassonomia
+            del sito e ripetevano l'offerta con parole leggermente diverse da
+            quelle del menu. "Cosa muove il preventivo" e' un'informazione per
+            disciplina, e ora vive nella pagina di quella disciplina, dove il
+            lettore la trova accanto ai lavori invece che in fondo a un elenco
+            di sei. */}
 
         {/* How it works */}
         <section className="prz-sec prz-sec--how" aria-label={t("home.plans.how.title")}>

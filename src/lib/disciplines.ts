@@ -1,92 +1,81 @@
 import { PROJECTS, type Project } from "./projects";
 import { getBrandKit } from "./brand-kits";
 
-// The disciplines the work is shown under, each its own page below /work.
+// LA tassonomia del sito. Una sola, quattro parole, usata ovunque.
 //
-// Static route segments win over the `[slug]` one in Next, so /work/branding
-// resolves here and not as a project called "branding"; all four names were
-// checked against the 26 project slugs and none collides.
+// Prima ce n'erano sei, tutte diverse: la lista sotto la hero (4), il bento
+// della home (6), le collaborazioni (3), le schede di /prezzi (6), la
+// biforcazione di /processo (4) e la directory del footer (4). Nessuna
+// coincideva con un'altra, "Marchio" compariva in quattro elenchi senza avere
+// una pagina che lo vendesse, e "Claude Cowork" esisteva in un elenco solo. Un
+// lettore che scorreva la home incontrava quattro discipline e poco più sotto
+// sei servizi che non erano quelle quattro.
 //
-// What each set actually holds:
+// Ora ogni superficie legge da qui. Aggiungere una disciplina la fa comparire
+// nel menu, nella lista sotto la hero, nella biforcazione del processo e nel
+// footer insieme.
 //
-//   branding        17 projects, every one with a brand kit and a browsable
-//                   fascicolo. The richest set on the site.
-//   web-design      16 built sites, each with a live demo.
-//   automazioni-ai   6 flows, the automation and agent demos.
-//   marketing        3, and they are the SAME three that appear under
-//                   automazioni-ai. Visibility, social and market data are sold
-//                   as marketing but built as automations, so the overlap is
-//                   real rather than a filtering mistake.
-//
-// There was a fifth, Development. It came out again: one project is not a body
-// of work, and a page that has to apologise for its own gallery argues against
-// the studio instead of for it. The build story lives on /processo.
-//
-// When more marketing work exists, it goes in MARKETING_SLUGS here and the page
-// fills out on its own.
+// Le pagine-disciplina sotto /work sono state fuse dentro le pagine servizio:
+// vendere e mostrare erano due metà della stessa pagina, e tenerle separate
+// costava al lettore un clic per arrivare alla prova. /work resta l'archivio
+// unico, /work/fascicoli l'archivio dei manuali di marca.
 
-export type DisciplineId =
-  | "branding"
-  | "web-design"
-  | "marketing"
-  | "automazioni-ai";
+export type DisciplineId = "marchio" | "siti-web" | "automazioni-ai" | "visibilita";
 
 export type Discipline = {
   id: DisciplineId;
-  /** URL segment under /work. */
+  /** Segmento sotto /servizi. È anche l'URL della pagina che vende. */
   slug: string;
-  /**
-   * i18n key prefix: disc.<id>.label / .title / .sub / .extra
-   *
-   * The visible name is `<key>.label` and NOT a literal here: an Italian visitor
-   * reads "Marchi" and "Sviluppo", a Swedish one "Varumärke" and "Utveckling".
-   * Only the slug stays fixed, so the URLs do not move between languages.
-   */
+  /** Prefisso i18n: disc.<id>.label / .title / .sub */
   key: string;
-  /** Which featured projects belong here. */
+  /**
+   * Quali progetti fanno da prova a questa disciplina. Il nome visibile non sta
+   * qui: un visitatore italiano legge "Marchio", uno svedese "Varumärke", e
+   * solo lo slug resta fermo così gli URL non cambiano con la lingua.
+   */
   select: (p: Project) => boolean;
   /**
-   * What the page shows. `gallery` is the card grid; `decks` stacks the brand
-   * manuals themselves, which is the whole point of the branding page — the
-   * fascicolo IS the work there, and a card that merely links to it was one
-   * click of nothing in between.
+   * Gli slug da mettere davanti nella griglia della pagina servizio, quando
+   * alcuni lavori parlano al pubblico di quella pagina meglio di altri.
    */
-  body: "gallery" | "decks";
+  lead?: string[];
 };
 
 const live = (p: Project) => Boolean(p.featured) && !p.hidden;
 
-/** Projects sold as marketing, built as automations. See the note above. */
-const MARKETING_SLUGS = ["audit-visibilita", "contenuti-social", "mappa-mercato"];
+/** Visibilità: si vende come marketing, si costruisce come automazione. */
+const VISIBILITA_SLUGS = ["audit-visibilita", "contenuti-social", "mappa-mercato"];
 
 export const DISCIPLINES: Discipline[] = [
   {
-    id: "branding",
-    slug: "branding",
-    key: "disc.branding",
+    id: "marchio",
+    slug: "marchio",
+    key: "disc.marchio",
+    // Ogni progetto con un fascicolo di marca. È il corpo di lavoro più ricco
+    // del sito ed era l'unica disciplina venduta ovunque senza una pagina.
     select: (p) => live(p) && Boolean(getBrandKit(p.slug)),
-    body: "decks",
   },
   {
-    id: "web-design",
-    slug: "web-design",
-    key: "disc.web-design",
+    id: "siti-web",
+    slug: "siti-web",
+    key: "disc.siti-web",
     select: (p) => live(p) && p.category === "website",
-    body: "gallery",
-  },
-  {
-    id: "marketing",
-    slug: "marketing",
-    key: "disc.marketing",
-    select: (p) => live(p) && MARKETING_SLUGS.includes(p.slug),
-    body: "gallery",
+    // Ristorazione e ospitalità davanti: è il pubblico che questa pagina cerca.
+    lead: ["nordbageriet", "sushi", "brado", "gelateria", "pizzeria-restaurant", "aliva"],
   },
   {
     id: "automazioni-ai",
     slug: "automazioni-ai",
     key: "disc.automazioni-ai",
+    // Un solo bacino: le automazioni e gli agenti pescavano già dagli stessi
+    // progetti, e due pagine separate erano costrette a citarsi a vicenda.
     select: (p) => live(p) && (p.category === "automazione" || p.category === "ai"),
-    body: "gallery",
+  },
+  {
+    id: "visibilita",
+    slug: "visibilita",
+    key: "disc.visibilita",
+    select: (p) => live(p) && VISIBILITA_SLUGS.includes(p.slug),
   },
 ];
 
@@ -94,6 +83,13 @@ export function getDiscipline(slug: string): Discipline | undefined {
   return DISCIPLINES.find((d) => d.slug === slug);
 }
 
+/** I progetti della disciplina, con i lead davanti se ne ha. */
 export function disciplineProjects(d: Discipline): Project[] {
-  return PROJECTS.filter(d.select);
+  const all = PROJECTS.filter(d.select);
+  if (!d.lead?.length) return all;
+  const rank = (p: Project) => {
+    const i = d.lead!.indexOf(p.slug);
+    return i === -1 ? d.lead!.length : i;
+  };
+  return [...all].sort((a, b) => rank(a) - rank(b));
 }
