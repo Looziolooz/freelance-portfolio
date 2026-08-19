@@ -6,37 +6,49 @@ import { useRef } from "react";
 import { useLang } from "./LangProvider";
 import { PROJECTS, type Project } from "@/lib/projects";
 import { DISCIPLINES } from "@/lib/disciplines";
+import { useRotation } from "@/lib/useRotation";
 
-// La sezione dei lavori sulla home, come griglia editoriale.
+// La sezione dei lavori sulla home.
 //
 // Prima era una galleria orizzontale che si trascinava mentre la pagina restava
 // bloccata, e raggruppava i progetti per il vecchio campo `category`
-// (website/saas/automazione/ai) che il sito ha ritirato quando e' passato a un
-// asse solo. Era l'ultimo posto che parlava ancora la vecchia lingua.
+// (website/saas/automazione/ai) che il sito ha ritirato passando a un asse solo.
 //
-// La forma viene dal mockup che il proprietario ha scelto: griglia asimmetrica,
-// due card larghe che spezzano il ritmo, colonne sfalsate in verticale, e
-// all'hover la card ruota di poco con l'ombra secca mentre l'immagine sotto
-// cresce. Del mockup si riusa esattamente questo, cioe' struttura, ritmo e
-// movimento. Non si riusa niente del suo contenuto: i marchi erano inventati
-// (Atelier Nord, Casa Lenta, Marea Botanica), gli anni pure, gli stack pure, e
-// le immagini stavano su un bucket di terzi. Qui ci sono i progetti veri, con le
-// loro copertine in /public e la disciplina a cui appartengono.
+// Poi e' diventata una griglia editoriale col titolo appoggiato sopra
+// l'immagine, come nel mockup. Guardata renderizzata, quella versione leggeva
+// dozzinale, e il motivo e' preciso: il mockup era disegnato per fotografie,
+// mentre queste copertine sono schermate di interfacce. Una targa scura
+// appoggiata su una schermata sembra un adesivo, i veli di colore impastavano
+// le copertine in poltiglie beige e verdine, e la rotazione all'hover e' un
+// gesto giocoso che dice il contrario di "studio".
 //
-// Niente anni: i progetti non hanno un campo anno e inventarne uno sarebbe una
-// data falsa su un portfolio. L'occhiello porta la disciplina, che e'
-// un'informazione vera e per giunta cliccabile.
+// Questa versione segue la regola dei portfolio seri: l'immagine si mostra
+// pulita e intera, il testo sta sotto in una didascalia. Nessun velo, nessuna
+// targa, nessun titolo che litiga con il testo dentro la schermata. Il ritmo
+// resta editoriale (card larghe e strette, colonne sfalsate) perche' li' il
+// mockup aveva ragione; cambia il modo di presentare il singolo lavoro.
+//
+// Il movimento e' quello che si concede uno studio: la card si alza di poco,
+// l'ombra secca compare, l'immagine cresce appena. Niente rotazioni.
+//
+// Niente anni: il dato non esiste sui progetti e inventarlo sarebbe una data
+// falsa su un portfolio. L'occhiello porta la disciplina, che e' vera.
 
-// Il ritmo del mockup, slot per slot. `wide` occupa entrambe le colonne.
-// `offset` sfalsa la colonna in verticale, che e' quello che impedisce alla
-// griglia di leggersi come una tabella.
+// Il ritmo: `wide` occupa entrambe le colonne, `offset` sfalsa la colonna.
+// I formati seguono le sorgenti, misurate: 14 copertine su 19 sono 1280x720,
+// cioe 16:9, e le restanti stanno fra 1,6 e 2,14. Incorniciare a 16/10 una
+// sorgente 16:9 con object-fit: cover significa tagliarle i lati, ed e
+// esattamente il difetto che si vedeva. Le tessere ora sono 16/9, quindi per la
+// maggioranza delle copertine il taglio e zero. Le card larghe restano
+// panoramiche a 2/1, dove il taglio e verticale e modesto: perdere un filo di
+// alto e basso di una schermata costa molto meno che perderne i bordi.
 const LAYOUT = [
-  { shape: "hero", tone: "forest", h: 480, offset: 0 },
-  { shape: "tile", tone: "paper", h: 370, offset: 8 },
-  { shape: "tile", tone: "ochre", h: 370, offset: 0 },
-  { shape: "band", tone: "paper", h: 330, offset: 0 },
-  { shape: "tile", tone: "paper", h: 330, offset: 0 },
-  { shape: "tile", tone: "forest", h: 330, offset: 14 },
+  { wide: true, ratio: "2 / 1", offset: 0 },
+  { wide: false, ratio: "16 / 9", offset: 8 },
+  { wide: false, ratio: "16 / 9", offset: 0 },
+  { wide: true, ratio: "2 / 1", offset: 0 },
+  { wide: false, ratio: "16 / 9", offset: 0 },
+  { wide: false, ratio: "16 / 9", offset: 14 },
 ] as const;
 
 /**
@@ -53,38 +65,57 @@ function disciplineOf(p: Project) {
   return undefined;
 }
 
+/** Tutti i lavori che hanno una copertina da mostrare. */
+const POOL = PROJECTS.filter((p) => p.featured && !p.hidden && (p.coverVideo || p.image));
+
+/** Al massimo due lavori della stessa disciplina fra i sei mostrati. */
+const PER_DISCIPLINE = 2;
+
 /**
- * Sei lavori: uno per disciplina, poi si riempie con quelli che hanno una
- * copertina. Le card grandi sono le prime due della lista, quindi in testa
- * vanno i progetti che hanno un video invece di una sola immagine.
+ * Sei lavori scelti dall ordine ricevuto, con un tetto per disciplina.
+ *
+ * Prima la regola era "uno per disciplina", e misurando dieci visite si e'
+ * visto che il primo posto non cambiava mai. Non era sfortuna: la disciplina
+ * "Marchio" ha un solo membro esclusivo, perche' ogni altro progetto con un
+ * fascicolo e' anche un sito e come sito viene classificato. Chiedere una quota
+ * per ogni disciplina significava chiedere sempre quel progetto.
+ *
+ * Il tetto ottiene la varieta' senza inchiodare nessun posto: nessuna
+ * estrazione mostra sei siti di fila, e nessun lavoro e' obbligato a esserci.
+ * Se il tetto non basta a riempire i sei posti, il secondo giro lo ignora:
+ * meglio due lavori in piu' della stessa disciplina che una griglia con i
+ * buchi.
+ *
+ * I filmati finiscono in testa perche' le prime due posizioni sono le card
+ * larghe, dove una copertina che si muove rende piu' di una ferma.
  */
-function pick(): Project[] {
-  const live = PROJECTS.filter((p) => p.featured && !p.hidden && (p.coverVideo || p.image));
+function pick(order: readonly Project[]): Project[] {
   const out: Project[] = [];
-  for (const d of DISCIPLINES) {
-    const found = live.find((p) => !out.includes(p) && disciplineOf(p)?.id === d.id);
-    if (found) out.push(found);
+  const seen = new Map<string, number>();
+
+  for (const p of order) {
+    if (out.length >= LAYOUT.length) break;
+    const id = disciplineOf(p)?.id ?? "altro";
+    const n = seen.get(id) ?? 0;
+    if (n >= PER_DISCIPLINE) continue;
+    seen.set(id, n + 1);
+    out.push(p);
   }
-  for (const p of live) {
+  for (const p of order) {
     if (out.length >= LAYOUT.length) break;
     if (!out.includes(p)) out.push(p);
   }
-  // I filmati davanti: le due card larghe sono quelle che si notano di piu'.
+
   return out
     .slice(0, LAYOUT.length)
     .sort((a, b) => Number(Boolean(b.coverVideo)) - Number(Boolean(a.coverVideo)));
 }
-
-const ITEMS = pick();
 
 const CSS = `
 .wke {
   position: relative;
   padding: clamp(52px, 8vw, 104px) 0;
   background: var(--canvas-page);
-  /* La carta punteggiata del mockup: costa un gradiente, non un'immagine. */
-  background-image: radial-gradient(color-mix(in srgb, var(--ink-border) 13%, transparent) 0.7px, transparent 0.7px);
-  background-size: 7px 7px;
 }
 
 .wke__head {
@@ -94,27 +125,15 @@ const CSS = `
   padding-bottom: clamp(24px, 3vw, 40px);
   margin-bottom: clamp(34px, 5vw, 64px);
 }
-@media (min-width: 1000px) {
-  .wke__head { grid-template-columns: 1fr 280px; align-items: end; }
-}
+@media (min-width: 1000px) { .wke__head { grid-template-columns: 1fr 300px; align-items: end; } }
 .wke__kicker {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: flex; align-items: center; gap: 12px;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--ink-muted);
   margin-bottom: 22px;
 }
-.wke__dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  border: 2px solid var(--ink-border);
-  background: var(--accent-green);
-  flex: 0 0 auto;
-}
+.wke__dot { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--ink-border); background: var(--accent-green); flex: 0 0 auto; }
 .wke__title {
   margin: 0;
   font-family: var(--font-display);
@@ -129,186 +148,122 @@ const CSS = `
 .wke__sub { margin: 0; font-size: 16px; line-height: 1.65; color: var(--ink-muted); }
 .wke__hint { margin: 18px 0 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); }
 
-.wke__grid { display: grid; grid-template-columns: 1fr; gap: clamp(18px, 2.4vw, 32px); }
+.wke__grid { display: grid; grid-template-columns: 1fr; gap: clamp(20px, 2.6vw, 36px); }
 @media (min-width: 900px) { .wke__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-/* Sotto i 900px il testo centrato della card larga non ha spazio per stare
-   comodo dentro un'altezza fissa: la si lascia crescere. */
-@media (max-width: 899px) {
-  .wke--band .wke__media { height: auto !important; min-height: 340px; }
-  .wke--band .wke__media img, .wke--band .wke__media video { position: absolute; inset: 0; height: 100%; }
-  .wke__over--centre {
-    position: absolute;
-    inset: auto 18px 18px auto;
-    left: 18px;
-    transform: none;
-    max-width: calc(100% - 36px);
-  }
-}
-
 .wke__card {
-  position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  background: var(--canvas-panel-yellow);
+  border: 2px solid color-mix(in srgb, var(--ink-border) 24%, transparent);
+  border-radius: 6px;
   overflow: hidden;
-  border: 3px solid var(--ink-border);
-  border-radius: 12px;
   text-decoration: none;
-  color: inherit;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease;
+  color: var(--ink-body);
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.28s ease;
 }
+/* Il movimento che si concede uno studio: si alza di poco e prende peso.
+   Nessuna rotazione: quella leggeva come un tema comprato. */
 .wke__card:hover, .wke__card:focus-visible {
-  transform: rotate(-1.15deg) scale(1.015);
-  box-shadow: 9px 10px 0 var(--ink-shadow);
+  transform: translateY(-5px);
+  border-color: var(--ink-border);
+  box-shadow: 7px 8px 0 var(--ink-shadow);
 }
-/* Le card pari ruotano dall'altra parte, cosi' la griglia non pende da un lato. */
-.wke__card:nth-child(even):hover, .wke__card:nth-child(even):focus-visible { transform: rotate(1.15deg) scale(1.015); }
-.wke__card:focus-visible { outline: 3px solid var(--accent-green-deep); outline-offset: 4px; }
-
+.wke__card:focus-visible { outline: 3px solid var(--accent-green-deep); outline-offset: 3px; }
 .wke--wide { grid-column: 1 / -1; }
 @media (min-width: 900px) {
-  .wke--off8 { margin-top: 32px; }
-  .wke--off14 { margin-top: 56px; }
+  .wke--off8 { margin-top: 34px; }
+  .wke--off14 { margin-top: 58px; }
 }
 
-.wke--forest { background: var(--accent-green-deep); color: var(--canvas-page); }
-.wke--paper { background: var(--canvas-panel-yellow); color: var(--ink-body); }
-/* Regola di marca: sui riempimenti ocra il testo resta scuro, mai bianco. */
-.wke--ochre { background: var(--accent-green); color: var(--ink-body); }
-
-.wke__media { position: relative; display: block; overflow: hidden; }
+/* L'immagine si mostra intera e nei suoi colori: nessun velo, nessuna targa. */
+.wke__media { position: relative; display: block; width: 100%; overflow: hidden; background: var(--canvas-slider-track); }
 .wke__media img, .wke__media video {
+  position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.wke__card:hover .wke__media img, .wke__card:hover .wke__media video {
-  transform: scale(1.08);
-  filter: saturate(1.12) contrast(1.04);
-}
-/* Il velo di colore che tiene insieme copertine molto diverse fra loro. */
-.wke__wash { position: absolute; inset: 0; transition: opacity 0.25s ease; }
-.wke--forest .wke__wash { background: var(--accent-green-deep); opacity: 0.52; }
-.wke--paper .wke__wash { background: var(--accent-green); opacity: 0.42; mix-blend-mode: multiply; }
-.wke--ochre .wke__wash { background: var(--ink-border); opacity: 0.34; }
-.wke__card:hover .wke__wash { opacity: 0.7; }
-
-/* Un velo appena accennato: serve solo a staccare la piastra dall'immagine,
-   non a garantire il contrasto. Di quello si occupa la piastra stessa. */
+.wke__card:hover .wke__media img, .wke__card:hover .wke__media video { transform: scale(1.035); }
+/* Una linea sola sotto l'immagine: separa la copertina dalla didascalia senza
+   incorniciare due volte. */
 .wke__media::after {
   content: "";
   position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--ink-border) 34%, transparent) 0%,
-    transparent 58%
-  );
+  inset: auto 0 0 0;
+  height: 2px;
+  background: color-mix(in srgb, var(--ink-border) 24%, transparent);
 }
 
-/* La piastra: il testo si porta dietro il suo fondo, quindi resta leggibile
-   sopra qualunque copertina, fotografia o schermata che sia. */
-.wke__over {
-  position: absolute;
-  inset: auto 18px 18px;
-  z-index: 2;
-  max-width: min(560px, calc(100% - 36px));
-  padding: 16px 20px 18px;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--ink-border) 90%, transparent);
-  backdrop-filter: blur(2px);
-}
-.wke--hero .wke__over { max-width: min(620px, calc(100% - 60px)); inset: auto 28px 26px; }
-/* Sulla card centrale la piastra sta a sinistra e lascia respirare l'immagine. */
-.wke__over--centre {
-  inset: auto auto 50% auto;
-  left: clamp(18px, 3vw, 44px);
-  transform: translateY(50%);
-  max-width: min(620px, calc(100% - clamp(36px, 6vw, 88px)));
+.wke__body { display: flex; flex-direction: column; gap: 10px; padding: clamp(18px, 2vw, 26px) clamp(18px, 2vw, 26px) clamp(20px, 2.2vw, 28px); }
+@media (min-width: 900px) {
+  /* Sulle card larghe la didascalia si apre su due colonne: il nome a sinistra,
+     la descrizione a destra. E' il modo in cui una monografia presenta un
+     progetto, e riempie una larghezza che altrimenti resterebbe vuota. */
+  .wke--wide .wke__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+  }
+  .wke--wide .wke__head2 { grid-row: 1; grid-column: 1; }
+  .wke--wide .wke__desc { grid-column: 2; grid-row: 1; margin: 0; align-self: end; }
+  .wke--wide .wke__meta { grid-column: 1 / -1; }
 }
 
 .wke__eyebrow {
-  display: block;
+  display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent-green);
-  margin-bottom: 10px;
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--accent-green-deep);
 }
-/* Sulla piastra il fondo e' scuro qualunque sia il tono della card, quindi
-   l'occhiello resta ocra e il titolo chiaro senza eccezioni per tono. */
-.wke__over .wke__eyebrow { color: var(--accent-green); }
+/* Il colore del progetto, ridotto a un segno: identita' senza tingere la foto. */
+.wke__swatch { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ink-border); flex: 0 0 auto; }
 
 .wke__name {
-  margin: 0;
+  margin: 6px 0 0;
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
-  /* Misurato sulle card strette: a 5vw un nome come "Contenuti social da un
-     progetto" andava a due righe strettissime. Il titolo si adatta alla
-     larghezza della card, non a quella della finestra. */
-  font-size: clamp(25px, 2.9vw, 40px);
-  color: var(--canvas-page);
+  font-size: clamp(23px, 2.1vw, 31px);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+  color: var(--fg);
   text-wrap: balance;
-  /* Due righe al massimo: oltre, il nome smette di essere un'insegna. */
-  display: -webkit-box;
+}
+.wke--wide .wke__name { font-size: clamp(28px, 3vw, 44px); }
+
+.wke__desc {
+  margin: 4px 0 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-muted);
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
-.wke--hero .wke__name, .wke--band .wke__name { font-size: clamp(32px, 4.2vw, 58px); }
-.wke__blurb {
-  margin: 14px 0 0;
-  max-width: 46ch;
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--canvas-panel-yellow);
-  /* Tre righe e basta: sopra una fotografia un paragrafo non si legge, e una
-     card e' un invito ad aprire, non il posto dove raccontare tutto. */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}
+.wke--wide .wke__desc { -webkit-line-clamp: 3; }
 
-.wke__body { padding: 20px 22px; }
-.wke__body .wke__eyebrow { color: var(--ink-muted); }
-.wke--forest .wke__body .wke__eyebrow { color: var(--accent-green); }
-.wke__body p {
-  margin: 10px 0 0;
-  font-size: 14px;
-  line-height: 1.6;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}
-.wke--paper .wke__body p, .wke--ochre .wke__body p { color: color-mix(in srgb, var(--ink-body) 78%, transparent); }
-.wke--forest .wke__body p { color: var(--canvas-panel-yellow); }
-
-.wke__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.wke__tag {
-  border: 2px solid var(--ink-border);
-  border-radius: 999px;
-  padding: 4px 12px;
+.wke__meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--ink-border) 18%, transparent);
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.04em;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
-.wke--forest .wke__tag { border: 1px solid var(--canvas-page); }
-.wke__strip {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  border-top: 2px solid var(--canvas-page);
-  padding: 14px 24px;
-}
+.wke__open { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; color: var(--accent-green-deep); font-weight: 700; }
+.wke__card:hover .wke__open { color: var(--ink-body); }
 
 .wke__foot {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  display: flex; flex-direction: column; gap: 18px;
   border-top: 2px solid var(--ink-border);
   margin-top: clamp(38px, 5vw, 72px);
   padding-top: clamp(20px, 2.6vw, 34px);
@@ -324,10 +279,9 @@ const CSS = `
 .wke__all:hover, .wke__all:focus-visible { color: var(--accent-green-deep); }
 
 @media (prefers-reduced-motion: reduce) {
-  .wke__card, .wke__media img, .wke__media video, .wke__wash { transition: none; }
-  .wke__card:hover, .wke__card:focus-visible,
-  .wke__card:nth-child(even):hover, .wke__card:nth-child(even):focus-visible { transform: none; }
-  .wke__card:hover .wke__media img, .wke__card:hover .wke__media video { transform: none; filter: none; }
+  .wke__card, .wke__media img, .wke__media video { transition: none; }
+  .wke__card:hover, .wke__card:focus-visible { transform: none; }
+  .wke__card:hover .wke__media img, .wke__card:hover .wke__media video { transform: none; }
 }
 `;
 
@@ -336,9 +290,22 @@ function Card({ p, slot, index }: { p: Project; slot: (typeof LAYOUT)[number]; i
   const vref = useRef<HTMLVideoElement>(null);
   const d = disciplineOf(p);
   const name = t(`work.proj.${p.key}`);
-  const blurb = t(`work.proj.${p.key}.blurb`);
-  const rawTags = t(`work.proj.${p.key}.tags`);
-  const tags = rawTags === `work.proj.${p.key}.tags` ? [] : rawTags.split(/[·,|]/).map((x) => x.trim()).filter(Boolean).slice(0, 3);
+  const blurbKey = `work.proj.${p.key}.blurb`;
+  const blurb = t(blurbKey);
+  const tagKey = `work.proj.${p.key}.tags`;
+  const rawTags = t(tagKey);
+  const tags =
+    rawTags === tagKey
+      ? []
+      : rawTags.split(/[·,|]/).map((x) => x.trim()).filter(Boolean).slice(0, 3);
+
+  // Dove tagliare la copertina. Le schermate di siti si leggono dall alto,
+  // dove c e la testata; i diagrammi delle automazioni sono centrati nella loro
+  // tela con i margini attorno, e tagliati dall alto lasciavano una fascia vuota
+  // dentro la card. Il progetto puo sempre imporre la sua posizione.
+  const focus =
+    p.imagePosition ??
+    (p.category === "automazione" || p.category === "ai" ? "center" : "center top");
 
   const play = () => {
     const v = vref.current;
@@ -349,25 +316,20 @@ function Card({ p, slot, index }: { p: Project; slot: (typeof LAYOUT)[number]; i
   };
   const pause = () => vref.current?.pause();
 
-  const eyebrow = d ? t(`${d.key}.label`) : "";
-  const over = slot.shape === "band";
-
   return (
     <Link
       href={`/work/${p.slug}`}
       prefetch={false}
       className={[
         "wke__card",
-        `wke--${slot.tone}`,
-        `wke--${slot.shape}`,
-        slot.shape === "hero" || slot.shape === "band" ? "wke--wide" : "",
+        slot.wide ? "wke--wide" : "",
         slot.offset === 8 ? "wke--off8" : slot.offset === 14 ? "wke--off14" : "",
       ].filter(Boolean).join(" ")}
       aria-label={`${name} — ${t("work.viewDemo")}`}
       onMouseEnter={play}
       onMouseLeave={pause}
     >
-      <span className="wke__media" style={{ height: slot.h }}>
+      <span className="wke__media" style={{ aspectRatio: slot.ratio }}>
         {p.coverVideo ? (
           <video
             ref={vref}
@@ -378,55 +340,53 @@ function Card({ p, slot, index }: { p: Project; slot: (typeof LAYOUT)[number]; i
             playsInline
             preload="none"
             aria-hidden="true"
-            style={{ objectPosition: p.imagePosition ?? "center" }}
+            style={{ objectPosition: focus }}
           />
         ) : (
           <Image
             src={p.image as string}
             alt={name}
             fill
-            sizes={slot.shape === "tile" ? "(max-width: 900px) 100vw, 50vw" : "100vw"}
+            sizes={slot.wide ? "100vw" : "(max-width: 900px) 100vw, 50vw"}
             loading={index === 0 ? "eager" : "lazy"}
-            style={{ objectFit: "cover", objectPosition: p.imagePosition ?? "center" }}
+            style={{ objectFit: "cover", objectPosition: focus }}
           />
         )}
-        <span className="wke__wash" aria-hidden="true" />
-        <span className={`wke__over${over ? " wke__over--centre" : ""}`}>
-          {eyebrow && <span className="wke__eyebrow">{eyebrow}</span>}
-          <h3 className="wke__name">{name}</h3>
-          {(slot.shape === "hero" || over) && blurb !== `work.proj.${p.key}.blurb` && (
-            <p className="wke__blurb">{blurb}</p>
-          )}
-        </span>
       </span>
 
-      {slot.shape === "hero" ? (
-        tags.length > 0 && (
-          <span className="wke__strip">
-            {tags.map((tg) => (
-              <span key={tg} className="wke__tag">{tg}</span>
-            ))}
-          </span>
-        )
-      ) : (
-        <span className="wke__body">
-          {slot.shape === "tile" && blurb !== `work.proj.${p.key}.blurb` && <p>{blurb}</p>}
-          {tags.length > 0 && (
-            <span className="wke__tags">
-              {tags.map((tg) => (
-                <span key={tg} className="wke__tag">{tg}</span>
-              ))}
+      <span className="wke__body">
+        <span className="wke__head2">
+          {d && (
+            <span className="wke__eyebrow">
+              <span
+                className="wke__swatch"
+                style={{ background: p.swatch ?? "var(--accent-green-deep)" }}
+                aria-hidden="true"
+              />
+              {t(`${d.key}.label`)}
             </span>
           )}
+          <span className="wke__name" style={{ display: "block" }}>{name}</span>
         </span>
-      )}
+        {blurb !== blurbKey && (
+          <span className="wke__desc" style={{ display: "-webkit-box" }}>{blurb}</span>
+        )}
+        <span className="wke__meta">
+          {tags.join(" · ")}
+          <span className="wke__open">
+            {t("work.viewDemo")} <span aria-hidden="true">↗</span>
+          </span>
+        </span>
+      </span>
     </Link>
   );
 }
 
 export default function WorkEditorial() {
   const { t } = useLang();
-  const range = `01—${String(ITEMS.length).padStart(2, "0")}`;
+  // Ordine autoriale sul server, estrazione nuova a ogni visita sul client.
+  const items = pick(useRotation(POOL));
+  const range = `01—${String(items.length).padStart(2, "0")}`;
 
   return (
     <section className="wke" aria-label={t("workmq.eyebrow")}>
@@ -447,7 +407,7 @@ export default function WorkEditorial() {
         </header>
 
         <div className="wke__grid">
-          {ITEMS.map((p, i) => (
+          {items.map((p, i) => (
             <Card key={p.id} p={p} slot={LAYOUT[i]} index={i} />
           ))}
         </div>
