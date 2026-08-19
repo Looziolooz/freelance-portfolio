@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useRef } from "react";
 import { useInView } from "framer-motion";
 import { useLang } from "./LangProvider";
+import { DISCIPLINES } from "@/lib/disciplines";
 
-// The capability list under the hero: five words, each one a door.
+// The capability list under the hero: one word per discipline, each a door.
 //
 // Scroll highlight: whichever entry is crossing the middle of the viewport is
 // the lit one. That is `useInView` with a margin that collapses the root to a
@@ -14,25 +15,14 @@ import { useLang } from "./LangProvider";
 // else. Steadier and cheaper than measuring distances in a scroll handler.
 //
 // The lit/unlit change is a CSS transition rather than Motion's `animate()`:
-// colour and opacity on five nodes is exactly what the compositor is for, and
+// colour and opacity on a handful of nodes is exactly what the compositor is for, and
 // keeping it declarative lets the hover, focus and reduced-motion states compose
 // with it for free instead of fighting an imperative tween.
 //
-// Destinations, and the soft spots, stated plainly. `Branding` points at /work
-// because the brand manuals living there ARE the branding proof, and
-// `Development` points at /processo because that is where the build is
-// described. Neither has a service page of its own. `Marketing` has none either
-// and lands on /prezzi, which describes visibility and content. Repoint them
-// here, in one place, when pages exist. /servizi/agenti-ai and
-// /servizi/claude-cowork are deliberately absent: five entries, and these are
-// the five words that were asked for.
-const ENTRIES = [
-  { label: "Branding", href: "/work" },
-  { label: "Web design", href: "/servizi/siti-web" },
-  { label: "Marketing", href: "/prezzi" },
-  { label: "Development", href: "/processo" },
-  { label: "Automazioni AI", href: "/servizi/automazioni" },
-] as const;
+// The words and the pages are the same list, so it is defined once in
+// lib/disciplines and read here, in the nav submenu and by the pages themselves.
+// Adding a discipline there makes it appear in all three.
+const ENTRIES = DISCIPLINES.map((d) => ({ labelKey: `${d.key}.label`, href: `/work/${d.slug}` }));
 
 const CSS = `
 .skl {
@@ -73,8 +63,8 @@ const CSS = `
   text-decoration: none;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(34px, 8.5vw, 104px);
-  line-height: 1.02;
+  font-size: clamp(34px, 8.8vw, 112px);
+  line-height: 1.01;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--skl-dim);
@@ -106,7 +96,8 @@ const CSS = `
 }
 `;
 
-function Entry({ label, href }: { label: string; href: string }) {
+function Entry({ labelKey, href }: { labelKey: string; href: string }) {
+  const { t } = useLang();
   const ref = useRef<HTMLLIElement>(null);
   // A zero-height root band across the viewport's middle: "in view" here means
   // "this element is on the centre line".
@@ -114,7 +105,7 @@ function Entry({ label, href }: { label: string; href: string }) {
   return (
     <li ref={ref} className={`skl__item${onCentre ? " is-on" : ""}`}>
       <Link href={href} className="skl__link">
-        {label}
+        {t(labelKey)}
         <span className="skl__arrow" aria-hidden="true">&#8599;</span>
       </Link>
     </li>
@@ -130,7 +121,7 @@ export default function SkillsList() {
         <span className="skl__label" aria-hidden="true">{t("skills.label")}</span>
         <ul className="skl__list">
           {ENTRIES.map((e) => (
-            <Entry key={e.href} label={e.label} href={e.href} />
+            <Entry key={e.href} labelKey={e.labelKey} href={e.href} />
           ))}
         </ul>
       </div>

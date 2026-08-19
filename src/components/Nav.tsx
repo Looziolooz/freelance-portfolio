@@ -6,19 +6,23 @@ import { useLang } from "./LangProvider";
 import Wordmark from "./Wordmark";
 import { useAuth } from "./auth/AuthProvider";
 import { isPreLaunch } from "@/lib/launch";
+import { DISCIPLINES } from "@/lib/disciplines";
 import type { Lang } from "@/i18n";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [subOpen, setSubOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { lang, setLang, t } = useLang();
   const { user } = useAuth();
   const pathname = usePathname();
 
-  // On the homepage (full-bleed hero) the menu stays hidden until the first
-  // scroll; on other pages it stays visible so navigation is always reachable.
-  const hideTop = pathname === "/" && !scrolled;
+  // The bar stays on screen everywhere, homepage included. It used to hide over
+  // the full-bleed hero until the first scroll, which looked good and left a
+  // visitor who had gone three pages deep with no way back except the browser
+  // button. Being able to leave a page is worth more than an uninterrupted hero.
+  const hideTop = false;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -35,6 +39,10 @@ export default function Nav() {
 
   const BORDER = "3px solid var(--ink-border)";
 
+  // Any navigation folds both the drawer and the submenu, so returning to a page
+  // never finds the menu half-open from last time.
+  const closeAll = () => { setMenuOpen(false); setSubOpen(false); };
+
   return (
     <div className={`topbar${scrolled ? " is-scrolled" : ""}${hideTop ? " is-hidden" : ""}${pathname === "/agents" ? " topbar--onyellow" : ""}`}>
       <div className="topbar__inner">
@@ -47,10 +55,44 @@ export default function Nav() {
         <div
           className={`topbar__nav nav-links ${menuOpen ? "open" : ""}`}
         >
-          <a href="/work" onClick={() => setMenuOpen(false)}>{t("nav.work")}</a>
-          <a href="/processo" onClick={() => setMenuOpen(false)}>{t("nav.process")}</a>
-          <a href="/prezzi" onClick={() => setMenuOpen(false)}>{t("nav.pricing")}</a>
-          <a href="/agents" onClick={() => setMenuOpen(false)}>{t("nav.agents")}</a>
+          {/* "Lavori" carries the disciplines. The panel opens on hover and
+              on focus-within, so it is reachable by keyboard without any state;
+              below 768px the whole nav is already a stacked column and the panel
+              simply sits inline under its parent (see globals.css). */}
+          <div className={`nav-sub${subOpen ? " is-open" : ""}`}>
+            <a href="/work" onClick={closeAll}>
+              {t("nav.work")}
+            </a>
+            {/* The caret is a button, not decoration: on a touch screen there is
+                no hover to open with, and "Lavori" itself has to stay a link to
+                the page. So the word navigates and the caret unfolds. */}
+            <button
+              type="button"
+              className="nav-sub__caret"
+              aria-expanded={subOpen}
+              aria-controls="nav-sub-panel"
+              aria-label={t("nav.work")}
+              onClick={() => setSubOpen((v) => !v)}
+            >
+              <span aria-hidden="true">▾</span>
+            </button>
+            {/* The inner wrapper exists for the mobile fold: collapsing a grid
+                row from 0fr to 1fr animates on the compositor, and that trick
+                needs exactly one child to clip. */}
+            <div className="nav-sub__panel" id="nav-sub-panel">
+              <div className="nav-sub__inner">
+                {DISCIPLINES.map((d) => (
+                  <a key={d.id} href={`/work/${d.slug}`} onClick={closeAll}>
+                    {t(`${d.key}.label`)}
+                    <span className="nav-sub__arrow" aria-hidden="true">↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <a href="/processo" onClick={closeAll}>{t("nav.process")}</a>
+          <a href="/prezzi" onClick={closeAll}>{t("nav.pricing")}</a>
+          <a href="/agents" onClick={closeAll}>{t("nav.agents")}</a>
           {/* Persistent conversion CTA — the free audit is the funnel's entry
               point, so it stays reachable from every page. */}
           <a
@@ -63,7 +105,7 @@ export default function Nav() {
               fontSize: 13,
               whiteSpace: "nowrap",
             }}
-            onClick={() => setMenuOpen(false)}
+            onClick={closeAll}
           >
             {t("nav.cta")} <span className="btn-arrow" aria-hidden="true">→</span>
           </a>
@@ -71,9 +113,9 @@ export default function Nav() {
               (flip LAUNCH_MODE in lib/launch.ts to reveal them). */}
           {!isPreLaunch && (
             <>
-              <a href="/blog" onClick={() => setMenuOpen(false)}>{t("nav.blog")}</a>
-              <a href="/componenti" onClick={() => setMenuOpen(false)}>{t("nav.components")}</a>
-              <a href="/membership" onClick={() => setMenuOpen(false)}>{t("nav.membership")}</a>
+              <a href="/blog" onClick={closeAll}>{t("nav.blog")}</a>
+              <a href="/componenti" onClick={closeAll}>{t("nav.components")}</a>
+              <a href="/membership" onClick={closeAll}>{t("nav.membership")}</a>
               <a
                 href={user ? "/account" : "/login"}
                 className="neo-btn neo-btn-sm"
@@ -83,7 +125,7 @@ export default function Nav() {
                   padding: "6px 16px",
                   fontSize: 13,
                 }}
-                onClick={() => setMenuOpen(false)}
+                onClick={closeAll}
               >
                 {user ? t("nav.account") : t("nav.login")}
               </a>
@@ -169,7 +211,7 @@ export default function Nav() {
 
         <button
           className="nav-hamburger"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={() => { setMenuOpen(!menuOpen); setSubOpen(false); }}
           style={{
             background: "var(--accent-peach)",
             border: BORDER,

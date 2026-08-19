@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLang } from "./LangProvider";
 import { PROJECTS, CATEGORIES, type Project, type ProjectCategory } from "@/lib/projects";
+import { getBrandKit } from "@/lib/brand-kits";
 
 // Projects as a card grid. Cover clips are hover-driven on desktop (play under
 // the cursor, pause on leave, one run total — then they hold the last frame);
@@ -32,7 +33,21 @@ function inkFor(hex: string | undefined): string {
   return L > 0.6 ? "#16151a" : "#fff";
 }
 
-export default function ProjectGallery() {
+// The discipline pages under /work reuse this grid with their own slice of the
+// pool and no filter row: on a page that already IS a filter, a second set of
+// tabs would just contradict the page it sits on. `lead` says what the second
+// line under each card points at, so a branding card can offer its manual.
+export type GalleryLead = "manual" | "demo" | "flow";
+
+export default function ProjectGallery({
+  items: itemsProp,
+  showFilters = true,
+  lead = "demo",
+}: {
+  items?: Project[];
+  showFilters?: boolean;
+  lead?: GalleryLead;
+} = {}) {
   const { t } = useLang();
   // NOT rotated, unlike the marquee and the showcase. useRotation answers with
   // the authored order on the server and a shuffle after hydration, which is the
@@ -43,7 +58,7 @@ export default function ProjectGallery() {
   // FEW of many (the marquee takes 8, the showcase 3) and where the rotation is
   // what stops the rest of the work from never being seen. This grid shows
   // every featured project, so there is nothing for a rotation to rescue.
-  const items = POOL;
+  const items = itemsProp ?? POOL;
   const [cat, setCat] = useState<ProjectCategory | "all">("all");
 
   const visible = cat === "all" ? items : items.filter((p) => p.category === cat);
@@ -58,6 +73,7 @@ export default function ProjectGallery() {
   return (
     <section id="work" className="pg" aria-label={t("work.title")}>
       <div className="container">
+        {showFilters && (
         <div className="pg-filters" role="group" aria-label={t("work.filter.label")}>
           {filters.map((f) => {
             const active = f === cat;
@@ -75,10 +91,11 @@ export default function ProjectGallery() {
             );
           })}
         </div>
+        )}
         {visible.length > 0 ? (
           <ul className="pg-grid">
             {visible.map((p) => (
-              <ProjectCard key={p.id} p={p} />
+              <ProjectCard key={p.id} p={p} lead={lead} />
             ))}
           </ul>
         ) : (
@@ -89,7 +106,7 @@ export default function ProjectGallery() {
   );
 }
 
-function ProjectCard({ p }: { p: Project }) {
+function ProjectCard({ p, lead = "demo" }: { p: Project; lead?: GalleryLead }) {
   const { t } = useLang();
   const vref = useRef<HTMLVideoElement>(null);
   const title = t(`work.proj.${p.key}`);
@@ -211,6 +228,15 @@ function ProjectCard({ p }: { p: Project }) {
             in tech stacks, and crawlers learned nothing about the projects). */}
         {blurb !== `work.proj.${p.key}.blurb` && <span className="pg-blurb">{blurb}</span>}
       </Link>
+      {/* Sibling, never nested: the whole card is already one anchor, and an
+          anchor inside an anchor is invalid and unreachable by keyboard. On the
+          branding page the second line opens the printed manual instead of the
+          demo, which is the thing that page is actually about. */}
+      {lead === "manual" && getBrandKit(p.slug) && (
+        <Link href={`/work/${p.slug}/brand-sheet`} prefetch={false} className="pg-second">
+          {t("disc.manual")} <span aria-hidden="true">↗</span>
+        </Link>
+      )}
     </li>
   );
 }

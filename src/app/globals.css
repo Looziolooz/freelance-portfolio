@@ -1027,10 +1027,125 @@ select:focus-visible,
   border-radius: var(--radius-sm);
 }
 
+/* ─── Nav submenu: the disciplines under "Lavori" ─── */
+
+.nav-sub { position: relative; display: inline-flex; align-items: center; gap: 4px; }
+.nav-sub__caret {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  padding: 4px;
+  margin: 0;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--ink-body);
+  opacity: 0.55;
+  cursor: pointer;
+  transition: transform var(--dur-base) var(--ease), opacity var(--dur-base) var(--ease);
+}
+.nav-sub__caret:hover, .nav-sub__caret:focus-visible { opacity: 1; }
+.nav-sub.is-open .nav-sub__caret { transform: rotate(180deg); opacity: 1; }
+
+.nav-sub__panel {
+  position: absolute;
+  top: 100%;
+  left: -14px;
+  min-width: 216px;
+  background: var(--canvas-page);
+  border: 3px solid var(--ink-border);
+  padding: 8px 0;
+  margin-top: 10px;
+  /* Hidden but still laid out, so the panel never resizes on open and the
+     transition has something to animate from. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity var(--dur-base) var(--ease), transform var(--dur-base) var(--ease), visibility 0s linear var(--dur-base);
+  z-index: 60;
+}
+.nav-sub:hover .nav-sub__panel,
+.nav-sub:focus-within .nav-sub__panel,
+.nav-sub.is-open .nav-sub__panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition-delay: 0s;
+}
+
+.nav-sub__inner { display: flex; flex-direction: column; }
+
+.topbar__nav .nav-sub__panel a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 9px 18px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+.topbar__nav .nav-sub__panel a::after { content: none; } /* the shared underline sweep would run past the padding */
+.topbar__nav .nav-sub__panel a:hover,
+.topbar__nav .nav-sub__panel a:focus-visible {
+  background: var(--accent-green-deep);
+  color: var(--canvas-page);
+}
+.nav-sub__arrow { font-size: 11px; opacity: 0.5; }
+.topbar__nav .nav-sub__panel a:hover .nav-sub__arrow { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-sub__panel { transition: none; }
+}
+
 /* ─── Responsive nav ─── */
 
 @media (max-width: 767px) {
   .nav-links { display: none !important; }
+  /* The drawer is already a column, so the panel unfolds inline under its
+     parent instead of floating over it. There is no hover on a touch screen:
+     here it is closed until the caret is tapped, and it collapses by height so
+     the rest of the menu slides rather than jumps. */
+  .nav-links.open .nav-sub {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    row-gap: 0;
+  }
+  .nav-links.open .nav-sub__caret { font-size: 13px; padding: 6px 10px; }
+  .nav-links.open .nav-sub__panel {
+    grid-column: 1 / -1;
+    position: static;
+    opacity: 0;
+    /* Hidden, not merely flat: a zero-height panel that is still `visible`
+       keeps its five links in the tab order and in the accessibility tree. */
+    visibility: hidden;
+    transform: none;
+    border: 0;
+    /* A hairline guide, not a panel edge: the 3px ink border is the site's
+       frame for surfaces, and using it here read as a tacked-on accent bar. */
+    border-left: 1px solid color-mix(in srgb, var(--ink-border) 40%, transparent);
+    margin: 0 0 0 4px;
+    padding: 0 0 0 14px;
+    min-width: 0;
+    background: transparent;
+    /* 0fr → 1fr folds the row without animating any box's own height, so the
+       drawer below it is not relaid out on every frame. */
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.34s var(--ease), opacity 0.24s var(--ease), visibility 0s linear 0.34s;
+  }
+  .nav-links.open .nav-sub__inner { overflow: hidden; min-height: 0; }
+  .nav-links.open .nav-sub.is-open .nav-sub__panel {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .nav-links.open .nav-sub__panel a { padding: 7px 0; justify-content: flex-start; gap: 8px; }
+  .nav-links.open .nav-sub__inner > a:first-child { padding-top: 12px; }
+  .nav-links.open .nav-sub__panel a:hover,
+  .nav-links.open .nav-sub__panel a:focus-visible { background: none; color: var(--accent-green-deep); }
   .nav-links.open { display: flex !important; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--canvas-page); padding: 16px 40px 24px; border-bottom: 3px solid var(--ink-border); gap: 16px; }
   .nav-locale-extras { display: none !important; }
 }
