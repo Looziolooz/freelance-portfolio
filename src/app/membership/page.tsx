@@ -240,7 +240,7 @@ export default function MembershipPage() {
                         ? "var(--canvas-panel-yellow)"
                         : "var(--canvas-panel-grey)",
                       boxShadow: tier.featured
-                        ? "8px 8px 0 var(--ink-shadow), 0 28px 56px -26px rgba(14,138,87,0.45)"
+                        ? "8px 8px 0 var(--ink-shadow), 0 28px 56px -26px color-mix(in srgb, var(--accent-green-deep) 45%, transparent)"
                         : "var(--shadow-card)",
                     }}
                   >

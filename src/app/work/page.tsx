@@ -2,7 +2,6 @@
 
 import Nav from "@/components/Nav";
 import ProjectGallery from "@/components/ProjectGallery";
-import ProjectShowcase from "@/components/ProjectShowcase";
 import ScrollProgress from "@/components/ScrollProgress";
 import ContactClose from "@/components/ContactClose";
 import { useLang } from "@/components/LangProvider";
@@ -31,12 +30,12 @@ export default function WorkPage() {
           <p className="ct-sub">{t("work.meta")}</p>
         </div>
       </header>
+      {/* Just the grid. It used to be followed by ProjectShowcase, which
+          re-ran three of the same 23 projects at full size a few hundred pixels
+          below the cards the reader had only just scrolled past. The component
+          still exists for surfaces that show a few of many; this page shows all
+          of them, so there was nothing left for it to reveal. */}
       <ProjectGallery />
-      {/* After the grid: the three headline demos at full size, each one
-          clickable straight into its live viewer. */}
-      <div className="container">
-        <ProjectShowcase />
-      </div>
       <ContactClose />
       <SiteFooter />
     </>

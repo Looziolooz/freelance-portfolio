@@ -49,7 +49,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "heroMotion.h1": "Siti, automazioni AI che fanno crescere la tua impresa.",
     "heroMotion.statement": "Ciao, sono Lorenzo, in arte Looz. Progetto e costruisco prodotti digitali su misura per chi porta avanti la propria impresa da solo o in un piccolo team.",
     "heroMotion.lede": "Più visibilità, meno lavoro manuale, e un sito che lavora per te.",
-    "heroMotion.proof": "3+ anni|13 demo|3 lingue|Il codice è tuo",
+    "heroMotion.proof": "3+ anni|17 demo|3 lingue|Il codice è tuo",
     "heroMotion.talk": "Scopri",
     "bento.kicker": "Shift",
     "bento.go": "Visita",
@@ -347,7 +347,7 @@ export const dict: Record<Lang, Record<string, string>> = {
 
     // Plans / how I work
     "home.plans.tag": "COLLABORAZIONI",
-    "home.plans.title": "Come lavoro.",
+    "home.plans.title": "Tre modi di lavorare insieme.",
     "home.plans.meta": "Percorsi per posizionarti meglio, validare i tuoi prodotti e far crescere il brand.",
     "home.eng.brand.title": "Sistema di brand",
     "home.eng.brand.desc": "Parto da quello che vendi e da chi lo compra, e costruisco un sistema di brand che porta risultati veri al business.",
@@ -1099,7 +1099,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "heroMotion.h1": "Websites and AI automations that grow your business.",
     "heroMotion.statement": "Hi, I'm Lorenzo, aka Looz. I design and build custom digital products for people running their business solo or in a small team.",
     "heroMotion.lede": "More visibility, less manual work, and a site that works for you.",
-    "heroMotion.proof": "3+ years|13 demos|3 languages|You own the code",
+    "heroMotion.proof": "3+ years|17 demos|3 languages|You own the code",
     "heroMotion.talk": "Discover",
     "bento.kicker": "Shift",
     "bento.go": "Visit",
@@ -1395,7 +1395,7 @@ export const dict: Record<Lang, Record<string, string>> = {
 
     // Plans / how I work
     "home.plans.tag": "ENGAGEMENTS",
-    "home.plans.title": "How I work.",
+    "home.plans.title": "Three ways to work together.",
     "home.plans.meta": "Engagement paths to position you better, validate your products, and grow the brand.",
     "home.eng.brand.title": "Brand System",
     "home.eng.brand.desc": "I start from what you sell and who buys it, then build a brand system that drives real business results.",
@@ -2139,7 +2139,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "heroMotion.h1": "Sajter och AI-automatiseringar som får ditt företag att växa.",
     "heroMotion.statement": "Hej, jag är Lorenzo, aka Looz. Jag formger och bygger skräddarsydda digitala produkter för dig som driver ditt företag själv eller i ett litet team.",
     "heroMotion.lede": "Mer synlighet, mindre manuellt arbete, och en sajt som jobbar för dig.",
-    "heroMotion.proof": "3+ år|13 demo|3 språk|Du äger koden",
+    "heroMotion.proof": "3+ år|17 demo|3 språk|Du äger koden",
     "heroMotion.talk": "Upptäck",
     "bento.kicker": "Shift",
     "bento.go": "Besök",
@@ -2435,7 +2435,7 @@ export const dict: Record<Lang, Record<string, string>> = {
 
     // Plans / how I work
     "home.plans.tag": "SAMARBETEN",
-    "home.plans.title": "Så jobbar jag.",
+    "home.plans.title": "Tre sätt att arbeta ihop.",
     "home.plans.meta": "Samarbeten för att positionera dig bättre, validera dina produkter och få varumärket att växa.",
     "home.eng.brand.title": "Varumärkessystem",
     "home.eng.brand.desc": "Jag utgår från vad du säljer och vem som köper, och bygger ett varumärkessystem som ger riktiga affärsresultat.",

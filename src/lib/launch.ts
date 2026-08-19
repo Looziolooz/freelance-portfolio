@@ -22,6 +22,10 @@ export const HIDDEN_ROUTES = [
   "/account",
   "/members-only",
   "/admin",
+  // Prototipo del barbiere: nessun percorso del sito ci arriva, la demo che il
+  // portfolio mostra punta a un deploy esterno, e i suoi schermi sono in inglese
+  // e fuori palette. Restava indicizzabile sul dominio dello studio.
+  "/barberia",
 ] as const;
 
 // Public site origin (used by robots.txt + sitemap). Override per environment.

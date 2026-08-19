@@ -443,11 +443,9 @@ button { font-family: inherit; cursor: pointer; }
    and the Work gallery (#work, sticky horizontal scroll). Phones keep the
    natural padded flow — there a short section as 100vh would just feel empty. */
 @media (min-width: 900px) {
-  #servizi,
-  #about,
-  #agents,
-  #blog,
-  #contact {
+  /* #about, #agents, #blog e #contact non esistono piu sulla home: la regola
+     restava a puntare quattro ancore morte. */
+  #servizi {
     min-height: 100vh;
     display: flex;
     flex-direction: column;

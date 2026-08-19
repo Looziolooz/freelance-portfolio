@@ -150,6 +150,7 @@ export default function CinematicFooter() {
   const navPills: { href: string; label: string }[] = [
     { href: "/work", label: t("nav.work") },
     { href: "/processo", label: t("nav.process") },
+    { href: "/prezzi", label: t("nav.pricing") },
     { href: "/agents", label: t("nav.agents") },
     { href: "/componenti", label: t("nav.components") },
     { href: "/membership", label: t("nav.membership") },
