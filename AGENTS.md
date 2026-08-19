@@ -155,6 +155,26 @@ is owned by the team.
 
 ## 5. Traps that have already cost time
 
+- **`vercel env add <KEY> preview` loops forever.** It answers
+  `action_required / git_branch_required` and, in its own `next[]` hint, suggests
+  the exact command you just ran — including `--value ... --yes`. Running it
+  again gets the same refusal. Use the REST API instead:
+
+      POST https://api.vercel.com/v10/projects/freelance-portfolio/env?teamId=team_h4Ey4sXXkpFVLP91QwZD0tVu
+      {"key":"...","value":"...","type":"encrypted","target":["preview"]}
+
+  The CLI token lives at
+  `~/AppData/Roaming/xdg.data/com.vercel.cli/auth.json` (NOT the paths the docs
+  list). Production adds work fine through the CLI; only `preview` loops.
+
+- **`git push` does not trigger a deploy on this project.** Pushing `main` left
+  production serving a two-hour-old deployment while the fix sat in the repo,
+  which reads exactly like "the fix did not work". After any push whose change
+  must go live, run `vercel deploy --prod --yes --scope loozioloozs-projects`
+  and confirm with `vercel inspect https://looz.design` that `created` is
+  seconds, not hours, old.
+
+
 - **Turbopack serves stale CSS.** Edits to `globals.css` often do not recompile.
   Symptom: your rule is in the file and not in the browser. Fix: kill whatever
   holds port 3000, `rm -rf .next`, restart. Do not spend an hour re-reading your
