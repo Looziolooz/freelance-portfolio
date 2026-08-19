@@ -3,24 +3,31 @@
 import Nav from "@/components/Nav";
 import CinematicFooter from "@/components/CinematicFooter";
 import ProcessTimeline, { type TimelineEntry } from "@/components/ProcessTimeline";
+import ProcessForks from "@/components/ProcessForks";
 import { useLang } from "@/components/LangProvider";
 
-// /processo — "Come lavoro": the four-phase method as an Aceternity-style vertical
-// timeline, re-themed Parchment & Forest (ochre→forest scroll rail, sticky phase
-// labels, content + a realistic photo scrolling past on the right).
-// The closing CTA block styles now live in globals.css: /prezzi reuses them.
+// /processo - "Come lavoro". The drawn journey, then the fork.
+//
+// The line used to run four phases for everybody, and phase 03 quietly carried
+// "site, e-commerce, automations and AI" inside one bullet list. Those are four
+// separate packages, each with its own path, and flattening them made the page
+// vague exactly where a buyer wants it specific. So the timeline now covers only
+// the two steps that really are shared - the call and the plan - and ProcessForks
+// takes over where the roads part.
+//
+// The closing CTA block styles live in globals.css: /prezzi reuses them.
 
 export default function ProcessoPage() {
   const { t } = useLang();
 
+  // Only the shared stretch has photographs now; p3/p4 belonged to phases that
+  // are no longer universal.
   const IMAGES = [
     { src: "/processo/p1.png", w: 1065, h: 1008 },
     { src: "/processo/p2.png", w: 1024, h: 1024 },
-    { src: "/processo/p3.jpg", w: 1280, h: 800 },
-    { src: "/processo/p4.jpg", w: 1280, h: 800 },
   ];
 
-  const entries: TimelineEntry[] = [1, 2, 3, 4].map((n, i) => {
+  const entries: TimelineEntry[] = [1, 2].map((n, i) => {
     const k = `processo.p${n}`;
     return {
       phase: `${t("processo.fase")} ${String(n).padStart(2, "0")}`,
@@ -55,7 +62,11 @@ export default function ProcessoPage() {
           <p className="ct-sub">{t("processo.sub")}</p>
         </header>
 
+        {/* The shared stretch: the same two steps whatever we end up building. */}
         <ProcessTimeline entries={entries} />
+
+        {/* Where the roads part, one lane per package. */}
+        <ProcessForks />
 
         <section className="container">
           <div className="proc-cta">

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Processo",
   description:
-    "Il metodo in quattro fasi: ascolto, strategia, costruzione, lancio e crescita. Cosa succede dal primo contatto al sito online, senza sorprese.",
+    "Ascolto e piano sono uguali per tutti. Poi la strada cambia: marchio, sito, automazioni AI o visibilità, ognuno con i suoi passi, i suoi tempi e quello che sposta il preventivo.",
 };
 
 export default function ProcessoLayout({ children }: { children: React.ReactNode }) {
