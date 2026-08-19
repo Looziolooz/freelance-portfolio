@@ -119,12 +119,13 @@ const CSS = `
   margin: 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(52px, 9vw, 108px);
-  line-height: 0.92;
+  font-size: clamp(40px, 6.4vw, 84px);
+  line-height: 0.98;
   letter-spacing: -0.03em;
   color: var(--fg);
+  text-wrap: balance;
+  max-width: 14ch;
 }
-.wke__title i { font-style: normal; display: block; color: var(--ink-muted); margin-left: clamp(28px, 6vw, 96px); }
 .wke__sub { margin: 0; font-size: 16px; line-height: 1.65; color: var(--ink-muted); }
 .wke__hint { margin: 18px 0 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); }
 
@@ -437,10 +438,7 @@ export default function WorkEditorial() {
               <span className="wke__dot" aria-hidden="true" />
               {t("wke.archive")} / {range}
             </span>
-            <h2 className="wke__title">
-              {t("wke.title1")}
-              <i>{t("wke.title2")}</i>
-            </h2>
+            <h2 className="wke__title">{t("wke.title")}</h2>
           </div>
           <div>
             <p className="wke__sub">{t("wke.sub")}</p>
