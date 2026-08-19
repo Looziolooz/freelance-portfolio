@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import Nav from "@/components/Nav";
 import HeroMotion from "@/components/HeroMotion";
-import WorkGallery from "@/components/WorkGallery";
+import WorkEditorial from "@/components/WorkEditorial";
 import TechStack from "@/components/TechStack";
 import BentoShift from "@/components/BentoShift";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -29,12 +29,11 @@ export default function Home() {
       {/* Five doors right under the hero: the entry crossing the viewport
           centre lights up, and each one is a real link. */}
       <SkillsList />
-      {/* Proof before claims: the live demos sit right under the hero. A
-          horizontal gallery rather than a grid — you walk the work, one card
-          at a time, in the same order the reader meets it. NB: this pinned
-          stage must never be wrapped in a transformed motion container
-          (ScrollReveal) — see WorkGallery's docblock. */}
-      <WorkGallery />
+      {/* La prova prima delle promesse: i lavori stanno subito sotto le
+          quattro porte. Griglia editoriale, non piu' galleria orizzontale
+          bloccata: si legge tutta in una scrollata invece di costringere a
+          trascinare, e le due card larghe danno il ritmo. */}
+      <WorkEditorial />
       {/* …and immediately what they are built with. Fills the slot the MacBook
           showcase used to occupy: demos first, then the toolkit behind them. */}
       <TechStack />
