@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import Nav from "@/components/Nav";
 import HeroMotion from "@/components/HeroMotion";
-import WorkGrid from "@/components/WorkGrid";
+import WorkGallery from "@/components/WorkGallery";
 import TechStack from "@/components/TechStack";
 import BentoShift from "@/components/BentoShift";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -25,9 +25,12 @@ export default function Home() {
       <Nav />
       <WayfindingNav />
       <HeroMotion />
-      {/* Proof before claims: the live demos sit right under the hero. A grid
-          rather than the old ticker — nothing slides away before it is read. */}
-      <WorkGrid />
+      {/* Proof before claims: the live demos sit right under the hero. A
+          horizontal gallery rather than a grid — you walk the work, one card
+          at a time, in the same order the reader meets it. NB: this pinned
+          stage must never be wrapped in a transformed motion container
+          (ScrollReveal) — see WorkGallery's docblock. */}
+      <WorkGallery />
       {/* …and immediately what they are built with. Fills the slot the MacBook
           showcase used to occupy: demos first, then the toolkit behind them. */}
       <TechStack />
