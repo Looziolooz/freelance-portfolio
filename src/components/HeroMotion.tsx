@@ -23,6 +23,19 @@ import { EncryptedText } from "./ui/encrypted-text";
 const VIDEO = "/hero-motion/clouds.mp4";
 const POSTER = "/hero-motion/clouds-poster.jpg";
 
+// The machine under the man: the same portrait, same pose, same ochre disc, in
+// cyborg form. A spotlight follows the cursor and reveals it through the base
+// footage, which is the whole positioning of this studio in one gesture.
+//
+// The file is composed to the base frame's geometry: the source was 1065x1008
+// with its disc at radius 0.319w, the base is 1280x720 at 0.187w, so it was
+// scaled by 0.703 and offset until both discs share a centre (verified: 604,339
+// against 605,339, radius 239 either way). That alignment is what lets the
+// reveal sit under `object-fit: cover` and register exactly.
+const REVEAL = "/hero-motion/cyborg-reveal.jpg";
+const SPOTLIGHT_R = 260;   // px, as specified
+const CURSOR_EASE = 0.1;   // per frame, toward the raw pointer
+
 // Extraction budget for the canvas path: 20 × 768×432 RGBA ≈ 20–25 MB of
 // bitmaps is enough to keep the scrub smooth without paying the full 64-frame
 // decode cost on every desktop viewport. The hero still keeps its motion, but
@@ -38,6 +51,7 @@ export default function HeroMotion() {
   const mediaRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const revealRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -262,6 +276,80 @@ export default function HeroMotion() {
     };
   }, []);
 
+  // ── The spotlight reveal ───────────────────────────────────────────────────
+  //
+  // Deliberately NOT the canvas-per-frame approach the reference uses. That one
+  // rebuilds a radial gradient on a full-viewport canvas, calls toDataURL() and
+  // hands the base64 PNG to `mask-image` on EVERY frame: an encode plus a decode
+  // per frame, at viewport size. A CSS radial-gradient mask whose centre is two
+  // custom properties gets the identical picture, stays on the compositor, and
+  // costs two style writes a frame.
+  //
+  // Three guards, each earning its place:
+  //   - hover-capable fine pointers only. There is no cursor to follow on a
+  //     phone, and a spotlight that cannot move is just a blurry patch.
+  //   - reduced motion opts out entirely.
+  //   - the image is attached on the FIRST pointer entry, never at load: the
+  //     poster is this page's LCP element and nothing may race it.
+  useEffect(() => {
+    const section = sectionRef.current;
+    const media = mediaRef.current;
+    const reveal = revealRef.current;
+    if (!section || !media || !reveal) return;
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    let attached = false;
+    let inside = false;
+    const raw = { x: 0, y: 0 };
+    const eased = { x: 0, y: 0 };
+
+    const frame = () => {
+      eased.x += (raw.x - eased.x) * CURSOR_EASE;
+      eased.y += (raw.y - eased.y) * CURSOR_EASE;
+      reveal.style.setProperty("--mx", `${eased.x.toFixed(1)}px`);
+      reveal.style.setProperty("--my", `${eased.y.toFixed(1)}px`);
+      // Stop when the pointer is gone AND the easing has caught up: an idle hero
+      // should not hold a rAF loop open.
+      if (inside || Math.abs(raw.x - eased.x) > 0.5 || Math.abs(raw.y - eased.y) > 0.5) {
+        raf = requestAnimationFrame(frame);
+      } else {
+        raf = 0;
+      }
+    };
+
+    const onMove = (e: PointerEvent) => {
+      const box = media.getBoundingClientRect();
+      raw.x = e.clientX - box.left;
+      raw.y = e.clientY - box.top;
+      if (!attached) {
+        // First contact: fetch the image, and start the spotlight already under
+        // the cursor rather than sliding in from the corner.
+        reveal.style.backgroundImage = `url("${REVEAL}")`;
+        eased.x = raw.x;
+        eased.y = raw.y;
+        attached = true;
+      }
+      inside = true;
+      reveal.style.setProperty("--on", "1");
+      if (!raf) raf = requestAnimationFrame(frame);
+    };
+
+    const onLeave = () => {
+      inside = false;
+      reveal.style.setProperty("--on", "0");
+    };
+
+    section.addEventListener("pointermove", onMove, { passive: true });
+    section.addEventListener("pointerleave", onLeave);
+    return () => {
+      cancelAnimationFrame(raf);
+      section.removeEventListener("pointermove", onMove);
+      section.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
+
   return (
     <section ref={sectionRef} id="top" className="hero-motion" aria-label="LO.oz">
       {/* The poster is the LCP element — preload it at high priority so it paints
@@ -276,6 +364,9 @@ export default function HeroMotion() {
           <video ref={videoRef} className="hm-video" poster={POSTER} muted playsInline preload="metadata" aria-hidden="true" />
           {/* Takes over from the video once its frames are decoded (desktop). */}
           <canvas ref={canvasRef} className="hm-canvas" aria-hidden="true" />
+          {/* Above the footage, masked to a spotlight. No background-image until
+              the pointer arrives (see the effect), so it never races the LCP. */}
+          <div ref={revealRef} className="hm-reveal" aria-hidden="true" />
         </div>
 
         <div ref={contentRef} className="hm-content">

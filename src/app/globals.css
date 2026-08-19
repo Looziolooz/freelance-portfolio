@@ -1039,42 +1039,11 @@ select:focus-visible,
   .nav-hamburger { display: none !important; }
 }
 
-/* ─── Work: horizontal gallery (sticky-driven) ─── */
+/* ─── Work: horizontal gallery (sticky-driven) ───
 
-/* Full-width title on top, then large cards that scroll horizontally below it.
-   On desktop the sticky child pins natively while the page scrolls through the
-   tall .work-track (height set in Work.tsx); below 769px it falls back to a
-   native horizontal swipe with the title in normal flow above. */
-.work-sticky {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(28px, 4vh, 56px);
-}
-
-/* Default (mobile + reduced motion): native horizontal swipe. */
-.work-gallery {
-  overflow-x: auto;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
-}
-.work-gallery::-webkit-scrollbar { display: none; }
-.work-gallery__item { scroll-snap-align: start; }
-
-/* Desktop with motion allowed: the sticky child fills the viewport and pins at
-   top:0 while .work-track scrolls past; the strip is moved via translateX from
-   JS. Must mirror the matchMedia() condition in Work.tsx. */
-@media (min-width: 769px) and (prefers-reduced-motion: no-preference) {
-  .work-track { position: relative; }
-  .work-sticky {
-    position: sticky;
-    top: 0;
-    min-height: 100vh;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .work-gallery { overflow: hidden; scroll-snap-type: none; }
-}
+   The gallery lives in WorkGallery.tsx with its own scoped styles (wgal-*);
+   the .work-* rules from the first horizontal gallery were removed once
+   nothing referenced them. */
 
 
 /* ════════════════════════════════════════════════════════════
@@ -2806,3 +2775,52 @@ body.theme-dark .topbar.is-scrolled,
 .faq-q { justify-content: flex-start; padding-left: 0; padding-right: 0; }
 .faq-mark { margin-left: auto; }
 .faq-item .faq-a { padding-left: 0; padding-right: 0; }
+
+/* Hero spotlight reveal: the cyborg portrait under the footage, shown only where
+   the cursor is. The gradient stops are the reference's, to the letter; what is
+   NOT the reference's is the mechanism — it drove this mask by encoding a canvas
+   to a data URL every frame, where two custom properties and a CSS gradient give
+   the same picture on the compositor. See HeroMotion for the guards.
+
+   --mx / --my are written per frame by the eased pointer; --on fades the whole
+   layer out when the cursor leaves, so the reveal never hangs on screen. */
+.hm-reveal {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: var(--on, 0);
+  transition: opacity 0.45s var(--ease);
+  --mx: 50%;
+  --my: 50%;
+  -webkit-mask-image: radial-gradient(
+    circle var(--sr) at var(--mx) var(--my),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 40%,
+    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.12) 88%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--sr) at var(--mx) var(--my),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 40%,
+    rgba(0, 0, 0, 0.75) 60%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0.12) 88%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  --sr: 260px;
+}
+
+/* No cursor to follow, so nothing to reveal. */
+@media (hover: none), (pointer: coarse) {
+  .hm-reveal { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hm-reveal { display: none; }
+}
