@@ -212,12 +212,11 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
     for (let i = 1; i < dotYs.length; i += 1) {
       const from = dotYs[i - 1];
       const span = dotYs[i] - from;
-      // Leaning right first on odd stretches and left first on even ones stops
-      // the zig reading as a repeating sawtooth.
-      const first = i % 2 === 1 ? amp : -amp * 0.55;
-      const second = i % 2 === 1 ? -amp * 0.55 : amp;
-      pts.push([SPINE_X + first, from + span / 3]);
-      pts.push([SPINE_X + second, from + (span * 2) / 3]);
+      // Two equal curves, this stretch leaning right then left (or the reverse
+      // on even stretches), so the path describes an even zig-zag.
+      const dir = i % 2 === 1 ? 1 : -1;
+      pts.push([SPINE_X + dir * amp, from + span / 3]);
+      pts.push([SPINE_X - dir * amp, from + (span * 2) / 3]);
       pts.push([SPINE_X, dotYs[i]]);
     }
     pts.push([SPINE_X, height]);
