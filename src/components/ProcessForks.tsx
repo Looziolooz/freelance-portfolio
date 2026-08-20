@@ -25,7 +25,10 @@ import { DISCIPLINES } from "@/lib/disciplines";
 // one axis), and it only exists on the wide layout: stacked on a phone there is
 // nothing to fork, so the lanes simply follow one another.
 
-const FORK_H = 96;
+const FORK_H = 126;
+// Il tratto dritto sopra il vertice: e' quello che rende il ventaglio una
+// strada che si divide invece di quattro archi che cominciano a mezz'aria.
+const FORK_STEM = 30;
 
 // Le corsie SONO le discipline: nome e destinazione vengono dalla tassonomia,
 // cosi la biforcazione non puo piu chiamare "Visibilita" quello che il menu
@@ -46,10 +49,12 @@ const CSS = `
   stroke: var(--accent-gold, var(--accent-green-deep));
   stroke-width: 2;
   stroke-linecap: round;
-  /* Drawn in when the fork reaches the reader, using the same one-long-dash
-     trick as the journey line above it. */
-  stroke-dasharray: var(--pfk-len) var(--pfk-len);
-  stroke-dashoffset: var(--pfk-len);
+  /* Il disegno entra quando la biforcazione arriva al lettore. La lunghezza
+     del tratteggio NON e' una costante: era 192px per tutti, e i rami esterni
+     ne misurano oltre 450, quindi il motivo si ripeteva e li spezzava in archi
+     staccati. Ogni ramo si misura da solo (getTotalLength) e scrive la sua. */
+  stroke-dasharray: var(--pfk-len, 999px) var(--pfk-len, 999px);
+  stroke-dashoffset: var(--pfk-len, 999px);
   transition: stroke-dashoffset 1.1s var(--ease);
 }
 .pfk.is-drawn .pfk__fork path { stroke-dashoffset: 0; }
@@ -62,6 +67,17 @@ const CSS = `
 }
 
 .pfk__lane { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+/* Le sei parti di ogni corsia (numero, nome, riga, passi, dati, link) prendono
+   le righe della griglia madre invece di impilarsi per conto loro: cosi'
+   "quanto dura" comincia alla stessa altezza in tutte e quattro, anche quando
+   un elenco ha un passo in piu'. Senza questo la tavola si sfilaccia. */
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 861px) {
+    .pfk__lanes { grid-template-rows: repeat(6, auto); }
+    .pfk__lane { display: grid; grid-template-rows: subgrid; grid-row: span 6; }
+  }
+}
 
 .pfk__n {
   font-family: var(--font-mono);
@@ -148,14 +164,20 @@ const CSS = `
  * clamped gap between columns, so `width / lanes * (i + 0.5)` lands about a
  * dozen pixels beside each lane instead of on it — enough to read as a mistake.
  */
-function forkPath(width: number, centres: number[]): string {
-  if (width <= 0 || centres.length === 0) return "";
+function forkPaths(width: number, centres: number[]): string[] {
+  if (width <= 0 || centres.length === 0) return [];
   const x0 = width / 2;
-  // A single cubic per branch: leaves the trunk vertically, arrives at the lane
-  // head vertically, so the joins read as one continuous road.
-  return centres
-    .map((x) => `M${x0} 0 C ${x0} ${FORK_H * 0.45}, ${x} ${FORK_H * 0.55}, ${x} ${FORK_H}`)
-    .join(" ");
+  const y0 = FORK_STEM;
+  const h = FORK_H - y0;
+  // Il gambo, e poi un cubica per ramo: parte in verticale dal tronco e arriva
+  // in verticale sulla testa della corsia, cosi' gli innesti si leggono come
+  // una strada sola che si apre.
+  return [
+    `M${x0} 0 L ${x0} ${y0}`,
+    ...centres.map(
+      (x) => `M${x0} ${y0} C ${x0} ${y0 + h * 0.45}, ${x} ${y0 + h * 0.55}, ${x} ${FORK_H}`,
+    ),
+  ];
 }
 
 export default function ProcessForks() {
@@ -166,6 +188,10 @@ export default function ProcessForks() {
   const lanesRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [centres, setCentres] = useState<number[]>([]);
+  const rami_ref = useRef<(SVGPathElement | null)[]>([]);
+  const ramoRef = (n: number) => (el: SVGPathElement | null) => {
+    rami_ref.current[n] = el;
+  };
   const inView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
 
   // Real pixels, re-measured on resize: the curve has to land on the lane
@@ -192,7 +218,17 @@ export default function ProcessForks() {
     return () => ro.disconnect();
   }, []);
 
-  const d = forkPath(width, centres);
+  const rami = forkPaths(width, centres);
+
+  // La lunghezza del tratteggio va chiesta al browser dopo che il tracciato
+  // esiste: un ramo corto e uno lungo hanno bisogno di due misure diverse, e
+  // una costante per tutti e' esattamente cio' che li spezzava.
+  useEffect(() => {
+    for (const p of rami_ref.current) {
+      if (!p) continue;
+      p.style.setProperty("--pfk-len", `${Math.ceil(p.getTotalLength())}px`);
+    }
+  }, [rami]);
 
   return (
     <section
@@ -215,9 +251,10 @@ export default function ProcessForks() {
           preserveAspectRatio="none"
           aria-hidden="true"
           focusable="false"
-          style={{ ["--pfk-len" as string]: `${FORK_H * 2}px` }}
         >
-          {d && <path d={d} />}
+          {rami.map((d, n) => (
+            <path key={n} ref={ramoRef(n)} d={d} style={{ transitionDelay: `${n * 90}ms` }} />
+          ))}
         </svg>
 
         <div className="pfk__lanes" ref={lanesRef}>
