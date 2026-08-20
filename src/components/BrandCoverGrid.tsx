@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { dimOn } from "@/lib/contrast";
+import { hasRealMark } from "@/lib/brand-logo-files";
 import { Monogram } from "./BrandKit";
 import { useLang } from "./LangProvider";
 import { getBrandKit } from "@/lib/brand-kits";
@@ -55,6 +56,8 @@ const COVER_CSS = `
 }
 
 .bcg__mark { flex: 1 1 auto; display: grid; place-items: center; padding: 14px 0; }
+/* Il segno vero, alla stessa misura del monogramma che sostituisce. */
+.bcg__mark-real { display: block; position: relative; width: 92px; height: 92px; }
 
 /* Il logo vero, non il nome ricomposto con il carattere del kit. I file stanno
    in /brand-logos, sono PNG trasparenti alti 168px, e finora non li usava
@@ -120,8 +123,23 @@ export default function BrandCoverGrid({ items }: { items: Project[] }) {
 
               <span className="bcg__mark">
                 {/* Il segno, non le iniziali: sotto c'e' gia' il logo scritto,
-                    e ripetere le lettere due volte non e' un marchio. */}
-                <Monogram kit={kit} variant="solid" size={92} glyph="motif" />
+                    e ripetere le lettere due volte non e' un marchio.
+                    Dove il segno vero esiste come file (elenco in
+                    brand-logo-files) si usa quello; il monogramma disegnato
+                    resta per gli altri, che e' un segnaposto onesto. */}
+                {hasRealMark(p.slug) ? (
+                  <span className="bcg__mark-real">
+                    <Image
+                      src={`/brand-logos/${p.slug}/mark.png`}
+                      alt=""
+                      fill
+                      sizes="92px"
+                      style={{ objectFit: "contain" }}
+                    />
+                  </span>
+                ) : (
+                  <Monogram kit={kit} variant="solid" size={92} glyph="motif" />
+                )}
               </span>
 
               <span>
