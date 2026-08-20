@@ -359,6 +359,53 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--ink-body);
 }
 
+/* ── Il timbro ──
+   Il nome dentro una pastiglia bordata, con l'ombra secca che portano i bottoni
+   e le schede: il marchio smette di essere testo appoggiato sopra il sito e
+   diventa un oggetto fatto nella stessa mano.
+
+   Colori da `currentColor` dove serve, cosi' la stessa pastiglia funziona sulla
+   pergamena e sui fondi scuri senza una seconda regola per ogni posto. */
+.wm-stamp {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 14px;
+  border: 2px solid var(--ink-border);
+  border-radius: 999px;
+  background: var(--canvas-page);
+  box-shadow: 3px 3px 0 var(--ink-shadow);
+  transition: transform var(--dur-fast, 150ms) var(--ease), box-shadow var(--dur-fast, 150ms) var(--ease);
+}
+.wordmark-link:hover .wm-stamp {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink-shadow);
+}
+.wm-stamp__name { display: inline-flex; align-items: baseline; line-height: 1; }
+/* Il filo che separa il nome dalla parola: la stessa idea del bordo, sottile. */
+.wm-stamp__suffix {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border-left: 1px solid color-mix(in srgb, var(--ink-border) 34%, transparent);
+  padding-left: 10px;
+  align-self: center;
+}
+/* Sotto i 520px la pastiglia si stringe: nella barra stretta la parola accanto
+   ruba lo spazio al menu, e il nome da solo basta. */
+@media (max-width: 520px) {
+  .wm-stamp { gap: 0; padding: 4px 12px; }
+  .wm-stamp__suffix { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wm-stamp { transition: none; }
+  .wordmark-link:hover .wm-stamp { transform: none; }
+}
+
 /* ── The dot ──
    The one piece of colour in the whole name. It used to be forest, which is the
    site's text-on-light accent and therefore reads as "this word is a link", not

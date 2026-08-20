@@ -1,4 +1,14 @@
-// The studio mark: LO.oz, where the only colour in the whole name is the dot.
+// The studio mark: LO.oz as a STAMP — the name inside a bordered lozenge with
+// the site's hard offset shadow, and "design" alongside behind a hairline.
+//
+// Chosen from four directions. The reason it won: the mark now speaks the same
+// language as every button and panel on the site (3px ink border, offset
+// shadow) instead of being loose text that happened to sit above them. What it
+// costs is width in the top bar, which is why `suffix` exists.
+//
+// The dot is untouched. Its ink ring is eight em-based shadows built to scale
+// from 24px to 160px, and it is what already tied the name to those same
+// borders. The frame changed; the detail did not.
 //
 // The Ø experiment is parked (see the trial page): slashing both O's turned the
 // name into a face, and a face competes with the work it sits above. What the
@@ -16,10 +26,20 @@
 // Italian, English and Swedish, so it is deliberately not routed through i18n —
 // a "translation" that repeats one string three times is somewhere to fall out
 // of sync, not a feature.
-export default function Wordmark({ className }: { className?: string }) {
+export default function Wordmark({
+  className,
+  suffix = true,
+}: {
+  className?: string;
+  /** La parola "design" accanto al nome. Si spegne dove lo spazio non c'e'. */
+  suffix?: boolean;
+}) {
   return (
-    <span className={className}>
-      LO<span className="wm-dot">.</span>oz
+    <span className={`wm-stamp${className ? ` ${className}` : ""}`}>
+      <span className="wm-stamp__name">
+        LO<span className="wm-dot">.</span>oz
+      </span>
+      {suffix && <span className="wm-stamp__suffix">design</span>}
     </span>
   );
 }

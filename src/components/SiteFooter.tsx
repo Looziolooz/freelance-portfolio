@@ -144,6 +144,17 @@ export default function SiteFooter() {
         /* The mark, at bar size. Its dot is the one piece of colour in the name
            (see Wordmark) and --wordmark-dot already carries it, so nothing is
            restyled here beyond the size. */
+        /* Sul fondo scuro la pastiglia si rovescia: niente carta chiara sotto
+           il nome, bordo e ombra presi dall'inchiostro chiaro del footer. */
+        .sfoot__mark {
+          background: transparent;
+          border-color: var(--cf-ink);
+          box-shadow: 3px 3px 0 color-mix(in srgb, var(--cf-ink) 34%, transparent);
+        }
+        .sfoot__mark .wm-stamp__suffix {
+          color: var(--cf-muted);
+          border-left-color: color-mix(in srgb, var(--cf-ink) 30%, transparent);
+        }
         .sfoot__mark {
           font-family: var(--font-display); font-weight: 600; font-size: 17px;
           letter-spacing: -0.01em; text-transform: none; color: var(--cf-ink);
