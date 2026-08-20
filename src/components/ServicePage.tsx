@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Nav from "./Nav";
 import ProjectGallery from "./ProjectGallery";
+import BrandCoverGrid from "./BrandCoverGrid";
 import CinematicFooter from "./CinematicFooter";
 import { useLang } from "./LangProvider";
 import { disciplineProjects, type Discipline } from "@/lib/disciplines";
@@ -131,7 +132,11 @@ export default function ServicePage({ d }: { d: Discipline }) {
           <section className="sv-sec svp-works" aria-label={s("proof.title")}>
             <h2 className="sv-h2">{s("proof.title")}</h2>
             {has("proof.sub") && <p className="svp-proof-head">{s("proof.sub")}</p>}
-            <ProjectGallery items={items} showFilters={false} />
+            {d.proof === "covers" ? (
+              <BrandCoverGrid items={items} />
+            ) : (
+              <ProjectGallery items={items} showFilters={false} />
+            )}
             {has("proof.more") && (
               <p style={{ margin: "18px 0 0", lineHeight: 1.6 }}>
                 <Link href={s("proof.more.href")} style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}>

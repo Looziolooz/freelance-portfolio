@@ -39,6 +39,16 @@ export type Discipline = {
    * alcuni lavori parlano al pubblico di quella pagina meglio di altri.
    */
   lead?: string[];
+  /**
+   * Che faccia ha la prova su questa pagina. `gallery` sono le schermate dei
+   * lavori; `covers` sono le copertine dei fascicoli di marca.
+   *
+   * Serve perche' marchio e siti web pescano da bacini che si sovrappongono
+   * quasi del tutto: con la stessa griglia le due pagine si leggevano come la
+   * stessa pagina, e il lavoro di marca sparisce dietro la schermata di un sito
+   * che ne e' solo una conseguenza.
+   */
+  proof: "gallery" | "covers";
 };
 
 const live = (p: Project) => Boolean(p.featured) && !p.hidden;
@@ -54,11 +64,16 @@ export const DISCIPLINES: Discipline[] = [
     // Ogni progetto con un fascicolo di marca. È il corpo di lavoro più ricco
     // del sito ed era l'unica disciplina venduta ovunque senza una pagina.
     select: (p) => live(p) && Boolean(getBrandKit(p.slug)),
+    // La prova qui e la copertina del fascicolo, non la schermata di un sito:
+    // con la stessa griglia questa pagina e quella dei siti si leggevano come
+    // la stessa pagina.
+    proof: "covers",
   },
   {
     id: "siti-web",
     slug: "siti-web",
     key: "disc.siti-web",
+    proof: "gallery",
     select: (p) => live(p) && p.category === "website",
     // Ristorazione e ospitalità davanti: è il pubblico che questa pagina cerca.
     lead: ["nordbageriet", "sushi", "brado", "gelateria", "pizzeria-restaurant", "aliva"],
@@ -67,6 +82,7 @@ export const DISCIPLINES: Discipline[] = [
     id: "automazioni-ai",
     slug: "automazioni-ai",
     key: "disc.automazioni-ai",
+    proof: "gallery",
     // Un solo bacino: le automazioni e gli agenti pescavano già dagli stessi
     // progetti, e due pagine separate erano costrette a citarsi a vicenda.
     select: (p) => live(p) && (p.category === "automazione" || p.category === "ai"),
@@ -75,6 +91,7 @@ export const DISCIPLINES: Discipline[] = [
     id: "visibilita",
     slug: "visibilita",
     key: "disc.visibilita",
+    proof: "gallery",
     select: (p) => live(p) && VISIBILITA_SLUGS.includes(p.slug),
   },
 ];
