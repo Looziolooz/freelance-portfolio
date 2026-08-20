@@ -108,13 +108,14 @@ export default function Plans() {
               </div>
             );
           })}
+
+          {/* Cosa coprono e cosa non coprono le cifre. Sta sotto la scheda e
+              non sotto il binario: e' una nota sull'offerta che stai leggendo,
+              non sull'elenco dei tre modi. */}
+          <p className="plans-costnote">{t("home.plans.costnote")}</p>
         </div>
       </div>
 
-      {/* Cosa coprono e cosa non coprono le cifre. La cosa piu' chiara che
-          faceva il sito di riferimento era dire quali costi sono miei e quali
-          tuoi: quel tipo di nota vale piu' di qualsiasi aggettivo rassicurante. */}
-      <p className="plans-costnote">{t("home.plans.costnote")}</p>
     </section>
   );
 }

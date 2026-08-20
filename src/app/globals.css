@@ -499,6 +499,20 @@ button { font-family: inherit; cursor: pointer; }
 /* ─── Button ─── */
 
 .neo-btn {
+  /* La classe base si regge da sola. Prima padding e misura arrivavano solo da
+     .neo-btn-sm / .neo-btn-lg, quindi un bottone scritto senza modificatore
+     usciva con le lettere appoggiate al bordo. I modificatori sono definiti
+     dopo e continuano a vincere sulla taglia. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 48px;
+  padding: 12px 24px;
+  font-size: 15px;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
   border: 3px solid var(--ink-border);
   border-radius: var(--radius);
   background: var(--accent-peach);
@@ -1472,6 +1486,9 @@ select:focus-visible,
   line-height: 1.7;
   color: var(--ink-muted);
 }
+/* La nota sui costi chiude la colonna della scheda, allineata al suo bordo. */
+.plans-costnote { margin: clamp(18px, 2vw, 26px) 0 0; }
+
 .plans-panel__actions {
   display: flex;
   flex-wrap: wrap;
@@ -2704,7 +2721,8 @@ a.bento-svc--agents:hover     { background: color-mix(in srgb, var(--ground-deep
   background: var(--accent-green-sheen);
   color: var(--btn-ink);
   border-color: var(--ink-border);
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+  /* Niente ombra sotto le lettere: il sistema e' fatto di bordi netti e ombre
+     secche, e una sfocatura sotto il testo scuro sull'ocra lo impastava. */
 }
 .neo-btn--primary:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink-shadow); }
 
@@ -2811,7 +2829,7 @@ a.bento-svc--agents:hover     { background: color-mix(in srgb, var(--ground-deep
 .cap-pill--solid .cap-pill__dot { background: #fff; }
 
 /* ── Sliding arrow on CTAs ── */
-.btn-arrow { display: inline-block; margin-left: 0.5em; transition: transform 0.25s var(--ease); }
+.btn-arrow { display: inline-block; transition: transform 0.25s var(--ease); }
 a:hover .btn-arrow, button:hover .btn-arrow, .magnetic:hover .btn-arrow { transform: translateX(5px); }
 @media (prefers-reduced-motion: reduce) { .btn-arrow { transition: none; } }
 
@@ -3016,17 +3034,6 @@ body.theme-dark .topbar.is-scrolled,
    vanished into the green. Stroke from the light page tone instead. */
 .trust .sec-head__folio { -webkit-text-stroke-color: color-mix(in oklch, var(--canvas-page) 32%, transparent); }
 
-/* The one italic line on the page: authorial voice over the Trust band,
-   set as a pullquote with a side rule (vault: Editorial + Luxury). */
-.trust-pull {
-  margin: clamp(18px, 2.5vw, 30px) 0 clamp(26px, 3.5vw, 44px);
-  max-width: 30ch;
-  font-family: var(--font-display); font-style: italic; font-weight: 500;
-  font-size: clamp(21px, 2.6vw, 31px); line-height: 1.25; letter-spacing: -0.01em;
-  color: var(--canvas-page);
-  border-left: 2px solid var(--accent-green); padding-left: clamp(14px, 1.8vw, 22px);
-}
-.trust-pull:last-child { margin-bottom: 0; }
 
 /* /prezzi: one dark movement in an all-parchment page. The owner read the page
    as one colour and too much text; the five steps become the forest band, the

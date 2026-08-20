@@ -40,12 +40,6 @@ export default function Trust() {
       <SectionHeader eyebrow={t("trust.eyebrow")} title={t("trust.title")} sub={t("trust.sub")} />
 
 
-      {/* La sola riga in corsivo della pagina. Il testo e il suo stile
-          (.trust-pull) esistevano gia' da tempo in tutte e tre le lingue,
-          ma nessun componente la stampava: la fascia finiva sulla griglia
-          e la voce dell'autore non arrivava mai in pagina. */}
-      <p className="trust-pull">{t("trust.pull")}</p>
-
       <ul className="trust-grid">
         {POINTS.map((k) => (
           <li key={k} className="trust-card">
