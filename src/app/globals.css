@@ -406,6 +406,17 @@ button { font-family: inherit; cursor: pointer; }
   .wordmark-link:hover .wm-stamp { transform: none; }
 }
 
+/* Taglia compatta: il timbro dentro una riga di testo. Bordo e ombra scendono
+   di un gradino, e la pastiglia si allinea alla linea di base della frase
+   invece di gonfiare l'interlinea. */
+.wm-stamp--compact {
+  padding: 0 10px 2px;
+  border-width: 2px;
+  box-shadow: 2px 2px 0 var(--ink-shadow);
+  vertical-align: baseline;
+}
+.wordmark-link:hover .wm-stamp--compact { box-shadow: 3px 3px 0 var(--ink-shadow); }
+
 /* ── The dot ──
    The one piece of colour in the whole name. It used to be forest, which is the
    site's text-on-light accent and therefore reads as "this word is a link", not
@@ -1293,7 +1304,9 @@ select:focus-visible,
 .hm-statement { font-family: var(--font-display); font-weight: 500; font-size: clamp(19px, 1.9vw, 27px); line-height: 1.28; letter-spacing: -0.01em; margin: 0; color: var(--fg); }
 /* "Looz" inside the statement echoes the wordmark: same Fraunces cut and
    tracking as .wordmark-link, so the name reads as the logo's text. */
-.hm-brand { font-weight: 600; letter-spacing: -0.04em; }
+.hm-brand { font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
+/* Nella frase il timbro non deve allargare l'interlinea. */
+.hm-statement .wm-stamp { margin: 0 2px; }
 .hm-brand .accent { color: var(--accent-green-deep); }
 .hm-lede { font-family: var(--font-ui); font-size: clamp(15px, 1.05vw, 16.5px); line-height: 1.6; margin: 2px 0 0; color: var(--ink-body); opacity: 0.82; max-width: 48ch; }
 .hm-cta { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 8px; }

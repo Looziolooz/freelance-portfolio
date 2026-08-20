@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useLang } from "./LangProvider";
+import Wordmark from "./Wordmark";
 import MagneticButton from "./MagneticButton";
 import { EncryptedText } from "./ui/encrypted-text";
 
@@ -388,13 +389,14 @@ export default function HeroMotion() {
             {t("heroMotion.statement").split("Looz").map((part, i, arr) => (
               <Fragment key={i}>
                 {part}
-                {/* Same mark as the nav: wm-dot, not the old forest .accent.
-                    The brand appearing twice on one screen in two different
-                    colours reads as a mistake, not as a variation. */}
+                {/* Il marchio passa dal componente, non e' riscritto qui.
+                    Prima lo era, ed e' per questo che e' rimasto indietro
+                    quando il marchio e' diventato un timbro: due posti che
+                    disegnano la stessa cosa divergono al primo che si tocca.
+                    Taglia compatta e senza la parola accanto, perche' qui sta
+                    dentro una frase. */}
                 {i < arr.length - 1 && (
-                  <span className="hm-brand">
-                    LO<span className="wm-dot">.</span>oz
-                  </span>
+                  <Wordmark className="hm-brand" suffix={false} compact />
                 )}
               </Fragment>
             ))}

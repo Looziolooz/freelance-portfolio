@@ -29,13 +29,22 @@
 export default function Wordmark({
   className,
   suffix = true,
+  compact = false,
 }: {
   className?: string;
   /** La parola "design" accanto al nome. Si spegne dove lo spazio non c'e'. */
   suffix?: boolean;
+  /**
+   * Taglia compatta: bordo piu' sottile e ombra piu' corta, per quando il
+   * marchio sta dentro una riga di testo invece che da solo. Senza, la
+   * pastiglia legge come un bottone caduto in mezzo a un paragrafo.
+   */
+  compact?: boolean;
 }) {
   return (
-    <span className={`wm-stamp${className ? ` ${className}` : ""}`}>
+    <span
+      className={`wm-stamp${compact ? " wm-stamp--compact" : ""}${className ? ` ${className}` : ""}`}
+    >
       <span className="wm-stamp__name">
         LO<span className="wm-dot">.</span>oz
       </span>
