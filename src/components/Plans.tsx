@@ -1,109 +1,120 @@
 "use client";
 
+import { useState } from "react";
 import { useLang } from "./LangProvider";
 import SectionHeader from "./SectionHeader";
-import { RevealStagger, RevealItem } from "./Reveal";
 
-// Engagements — three ways to work together (no fixed prices/subscriptions):
-// a Brand System, a Conversion Website, or an ongoing Retainer. Laid out as a
-// BENTO that echoes the Servizi grid: Brand + Web as two top cells, the ongoing
-// Retainer (dark) as a full-width FEATURE bar (pitch left, deliverables right).
-// The real scope is set in a short intro call, so the only CTA is "fill the form".
-type Engagement = {
-  key: "brand" | "web" | "retainer";
-  dark?: boolean;
-};
-
-const ENGAGEMENTS: Engagement[] = [
-  { key: "brand" },
-  { key: "web" },
-  { key: "retainer", dark: true },
-];
+// Engagements — tre modi di lavorare insieme (nessun listino: lo scopo si
+// decide in una call).
+//
+// Prima era un bento: due celle in alto e la gestione continuativa come barra
+// scura a tutta larghezza. Aveva gia' una gerarchia, ma chiedeva comunque al
+// lettore di leggere tutti e tre i blocchi per capire quale lo riguarda, ed era
+// il blocco piu' alto della seconda meta' della pagina, proprio dove la home
+// perde ritmo.
+//
+// Ora e' una scelta: un binario con i tre modi, e un pannello che cambia. Chi
+// sa cosa cerca legge solo quello; chi non lo sa scorre tre righe invece di tre
+// schede.
+//
+// I due pannelli non attivi restano nel DOM con l'attributo `hidden` invece di
+// non essere renderizzati: un motore di ricerca e un assistente AI continuano a
+// leggere tutte e tre le offerte, che su una pagina che vende e' esattamente
+// quello che serve.
+const KEYS = ["brand", "web", "retainer"] as const;
+type Key = (typeof KEYS)[number];
 
 export default function Plans() {
   const { t } = useLang();
+  // "web" e' il modo piu' richiesto: si apre su quello invece che sul primo
+  // della lista, cosi' il pannello che si vede per primo e' quello che serve
+  // alla maggioranza dei visitatori.
+  const [picked, setPicked] = useState<Key>("web");
 
   return (
-    <section
-      id="piani"
-      className="plans"
-      aria-label={t("home.plans.title")}
-      style={{ position: "relative" }}
-    >
-      <SectionHeader eyebrow={t("home.plans.tag")} title={t("home.plans.title")} sub={t("home.plans.meta")} />
+    <section id="piani" className="plans" aria-label={t("home.plans.title")}>
+      <SectionHeader
+        eyebrow={t("home.plans.tag")}
+        title={t("home.plans.title")}
+        sub={t("home.plans.meta")}
+      />
 
-      {/* The three things a small-business buyer wants settled before reading
-          anything else. Mono chips, not prose — they are meant to be scanned. */}
+      {/* Le tre cose che chi compra vuole sistemate prima di leggere il resto.
+          Chip mono, non prosa: si scorrono. */}
       <ul className="plans-signals">
         {t("home.plans.signals").split("|").map((sig) => (
           <li key={sig} className="plans-signals__item">{sig}</li>
         ))}
       </ul>
 
-      <RevealStagger className="plans-bento">
-        {ENGAGEMENTS.map((e, i) => {
-          const feature = !!e.dark;
-          const features = t(`home.eng.${e.key}.features`).split("|");
-          const cta = (
-            <a href="/contatti" className="neo-btn neo-btn--primary plan-card__cta">
-              {t("home.plans.cta")} →
-            </a>
-          );
-          return (
-            <RevealItem
-              key={e.key}
-              className={`plan-card${feature ? " plan-card--feature" : ""}`}
-            >
-              <div className="plan-card__head">
-                {/* Just the folio: the old chip repeated the section eyebrow
-                    on every card (vault: Minimalism, remove before adding). */}
-                <span className="plan-card__badge">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="plan-card__title">{t(`home.eng.${e.key}.title`)}</h3>
-                {/* The figure sits right under the title, before the pitch: the
-                    card next door promises "Prezzo deciso prima", and until now
-                    the only number on the site was buried in a collapsed FAQ. */}
-                <p className="plan-card__price">
-                  {t(`home.eng.${e.key}.price`)}
-                  <span className="plan-card__pricenote">{t(`home.eng.${e.key}.priceNote`)}</span>
-                </p>
-                <p className="plan-card__desc">{t(`home.eng.${e.key}.desc`)}</p>
-                {feature && cta}
+      <div className="plans-pick">
+        <div className="plans-rail" role="tablist" aria-label={t("home.plans.title")}>
+          {KEYS.map((k, i) => {
+            const on = k === picked;
+            return (
+              <button
+                key={k}
+                type="button"
+                role="tab"
+                id={`plan-tab-${k}`}
+                aria-selected={on}
+                aria-controls={`plan-panel-${k}`}
+                className={`plans-rail__btn${on ? " is-on" : ""}`}
+                onClick={() => setPicked(k)}
+              >
+                <span className="plans-rail__n">{String(i + 1).padStart(2, "0")}</span>
+                <span className="plans-rail__t">{t(`home.eng.${k}.title`)}</span>
+                <span className="plans-rail__go" aria-hidden="true">→</span>
+              </button>
+            );
+          })}
+          <p className="plans-rail__note">{t("home.plans.note")}</p>
+        </div>
+
+        <div className="plans-panels">
+          {KEYS.map((k) => {
+            const on = k === picked;
+            return (
+              <div
+                key={k}
+                id={`plan-panel-${k}`}
+                role="tabpanel"
+                aria-labelledby={`plan-tab-${k}`}
+                className="plans-panel"
+                hidden={!on}
+              >
+                <div className="plans-panel__head">
+                  <h3 className="plans-panel__title">{t(`home.eng.${k}.title`)}</h3>
+                  <span className="plans-panel__price">{t(`home.eng.${k}.price`)}</span>
+                </div>
+                <p className="plans-panel__desc">{t(`home.eng.${k}.desc`)}</p>
+
+                <ul className="plans-panel__features">
+                  {t(`home.eng.${k}.features`).split("|").map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
+                </ul>
+
+                <p className="plans-panel__note">{t(`home.eng.${k}.priceNote`)}</p>
+
+                <div className="plans-panel__actions">
+                  <a href="/contatti" className="neo-btn neo-btn--primary">
+                    {t("home.plans.cta")} <span aria-hidden="true">→</span>
+                  </a>
+                  <a href="/prezzi" className="plans-pricelink">
+                    {t("home.plans.pricelink")} <span aria-hidden="true">→</span>
+                  </a>
+                </div>
               </div>
+            );
+          })}
+        </div>
+      </div>
 
-              <ul className="plan-card__features">
-                {features.map((f) => (
-                  <li key={f}>{f}</li>
-                ))}
-              </ul>
-
-              {!feature && cta}
-            </RevealItem>
-          );
-        })}
-      </RevealStagger>
-
-      <p
-        style={{
-          marginTop: 20,
-          fontFamily: "var(--font-mono)",
-          fontSize: 12,
-          color: "var(--ink-muted)",
-        }}
-      >
-        {t("home.plans.note")}
-      </p>
-
-      {/* What the figures do and don't cover. The clearest thing the reference
-          site did was spell out which costs are mine and which are yours — that
-          kind of note earns more trust than any reassuring adjective. */}
+      {/* Cosa coprono e cosa non coprono le cifre. La cosa piu' chiara che
+          faceva il sito di riferimento era dire quali costi sono miei e quali
+          tuoi: quel tipo di nota vale piu' di qualsiasi aggettivo rassicurante. */}
       <p className="plans-costnote">{t("home.plans.costnote")}</p>
-
-      {/* The full breakdown (deliverables, process, hosting) lives on /prezzi —
-          piling it in here would have made this the longest block on the page and
-          pushed the FAQ and the contact form far down the scroll. */}
-      <a href="/prezzi" className="plans-pricelink">
-        {t("home.plans.pricelink")} <span aria-hidden="true">→</span>
-      </a>
     </section>
   );
 }
