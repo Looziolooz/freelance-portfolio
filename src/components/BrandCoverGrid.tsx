@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Monogram } from "./BrandKit";
 import { useLang } from "./LangProvider";
 import { getBrandKit } from "@/lib/brand-kits";
@@ -55,16 +56,14 @@ const COVER_CSS = `
 
 .bcg__mark { flex: 1 1 auto; display: grid; place-items: center; padding: 14px 0; }
 
-.bcg__name {
-  font-weight: 600;
-  /* Un filo piu' piccolo, e si spezza solo quando la parola non entra davvero:
-     con overflow-wrap: anywhere un nome lungo e spaziato come Nordbageriet si
-     rompeva a meta parola anche quando ci sarebbe stato. */
-  font-size: clamp(17px, 1.7vw, 22px);
-  line-height: 1.08;
-  overflow-wrap: break-word;
-  hyphens: none;
-}
+/* Il logo vero, non il nome ricomposto con il carattere del kit. I file stanno
+   in /brand-logos, sono PNG trasparenti alti 168px, e finora non li usava
+   nessuno: la copertina mostrava una ricostruzione tipografica di una cosa che
+   esisteva gia' disegnata. */
+/* display:block e obbligatorio: e uno <span>, e uno span in linea ignora
+   altezza e larghezza, quindi l immagine in posizione assoluta riempiva una
+   scatola alta zero e il logo non si vedeva. */
+.bcg__logo { display: block; position: relative; width: 100%; height: 38px; }
 .bcg__tag {
   margin-top: 6px;
   font-size: 12.5px;
@@ -120,11 +119,14 @@ export default function BrandCoverGrid({ items }: { items: Project[] }) {
               </span>
 
               <span>
-                <span
-                  className="bcg__name"
-                  style={{ fontFamily: kit.display, letterSpacing: kit.tracking, display: "block" }}
-                >
-                  {kit.name}
+                <span className="bcg__logo">
+                  <Image
+                    src={`/brand-logos/${p.slug}/wordmark.png`}
+                    alt={kit.name}
+                    fill
+                    sizes="(max-width: 720px) 60vw, 240px"
+                    style={{ objectFit: "contain", objectPosition: "left center" }}
+                  />
                 </span>
                 {kit.tagline && (
                   <span className="bcg__tag" style={{ fontFamily: kit.body, display: "-webkit-box" }}>
