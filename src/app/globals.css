@@ -1164,7 +1164,7 @@ select:focus-visible,
 
 /* ─── Responsive nav ─── */
 
-@media (max-width: 767px) {
+@media (max-width: 899px) {
   .nav-links { display: none !important; }
   /* The drawer is already a column, so the panel unfolds inline under its
      parent instead of floating over it. There is no hover on a touch screen:
@@ -1175,6 +1175,9 @@ select:focus-visible,
     grid-template-columns: 1fr auto;
     align-items: center;
     row-gap: 0;
+    /* La riga si ferma qui: piu' larga di cosi', la freccia finisce lontana
+       dalla parola a cui appartiene. Su un telefono la misura non morde. */
+    max-width: 420px;
   }
   .nav-links.open .nav-sub__caret { font-size: 13px; padding: 6px 10px; }
   .nav-links.open .nav-sub__panel {
@@ -1218,7 +1221,7 @@ select:focus-visible,
   .nav-locale-extras { display: none !important; }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .nav-hamburger { display: none !important; }
 }
 
@@ -1720,10 +1723,13 @@ select:focus-visible,
 .cc-alt__or { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); }
 
 /* Booking widget */
-.bk { width: 100%; max-width: 620px; display: flex; flex-direction: column; gap: 20px; padding: clamp(22px, 3vw, 34px); border: 3px solid var(--ink-border); border-radius: var(--radius-lg); background: var(--canvas-panel-yellow); box-shadow: 6px 6px 0 var(--ink-shadow); }
-.bk-block { display: flex; flex-direction: column; gap: 10px; }
+.bk { width: 100%; max-width: 620px; min-width: 0; display: flex; flex-direction: column; gap: 20px; padding: clamp(22px, 3vw, 34px); border: 3px solid var(--ink-border); border-radius: var(--radius-lg); background: var(--canvas-panel-yellow); box-shadow: 6px 6px 0 var(--ink-shadow); }
+/* min-width: 0 e' quello che fa partire lo scorrimento della striscia dei
+   giorni: senza, l'elemento flex non scende sotto la larghezza del suo
+   contenuto e la spinge fuori dalla pagina. */
+.bk-block { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .bk-label { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); }
-.bk-days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.bk-days { display: flex; gap: 8px; overflow-x: auto; overscroll-behavior-x: contain; min-width: 0; padding-bottom: 4px; }
 .bk-day { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 12px; border: 2px solid var(--ink-border); border-radius: var(--radius); background: var(--canvas-page); cursor: pointer; font-family: var(--font-mono); transition: background .18s var(--ease), transform .18s var(--ease); }
 .bk-day:hover { transform: translateY(-2px); }
 .bk-day__dow { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-muted); }
@@ -2272,8 +2278,11 @@ select.ct-input[data-empty="true"] { color: var(--ink-muted); }
 .ct-kicker { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-green-deep); }
 .ct-title { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-display-xl); line-height: 1.02; letter-spacing: -0.02em; margin: 0; color: var(--fg); }
 .ct-sub { font-size: 17px; line-height: 1.6; color: var(--ink-body); opacity: 0.84; max-width: 56ch; }
-.ct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 3vw, 44px); align-items: start; }
-.ct-card { border: 3px solid var(--ink-border); border-radius: var(--radius-lg); background: var(--canvas-panel-grey); box-shadow: 6px 6px 0 var(--ink-shadow); padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 14px; }
+/* minmax(0, 1fr) invece di 1fr: un elemento di griglia ha min-width auto,
+   quindi con 1fr la scheda non poteva scendere sotto il suo contenuto e il
+   calendario dentro spingeva fuori tutta la pagina. */
+.ct-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 3vw, 44px); align-items: start; }
+.ct-card { min-width: 0; border: 3px solid var(--ink-border); border-radius: var(--radius-lg); background: var(--canvas-panel-grey); box-shadow: 6px 6px 0 var(--ink-shadow); padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 14px; }
 .ct-card__title { font-family: var(--font-display); font-weight: 500; font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -0.01em; margin: 0; color: var(--fg); }
 .ct-card__body { font-size: 15px; line-height: 1.6; color: var(--ink-body); opacity: 0.85; margin: 0; }
 .ct-form { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }
@@ -2773,10 +2782,10 @@ a.bento-svc--agents:hover     { background: color-mix(in srgb, var(--ground-deep
 }
 
 /* ── Mobile nav menu: surface language + theme inside the open drawer ── */
-@media (max-width: 767px) {
+@media (max-width: 899px) {
   .nav-mobile-extras { display: flex !important; gap: 10px; flex-wrap: wrap; padding-top: 4px; }
 }
-@media (min-width: 768px) { .nav-mobile-extras { display: none !important; } }
+@media (min-width: 900px) { .nav-mobile-extras { display: none !important; } }
 
 
 /* ════════════════════════════════════════════════════════════
@@ -3174,4 +3183,99 @@ body.theme-dark .topbar.is-scrolled,
 }
 @media (prefers-reduced-motion: reduce) {
   .hm-reveal { display: none; }
+}
+
+/* ─── Dita e occhi: telefono e tablet ────────────────────────────────────────
+   Misurato a 390 e 834 su otto pagine. Sotto i 44px un tocco sbaglia, sotto i
+   12px un'etichetta smette di essere informazione. Le classi qui sono quelle
+   che risultavano davvero sotto soglia, non un elenco preventivo.
+
+   La condizione tiene insieme due casi: uno schermo stretto, e un puntatore
+   grosso su schermo largo, che e' il tablet in orizzontale.
+
+   Le classi sono RADDOPPIATE (.x.x) di proposito. Gli stili dei componenti
+   sono iniettati nel corpo della pagina, quindi arrivano dopo questo foglio e a
+   parita' di specificita' vincono loro; raddoppiare la classe alza la
+   specificita' senza ricorrere a !important. */
+@media (max-width: 900px), (pointer: coarse) {
+  /* Il bersaglio cresce, il disegno no: il timbro e le pastiglie restano della
+     loro misura, e' l'area sensibile attorno che arriva a 44. */
+  .wordmark-link,
+  .topbar__nav a,
+  .nav-sub__panel a,
+  .cine-svc__link.cine-svc__link,
+  .cine-foot a,
+  .sfoot a,
+  .pfk__link.pfk__link,
+  .wke__all.wke__all,
+  .plans-pricelink,
+  .sv-cta a,
+  .ct-card a,
+  .sv-sec p a,
+  .ct-head p a,
+  .cookie-banner a,
+  .trust-proof {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .nav-sub__caret,
+  .status-pill,
+  .pg-filter,
+  .bk-slot,
+  .bk-day,
+  .neo-btn-sm,
+  .wayfinding-link,
+  .cookie-btn,
+  .dpl__btn,
+  .sdm__arrow,
+  .wfd__case,
+  .skl__link.skl__link {
+    min-height: 44px;
+  }
+  .nav-sub__caret { min-width: 44px; }
+  /* L'esca antispam del modulo deve restare invisibile e minuscola: e'
+     un campo che nessuna persona vede, e ingrandirlo lo mostrerebbe. */
+  .lead-hp { min-height: 0; }
+
+  /* La soglia di lettura: 12px. Scendevano a 9,5 sulle copertine.
+     Fuori da qui restano il suffisso del timbro (e' un logotipo, non testo) e i
+     diagrammi delle demo (sono immagini di interfacce: vanno scalate, non
+     ingrandite nel testo). */
+  .pg-cat.pg-cat,
+  .pg-tags.pg-tags,
+  .pg-brand__hint,
+  .bk-note,
+  .cine-svc__label.cine-svc__label,
+  .plans-panel__price,
+  .prz-tier__badge,
+  .sv-price__name.sv-price__name,
+  .sfoot__bar.sfoot__bar,
+  .tech__eyebrow,
+  .tech__name,
+  .wayfinding-label,
+  .skl__label.skl__label,
+  .bcg__kind.bcg__kind,
+  .bcg__domain.bcg__domain,
+  .bcg__tag.bcg__tag,
+  .wke__meta.wke__meta,
+  .wke__hint.wke__hint,
+  .pfk__n.pfk__n,
+  .pfk__meta dt,
+  .plans-signals__item,
+  .plans-rail__note,
+  .plans-panel__note,
+  .lead-field__label,
+  .lead-note,
+  .bk-label,
+  .bk-day__dow,
+  .faq-n,
+  .svp-driver dt,
+  .sv-guar span,
+  .label,
+  .pg-tags,
+  .prz-tier__note {
+    font-size: 12px;
+  }
 }

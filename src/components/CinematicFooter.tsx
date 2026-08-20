@@ -106,6 +106,21 @@ const CSS = `
 }
 .cine-pill:hover { box-shadow: 6px 6px 0 var(--ink-shadow); }
 .cine-pill--primary { background: var(--accent-green); color: var(--btn-ink); }
+/* La riga legale in fondo. La misura sta qui e non nello stile in linea proprio
+   perche' sul telefono deve poter salire: 11px in mano non si leggono, e uno
+   stile scritto in linea non lo corregge nessun foglio. */
+.cine-bottombar { padding: 0 24px 28px; }
+.cine-legal { font-size: 11px; }
+@media (max-width: 900px), (pointer: coarse) {
+  /* La bolla dell'assistente galleggia nell'angolo in basso a destra. Su uno
+     schermo stretto la barra va a capo e la seconda riga le finisce sotto:
+     "Cookie" spariva. Il fondo si alza quanto basta a passarci sotto. */
+  .cine-bottombar { padding-bottom: 96px; }
+  .cine-legal { font-size: 12px; }
+  a.cine-legal,
+  .cine-legal a { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
 `;
 
 export default function CinematicFooter() {
@@ -229,7 +244,7 @@ export default function CinematicFooter() {
 
           {/* Bottom bar — everything left-aligned so the bottom-right corner
               stays free for the Assistant FAB (it was covering the back-to-top). */}
-          <div style={{ position: "relative", zIndex: 3, width: "100%", padding: "0 24px 28px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "flex-start", gap: "clamp(14px, 2.5vw, 30px)" }}>
+          <div className="cine-bottombar" style={{ position: "relative", zIndex: 3, width: "100%", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "flex-start", gap: "clamp(14px, 2.5vw, 30px)" }}>
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
@@ -241,10 +256,10 @@ export default function CinematicFooter() {
                 <path d="M12 19V5M5 12l7-7 7 7" />
               </svg>
             </button>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cf-muted)" }}>
+            <div className="cine-legal" style={{ fontFamily: "var(--font-mono)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cf-muted)" }}>
               {t("contact.footer.copy")}
             </div>
-            <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cf-muted)" }}>
+            <div className="cine-legal" style={{ fontFamily: "var(--font-mono)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--cf-muted)" }}>
               {t("contact.footer.made")}
             </div>
             {/* A real mailto. The address was on the page as plain text and in the
@@ -252,12 +267,13 @@ export default function CinematicFooter() {
                 visitor could act on. */}
             <a
               href="mailto:hello@looz.design"
-              style={{ fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", color: "var(--cf-muted)", textDecoration: "none" }}
+              className="cine-legal"
+              style={{ fontFamily: "var(--font-mono)", fontWeight: 600, letterSpacing: "0.08em", color: "var(--cf-muted)", textDecoration: "none" }}
             >
               hello@looz.design
             </a>
             {/* Legal — always reachable (not gated by the pre-launch flag). */}
-            <div style={{ display: "flex", gap: 16, fontFamily: "var(--font-mono)", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+            <div className="cine-legal" style={{ display: "flex", gap: 16, fontFamily: "var(--font-mono)", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
               <a href="/privacy" style={{ color: "var(--cf-muted)", textDecoration: "none" }}>{t("nav.privacy")}</a>
               <a href="/cookie" style={{ color: "var(--cf-muted)", textDecoration: "none" }}>{t("nav.cookie")}</a>
             </div>
