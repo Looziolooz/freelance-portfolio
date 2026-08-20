@@ -337,8 +337,11 @@ button { font-family: inherit; cursor: pointer; }
 .topbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
   height: var(--topbar-h);
-  /* transparent over the hero; solidifies on scroll (.is-scrolled) */
-  background: transparent;
+  /* Il fondo c'e' sempre. Era trasparente perche' sulla home la barra restava
+     nascosta fino al primo scroll: da quando sta sempre a schermo, sopra la
+     fotografia della hero le voci sparivano. Lo scroll ora cambia solo la
+     misura, il bordo e l'ombra. */
+  background: var(--canvas-page);
   border-bottom: 3px solid transparent;
 }
 
@@ -417,32 +420,26 @@ button { font-family: inherit; cursor: pointer; }
 }
 .wordmark-link:hover .wm-stamp--compact { box-shadow: 3px 3px 0 var(--ink-shadow); }
 
-/* ── The dot ──
-   The one piece of colour in the whole name. It used to be forest, which is the
-   site's text-on-light accent and therefore reads as "this word is a link", not
-   as a mark. Ochre is the brand's own fill colour and it pops off the parchment.
-   Two craft notes that keep the choice working:
-   · ochre is a LIGHT hue, and a full stop is the smallest possible amount of
-     ink, so at 24px the nav mark would lose it. The dot is set 12% larger to
-     put back the area the colour needs, which is invisible as a size change and
-     decisive as a colour one.
-   · on the charcoal canvas the standard ochre goes muddy, so in dark mode it
-     lifts to the bright ochre the rest of the dark theme already uses.
-   · the ink ring. Ochre on parchment is warm-on-warm and the dot was floating;
-     a contour separates it from the paper and, more importantly, ties it back to
-     the 3px ink borders that every panel on this site already wears, so the mark
-     is drawn in the same hand as the rest. Built from eight text-shadows rather
-     than -webkit-text-stroke: the stroke is centred on the glyph edge and eats
-     into the fill, which on a glyph this small leaves almost no yellow. All the
-     offsets are in em, so the ring scales with the mark from 24px to 160px. */
+/* ── Il punto ──
+   L'unico colore del nome. Non e' forest ma ocra: il verde e' il colore dei
+   link del sito e faceva leggere il marchio come un collegamento, mentre
+   l'ocra e' il colore di riempimento della marca.
+
+   Due note che tengono in piedi la scelta:
+   · l'ocra e' chiaro e un punto fermo e' la minima quantita' possibile di
+     inchiostro, quindi a 24px il punto si perderebbe. E' impostato il 12% piu'
+     grande per restituire l'area che il colore richiede: invisibile come
+     cambio di misura, decisivo come cambio di colore.
+   · sulla tela scura l'ocra standard va in fango, quindi in tema scuro sale
+     all'ocra chiara che il resto del tema gia' usa.
+
+   Aveva anche un anello d'inchiostro costruito con otto ombre, per staccarlo
+   dalla pergamena. Non c'e' piu': dentro il timbro il contrasto lo da' il bordo
+   della pastiglia, e l'anello nero attorno al giallo si leggeva come una
+   sbavatura. */
 .wm-dot {
   color: var(--accent-green);
   font-size: 1.2em; line-height: 0;
-  text-shadow:
-     0.030em 0      0 var(--ink-border), -0.030em 0      0 var(--ink-border),
-     0      0.030em 0 var(--ink-border),  0     -0.030em 0 var(--ink-border),
-     0.021em 0.021em 0 var(--ink-border), -0.021em -0.021em 0 var(--ink-border),
-     0.021em -0.021em 0 var(--ink-border), -0.021em 0.021em 0 var(--ink-border);
 }
 [data-theme="dark"] .wm-dot { color: var(--accent-green-bright); }
 .wordmark-link .accent { color: var(--accent-green-deep); }
@@ -2905,11 +2902,10 @@ a:hover .btn-arrow, button:hover .btn-arrow, .magnetic:hover .btn-arrow { transf
    children every frame (impeccable detector); the 8px snap hides under the
    box-shadow/background cross-fade. */
 .topbar { transition: box-shadow 0.3s var(--ease), background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.4s var(--ease), opacity 0.3s var(--ease); }
-/* Hidden over the hero (homepage) until the first scroll; slides down on scroll. */
+/* Scorrendo la barra si stringe e prende bordo e ombra. */
 .topbar.is-hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; }
 .topbar.is-scrolled {
   height: 56px;
-  background: var(--canvas-page);
   border-bottom-color: var(--ink-border);
   box-shadow: 0 16px 30px -22px rgba(20, 17, 13, 0.45);
 }
