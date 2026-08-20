@@ -63,17 +63,21 @@ const CSS = `
   text-decoration: none;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(34px, 8.8vw, 112px);
+  font-size: clamp(38px, 9.8vw, 128px);
   line-height: 1.01;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--skl-dim);
   transition: color 0.4s var(--ease), opacity 0.4s var(--ease);
 }
-/* On the centre line, hovered, or focused: lit. */
+/* Sulla linea di mezzo, sotto il cursore o col fuoco: accesa.
+   Accesa vuol dire ocra, non crema: e il colore della marca, e su questo fondo
+   scuro regge il contrasto meglio del bianco sporco che c era prima. La regola
+   del testo scuro sull ocra vale per i riempimenti, non per il testo ocra su un
+   fondo di inchiostro. */
 .skl__item.is-on .skl__link,
 .skl__link:hover,
-.skl__link:focus-visible { color: var(--skl-ink); }
+.skl__link:focus-visible { color: var(--accent-green); }
 .skl__link:focus-visible { outline: 2px solid var(--accent-green); outline-offset: 6px; }
 
 /* Pointing at one dims the rest, so the list answers the cursor as a whole. */
