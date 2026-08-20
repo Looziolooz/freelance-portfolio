@@ -646,10 +646,18 @@ const CSS = `
      side by side on a 390px screen the sub ran off the right edge of every
      card: "risponde nella lingua del me…". Stacked, it wraps and reads. */
   .wfc__node {
-    position: static;
+    /* relative, non static: il numero del passo si ancora al suo nodo. E
+       inset:auto perche left/top della regola base sono le coordinate del
+       grafo largo: su un elemento relative tornerebbero scarti, e spedirebbero
+       le schede fuori colonna. */
+    position: relative;
+    inset: auto;
     width: auto;
     height: auto;
     min-height: 0;
+    /* La regola base taglia quello che esce dalla scheda, e il numero del passo
+       sta apposta fuori dal bordo sinistro: senza questo non si vede. */
+    overflow: visible;
     flex-direction: row;
     align-items: flex-start;
     gap: 10px;
@@ -664,16 +672,83 @@ const CSS = `
     margin-top: 3px; margin-left: 0; padding-left: 0;
     text-align: left; white-space: normal;
   }
-  .wfc__node--capability { margin-left: 26px; }
   .wfc__node--trigger { border-radius: var(--radius-lg); padding-left: 14px; }
+  .wfc__node.is-on { animation: none; }
+
+  /* ── Da pila a sequenza ────────────────────────────────────────────────
+     Quello che segue e' il vero lavoro: senza numeri, senza un filo e senza
+     una gerarchia visibile, dieci scatole della stessa forma non raccontano
+     un processo. Su schermo largo lo raccontano i fili; qui devono dirlo
+     l'ordine e il rientro. */
+
+  /* Il filo. Corre dietro la colonna e unisce i passi come sul grafo largo. */
+  .wfc__plane { position: relative; padding-left: 34px; }
+  .wfc__plane::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 14px;
+    bottom: 14px;
+    width: 2px;
+    background: color-mix(in oklch, var(--ink-border) 34%, transparent);
+  }
+
+  /* I numeri. Contatore CSS: la sequenza si vede senza toccare i dati, e le
+     risorse non incrementano perche' non sono passi del processo. */
+  .wfc__plane { counter-reset: wfc-passo; }
+  .wfc__node:not(.wfc__node--capability) { counter-increment: wfc-passo; }
+  .wfc__node:not(.wfc__node--capability)::after {
+    content: counter(wfc-passo, decimal-leading-zero);
+    position: absolute;
+    left: -34px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    box-sizing: border-box;
+    border: 2px solid var(--ink-border);
+    border-radius: 50%;
+    background: var(--canvas-page);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink-body);
+  }
+
+  /* Le risorse: rientrate, con una tacca che le aggancia al passo sopra. Non
+     sono tappe, sono cose che al passo servono. */
+  .wfc__node--capability { margin-left: 30px; }
+  .wfc__node--capability::after {
+    content: "";
+    position: absolute;
+    left: -18px;
+    top: 50%;
+    width: 14px;
+    height: 2px;
+    background: color-mix(in oklch, var(--ink-border) 34%, transparent);
+  }
+
+  /* Le strade possibili di una decisione: sotto di lei, rientrate, in fila.
+     Sparse a sinistra sembravano scarti di layout. */
   .wfc__pill {
     position: static;
     transform: none;
     align-self: flex-start;
-    margin-left: 26px;
+    margin-left: 30px;
     max-width: none;
+    font-size: 12px;
+    padding: 5px 12px;
   }
-  .wfc__node.is-on { animation: none; }
+
+  /* La misura del testo. Il nome stava a 11,5px e la riga sotto a 9,5: in mano
+     diventano decorazione. */
+  .wfc__node .wfc__label { font-size: 14px; line-height: 1.3; }
+  .wfc__node .wfc__sub { font-size: 12px; line-height: 1.4; }
+  .wfc__node--capability .wfc__label { font-size: 13px; }
+  .wfc__glyph { width: 18px; height: 18px; }
+  .wfc__node { padding: 12px 14px; gap: 4px; border-width: 2px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

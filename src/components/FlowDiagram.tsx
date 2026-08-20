@@ -69,6 +69,15 @@ const CSS = `
 /* Under roughly a phone's width the row becomes a column and the connectors
    turn upright, because three cards side by side stop being readable long
    before they stop fitting. */
+/* Sotto i 12px le didascalie del diagramma smettono di essere leggibili in
+   mano: stavano fra 10 e 11,5. La composizione non cambia, solo la misura. */
+@container (max-width: 640px) {
+  .fdg__cap { font-size: 12px; }
+  .fdg__stack { font-size: 12px; }
+  .fdg__body { font-size: 14px; line-height: 1.5; }
+  .fdg__title { font-size: 18px; }
+}
+
 @container (max-width: 640px) {
   .fdg__grid { grid-template-columns: 1fr; }
   .fdg__wire { width: 3px; height: 26px; justify-self: center; }

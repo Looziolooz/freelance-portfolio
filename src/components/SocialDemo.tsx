@@ -108,6 +108,15 @@ const CSS = `
 .sdm__aside { display: flex; flex-direction: column; gap: 6px; max-width: 54ch; }
 .sdm__aside dt { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-green-deep); }
 .sdm__aside dd { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--ink-body); }
+/* Stessa cura per la demo dei contenuti: la fonte, i tag e il contatore
+   scendevano a 10,5. */
+@container (max-width: 660px) {
+  .sdm__hint { font-size: 12.5px; }
+  .sdm__src { font-size: 12px; }
+  .sdm__tags { font-size: 12px; }
+  .sdm__count { font-size: 12px; }
+  .sdm__muted { font-size: 12px; }
+}
 `;
 
 export default function SocialDemo() {

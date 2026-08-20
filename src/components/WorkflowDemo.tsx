@@ -111,6 +111,21 @@ const CSS = `
   100% { left: 100%; opacity: 0; }
 }
 
+/* Le didascalie della demo stavano fra 9,5 e 11,5px: il numero del caso, la
+   regola che scatta, lo stato. Sono esattamente le parti che spiegano cosa
+   sta succedendo, quindi sono le ultime che possono restare piccole. */
+@container (max-width: 700px) {
+  .wfd__hint { font-size: 12.5px; }
+  .wfd__cap { font-size: 12px; }
+  .wfd__case-label { font-size: 12px; }
+  .wfd__case-tag { font-size: 12px; }
+  .wfd__rule { font-size: 13px; line-height: 1.5; }
+  .wfd__badge { font-size: 12px; }
+  .wfd__line { font-size: 13px; line-height: 1.5; }
+  .wfd__status { font-size: 12px; }
+  .wfd__title { font-size: 18px; }
+}
+
 @container (max-width: 700px) {
   .wfd__grid { grid-template-columns: 1fr; }
   .wfd__wire { width: 3px; height: 26px; justify-self: center; }
