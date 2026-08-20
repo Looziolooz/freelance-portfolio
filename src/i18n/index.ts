@@ -647,7 +647,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "serv.pricelink": "Come si decide il costo, e i tempi",
     "serv.pricelink.after": "insieme a cosa ricevi, come funziona, hosting e dominio.",
 
-    "serv.marchio.title": "Un marchio che regge anche senza di te.",
+    "serv.marchio.title": "Un marchio, e le istruzioni per usarlo.",
     "serv.marchio.lede": "Nome, segno, colori e caratteri, e poi il fascicolo che tiene tutto insieme quando a usarlo sono altre persone: chi stampa il menu, chi gestisce i social, chi ti monta l'insegna.",
     "serv.marchio.includes.title": "Cosa ti porti a casa.",
     "serv.marchio.includes": "Nome e segno::Il marchio disegnato da zero, nelle versioni che servono davvero: grande, piccolo, su fondo chiaro e su fondo scuro.|Colori e caratteri::La palette e i caratteri scelti insieme, con scritto dove va ognuno invece di lasciarlo al caso.|Il fascicolo::Un manuale che si sfoglia, non un file che nessuno apre: dove il marchio va, dove non va, e perché.|Le applicazioni::Biglietti, menu, insegne, magliette, packaging. Le cose su cui il marchio finisce davvero.|I file pronti::Vettoriali per la stampa e versioni per lo schermo, a tuo nome, pronti da mandare a chi ti serve.|Il tono di voce::Come parla il marchio, con gli esempi. Un segno giusto e dei testi sbagliati si annullano a vicenda.",
@@ -1792,7 +1792,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "serv.pricelink": "How the cost is decided, and the timing",
     "serv.pricelink.after": "along with what you get, how it works, hosting and domain.",
 
-    "serv.marchio.title": "A brand that holds up without you in the room.",
+    "serv.marchio.title": "A brand, and the instructions for using it.",
     "serv.marchio.lede": "Name, mark, colours and type, and then the manual that holds it together once other people are the ones using it: whoever prints the menu, runs the social accounts, or puts up your sign.",
     "serv.marchio.includes.title": "What you take home.",
     "serv.marchio.includes": "Name and mark::The brand drawn from nothing, in the versions you actually need: large, small, on light and on dark.|Colours and type::The palette and the typefaces chosen together, with it written down where each one goes instead of left to chance.|The manual::A document you page through, not a file nobody opens: where the brand goes, where it does not, and why.|The applications::Cards, menus, signs, shirts, packaging. The things a brand actually ends up on.|The files, ready::Vectors for print and versions for screen, in your name, ready to send to whoever needs them.|The tone of voice::How the brand speaks, with examples. A good mark and bad words cancel each other out.",
@@ -2889,7 +2889,7 @@ export const dict: Record<Lang, Record<string, string>> = {
     "serv.pricelink": "Så bestäms kostnaden, och tiderna",
     "serv.pricelink.after": "tillsammans med vad du får, hur det fungerar, hosting och domän.",
 
-    "serv.marchio.title": "Ett varumärke som håller även utan dig.",
+    "serv.marchio.title": "Ett varumärke, och instruktionerna för att använda det.",
     "serv.marchio.lede": "Namn, märke, färger och typsnitt, och sedan manualen som håller ihop det när andra är de som använder det: den som trycker menyn, sköter sociala medier eller sätter upp din skylt.",
     "serv.marchio.includes.title": "Vad du får med dig.",
     "serv.marchio.includes": "Namn och märke::Varumärket ritat från ingenting, i de versioner du faktiskt behöver: stort, litet, på ljus och på mörk botten.|Färger och typsnitt::Paletten och typsnitten valda tillsammans, med nedskrivet var var och en hör hemma i stället för överlämnat åt slumpen.|Manualen::Ett dokument man bläddrar i, inte en fil ingen öppnar: var märket får synas, var det inte får synas, och varför.|Tillämpningarna::Kort, menyer, skyltar, tröjor, förpackningar. Sakerna ett varumärke faktiskt hamnar på.|Filerna, färdiga::Vektorer för tryck och versioner för skärm, i ditt namn, redo att skickas till den som behöver dem.|Tonen::Hur varumärket talar, med exempel. Ett bra märke och fel ord tar ut varandra.",
