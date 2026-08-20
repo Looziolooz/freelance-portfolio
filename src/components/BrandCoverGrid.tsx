@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { dimOn } from "@/lib/contrast";
 import { Monogram } from "./BrandKit";
 import { useLang } from "./LangProvider";
 import { getBrandKit } from "@/lib/brand-kits";
@@ -51,7 +52,6 @@ const COVER_CSS = `
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0.68;
 }
 
 .bcg__mark { flex: 1 1 auto; display: grid; place-items: center; padding: 14px 0; }
@@ -68,18 +68,19 @@ const COVER_CSS = `
   margin-top: 6px;
   font-size: 12.5px;
   line-height: 1.45;
-  opacity: 0.76;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
 }
+/* Niente opacita' su queste tre righe: smorzava anche il contrasto, e su carte
+   chiare le portava fra 3,79 e 4,48. Il grigio ora e' calcolato sul fondo vero
+   di ogni kit (dimOn), quindi resta quieto ma misurabile. */
 .bcg__domain {
   margin-top: 10px;
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
-  opacity: 0.6;
 }
 
 /* La palette come striscia sul bordo basso: si legge come il taglio colorato
@@ -103,6 +104,9 @@ export default function BrandCoverGrid({ items }: { items: Project[] }) {
         {items.map((p) => {
           const kit = getBrandKit(p.slug);
           if (!kit) return null;
+          // Il grigio delle righe secondarie, misurato sulla carta di QUESTO
+          // kit: la stessa opacita' su carte diverse da contrasti diversi.
+          const quieto = dimOn(kit.ink, kit.paper);
           return (
             <Link
               key={p.id}
@@ -112,7 +116,7 @@ export default function BrandCoverGrid({ items }: { items: Project[] }) {
               style={{ background: kit.paper, color: kit.ink }}
               aria-label={`${kit.name} — ${t("bdeck.eyebrow")}`}
             >
-              <span className="bcg__kind">{t("bdeck.eyebrow")}</span>
+              <span className="bcg__kind" style={{ color: quieto }}>{t("bdeck.eyebrow")}</span>
 
               <span className="bcg__mark">
                 {/* Il segno, non le iniziali: sotto c'e' gia' il logo scritto,
@@ -131,11 +135,11 @@ export default function BrandCoverGrid({ items }: { items: Project[] }) {
                   />
                 </span>
                 {kit.tagline && (
-                  <span className="bcg__tag" style={{ fontFamily: kit.body, display: "-webkit-box" }}>
+                  <span className="bcg__tag" style={{ fontFamily: kit.body, display: "-webkit-box", color: quieto }}>
                     {kit.tagline}
                   </span>
                 )}
-                {kit.domain && <span className="bcg__domain" style={{ display: "block" }}>{kit.domain}</span>}
+                {kit.domain && <span className="bcg__domain" style={{ display: "block", color: quieto }}>{kit.domain}</span>}
               </span>
 
               <span className="bcg__strip" aria-hidden="true">

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { readableOn, dimOn } from "@/lib/contrast";
 import Image from "next/image";
 import { useLang } from "./LangProvider";
 import { PROJECTS, CATEGORIES, type Project, type ProjectCategory } from "@/lib/projects";
@@ -18,18 +19,12 @@ import { PROJECTS, CATEGORIES, type Project, type ProjectCategory } from "@/lib/
 // three rows.
 const POOL = PROJECTS.filter((p) => p.featured && !p.hidden);
 
-// Pick a readable ink for a swatch: light text on dark/rich colours, dark text
-// on pale ones. Keeps the brand-coloured chip legible without a per-project
-// manual override.
+// Il colore del testo sopra la tinta di un marchio non si sceglie con una
+// soglia di luminosita': quella decideva "bianco" per #E8C4A0, che misura 1,63.
+// Vince chi contrasta di piu', calcolato sul colore vero.
 function inkFor(hex: string | undefined): string {
   if (!hex) return "#fff";
-  const m = hex.replace("#", "");
-  const r = parseInt(m.slice(0, 2), 16) / 255;
-  const g = parseInt(m.slice(2, 4), 16) / 255;
-  const b = parseInt(m.slice(4, 6), 16) / 255;
-  const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
-  const L = 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
-  return L > 0.6 ? "#16151a" : "#fff";
+  return readableOn(hex);
 }
 
 // The discipline pages under /work reuse this grid with their own slice of the
@@ -163,7 +158,8 @@ function ProjectCard({ p }: { p: Project }) {
         href={`/work/${p.slug}`}
         prefetch={false}
         className="pg-card"
-        style={{ ["--sw" as string]: p.swatch ?? "#16151a", ["--sw-ink" as string]: ink } as React.CSSProperties}
+        style={{ ["--sw" as string]: p.swatch ?? "#16151a", ["--sw-ink" as string]: ink,
+                 ["--sw-hint" as string]: dimOn(ink, p.swatch ?? "#16151a") } as React.CSSProperties}
         aria-label={`${title} — ${t("work.viewDemo")}`}
         onMouseEnter={hoverPlay}
         onMouseLeave={hoverPause}

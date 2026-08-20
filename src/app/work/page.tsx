@@ -20,6 +20,11 @@ export default function WorkPage() {
     <>
       <ScrollProgress />
       <Nav />
+      {/* Il <main> mancava: senza, l'intestazione della pagina veniva letta come
+          un secondo "banner" accanto alla barra, e la griglia piu' il modulo di
+          chiusura restavano contenuto orfano per chi naviga per punti di
+          riferimento. */}
+      <main>
       <header
         className="container"
         style={{ paddingTop: "calc(var(--topbar-h) + clamp(44px, 7vw, 96px))" }}
@@ -37,6 +42,7 @@ export default function WorkPage() {
           of them, so there was nothing left for it to reveal. */}
       <ProjectGallery />
       <ContactClose />
+      </main>
       <SiteFooter />
     </>
   );

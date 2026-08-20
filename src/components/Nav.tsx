@@ -44,7 +44,10 @@ export default function Nav() {
   const closeAll = () => { setMenuOpen(false); setSubOpen(false); };
 
   return (
-    <div className={`topbar${scrolled ? " is-scrolled" : ""}${hideTop ? " is-hidden" : ""}${pathname === "/agents" ? " topbar--onyellow" : ""}`}>
+    /* <header> e non <div>: cosi la barra diventa un punto di riferimento
+       della pagina (banner), e il marchio piu le voci smettono di essere
+       contenuto orfano per chi naviga per landmark. */
+    <header className={`topbar${scrolled ? " is-scrolled" : ""}${hideTop ? " is-hidden" : ""}${pathname === "/agents" ? " topbar--onyellow" : ""}`}>
       <div className="topbar__inner">
         {/* Wordmark */}
         <a href="/" className="wordmark-link">
@@ -229,6 +232,6 @@ export default function Nav() {
           {menuOpen ? "✕" : "☰"}
         </button>
       </div>
-    </div>
+    </header>
   );
 }

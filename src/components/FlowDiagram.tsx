@@ -121,7 +121,10 @@ export default function FlowDiagram({ project }: { project: Project }) {
       <div className="fdg__grid">
         <div className="fdg__stage">
           <span className="fdg__cap">01 · {t("flow.s1")}</span>
-          <h3 className="fdg__title">{title}</h3>
+          {/* Non un titolo: ripete parola per parola l'H1 della pagina, e sta
+              dentro una figura (role="group"). Nell'indice era un doppione
+              che faceva anche saltare i livelli. */}
+          <p className="fdg__title">{title}</p>
           {!missing(tags, ".tags") && <span className="fdg__stack">{tags}</span>}
         </div>
 

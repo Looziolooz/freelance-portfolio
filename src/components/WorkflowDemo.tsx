@@ -43,6 +43,8 @@ const CSS = `
   text-transform: uppercase; color: var(--accent-green-deep); font-weight: 700;
 }
 .wfd__stage--rule .wfd__cap { color: var(--accent-green); }
+/* h2 e non h3: sono le tre tappe del caso, e sopra di loro c'e' solo l'H1
+   della pagina. A h3 l'indice saltava un livello. L'aspetto non cambia. */
 .wfd__title {
   font-family: var(--font-display); font-weight: 600; font-size: clamp(15px, 2.2cqw, 20px);
   line-height: 1.15; letter-spacing: -0.01em; margin: 0; color: var(--fg);
@@ -168,7 +170,7 @@ export default function WorkflowDemo({ projectKey }: { projectKey: string }) {
       <div className="wfd__grid">
         <div className="wfd__stage">
           <span className="wfd__cap">01 · {wf.s1}</span>
-          <h3 className="wfd__title">{wf.s1title}</h3>
+          <h2 className="wfd__title">{wf.s1title}</h2>
           <div className="wfd__cases">
             {wf.cases.map((c, n) => (
               <button
@@ -189,7 +191,7 @@ export default function WorkflowDemo({ projectKey }: { projectKey: string }) {
 
         <div className="wfd__stage wfd__stage--rule">
           <span className="wfd__cap">02 · {wf.s2}</span>
-          <h3 className="wfd__title">{wf.s2title}</h3>
+          <h2 className="wfd__title">{wf.s2title}</h2>
           <p className="wfd__rule dpl-swap" key={index}>{active.rule}</p>
           <span className="wfd__badge">{wf.badge}</span>
         </div>
@@ -198,7 +200,7 @@ export default function WorkflowDemo({ projectKey }: { projectKey: string }) {
 
         <div className={`wfd__stage wfd__stage--out${active.held ? " is-held" : ""}`}>
           <span className="wfd__cap">03 · {wf.s3}</span>
-          <h3 className="wfd__title">{wf.s3title}</h3>
+          <h2 className="wfd__title">{wf.s3title}</h2>
           <div className="wfd__out dpl-swap" key={index} aria-live="polite">
             {active.out.map((line) => (
               <p key={line} className="wfd__line">{line}</p>

@@ -1282,7 +1282,9 @@ select:focus-visible,
   width: min(46%, 560px); display: flex; flex-direction: column; gap: 16px;
   color: var(--ink-body); will-change: transform, opacity;
 }
-.hm-kicker { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #766d5e; }
+/* Su fondo scuro #766d5e misurava 3,47. #8E8475 e il grigio piu vicino che
+   supera la soglia: la riga resta quieta, si legge. */
+.hm-kicker { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #8E8475; }
 /* Hero copy is a full SENTENCE (long), so it uses a restrained size — NOT
    --fs-display-xl, which is sized for short page titles. Big enough to lead,
    small enough to read in ~4 lines inside the 560px statement column. */
@@ -1389,7 +1391,9 @@ select:focus-visible,
 .sec-head__title { margin: 0; font-family: var(--font-display); font-weight: 600; font-size: var(--fs-display-md); line-height: 1.05; letter-spacing: -0.02em; color: var(--fg); }
 .sec-head__sub { margin: 0; font-family: var(--font-ui); font-size: clamp(15px, 1.2vw, 17px); line-height: 1.55; color: var(--ink-muted); max-width: 54ch; }
 /* Ink tone — header on the ochre Audit panel (dark text, never white). */
-.sec-head--ink .sec-head__eyebrow { color: var(--btn-ink); opacity: 0.72; }
+/* 0.72 su ocra misurava 4,26. A 0.8 sono 5,11, e la riga resta piu' quieta
+   del titolo com era intenzione. */
+.sec-head--ink .sec-head__eyebrow { color: var(--btn-ink); opacity: 0.8; }
 .sec-head--ink .sec-head__title, .sec-head--ink .sec-head__sub { color: var(--btn-ink); }
 /* Method section: same vertical rhythm as the other funnel sections. */
 .plans { padding: var(--section-y) 0; }
@@ -1683,7 +1687,9 @@ select:focus-visible,
 .pg-filter:focus-visible { outline: 3px solid var(--accent-green-deep); outline-offset: 3px; }
 .pg-filter.is-active { background: var(--accent-green); color: var(--btn-ink); }
 /* The count, set apart so the chip reads as label-then-number. */
-.pg-filter i { font-style: normal; margin-left: 2px; opacity: 0.55; font-variant-numeric: tabular-nums; }
+/* 0.55 portava il numero a 3,59 sul fondo carta. Resta piu' quieto della
+   parola, ma sopra la soglia. */
+.pg-filter i { font-style: normal; margin-left: 2px; opacity: 0.78; font-variant-numeric: tabular-nums; }
 .pg-filter.is-active i { opacity: 0.75; }
 .pg-empty { margin: clamp(20px, 4vw, 40px) 0; font-size: var(--fs-lg); color: var(--ink-muted); }
 
@@ -1702,7 +1708,9 @@ select:focus-visible,
   justify-content: center; gap: 10px; padding: 20px 22px; background: var(--sw, #16151a); color: var(--sw-ink, #fff);
 }
 .pg-brand__name { font-family: var(--font-display); font-weight: 600; font-size: clamp(20px, 2.6vw, 30px); line-height: 1.05; letter-spacing: -0.01em; }
-.pg-brand__hint { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+/* Il colore arriva gia' smorzato quanto il contrasto permette (dimOn), quindi
+   qui non serve un'opacita' che lo riporterebbe sotto soglia. */
+.pg-brand__hint { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--sw-hint, inherit); }
 
 @media (max-width: 720px) {
   .pg-grid { grid-template-columns: 1fr; gap: 18px; }
