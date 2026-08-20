@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { dimOn } from "@/lib/contrast";
-import { hasRealMark } from "@/lib/brand-logo-files";
+import { hasRealMark, hasRealWordmark, logoBg } from "@/lib/brand-logo-files";
 import { Monogram } from "./BrandKit";
 import { useLang } from "./LangProvider";
 import { getBrandKit } from "@/lib/brand-kits";
@@ -67,6 +67,17 @@ const COVER_CSS = `
    altezza e larghezza, quindi l immagine in posizione assoluta riempiva una
    scatola alta zero e il logo non si vedeva. */
 .bcg__logo { display: block; position: relative; width: 100%; height: 38px; }
+/* Il marchio fotografato porta con se il fondo del sito. Steso da bordo a bordo
+   con quel colore dietro si legge come il campo del marchio; ritagliato e
+   posato sulla carta si legge come un adesivo. */
+.bcg__logo--campo {
+  height: 52px;
+  margin: 0 -18px 2px;
+  width: auto;
+  padding: 7px 18px;
+  border-top: 2px solid var(--ink-border);
+  border-bottom: 2px solid var(--ink-border);
+}
 .bcg__tag {
   margin-top: 6px;
   font-size: 12.5px;
@@ -143,13 +154,19 @@ export default function BrandCoverGrid({ items }: { items: Project[] }) {
               </span>
 
               <span>
-                <span className="bcg__logo">
+                <span
+                  className={`bcg__logo${hasRealWordmark(p.slug) ? " bcg__logo--campo" : ""}`}
+                  style={hasRealWordmark(p.slug) ? { background: logoBg(p.slug) } : undefined}
+                >
                   <Image
                     src={`/brand-logos/${p.slug}/wordmark.png`}
                     alt={kit.name}
                     fill
                     sizes="(max-width: 720px) 60vw, 240px"
-                    style={{ objectFit: "contain", objectPosition: "left center" }}
+                    style={{
+                      objectFit: "contain",
+                      objectPosition: hasRealWordmark(p.slug) ? "center" : "left center",
+                    }}
                   />
                 </span>
                 {kit.tagline && (
