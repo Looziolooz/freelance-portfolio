@@ -64,7 +64,25 @@ function variantColors(kit: Kit, v: Variant) {
   return { bg: kit.paper, fg: kit.ink, border: kit.ink }; // outline
 }
 
-export function Monogram({ kit, variant = "solid", size = 120 }: { kit: Kit; variant?: Variant; size?: number }) {
+/**
+ * Il segno del marchio: la forma dichiarata dal kit, con dentro le iniziali
+ * oppure il motivo disegnato.
+ *
+ * `glyph="motif"` e' quello che rende il marchio un simbolo invece che una
+ * lettera. La forma, i colori e il ritaglio dello scudo restano identici: e'
+ * solo il contenuto che cambia, cosi' le due versioni non possono divergere.
+ */
+export function Monogram({
+  kit,
+  variant = "solid",
+  size = 120,
+  glyph = "letters",
+}: {
+  kit: Kit;
+  variant?: Variant;
+  size?: number;
+  glyph?: "letters" | "motif";
+}) {
   const c = variantColors(kit, variant);
   const isRing = kit.shape === "ring";
   const isShield = kit.shape === "shield";
@@ -82,7 +100,11 @@ export function Monogram({ kit, variant = "solid", size = 120 }: { kit: Kit; var
     lineHeight: 1,
     borderRadius: radius,
     background: isRing ? c.bg : c.bg,
-    color: isRing ? c.border : c.fg,
+    /* Sull anello il contenuto prendeva sempre il colore del bordo: giusto per
+       la variante a contorno, sbagliato per quella piena, dove bordo e fondo
+       sono lo stesso colore e il segno spariva. Atelier Solari era un cerchio
+       vuoto da prima che ci fosse un simbolo dentro. */
+    color: isRing && variant === "outline" ? c.border : c.fg,
     border: variant === "outline" ? `2.5px solid ${c.border}` : isRing ? `${Math.max(3, size * 0.06)}px solid ${c.border}` : "none",
     boxShadow: isRing ? `inset 0 0 0 2px ${c.border}` : "none",
     clipPath: isShield ? "polygon(50% 0%, 100% 24%, 100% 62%, 50% 100%, 0% 62%, 0% 24%)" : undefined,
@@ -90,7 +112,15 @@ export function Monogram({ kit, variant = "solid", size = 120 }: { kit: Kit; var
   };
   if (isShield) { style.background = c.bg; style.color = c.fg; style.border = "none"; style.boxShadow = "none"; }
 
-  return <span style={style} aria-hidden="true">{kit.monogram}</span>;
+  // Il motivo eredita il colore dal contenitore (`currentColor` nei tracciati),
+  // quindi non serve passargli niente: prende gia' l'inchiostro giusto per la
+  // variante scelta.
+  const useMotif = glyph === "motif" && kit.motif !== "none";
+  return (
+    <span style={style} aria-hidden="true">
+      {useMotif ? <Motif name={kit.motif} size={size * (kit.shape === "shield" ? 0.42 : 0.5)} /> : kit.monogram}
+    </span>
+  );
 }
 
 // ---- Palette ------------------------------------------------------------------

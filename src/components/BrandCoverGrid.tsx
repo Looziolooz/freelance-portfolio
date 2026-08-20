@@ -115,7 +115,9 @@ export default function BrandCoverGrid({ items }: { items: Project[] }) {
               <span className="bcg__kind">{t("bdeck.eyebrow")}</span>
 
               <span className="bcg__mark">
-                <Monogram kit={kit} variant="solid" size={92} />
+                {/* Il segno, non le iniziali: sotto c'e' gia' il logo scritto,
+                    e ripetere le lettere due volte non e' un marchio. */}
+                <Monogram kit={kit} variant="solid" size={92} glyph="motif" />
               </span>
 
               <span>
