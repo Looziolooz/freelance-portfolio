@@ -10,7 +10,9 @@ import { EncryptedText } from "./ui/encrypted-text";
 // Hero: the studio portrait (B&W + brand ochre disc) as full-bleed footage that
 // the visitor SCRUBS by scroll — no autoplay/loop. A left-aligned studio
 // statement + two CTAs sit over the light side and parallax out as you scroll.
-// Desktop = tall sticky scrub; phones / reduced-motion = a static poster frame.
+// Desktop (>=1440) = tall sticky scrub; tablet and phone = the same footage
+// scrubbed through a stacked card, over that card's own transit; reduced motion
+// = a static poster frame.
 //
 // Two renderers share one box (see .hm-media in globals.css):
 //   1. the <video>, scrubbed by currentTime — always available, but seeking an
@@ -18,15 +20,18 @@ import { EncryptedText } from "./ui/encrypted-text";
 //   2. a <canvas> blitting frames pre-decoded into ImageBitmaps — no decode in
 //      the scroll path at all, so the motion is continuous.
 // The canvas path is desktop-only and starts on the first scroll; until its
-// frames exist the video covers, then they crossfade. Scroll progress is
+// frames exist the video covers, then they crossfade. Tablet and phone stay on
+// renderer 1 for good: the clip is downloaded there either way, so the scrub
+// costs them nothing extra, while the ~25MB of bitmaps would. Scroll progress is
 // lerped every rAF rather than mapped 1:1, which is what makes the footage
 // trail the scroll like inertia instead of snapping to it like a slider.
 const VIDEO = "/hero-motion/clouds.mp4";
 const POSTER = "/hero-motion/clouds-poster.jpg";
 
 // The machine under the man: the same portrait, same pose, same ochre disc, in
-// cyborg form. A spotlight follows the cursor and reveals it through the base
-// footage, which is the whole positioning of this studio in one gesture.
+// cyborg form. A spotlight reveals it through the base footage, which is the
+// whole positioning of this studio in one gesture. The spotlight follows the
+// cursor where there is one, and the scroll where there is not.
 //
 // The file is composed to the base frame's geometry: the source was 1065x1008
 // with its disc at radius 0.319w, the base is 1280x720 at 0.187w, so it was
@@ -39,8 +44,8 @@ const CURSOR_EASE = 0.1;   // per frame, toward the raw pointer
 
 // Extraction budget for the canvas path: 20 × 768×432 RGBA ≈ 20–25 MB of
 // bitmaps is enough to keep the scrub smooth without paying the full 64-frame
-// decode cost on every desktop viewport. The hero still keeps its motion, but
-// we only enable the expensive path on very large screens.
+// decode cost on every desktop viewport. Below 1440 the hero still scrubs, it
+// just does it through renderer 1 — only this bitmap budget is desktop-gated.
 const FRAMES = 20;
 const FRAME_W = 768;
 // Per-frame lerp constant. Lower = heavier trail; 0.12 lands on "footage".
@@ -54,6 +59,10 @@ export default function HeroMotion() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const revealRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  // Installed by the touch-reveal effect once (and only if) it has decided the
+  // 105KB cyborg frame is affordable on this connection. Null everywhere else,
+  // so the stacked paint pays one null check a frame and nothing more.
+  const revealDriveRef = useRef<((p: number) => void) | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -64,10 +73,14 @@ export default function HeroMotion() {
     if (!section || !media || !video || !canvas) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // Only the very largest desktops pay the full scrub decode budget. On the
-    // rest, the hero stays in the static-poster path so the page can keep a
-    // healthy LCP and TBT budget.
-    const overlay = window.matchMedia("(min-width: 1600px)").matches && !reduce;
+    // 1440, NOT 1600: this number MUST equal the CSS stacked breakpoint in
+    // globals.css (`@media (max-width: 1439px)`). It used to be 1600, and the
+    // 160px gap was a live layout bug — between 1440 and 1599 the CSS put
+    // .hm-content in the sticky path (top:50% + translateY(-50%)) while this
+    // flag put `paint` in the stacked path, which overwrites that transform
+    // with translateY(0) and dropped the whole statement half a screen. If you
+    // move one of the two, move the other in the same commit.
+    const overlay = window.matchMedia("(min-width: 1440px)").matches && !reduce;
     section.dataset.mode = overlay ? "scrub" : "poster";
 
     if (reduce) return; // static poster, no motion
@@ -215,6 +228,10 @@ export default function HeroMotion() {
             content.style.transform = `translateY(${(p * 18).toFixed(1)}px)`;
             content.style.opacity = Math.max(0, 1 - p * 1.1).toFixed(3);
           }
+          // Touch builds drive the spotlight from this same progress — see the
+          // reveal effect below. Deliberately NOT a second rAF loop: the ref is
+          // null until (and unless) that effect decides the reveal is affordable.
+          revealDriveRef.current?.(p);
         };
 
     // ── the loop: raw progress → lerp → render ────────────────────────────
@@ -224,12 +241,39 @@ export default function HeroMotion() {
     const loop = () => {
       if (!alive) return;
       const rect = section.getBoundingClientRect();
-      // overlay: the stage is sticky, so the travel is the section minus one
-      // viewport. stacked: the stage scrolls normally, travel is its height.
-      const travel = Math.max(1, overlay ? section.offsetHeight - window.innerHeight : section.offsetHeight);
-      const target = Math.min(1, Math.max(0, -rect.top / travel));
+      const vh = window.innerHeight;
+      let target: number;
+      if (overlay) {
+        // The stage is sticky, so the travel is the section minus one viewport.
+        target = Math.min(1, Math.max(0, -rect.top / Math.max(1, section.offsetHeight - vh)));
+      } else {
+        // Stacked, the section is the WRONG ruler. The portrait card is a
+        // 240-380px band pinned to the top of the stack (order:-1) with the
+        // whole statement below it, so by the time the section is a third
+        // scrolled the card has already left the screen — the visitor saw the
+        // first third of the clip and nothing else. That is why the hero read
+        // as "not animating" on tablet and phone.
+        //
+        // Progress is the CARD's own transit instead: 0 as its top edge enters
+        // at the bottom of the viewport, 1 as its bottom edge exits at the top.
+        // The whole clip now plays across exactly the span where it is visible.
+        //
+        // Measured off .hm-stage + offsetTop/offsetHeight rather than the
+        // card's own rect on purpose: `paint` writes a translate+scale to the
+        // card every frame, so reading its rect here would feed the transform
+        // back into the progress that produced it.
+        const stageTop = (media.offsetParent as HTMLElement | null)?.getBoundingClientRect().top ?? rect.top;
+        const mTop = stageTop + media.offsetTop;
+        const mH = media.offsetHeight;
+        target = Math.min(1, Math.max(0, (vh - mTop) / Math.max(1, vh + mH)));
+      }
       smoothed += (target - smoothed) * SMOOTHING;
-      if (target > 0) ensureVideo();
+      // `rect.top < 0`, NOT `target > 0`. They were the same thing while both
+      // paths measured the section, but the stacked path now measures the card
+      // — which is on screen at rest, so its progress starts around 0.4 and
+      // `target > 0` would fire the 311KB download at load, racing the poster
+      // that is this page's LCP. This still means "the visitor has scrolled".
+      if (rect.top < 0) ensureVideo();
       // Keep lerping while off-screen (so re-entry is already settled), but
       // skip the pixel work — nothing is watching.
       if (rect.bottom > 0 && rect.top < window.innerHeight) {
@@ -348,6 +392,110 @@ export default function HeroMotion() {
       cancelAnimationFrame(raf);
       section.removeEventListener("pointermove", onMove);
       section.removeEventListener("pointerleave", onLeave);
+    };
+  }, []);
+
+  // ── The same reveal on touch, driven by SCROLL instead of a finger ────────
+  //
+  // The desktop effect above bails on coarse pointers, and a finger-follow
+  // version would not fix either reason it bails: the finger sits exactly on
+  // top of the thing being revealed, and tracking touchmove on the hero means
+  // wrestling the page scroll. So the touch build does not move the spotlight
+  // with the touch at all — it sweeps across the portrait as the card transits
+  // the viewport, off the progress the stacked paint already computes. No
+  // second rAF loop, no listener on the scroll path, no scroll hijack.
+  //
+  // The 105KB frame is the whole cost, and it is spent only when all of this
+  // holds:
+  //   - Save-Data is off and the connection reports 4g. A hero easter egg is
+  //     not worth 105KB on a metered phone.
+  //   - the hero is actually on screen (IntersectionObserver, so a visitor who
+  //     lands deep-linked further down the page never pays for it).
+  //   - the browser is idle, so it queues behind the poster (LCP) and the clip.
+  // If any of those fails the ref stays null and the layer stays display:none.
+  useEffect(() => {
+    const section = sectionRef.current;
+    const media = mediaRef.current;
+    const reveal = revealRef.current;
+    if (!section || !media || !reveal) return;
+    // The pointer version owns fine pointers; this one is the touch build only.
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Only the stacked path calls revealDrive. A touch laptop wide enough for
+    // the sticky scrub would otherwise arm the layer, composite it, and never
+    // move it. Read back off the flag the first effect just set rather than
+    // re-testing the width, so there is one definition of the threshold.
+    if (section.dataset.mode !== "poster") return;
+
+    const conn = (navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }).connection;
+    if (conn?.saveData) return;
+    if (conn?.effectiveType && conn.effectiveType !== "4g") return;
+
+    let alive = true;
+    let cancelIdle: (() => void) | undefined;
+
+    const arm = () => {
+      if (!alive) return;
+      reveal.style.backgroundImage = `url("${REVEAL}")`;
+      // CSS holds this layer at display:none under (pointer: coarse); the flag
+      // is the opt-in that turns it back on, so a device that never reaches
+      // here never composites an extra full-card layer either.
+      section.dataset.reveal = "scroll";
+
+      revealDriveRef.current = (p) => {
+        const w = media.clientWidth;
+        const h = media.clientHeight;
+        // The stacked card is short and wide, so the desktop 260px circle would
+        // cover most of it and read as a haze instead of a spotlight.
+        const r = Math.max(90, Math.min(SPOTLIGHT_R, Math.round(Math.min(w, h) * 0.55)));
+        // Left to right across the portrait, crossing the face rather than the
+        // empty side: the ochre disc sits at ~0.47 of the frame.
+        const x = (0.24 + 0.52 * p) * w;
+        // A shallow arc, not a ruler line — a flat horizontal sweep reads as a
+        // UI wipe, the curve reads as something looking around.
+        const y = (0.44 + 0.07 * Math.sin(p * Math.PI)) * h;
+        // Up through the middle of the transit, out at both ends, so the cyborg
+        // is never left frozen half-revealed at the edge of the screen.
+        const on = Math.max(0, Math.min(1, Math.sin(p * Math.PI) * 1.7 - 0.1));
+        reveal.style.setProperty("--sr", `${r}px`);
+        reveal.style.setProperty("--mx", `${x.toFixed(1)}px`);
+        reveal.style.setProperty("--my", `${y.toFixed(1)}px`);
+        reveal.style.setProperty("--on", on.toFixed(3));
+      };
+    };
+
+    // Fetch first, arm second: flipping the flag before the bytes are in would
+    // show the mask sweeping over an empty layer for the length of the fetch.
+    const install = () => {
+      const img = new Image();
+      img.decoding = "async";
+      img.onload = arm;
+      img.src = REVEAL;
+    };
+
+    // Only once the hero is on screen, and only when the main thread is free.
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      const ric = window.requestIdleCallback;
+      if (ric) {
+        const id = ric(install, { timeout: 3000 });
+        cancelIdle = () => window.cancelIdleCallback?.(id);
+      } else {
+        const id = window.setTimeout(install, 1200);
+        cancelIdle = () => window.clearTimeout(id);
+      }
+    });
+    io.observe(media);
+
+    return () => {
+      alive = false;
+      io.disconnect();
+      cancelIdle?.();
+      revealDriveRef.current = null;
+      delete section.dataset.reveal;
     };
   }, []);
 

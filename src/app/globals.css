@@ -3185,12 +3185,18 @@ body.theme-dark .topbar.is-scrolled,
   --sr: 260px;
 }
 
-/* No cursor to follow, so nothing to reveal. */
+/* No cursor to follow — so by default there is nothing to reveal, and the layer
+   is not composited at all. HeroMotion turns it back on with [data-reveal] only
+   after it has decided the touch build can afford the 105KB frame; there the
+   spotlight is swept by SCROLL progress rather than by a finger. --on is written
+   every frame on that path, so the fade transition has to go: at 0.45s it would
+   lag a whole sweep behind the scroll and smear. */
 @media (hover: none), (pointer: coarse) {
   .hm-reveal { display: none; }
+  .hero-motion[data-reveal="scroll"] .hm-reveal { display: block; transition: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hm-reveal { display: none; }
+  .hm-reveal, .hero-motion[data-reveal] .hm-reveal { display: none; }
 }
 
 /* ─── Dita e occhi: telefono e tablet ────────────────────────────────────────
