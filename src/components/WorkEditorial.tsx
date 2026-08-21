@@ -146,7 +146,11 @@ const CSS = `
   max-width: 14ch;
 }
 .wke__sub { margin: 0; font-size: 16px; line-height: 1.65; color: var(--ink-muted); }
-.wke__hint { margin: 18px 0 0; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); }
+/* line-height, which this did not need while it read "clicca per entrare". It
+   now carries the disclosure about the brands, so it wraps to two lines, and
+   tracked caps at the inherited body leading drift apart into two unrelated
+   rows instead of one caption. */
+.wke__hint { margin: 18px 0 0; font-family: var(--font-mono); font-size: 10px; line-height: 1.5; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-muted); }
 
 .wke__grid { display: grid; grid-template-columns: 1fr; gap: clamp(20px, 2.6vw, 36px); }
 @media (min-width: 900px) { .wke__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
