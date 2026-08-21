@@ -224,10 +224,24 @@ export default function HeroMotion() {
         }
       : (p: number) => {
           media.style.transform = `translateY(${(p * -28).toFixed(1)}px) scale(${(1 + p * 0.05).toFixed(3)})`;
-          if (content) {
-            content.style.transform = `translateY(${(p * 18).toFixed(1)}px)`;
-            content.style.opacity = Math.max(0, 1 - p * 1.1).toFixed(3);
-          }
+          // The statement is deliberately NOT touched here. It used to drift and
+          // fade like the desktop one, and that was wrong twice over.
+          //
+          // Wrong in principle: the fade exists on desktop because the stage is
+          // PINNED. The copy has to clear itself out or it would sit on top of
+          // the portrait for the whole 220vh run. Stacked, nothing is pinned —
+          // the card is above the text and the page scroll carries both away on
+          // its own. There is nothing to clear.
+          //
+          // Wrong in fact, since progress became the card's transit: p hits 1
+          // when the card's bottom edge leaves the top of the viewport, and at
+          // that moment the statement underneath it is sitting dead centre on
+          // screen, fully readable and at opacity 0. The copy was dissolving in
+          // front of the reader.
+          //
+          // So on tablet and phone the statement is fixed: it enters once with
+          // the GSAP cascade below and then behaves like ordinary text.
+          //
           // Touch builds drive the spotlight from this same progress — see the
           // reveal effect below. Deliberately NOT a second rAF loop: the ref is
           // null until (and unless) that effect decides the reveal is affordable.
@@ -296,6 +310,11 @@ export default function HeroMotion() {
     // transform every frame and would fight one.
     let ctxg: gsap.Context | undefined;
     if (!overlay && content) {
+      // Clear anything the overlay paint may have written before a resize put
+      // us here: it leaves a translateY(calc(-50% ...)) and a faded opacity
+      // behind, and stacked nobody overwrites them any more.
+      content.style.transform = "";
+      content.style.opacity = "";
       ctxg = gsap.context(() => {
         // The slow register (vault: Luxury). Micro-hovers stay at 150-200ms;
         // the opening statement is the one place the page is allowed to take

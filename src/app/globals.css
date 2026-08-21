@@ -1330,7 +1330,12 @@ select:focus-visible,
   .hm-stage { position: relative; height: auto; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; gap: 26px; padding: 96px 22px 48px; }
   /* overflow:hidden so the rounded corner clips the renderers inside the box. */
   .hm-media { position: relative; right: auto; top: auto; bottom: auto; width: 100%; height: clamp(240px, 42vh, 380px); order: -1; border-radius: 14px; overflow: hidden; -webkit-mask-image: none; mask-image: none; }
-  .hm-content { position: relative; inset: auto; left: auto; top: auto; transform: none; width: 100%; gap: 14px; max-width: 640px; }
+  /* will-change: auto, overriding the base rule. Stacked, HeroMotion no longer
+     writes a transform or an opacity to the statement on any frame (the page
+     scroll carries it away instead of a fade), so promoting it to its own
+     compositor layer for the life of the page buys nothing and costs memory on
+     exactly the devices with the least of it. */
+  .hm-content { position: relative; inset: auto; left: auto; top: auto; transform: none; width: 100%; gap: 14px; max-width: 640px; will-change: auto; }
   .hm-h1 { font-size: clamp(34px, 9vw, 54px); line-height: 1.03; }
   .hm-statement { font-size: clamp(18px, 5vw, 24px); }
 }
