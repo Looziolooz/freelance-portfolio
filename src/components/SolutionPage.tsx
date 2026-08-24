@@ -16,18 +16,16 @@ import { SV_CSS } from "@/app/servizi/shared-css";
 import { SOL_CSS } from "@/app/soluzioni/shared-css";
 
 // Una soluzione, nell'ordine in cui si legge quando si sta valutando qualcuno:
-// ti riconosci nel problema, controlli che parli di te, vedi cosa verrebbe
-// costruito e cosa no, capisci cosa cambierebbe, e solo dopo guardi se la
-// persona sa farlo davvero.
+// ti riconosci nel problema, vedi cosa verrebbe costruito, capisci cosa
+// cambierebbe, guardi la prova, e i dettagli da contratto stanno a un tocco.
 //
-// Il catalogo da cui e' nata questa sezione mette ventidue sezioni per pagina,
-// ma FAQ, integrazioni, funzionalita', confronto e tempi compaiono due volte
-// ciascuno: e' conteggio parole, non informazione. Qui ogni cosa e' detta una
-// volta sola.
-//
-// "Cosa non e' compreso" non e' un vezzo di onesta': e' la sezione che evita la
-// discussione a lavoro iniziato, che e' il punto in cui un progetto piccolo si
-// rovina. Per lo stesso motivo le fasi portano una durata e non una promessa.
+// Seconda versione. La prima aveva dodici blocchi in fila e il committente
+// l'ha giudicata macchinosa: cinque schermate prima della chiamata. Ora i
+// blocchi visibili sono sette: problema e segnali sono un capitolo solo (sono
+// la stessa domanda, "parli di me?"), ed escluso, integrazioni e FAQ vivono
+// dentro un details "Dettagli pratici", stesse chiavi e stesso DOM per i
+// motori, un tocco per chi li vuole. "Cosa non e' compreso" resta scritto
+// perche' e' la sezione che evita la discussione a lavoro iniziato.
 
 /** "voce|voce" -> ["voce", …]. Vuoto se la chiave non e' tradotta. */
 function list(raw: string, key: string): string[] {
@@ -91,21 +89,22 @@ export default function SolutionPage({ s }: { s: Solution }) {
           <p className="sv-lede">{v("lede")}</p>
         </header>
 
+        {/* Problema e segnali sono la stessa domanda ("parli di me?") e stanno
+            in un capitolo solo: la prosa la racconta, la checklist la verifica. */}
         <section className="sv-sec" aria-label={t("sol.sec.problem")}>
           <h2 className="sv-h2">{t("sol.sec.problem")}</h2>
           <p className="sol-prose">{v("problem")}</p>
+          {signals.length > 0 && (
+            <>
+              <p className="sol-signals__lbl">{t("sol.sec.signals")}</p>
+              <ul className="sol-signals">
+                {signals.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </>
+          )}
         </section>
-
-        {signals.length > 0 && (
-          <section className="sv-sec" aria-label={t("sol.sec.signals")}>
-            <h2 className="sv-h2">{t("sol.sec.signals")}</h2>
-            <ul className="sol-signals">
-              {signals.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </section>
-        )}
 
         {build.length > 0 && (
           <section className="sv-sec" aria-label={t("sol.sec.build")}>
@@ -116,18 +115,6 @@ export default function SolutionPage({ s }: { s: Solution }) {
                   <h3>{item.title}</h3>
                   <p>{item.body}</p>
                 </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {excludes.length > 0 && (
-          <section className="sv-sec" aria-label={t("sol.sec.excludes")}>
-            <h2 className="sv-h2">{t("sol.sec.excludes")}</h2>
-            <p className="svp-proof-head">{t("sol.sec.excludes.sub")}</p>
-            <ul className="sol-excludes">
-              {excludes.map((item) => (
-                <li key={item}>{item}</li>
               ))}
             </ul>
           </section>
@@ -174,40 +161,61 @@ export default function SolutionPage({ s }: { s: Solution }) {
           </p>
         </section>
 
-        {integra.length > 0 && (
-          <section className="sv-sec" aria-label={t("sol.sec.integra")}>
-            <h2 className="sv-h2">{t("sol.sec.integra")}</h2>
-            <p className="svp-proof-head">{t("sol.sec.integra.sub")}</p>
-            <ul className="sol-chips">
-              {integra.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {faq.length > 0 && (
-          <section className="sv-sec sol-faq" aria-label={t("sol.sec.faq")}>
-            <h2 className="sv-h2">{t("sol.sec.faq")}</h2>
-            {/* <details> nativi: accessibili, senza JavaScript, e la pagina
-                resta leggibile anche se lo script non arriva mai. Stesso
-                oggetto della FAQ in home. */}
-            <div className="faq-list">
-              {faq.map((q, i) => (
-                <details key={q.title} className="faq-item" name={`sol-faq-${s.slug}`}>
-                  <summary className="faq-q">
-                    <span className="faq-n" aria-hidden="true">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span>{q.title}</span>
-                    <span className="faq-mark" aria-hidden="true" />
-                  </summary>
-                  <div className="faq-a">
-                    <p>{q.body}</p>
+        {/* La parte da contratto: esclusioni, collegamenti e domande. Un solo
+            details, aperto con un tocco; il contenuto resta nel DOM (i motori
+            lo leggono comunque) e le chiavi sono le stesse di prima. */}
+        {(excludes.length > 0 || integra.length > 0 || faq.length > 0) && (
+          <section className="sv-sec" aria-label={t("sol.sec.details")}>
+            <details className="sol-more">
+              <summary>
+                <span className="sol-more__title">{t("sol.sec.details")}</span>
+                <span className="sol-more__mark" aria-hidden="true" />
+              </summary>
+              <p className="sol-more__sub">{t("sol.sec.details.sub")}</p>
+              <div className="sol-more__body">
+                {excludes.length > 0 && (
+                  <div>
+                    <h3 className="sol-more__h">{t("sol.sec.excludes")}</h3>
+                    <ul className="sol-excludes">
+                      {excludes.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
                   </div>
-                </details>
-              ))}
-            </div>
+                )}
+                {integra.length > 0 && (
+                  <div>
+                    <h3 className="sol-more__h">{t("sol.sec.integra")}</h3>
+                    <ul className="sol-chips">
+                      {integra.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {faq.length > 0 && (
+                  <div className="sol-faq">
+                    <h3 className="sol-more__h">{t("sol.sec.faq")}</h3>
+                    <div className="faq-list">
+                      {faq.map((q, i) => (
+                        <details key={q.title} className="faq-item" name={`sol-faq-${s.slug}`}>
+                          <summary className="faq-q">
+                            <span className="faq-n" aria-hidden="true">
+                              {String(i + 1).padStart(2, "0")}
+                            </span>
+                            <span>{q.title}</span>
+                            <span className="faq-mark" aria-hidden="true" />
+                          </summary>
+                          <div className="faq-a">
+                            <p>{q.body}</p>
+                          </div>
+                        </details>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </details>
           </section>
         )}
 

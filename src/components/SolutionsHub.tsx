@@ -13,43 +13,32 @@ import {
   familyLabelKey,
   solutionsBySector,
   type Family,
-  type SectorId,
 } from "@/lib/solutions";
 import { SV_CSS } from "@/app/servizi/shared-css";
 import { SOL_CSS } from "@/app/soluzioni/shared-css";
 
-// L'hub del catalogo: due file di filtri e una griglia.
+// L'hub del catalogo, seconda versione.
 //
-// I filtri sono stato locale e NON vivono nella query string, ed e' una
-// correzione a una prima versione che ce li metteva.
+// La prima apriva con diciotto pastiglie di filtro su due assi e ripeteva gli
+// stessi dodici settori come directory in fondo: un pannello di controllo, non
+// una vetrina, e il visitatore doveva imparare la nostra tassonomia prima di
+// trovare la sua risposta. Ora la pagina fa una domanda sola, subito: che
+// attivita' hai. I settori sono card grandi in testa, ognuna una pagina vera
+// (/soluzioni/settore/<slug>, che i motori trattano come contenuto, non come
+// vista filtrata). Sotto, l'elenco completo con UN filtro secondario per tipo
+// di lavoro.
 //
-// Misurato su una build di produzione: con useSearchParams l'intero
-// sottoalbero esce dal prerender, e l'HTML statico di /soluzioni arrivava ai
-// crawler con la sola fallback di Suspense. Cioe' la pagina da cui partono i
-// link a tutte le altre non conteneva nessuno di quei link: e' lo stesso
-// problema di orfanaggio che site-links.ts esiste per evitare, ricreato piu'
-// in grande.
-//
-// Un filtro condivisibile non vale quel prezzo, anche perche' l'indirizzo da
-// mandare a qualcuno esiste gia' ed e' migliore: /soluzioni/settore/<slug> e'
-// una pagina vera, con la sua introduzione e i suoi lavori, e i motori la
-// trattano come contenuto invece che come una vista filtrata.
+// Il filtro resta stato locale e MAI useSearchParams: misurato su una build di
+// produzione, con useSearchParams l'intero sottoalbero usciva dal prerender e
+// l'HTML statico arrivava ai crawler senza un solo link.
 
 export default function SolutionsHub() {
   const { t } = useLang();
   const [fam, setFam] = useState<Family | null>(null);
-  const [sect, setSect] = useState<SectorId | null>(null);
 
-  const visible = SOLUTIONS.filter(
-    (s) => (!fam || s.family === fam) && (!sect || s.sectors.includes(sect)),
-  );
-
-  // I conteggi tengono conto dell'altro filtro gia' attivo: una pastiglia che
-  // promette 4 e ne apre 0 e' peggio che non avere il numero.
+  const visible = SOLUTIONS.filter((s) => !fam || s.family === fam);
   const countFam = (id: Family | null) =>
-    SOLUTIONS.filter((s) => (!id || s.family === id) && (!sect || s.sectors.includes(sect))).length;
-  const countSect = (id: SectorId | null) =>
-    SOLUTIONS.filter((s) => (!fam || s.family === fam) && (!id || s.sectors.includes(id))).length;
+    SOLUTIONS.filter((s) => !id || s.family === id).length;
 
   const plural = (n: number) => (n === 1 ? t("sol.count.one") : t("sol.count.many"));
 
@@ -64,94 +53,60 @@ export default function SolutionsHub() {
           <p className="sv-lede">{t("sol.hub.lede")}</p>
         </header>
 
-        <div className="sol-filters" role="group" aria-label={t("sol.hub.byDisc")}>
-          <span className="sol-filters__label">{t("sol.hub.byDisc")}</span>
-          <div className="pg-filters">
-            <button
-              type="button"
-              className={`pg-filter${!fam ? " is-active" : ""}`}
-              aria-pressed={!fam}
-              onClick={() => setFam(null)}
-            >
-              {t("sol.filter.all")} <i>{countFam(null)}</i>
-            </button>
-            {LIVE_FAMILIES.map((f) => (
-              <button
-                key={f}
-                type="button"
-                className={`pg-filter${fam === f ? " is-active" : ""}`}
-                aria-pressed={fam === f}
-                onClick={() => setFam(fam === f ? null : f)}
-              >
-                {t(familyLabelKey(f))} <i>{countFam(f)}</i>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="sol-filters" role="group" aria-label={t("sol.hub.bySector")}>
-          <span className="sol-filters__label">{t("sol.hub.bySector")}</span>
-          <div className="pg-filters">
-            <button
-              type="button"
-              className={`pg-filter${!sect ? " is-active" : ""}`}
-              aria-pressed={!sect}
-              onClick={() => setSect(null)}
-            >
-              {t("sol.filter.all")} <i>{countSect(null)}</i>
-            </button>
-            {LIVE_SECTORS.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                className={`pg-filter${sect === s.id ? " is-active" : ""}`}
-                aria-pressed={sect === s.id}
-                onClick={() => setSect(sect === s.id ? null : s.id)}
-              >
-                {t(`sec.${s.id}.label`)} <i>{countSect(s.id)}</i>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {visible.length > 0 ? (
-          <ul className="sol-grid">
-            {visible.map((s) => (
-              <SolutionCard key={s.slug} s={s} />
-            ))}
-          </ul>
-        ) : (
-          <p className="sol-empty">
-            {t("sol.hub.empty")}
-            <button
-              type="button"
-              onClick={() => {
-                setFam(null);
-                setSect(null);
-              }}
-            >
-              {t("sol.hub.reset")}
-            </button>
-          </p>
-        )}
-
+        {/* La domanda giusta per prima: il settore. Ogni card porta il titolo
+            della sua pagina, cosi' la promessa e' la stessa che si trova
+            dall'altra parte del clic. */}
         <section className="sv-sec" aria-label={t("sol.hub.sectors.title")}>
           <h2 className="sv-h2">{t("sol.hub.sectors.title")}</h2>
           <p className="svp-proof-head">{t("sol.hub.sectors.sub")}</p>
-          <ul className="sol-sectors">
+          <ul className="sol-seccards">
             {LIVE_SECTORS.map((s) => {
               const n = solutionsBySector(s.id).length;
               return (
                 <li key={s.id}>
-                  <Link href={`/soluzioni/settore/${s.slug}`} className="sol-sector">
-                    {t(`sec.${s.id}.label`)}
-                    <i>
+                  <Link href={`/soluzioni/settore/${s.slug}`} className="sol-seccard">
+                    <span className="sol-seccard__name">{t(`sec.${s.id}.label`)}</span>
+                    <span className="sol-seccard__promise">{t(`sec.${s.id}.title`)}</span>
+                    <span className="sol-seccard__n">
                       {n} {plural(n)}
-                    </i>
+                    </span>
                   </Link>
                 </li>
               );
             })}
+          </ul>
+        </section>
+
+        {/* L'elenco completo, con l'unico filtro rimasto: il tipo di lavoro. */}
+        <section className="sv-sec" aria-label={t("sol.hub.listTitle")}>
+          <h2 className="sv-h2">{t("sol.hub.listTitle")}</h2>
+          <div className="sol-filters" role="group" aria-label={t("sol.hub.byDisc")}>
+            <div className="pg-filters">
+              <button
+                type="button"
+                className={`pg-filter${!fam ? " is-active" : ""}`}
+                aria-pressed={!fam}
+                onClick={() => setFam(null)}
+              >
+                {t("sol.filter.all")} <i>{countFam(null)}</i>
+              </button>
+              {LIVE_FAMILIES.map((f) => (
+                <button
+                  key={f}
+                  type="button"
+                  className={`pg-filter${fam === f ? " is-active" : ""}`}
+                  aria-pressed={fam === f}
+                  onClick={() => setFam(fam === f ? null : f)}
+                >
+                  {t(familyLabelKey(f))} <i>{countFam(f)}</i>
+                </button>
+              ))}
+            </div>
+          </div>
+          <ul className="sol-grid">
+            {visible.map((s) => (
+              <SolutionCard key={s.slug} s={s} />
+            ))}
           </ul>
         </section>
 
