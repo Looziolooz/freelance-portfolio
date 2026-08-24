@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLang } from "./LangProvider";
 import MagneticButton from "./MagneticButton";
 import { isPreLaunch, HIDDEN_ROUTES } from "@/lib/launch";
-import { SERVICE_LINKS } from "@/lib/site-links";
+import { LAUNCH_LINKS, SECTION_LINKS, SERVICE_LINKS } from "@/lib/site-links";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
@@ -162,16 +162,12 @@ export default function CinematicFooter() {
     return () => ctx.revert();
   }, []);
 
-  const navPills: { href: string; label: string }[] = [
-    { href: "/work", label: t("nav.work") },
-    { href: "/soluzioni", label: t("nav.solutions") },
-    { href: "/processo", label: t("nav.process") },
-    { href: "/prezzi", label: t("nav.pricing") },
-    { href: "/agents", label: t("nav.agents") },
-    { href: "/componenti", label: t("nav.components") },
-    { href: "/membership", label: t("nav.membership") },
-    { href: "/blog", label: t("nav.blog") },
-  ].filter((p) => !(isPreLaunch && (HIDDEN_ROUTES as readonly string[]).includes(p.href)));
+  // Le voci arrivano da site-links: dal 2026-08-24 il footer e' il paracadute
+  // di Processo, Assistente e delle pagine disciplina usciti dalla barra, e la
+  // lista deve restare identica a quella dell'altro footer senza doverci pensare.
+  const navPills: { href: string; label: string }[] = [...SECTION_LINKS, ...LAUNCH_LINKS]
+    .map((l) => ({ href: l.href, label: t(l.labelKey) }))
+    .filter((p) => !(isPreLaunch && (HIDDEN_ROUTES as readonly string[]).includes(p.href)));
 
   return (
     <>

@@ -6,12 +6,10 @@ import { useLang } from "./LangProvider";
 import Wordmark from "./Wordmark";
 import { useAuth } from "./auth/AuthProvider";
 import { isPreLaunch } from "@/lib/launch";
-import { DISCIPLINES } from "@/lib/disciplines";
 import type { Lang } from "@/i18n";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [subOpen, setSubOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { lang, setLang, t } = useLang();
@@ -39,9 +37,9 @@ export default function Nav() {
 
   const BORDER = "3px solid var(--ink-border)";
 
-  // Any navigation folds both the drawer and the submenu, so returning to a page
-  // never finds the menu half-open from last time.
-  const closeAll = () => { setMenuOpen(false); setSubOpen(false); };
+  // Any navigation folds the drawer, so returning to a page never finds the
+  // menu half-open from last time.
+  const closeAll = () => setMenuOpen(false);
 
   return (
     /* <header> e non <div>: cosi la barra diventa un punto di riferimento
@@ -58,55 +56,15 @@ export default function Nav() {
         <div
           className={`topbar__nav nav-links ${menuOpen ? "open" : ""}`}
         >
-          {/* "Servizi" carries the four disciplines: the submenu now sits under
-              the word that sells, and "Lavori" is a plain link to the archive. The panel opens on hover and
-              on focus-within, so it is reachable by keyboard without any state;
-              below 768px the whole nav is already a stacked column and the panel
-              simply sits inline under its parent (see globals.css). */}
-          <div className={`nav-sub${subOpen ? " is-open" : ""}`}>
-            <a href={"/servizi/" + DISCIPLINES[0].slug} onClick={closeAll}>
-              {t("nav.services")}
-            </a>
-            {/* The caret is a button, not decoration: on a touch screen there is
-                no hover to open with, and "Lavori" itself has to stay a link to
-                the page. So the word navigates and the caret unfolds. */}
-            <button
-              type="button"
-              className="nav-sub__caret"
-              aria-expanded={subOpen}
-              aria-controls="nav-sub-panel"
-              aria-label={t("nav.services")}
-              onClick={() => setSubOpen((v) => !v)}
-            >
-              <span aria-hidden="true">▾</span>
-            </button>
-            {/* The inner wrapper exists for the mobile fold: collapsing a grid
-                row from 0fr to 1fr animates on the compositor, and that trick
-                needs exactly one child to clip. */}
-            <div className="nav-sub__panel" id="nav-sub-panel">
-              <div className="nav-sub__inner">
-                {/* Il catalogo entra qui e non nella barra: fra 768 e 1100px la
-                    riga porta gia' cinque voci piu' il pulsante, e una sesta
-                    parola la mandava a capo. Sotto "Servizi" e' anche al posto
-                    giusto, visto che e' la versione concreta di quelle quattro
-                    discipline. */}
-                <a href="/soluzioni" onClick={closeAll}>
-                  {t("nav.solutions")}
-                  <span className="nav-sub__arrow" aria-hidden="true">↗</span>
-                </a>
-                {DISCIPLINES.map((d) => (
-                  <a key={d.id} href={`/servizi/${d.slug}`} onClick={closeAll}>
-                    {t(`${d.key}.label`)}
-                    <span className="nav-sub__arrow" aria-hidden="true">↗</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+          {/* La barra dice una parola sola per l'offerta: Soluzioni. Prima
+              c'era "Servizi" con un sottomenu da cinque voci e un caret a parte:
+              su touch servivano tre tap per arrivare al catalogo, e la parola
+              stessa portava a /servizi/marchio, cioe' altrove. Le quattro pagine
+              disciplina restano raggiungibili dal footer e da /soluzioni: sono
+              lander secondari, non porte d'ingresso. */}
+          <a href="/soluzioni" onClick={closeAll}>{t("nav.solutions")}</a>
           <a href="/work" onClick={closeAll}>{t("nav.work")}</a>
-          <a href="/processo" onClick={closeAll}>{t("nav.process")}</a>
           <a href="/prezzi" onClick={closeAll}>{t("nav.pricing")}</a>
-          <a href="/agents" onClick={closeAll}>{t("nav.agents")}</a>
           {/* Persistent conversion CTA — the free audit is the funnel's entry
               point, so it stays reachable from every page. */}
           <a
@@ -225,7 +183,7 @@ export default function Nav() {
 
         <button
           className="nav-hamburger"
-          onClick={() => { setMenuOpen(!menuOpen); setSubOpen(false); }}
+          onClick={() => setMenuOpen(!menuOpen)}
           style={{
             background: "var(--accent-peach)",
             border: BORDER,

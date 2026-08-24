@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Nav from "@/components/Nav";
-import CinematicFooter from "@/components/CinematicFooter";
+import SiteFooter from "@/components/SiteFooter";
 import BookingCalendar from "@/components/BookingCalendar";
 import LeadMagnet from "@/components/LeadMagnet";
 import { useLang } from "@/components/LangProvider";
@@ -158,7 +158,7 @@ export default function ContattiPage() {
           </div>
         </div>
       </main>
-      <CinematicFooter />
+      <SiteFooter />
     </>
   );
 }

@@ -2,7 +2,7 @@
 
 import { useLang } from "./LangProvider";
 import { isPreLaunch, HIDDEN_ROUTES } from "@/lib/launch";
-import { SERVICE_LINKS } from "@/lib/site-links";
+import { LAUNCH_LINKS, SECTION_LINKS, SERVICE_LINKS } from "@/lib/site-links";
 import Wordmark from "./Wordmark";
 
 // The plain footer, for the pages the cinematic one deliberately skips.
@@ -32,19 +32,12 @@ import Wordmark from "./Wordmark";
 export default function SiteFooter() {
   const { t } = useLang();
 
-  const sections: { href: string; label: string }[] = [
-    { href: "/work", label: t("nav.work") },
-    { href: "/soluzioni", label: t("nav.solutions") },
-    { href: "/processo", label: t("nav.process") },
-    { href: "/prezzi", label: t("nav.pricing") },
-    { href: "/agents", label: t("nav.agents") },
-    { href: "/componenti", label: t("nav.components") },
-    { href: "/membership", label: t("nav.membership") },
-    { href: "/blog", label: t("nav.blog") },
-    // No /contatti entry here: the contact column already points at it, and the
-    // `nav.contact` string is lower-cased for the top bar, so in a list beside
-    // "Lavori" and "Processo" it read as a typo.
-  ].filter((s) => !(isPreLaunch && (HIDDEN_ROUTES as readonly string[]).includes(s.href)));
+  // Stessa fonte dell'altro footer (site-links): un elenco solo, mai piu' due
+  // liste gemelle che divergono. Niente /contatti qui: la colonna contatti gia'
+  // ci punta, e la stringa nav.contact e' minuscola per la barra.
+  const sections: { href: string; label: string }[] = [...SECTION_LINKS, ...LAUNCH_LINKS]
+    .map((l) => ({ href: l.href, label: t(l.labelKey) }))
+    .filter((s) => !(isPreLaunch && (HIDDEN_ROUTES as readonly string[]).includes(s.href)));
 
   return (
     <footer className="sfoot" aria-label="LO.oz">

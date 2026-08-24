@@ -1,7 +1,7 @@
 "use client";
 
 import Nav from "./Nav";
-import CinematicFooter from "./CinematicFooter";
+import SiteFooter from "./SiteFooter";
 
 // Shared shell for the legal pages (privacy, cookie): brand nav + footer + a
 // readable prose column. Content is authored per page.
@@ -27,7 +27,7 @@ export default function LegalPage({
           {children}
         </article>
       </main>
-      <CinematicFooter />
+      <SiteFooter />
 
       <style>{`
         .legal { max-width: 760px; margin: 0 auto; }

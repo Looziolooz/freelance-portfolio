@@ -1,7 +1,7 @@
 "use client";
 
 import Nav from "@/components/Nav";
-import CinematicFooter from "@/components/CinematicFooter";
+import SiteFooter from "@/components/SiteFooter";
 import MagneticButton from "@/components/MagneticButton";
 import { useLang } from "@/components/LangProvider";
 
@@ -215,7 +215,7 @@ export default function PrezziPage() {
           </div>
         </section>
       </main>
-      <CinematicFooter />
+      <SiteFooter />
     </>
   );
 }

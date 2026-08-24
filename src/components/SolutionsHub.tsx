@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Nav from "./Nav";
-import CinematicFooter from "./CinematicFooter";
+import SiteFooter from "./SiteFooter";
 import SolutionCard from "./SolutionCard";
 import { useLang } from "./LangProvider";
 import {
@@ -173,7 +173,7 @@ export default function SolutionsHub() {
           </Link>
         </section>
       </main>
-      <CinematicFooter />
+      <SiteFooter />
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Nav from "@/components/Nav";
-import CinematicFooter from "@/components/CinematicFooter";
+import SiteFooter from "@/components/SiteFooter";
 import ProcessTimeline, { type TimelineEntry } from "@/components/ProcessTimeline";
 import ProcessForks from "@/components/ProcessForks";
 import { useLang } from "@/components/LangProvider";
@@ -91,7 +91,7 @@ export default function ProcessoPage() {
           </div>
         </section>
       </main>
-      <CinematicFooter />
+      <SiteFooter />
     </>
   );
 }

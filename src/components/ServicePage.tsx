@@ -4,7 +4,7 @@ import Link from "next/link";
 import Nav from "./Nav";
 import ProjectGallery from "./ProjectGallery";
 import BrandCoverGrid from "./BrandCoverGrid";
-import CinematicFooter from "./CinematicFooter";
+import SiteFooter from "./SiteFooter";
 import { useLang } from "./LangProvider";
 import { disciplineProjects, type Discipline } from "@/lib/disciplines";
 import { SV_CSS } from "@/app/servizi/shared-css";
@@ -241,7 +241,7 @@ export default function ServicePage({ d }: { d: Discipline }) {
           </Link>
         </section>
       </main>
-      <CinematicFooter />
+      <SiteFooter />
     </>
   );
 }

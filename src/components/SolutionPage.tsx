@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Nav from "./Nav";
-import CinematicFooter from "./CinematicFooter";
+import SiteFooter from "./SiteFooter";
 import ProjectGallery from "./ProjectGallery";
 import SolutionCard from "./SolutionCard";
 import { useLang } from "./LangProvider";
@@ -240,7 +240,7 @@ export default function SolutionPage({ s }: { s: Solution }) {
           </Link>
         </section>
       </main>
-      <CinematicFooter />
+      <SiteFooter />
     </>
   );
 }
