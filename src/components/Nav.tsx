@@ -85,6 +85,15 @@ export default function Nav() {
                 needs exactly one child to clip. */}
             <div className="nav-sub__panel" id="nav-sub-panel">
               <div className="nav-sub__inner">
+                {/* Il catalogo entra qui e non nella barra: fra 768 e 1100px la
+                    riga porta gia' cinque voci piu' il pulsante, e una sesta
+                    parola la mandava a capo. Sotto "Servizi" e' anche al posto
+                    giusto, visto che e' la versione concreta di quelle quattro
+                    discipline. */}
+                <a href="/soluzioni" onClick={closeAll}>
+                  {t("nav.solutions")}
+                  <span className="nav-sub__arrow" aria-hidden="true">↗</span>
+                </a>
                 {DISCIPLINES.map((d) => (
                   <a key={d.id} href={`/servizi/${d.slug}`} onClick={closeAll}>
                     {t(`${d.key}.label`)}

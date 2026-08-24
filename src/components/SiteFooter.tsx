@@ -34,6 +34,7 @@ export default function SiteFooter() {
 
   const sections: { href: string; label: string }[] = [
     { href: "/work", label: t("nav.work") },
+    { href: "/soluzioni", label: t("nav.solutions") },
     { href: "/processo", label: t("nav.process") },
     { href: "/prezzi", label: t("nav.pricing") },
     { href: "/agents", label: t("nav.agents") },

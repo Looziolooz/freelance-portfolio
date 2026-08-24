@@ -111,6 +111,19 @@ export default function ServicePage({ d }: { d: Discipline }) {
           </span>
           <h1 className="ct-title">{s("title")}</h1>
           <p className="sv-lede">{s("lede")}</p>
+          {/* Questa pagina vende la disciplina in astratto. Chi arriva qui con
+              un'attivita' precisa in testa ha bisogno del caso concreto, ed e'
+              a un clic. Il link va al catalogo intero e non a una vista
+              filtrata: i filtri dell'hub sono stato locale, per non far uscire
+              la griglia dal prerender. */}
+          <p style={{ margin: "16px 0 0" }}>
+            <Link
+              href="/soluzioni"
+              style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}
+            >
+              {t("serv.sol.link")} ↗
+            </Link>
+          </p>
         </header>
 
         {includes.length > 0 && (
