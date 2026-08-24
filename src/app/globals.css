@@ -2861,6 +2861,52 @@ body.theme-dark .topbar.is-scrolled,
     }
   }
 }
+
+/* ── Entrance da scroll-timeline, secondo capitolo ──────────────────────────
+   Stessa tecnica del filo che si disegna sotto i titoli (qui sopra): CSS puro,
+   niente JS, niente observer. Le card dei cataloghi salgono di 18px nel primo
+   quarto del loro viaggio nel viewport; ogni elemento ha la sua timeline,
+   quindi le righe piu' in basso entrano dopo, e lo scaglionamento viene da se'.
+   Dalla famiglia "Services" del catalogo motion-prompt si prende la meccanica
+   (rise scaglionato all'ingresso), non la scenografia: pin e parallasse sono
+   fuori budget sulla GPU di riferimento.
+   L'animazione sta sul contenitore (il li, o la card senza hover-transform):
+   un'animazione con fill su transform vincerebbe sulla transition di hover, e
+   le card che si alzano sotto il cursore hanno quel transform sul figlio. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sol-seccards > li,
+    .sol-grid > li,
+    .sol-build > li,
+    .sv-grid > .sv-card {
+      animation: card-rise linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 22%;
+    }
+  }
+}
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── Fold dei details ───────────────────────────────────────────────────────
+   Apertura animata per FAQ e "Dettagli pratici": interpolate-size permette la
+   transizione verso block-size auto sul ::details-content. Dove il browser non
+   la supporta l'apertura resta secca, che e' il comportamento di sempre. */
+@supports (interpolate-size: allow-keywords) {
+  @media (prefers-reduced-motion: no-preference) {
+    :root { interpolate-size: allow-keywords; }
+    .faq-item::details-content,
+    .sol-more::details-content {
+      block-size: 0;
+      overflow-y: clip;
+      transition: content-visibility 0.28s allow-discrete, block-size 0.28s var(--ease);
+    }
+    .faq-item[open]::details-content,
+    .sol-more[open]::details-content { block-size: auto; }
+  }
+}
 @keyframes head-draw { to { transform: scaleX(1); } }
 
 /* ── Project gallery hover overlay ("Vedi progetto") ── */

@@ -48,6 +48,10 @@ export const SOL_CSS = `
    spinge i tag in fondo cosi' le schede di una riga finiscono allineate. */
 .sol-card__tags { margin-top: auto; }
 
+@media (prefers-reduced-motion: no-preference) {
+  .sol-grid--swap { animation: reveal-fade .15s var(--ease); }
+}
+
 .sol-empty { margin: clamp(28px, 4vw, 44px) 0 0; padding: 26px 24px; border: 3px dashed var(--ink-border); border-radius: var(--radius-lg); color: var(--ink-muted); font-size: 15.5px; line-height: 1.6; }
 .sol-empty button { margin-left: 8px; font: inherit; color: var(--accent-green-deep); font-weight: 600; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
 

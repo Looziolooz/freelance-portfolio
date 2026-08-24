@@ -104,7 +104,10 @@ export default function SolutionsHub() {
               ))}
             </div>
           </div>
-          <ul className="sol-grid">
+          {/* La chiave rimonta la lista al cambio filtro: il fade da 150ms
+              (keyframe reveal-fade gia' in globals) dice "e' cambiato qualcosa"
+              senza FLIP, che con 18+ card e' fuori budget sulla GPU debole. */}
+          <ul className="sol-grid sol-grid--swap" key={fam ?? "tutte"}>
             {visible.map((s) => (
               <SolutionCard key={s.slug} s={s} />
             ))}
