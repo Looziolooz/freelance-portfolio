@@ -2,6 +2,8 @@
 // är källspråket och det här är en trogen översättning, inte en omskrivning.
 export const solSv: Record<string, string> = {
   "nav.solutions": "Lösningar",
+  "home.sectors.label": "Din bransch",
+  "home.sectors.all": "Alla lösningar",
   "fam.software.label": "Skräddarsydd mjukvara",
   "sol.badge.demo": "Har demo",
   "sol.badge.commessa": "På beställning",

@@ -2,6 +2,8 @@
 // source language, this is a faithful translation and not a rewrite.
 export const solEn: Record<string, string> = {
   "nav.solutions": "Solutions",
+  "home.sectors.label": "Your sector",
+  "home.sectors.all": "All solutions",
   "fam.software.label": "Custom software",
   "sol.badge.demo": "Has a demo",
   "sol.badge.commessa": "Built to order",

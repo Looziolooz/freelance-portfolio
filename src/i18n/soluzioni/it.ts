@@ -15,6 +15,8 @@
 export const solIt: Record<string, string> = {
   // ── Voci che vivono fuori dal catalogo ─────────────────────────────────
   "nav.solutions": "Soluzioni",
+  "home.sectors.label": "Il tuo settore",
+  "home.sectors.all": "Tutte le soluzioni",
   // I gestionali su misura non sono una delle quattro discipline del sito.
   // Finche' non hanno una pagina in /servizi, l'etichetta vive qui.
   "fam.software.label": "Software su misura",
