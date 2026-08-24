@@ -1,7 +1,13 @@
+import { solIt, solEn, solSv } from "./soluzioni";
+
 export type Lang = "it" | "en" | "sv";
 
+// Il catalogo /soluzioni porta da solo qualche centinaio di chiavi e vive in
+// un file suo: qui entra dall'alto di ogni lingua, cosi' una chiave scritta a
+// mano piu' in basso vince comunque sull'omonima del catalogo.
 export const dict: Record<Lang, Record<string, string>> = {
   it: {
+    ...solIt,
     // Nav
     "nav.services": "Servizi",
     "nav.work": "Lavori",
@@ -1112,6 +1118,7 @@ export const dict: Record<Lang, Record<string, string>> = {
   },
 
   en: {
+    ...solEn,
     "nav.services": "Services",
     "nav.work": "Work",
     "nav.blog": "Blog",
@@ -2209,6 +2216,7 @@ export const dict: Record<Lang, Record<string, string>> = {
   },
 
   sv: {
+    ...solSv,
     "nav.services": "Tjänster",
     "nav.work": "Arbeten",
     "nav.blog": "Blogg",
