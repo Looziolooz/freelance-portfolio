@@ -3,7 +3,6 @@ import Nav from "@/components/Nav";
 import HeroMotion from "@/components/HeroMotion";
 import WorkEditorial from "@/components/WorkEditorial";
 import TechStack from "@/components/TechStack";
-import BentoShift from "@/components/BentoShift";
 import ScrollProgress from "@/components/ScrollProgress";
 import WayfindingNav from "@/components/WayfindingNav";
 import ScrollReveal from "@/components/ScrollReveal";

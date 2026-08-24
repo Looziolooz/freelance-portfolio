@@ -1717,6 +1717,10 @@ select:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   .pg-card, .pg-media img { transition: none; }
   .pg-card:hover { transform: none; }
+  /* Le pastiglie di filtro erano l'unico controllo della galleria senza
+     guardia: il salto di 1px su hover e' poco, ma la regola vale per tutti. */
+  .pg-filter { transition: none; }
+  .pg-filter:hover { transform: none; }
 }
 
 /* ── Contact close (Parliamone) + booking calendar + /contatti ── */

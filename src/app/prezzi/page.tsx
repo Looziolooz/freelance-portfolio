@@ -22,19 +22,6 @@ import { useLang } from "@/components/LangProvider";
 // Order is deliberate: the two build services first (highest intent), then the
 // two automation ones, then the two subscriptions last.
 // `proof` is the demo that already exists for that service. The page had a real
-// trust gap — zero evidence next to any claim — and the honest fix was never
-// testimonials (there are none, deliberately) but the work itself, which was
-// sitting two clicks away with nothing pointing at it from here. Landing pages
-// have no demo yet, so that card carries no link rather than a hollow one.
-const SERVICES: { k: string; n: string; monthly?: boolean; proof?: string }[] = [
-  { k: "ecom", n: "01", proof: "/work/pizzeria-restaurant" },
-  { k: "landing", n: "02" },
-  { k: "autom", n: "03", proof: "/work/solleciti-pagamento" },
-  { k: "agent", n: "04", proof: "/work/assistente-whatsapp" },
-  { k: "visib", n: "05", monthly: true, proof: "/work/audit-visibilita" },
-  { k: "content", n: "06", monthly: true, proof: "/work/contenuti-social" },
-];
-
 // q1 repeated the header ("perche non c'e un listino" IS the page title) and
 // q5 repeated the home FAQ's ownership answer. Four remain, each earning its row.
 const FAQ = ["2", "3", "4", "6"];
