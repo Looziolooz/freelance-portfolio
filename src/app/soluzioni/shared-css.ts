@@ -80,6 +80,12 @@ export const SOL_CSS = `
 .sol-seccard__promise { font-size: 13.5px; line-height: 1.45; color: var(--ink-muted); }
 .sol-seccard__n { margin-top: auto; padding-top: 8px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-green-deep); font-variant-numeric: tabular-nums; }
 
+/* ── La riga dei quattro mestieri, in fondo all'hub ─────────────────────── */
+.sol-trades { margin-top: clamp(40px, 6vw, 72px); display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px; }
+.sol-trades__lbl { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-muted); }
+.sol-trades__link { font-size: 14px; color: var(--accent-green-deep); font-weight: 600; text-decoration: none; border-bottom: 1.5px solid transparent; transition: border-color .16s var(--ease); }
+.sol-trades__link:hover, .sol-trades__link:focus-visible { border-bottom-color: var(--accent-green-deep); }
+
 /* ── Corpo della pagina soluzione ───────────────────────────────────────── */
 .sol-prose { max-width: 660px; font-size: clamp(16px, 1.6vw, 17.5px); line-height: 1.68; color: var(--ink-body); margin: 0; }
 .sol-prose + .sol-prose { margin-top: 14px; }

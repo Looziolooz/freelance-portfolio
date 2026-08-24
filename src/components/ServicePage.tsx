@@ -146,7 +146,11 @@ export default function ServicePage({ d }: { d: Discipline }) {
             <h2 className="sv-h2">{s("proof.title")}</h2>
             {has("proof.sub") && <p className="svp-proof-head">{s("proof.sub")}</p>}
             {d.proof === "covers" ? (
-              <BrandCoverGrid items={items} />
+              /* Sei copertine, non tutte: l'archivio completo vive in
+                 /work/fascicoli (il link qui sotto) e mostrava gli stessi
+                 diciassette fascicoli due volte a un clic di distanza. La
+                 pagina disciplina e' la vetrina, l'archivio e' l'archivio. */
+              <BrandCoverGrid items={items.slice(0, 6)} />
             ) : (
               <ProjectGallery items={items} showFilters={false} />
             )}

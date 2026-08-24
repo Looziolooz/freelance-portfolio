@@ -81,7 +81,19 @@ export default function SolutionPage({ s }: { s: Solution }) {
             ← {t("sol.back")}
           </Link>
           <span className="ct-kicker">
-            {t(familyLabelKey(s.family))}
+            {/* La famiglia porta alla sua pagina disciplina quando ne ha una:
+                e' il cross-link che tiene vive le quattro pagine demotate.
+                "software" non ce l'ha ancora, e resta testo. */}
+            {s.family === "software" ? (
+              t(familyLabelKey(s.family))
+            ) : (
+              <Link
+                href={`/servizi/${s.family}`}
+                style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                {t(familyLabelKey(s.family))}
+              </Link>
+            )}
             {" · "}
             {s.sectors.map((id) => t(`sec.${id}.label`)).join(" · ")}
           </span>

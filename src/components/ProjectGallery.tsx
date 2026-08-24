@@ -52,7 +52,13 @@ export default function ProjectGallery({
 
   const visible = cat === "all" ? items : items.filter((p) => p.category === cat);
 
-  const filters: (ProjectCategory | "all")[] = ["all", ...CATEGORIES];
+  // Una pastiglia che apre un solo lavoro non e' un filtro, e' un vicolo:
+  // "SaaS / App" prometteva una categoria e conteneva una card. Sotto i due
+  // lavori la voce sparisce dalla riga (il lavoro resta dentro "Tutti").
+  const filters: (ProjectCategory | "all")[] = [
+    "all",
+    ...CATEGORIES.filter((c) => items.filter((p) => p.category === c).length >= 2),
+  ];
 
   // The count rides on the chip. Without it a tab holding one project reads as
   // broken; with it, the number is information you had before you clicked.

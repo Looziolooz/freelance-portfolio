@@ -14,6 +14,7 @@ import {
   solutionsBySector,
   type Family,
 } from "@/lib/solutions";
+import { SERVICE_LINKS } from "@/lib/site-links";
 import { SV_CSS } from "@/app/servizi/shared-css";
 import { SOL_CSS } from "@/app/soluzioni/shared-css";
 
@@ -109,6 +110,19 @@ export default function SolutionsHub() {
             ))}
           </ul>
         </section>
+
+        {/* I quattro mestieri, in sordina: le pagine disciplina sono lander
+            secondari usciti dalla barra, e questa riga con il footer e' cio'
+            che le tiene raggiungibili. Una riga, non una griglia: qui non
+            devono competere con le soluzioni che hanno sopra. */}
+        <nav className="sol-trades" aria-label={t("footer.services")}>
+          <span className="sol-trades__lbl">{t("footer.services")}</span>
+          {SERVICE_LINKS.map((sv) => (
+            <Link key={sv.href} href={sv.href} className="sol-trades__link">
+              {t(sv.labelKey)}
+            </Link>
+          ))}
+        </nav>
 
         <section className="sv-cta" aria-label={t("sol.cta.title")}>
           <h2>{t("sol.cta.title")}</h2>
