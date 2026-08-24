@@ -1308,12 +1308,6 @@ select:focus-visible,
    statement below. overflow:hidden keeps it inside its own box until it resolves. */
 .hm-h1__live { position: absolute; inset: 0; overflow: hidden; }
 .hm-statement { font-family: var(--font-display); font-weight: 500; font-size: clamp(19px, 1.9vw, 27px); line-height: 1.28; letter-spacing: -0.01em; margin: 0; color: var(--fg); }
-/* "Looz" inside the statement echoes the wordmark: same Fraunces cut and
-   tracking as .wordmark-link, so the name reads as the logo's text. */
-.hm-brand { font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
-/* Nella frase il timbro non deve allargare l'interlinea. */
-.hm-statement .wm-stamp { margin: 0 2px; }
-.hm-brand .accent { color: var(--accent-green-deep); }
 .hm-lede { font-family: var(--font-ui); font-size: clamp(15px, 1.05vw, 16.5px); line-height: 1.6; margin: 2px 0 0; color: var(--ink-body); opacity: 0.82; max-width: 48ch; }
 .hm-cta { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-top: 8px; }
 /* Honest proof strip under the hero CTAs — mono credentials, forest markers. */

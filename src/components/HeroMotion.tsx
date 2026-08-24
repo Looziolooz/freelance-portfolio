@@ -1,9 +1,8 @@
 "use client";
 
-import { Fragment, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useLang } from "./LangProvider";
-import Wordmark from "./Wordmark";
 import MagneticButton from "./MagneticButton";
 import { EncryptedText } from "./ui/encrypted-text";
 
@@ -552,22 +551,12 @@ export default function HeroMotion() {
               />
             </span>
           </h1>
-          <h2 className="hm-statement">
-            {t("heroMotion.statement").split("Looz").map((part, i, arr) => (
-              <Fragment key={i}>
-                {part}
-                {/* Il marchio passa dal componente, non e' riscritto qui.
-                    Prima lo era, ed e' per questo che e' rimasto indietro
-                    quando il marchio e' diventato un timbro: due posti che
-                    disegnano la stessa cosa divergono al primo che si tocca.
-                    Taglia compatta e senza la parola accanto, perche' qui sta
-                    dentro una frase. */}
-                {i < arr.length - 1 && (
-                  <Wordmark className="hm-brand" suffix={false} compact />
-                )}
-              </Fragment>
-            ))}
-          </h2>
+          {/* Testo e basta. Qui dentro il nome veniva spezzato via e sostituito
+              dal timbro del marchio, ma questa e' una presentazione, non
+              un'insegna: il timbro in mezzo alla frase la interrompeva per
+              firmarla una seconda volta, quando il marchio sta gia' nella nav e
+              nell'h1 qui sopra. Il nome resta, come parola. */}
+          <h2 className="hm-statement">{t("heroMotion.statement")}</h2>
           <p className="hm-lede">{t("heroMotion.lede")}</p>
           <div className="hm-cta">
             <MagneticButton
