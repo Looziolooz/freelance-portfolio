@@ -8,9 +8,9 @@ import { TESTIMONIALS } from "@/lib/testimonials";
 // Trust signals — honest reassurances only (no invented testimonials/logos).
 // Real client quotes, when there are any, come from lib/testimonials.ts and
 // render below; the block stays hidden while that list is empty.
-const POINTS = ["own", "price", "speed", "lang"] as const;
+export const POINTS = ["own", "price", "speed", "lang"] as const;
 
-function PointIcon({ k }: { k: (typeof POINTS)[number] }) {
+export function PointIcon({ k }: { k: (typeof POINTS)[number] }) {
   const p = {
     width: 24, height: 24, viewBox: "0 0 24 24", fill: "none",
     stroke: "var(--accent-green-deep)", strokeWidth: 2,

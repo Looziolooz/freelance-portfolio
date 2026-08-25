@@ -10,7 +10,7 @@ import SectorEntry from "@/components/SectorEntry";
 // Below-the-fold sections are code-split out of the initial bundle to cut the
 // first-load JS (and TBT). ssr stays on (default) so the HTML is still
 // server-rendered — no SEO/LCP/CLS regression, just deferred hydration JS.
-const Trust = dynamic(() => import("@/components/Trust"));
+const TrustAct = dynamic(() => import("@/components/TrustAct"));
 const LeadMagnet = dynamic(() => import("@/components/LeadMagnet"));
 const CinematicFooter = dynamic(() => import("@/components/CinematicFooter"));
 
@@ -39,8 +39,12 @@ export default function Home() {
       {/* …and immediately what they are built with. Fills the slot the MacBook
           showcase used to occupy: demos first, then the toolkit behind them. */}
       <TechStack />
+      {/* Fiducia come atto scrollcraft: pinna e fa avanzare l'argomento sotto
+          la rotella (solo desktop senza reduced-motion; altrove e' il flusso
+          statico di sempre). Sta fuori dal container: un palco da viewport
+          intero dentro un wrapper trasformato e' il pasticcio documentato. */}
+      <TrustAct />
       <main className="container">
-        <ScrollReveal><Trust /></ScrollReveal>
         <ScrollReveal><LeadMagnet /></ScrollReveal>
       </main>
       <CinematicFooter />
