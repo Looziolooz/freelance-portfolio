@@ -21,7 +21,7 @@ function build(): string {
   out.push("# LOoz.design");
   out.push("");
   out.push(
-    "> One-person freelance studio (Lorenzo, \"Looz\"): custom websites and e-commerce, process automation, and tailored AI agents for small businesses and solo founders. Italian market first, English and Swedish mirrored. Remote, clients in Italy and Sweden. The code, accounts and domain stay in the client's name; the quote is agreed before work starts; replies within 24 hours.",
+    "> One-person freelance studio (Lorenzo Dastoli, \"Looz\"): custom websites and e-commerce, process automation, and tailored AI agents for small businesses and solo founders. Italian market first, English and Swedish mirrored. Remote, clients in Italy and Sweden. The code, accounts and domain stay in the client's name; the quote is agreed before work starts; replies within 24 hours.",
   );
   out.push("");
   out.push("## When to use this site");
@@ -64,6 +64,7 @@ function build(): string {
   out.push("");
   out.push("## Contact");
   out.push("");
+  out.push("- Owner: Lorenzo Dastoli (\"Looz\")");
   out.push("- Email: hello@looz.design");
   out.push("- GitHub: https://github.com/Looziolooz");
   out.push("- Languages: Italian, English, Swedish");

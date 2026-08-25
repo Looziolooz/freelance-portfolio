@@ -78,7 +78,9 @@ export const metadata: Metadata = {
 // Site-wide entity graph (SEO audit): Organization + Person + WebSite, all keyed
 // on SITE_URL so JSON-LD, sitemap and canonicals always agree. Deliberately no
 // street address / city (remote-first privacy posture): areaServed gives
-// country-level grounding without doxxing, and the Person stays first-name-only.
+// country-level grounding without doxxing. The Person carries the full name by
+// the owner's explicit choice (2026-08-25): "Lorenzo Dastoli" is the string a
+// motore deve legare a questo dominio, ed era gia' pubblico in hero.name.
 const JSON_LD = {
   "@context": "https://schema.org",
   "@graph": [
@@ -140,7 +142,9 @@ const JSON_LD = {
       "@type": "Person",
       "@id": `${SITE_URL}/#lorenzo`,
       url: `${SITE_URL}/chi-sono`,
-      name: "Lorenzo",
+      name: "Lorenzo Dastoli",
+      // Le forme con cui la persona viene cercata o citata, come per l'Org.
+      alternateName: ["Lorenzo", "Looz", "Looziolooz"],
       jobTitle: "Designer & Developer",
       worksFor: { "@id": `${SITE_URL}/#org` },
       knowsLanguage: ["it", "en", "sv"],

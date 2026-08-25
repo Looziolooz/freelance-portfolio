@@ -24,6 +24,12 @@ describe("il gemello markdown di ogni rotta", () => {
     for (const s of LIVE_SECTORS) expect(routes).toContain(`/soluzioni/settore/${s.slug}`);
   });
 
+  // Brand discoverability: il nome reale e' il segnale che lega la persona al
+  // dominio, e la pagina di fiducia e' dove un agente va a cercarlo.
+  it("la pagina di fiducia porta il nome completo", () => {
+    expect(renderAgentMarkdown("/chi-sono")).toContain("Lorenzo Dastoli");
+  });
+
   it("rende ogni rotta con un H1 e un corpo sostanzioso", () => {
     for (const r of markdownRoutes()) {
       const md = renderAgentMarkdown(r);
