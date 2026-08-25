@@ -1,0 +1,6 @@
+# I file di discovery per gli agenti restano LF su ogni piattaforma: l'indice
+# agent-skills dichiara un digest sha256 della SKILL.md, e una conversione
+# CRLF al checkout (autocrlf su Windows) lo invaliderebbe in silenzio.
+# agent-discovery.test.ts verifica il digest dal file su disco: senza questa
+# regola fallirebbe su un clone Windows pur essendo il repo corretto.
+public/.well-known/** text eol=lf
