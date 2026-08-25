@@ -27,6 +27,12 @@ const nextConfig: NextConfig = {
       { source: "/servizi/automazioni", destination: "/servizi/automazioni-ai", permanent: true },
       { source: "/servizi/agenti-ai", destination: "/servizi/automazioni-ai", permanent: true },
       { source: "/servizi/claude-cowork", destination: "/servizi/automazioni-ai", permanent: true },
+      // Anchor di fiducia con lo slug inglese: gli agenti (e le persone che
+      // tirano a indovinare) provano /about e /contact. Le pagine vere hanno
+      // lo slug italiano, come il resto del sito.
+      { source: "/about", destination: "/chi-sono", permanent: true },
+      { source: "/contact", destination: "/contatti", permanent: true },
+      { source: "/chi-siamo", destination: "/chi-sono", permanent: true },
     ];
   },
 

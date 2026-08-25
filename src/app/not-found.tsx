@@ -32,6 +32,16 @@ export default function NotFound() {
         >
           Torna alla home →
         </Link>
+        {/* Dove guardare, per persone e per agenti: un 404 che dice solo "non
+            c'e'" lascia chiunque a tentoni. La stessa mappa, in markdown, la
+            riceve chi chiede Accept: text/markdown (vedi agent-md). */}
+        <nav aria-label="Dove guardare" style={{ marginTop: 30, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px 18px", fontSize: 14.5 }}>
+          <Link href="/soluzioni" style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}>Soluzioni</Link>
+          <Link href="/work" style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}>Progetti</Link>
+          <Link href="/contatti" style={{ color: "var(--accent-green-deep)", fontWeight: 600 }}>Contatti</Link>
+          <a href="/sitemap.xml" style={{ color: "var(--ink-muted)" }}>Mappa del sito</a>
+          <a href="/llms.txt" style={{ color: "var(--ink-muted)" }}>Guida per agenti</a>
+        </nav>
       </div>
     </main>
   );

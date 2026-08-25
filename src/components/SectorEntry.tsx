@@ -157,10 +157,13 @@ function Row({ sector }: { sector: Sector }) {
 export default function SectorEntry() {
   const { t } = useLang();
   return (
-    <section className="sce" aria-label={t("home.sectors.label")}>
+    <section className="sce" aria-labelledby="sce-title">
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
       <div className="container sce__inner">
-        <span className="sce__label" aria-hidden="true">{t("home.sectors.label")}</span>
+        {/* h2 vero, non uno span decorativo: la home aveva una struttura di
+            intestazioni piatta (audit agent-readiness) e questa sezione era
+            l'unica fermata senza titolo. Stessa veste di prima, via classe. */}
+        <h2 id="sce-title" className="sce__label" style={{ margin: 0, fontWeight: 700 }}>{t("home.sectors.label")}</h2>
         <div style={{ minWidth: 0, flex: "1 1 auto" }}>
           <ul className="sce__list">
             {ROWS.map((s) => (

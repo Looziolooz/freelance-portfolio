@@ -73,6 +73,9 @@ export default function SiteFooter() {
             <li>
               <a href="/contatti">{t("footer.book")}</a>
             </li>
+            <li>
+              <a href="/chi-sono">{t("chisono.label")}</a>
+            </li>
           </ul>
         </div>
       </div>

@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // nuova entra nel sitemap insieme al menu invece che con un commit dopo.
   const staticRoutes = [
     "", "/work", "/work/fascicoli", "/processo", "/prezzi", "/agents", "/contatti",
-    "/soluzioni", "/privacy", "/cookie",
+    "/soluzioni", "/chi-sono", "/privacy", "/cookie",
   ];
 
   const disciplineRoutes = DISCIPLINES.map((d) => `/servizi/${d.slug}`);

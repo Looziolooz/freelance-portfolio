@@ -271,6 +271,7 @@ export default function CinematicFooter() {
             </a>
             {/* Legal — always reachable (not gated by the pre-launch flag). */}
             <div className="cine-legal" style={{ display: "flex", gap: 16, fontFamily: "var(--font-mono)", fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+              <a href="/chi-sono" style={{ color: "var(--cf-muted)", textDecoration: "none" }}>{t("chisono.label")}</a>
               <a href="/privacy" style={{ color: "var(--cf-muted)", textDecoration: "none" }}>{t("nav.privacy")}</a>
               <a href="/cookie" style={{ color: "var(--cf-muted)", textDecoration: "none" }}>{t("nav.cookie")}</a>
             </div>

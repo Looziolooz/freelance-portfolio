@@ -86,6 +86,9 @@ const JSON_LD = {
       "@type": "Organization",
       "@id": `${SITE_URL}/#org`,
       name: "LOoz.design",
+      // Le grafie con cui la marca viene davvero cercata: aiutano i motori a
+      // legare "looz" e "looz design" a questo dominio (brand discoverability).
+      alternateName: ["LOoz", "Looz", "looz design", "Looz Design"],
       url: `${SITE_URL}/`,
       description:
         "Studio freelance indipendente: siti web ed e-commerce su misura, automazioni dei processi ripetitivi, contenuti social e agenti AI per piccole imprese e solo founder.",
@@ -136,6 +139,7 @@ const JSON_LD = {
     {
       "@type": "Person",
       "@id": `${SITE_URL}/#lorenzo`,
+      url: `${SITE_URL}/chi-sono`,
       name: "Lorenzo",
       jobTitle: "Designer & Developer",
       worksFor: { "@id": `${SITE_URL}/#org` },
@@ -147,6 +151,7 @@ const JSON_LD = {
       "@id": `${SITE_URL}/#website`,
       url: `${SITE_URL}/`,
       name: "LOoz.design",
+      alternateName: "looz",
       publisher: { "@id": `${SITE_URL}/#org` },
       inLanguage: "it",
     },

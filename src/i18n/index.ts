@@ -8,6 +8,13 @@ export type Lang = "it" | "en" | "sv";
 export const dict: Record<Lang, Record<string, string>> = {
   it: {
     ...solIt,
+    // ── Chi sono (pagina di fiducia: /chi-sono, /about ci reindirizza) ──
+    "chisono.label": "Chi sono",
+    "chisono.title": "Chi c'è dietro LOoz.design.",
+    "chisono.sub": "Una persona, non un'agenzia. Ecco cosa significa in pratica.",
+    "chisono.body":
+      "Mi chiamo Lorenzo, in arte Looz. Progetto e costruisco da solo tutto quello che vedi su questo sito: i siti, le automazioni, gli agenti AI e le diciassette demo aperte nel portfolio. Non c'è un'agenzia dietro, e non è un ripiego: è il modo in cui voglio lavorare. Chi mi scrive parla con la stessa persona che poi apre l'editor.|Lavoro da remoto, in italiano, inglese e svedese, con clienti tra l'Italia e la Svezia. Il patto è sempre lo stesso e sta scritto in ogni pagina di questo sito: il codice, gli account e il dominio restano a nome tuo, il preventivo si concorda prima di cominciare, e a un messaggio rispondo entro ventiquattro ore.|Se vuoi vedere come lavoro prima di scrivermi, le demo in Lavori si aprono e si usano davvero, e la pagina Processo racconta la strada passo per passo. Se vuoi solo un parere, l'audit del sito è gratuito e senza impegno.",
+    "chisono.cta": "Scrivimi",
     // Nav
     "nav.services": "Servizi",
     "nav.work": "Lavori",
@@ -1119,6 +1126,12 @@ export const dict: Record<Lang, Record<string, string>> = {
 
   en: {
     ...solEn,
+    "chisono.label": "About",
+    "chisono.title": "Who is behind LOoz.design.",
+    "chisono.sub": "One person, not an agency. Here is what that means in practice.",
+    "chisono.body":
+      "My name is Lorenzo, Looz for short. I design and build everything you see on this site by myself: the websites, the automations, the AI agents and the seventeen open demos in the portfolio. There is no agency behind this, and it is not a fallback: it is how I want to work. Whoever writes to me talks to the same person who then opens the editor.|I work remotely, in Italian, English and Swedish, with clients between Italy and Sweden. The deal is always the same and it is written on every page of this site: the code, the accounts and the domain stay in your name, the quote is agreed before we start, and I answer a message within twenty-four hours.|If you want to see how I work before writing, the demos under Work open and actually run, and the Process page tells the road step by step. If you just want an opinion, the site audit is free and without obligation.",
+    "chisono.cta": "Write to me",
     "nav.services": "Services",
     "nav.work": "Work",
     "nav.blog": "Blog",
@@ -2217,6 +2230,12 @@ export const dict: Record<Lang, Record<string, string>> = {
 
   sv: {
     ...solSv,
+    "chisono.label": "Om mig",
+    "chisono.title": "Vem som står bakom LOoz.design.",
+    "chisono.sub": "En person, inte en byrå. Så här ser det ut i praktiken.",
+    "chisono.body":
+      "Jag heter Lorenzo, Looz i korthet. Jag formger och bygger allt du ser på den här sajten själv: sajterna, automationerna, AI-agenterna och de sjutton öppna demos som finns i portfolion. Det står ingen byrå bakom, och det är inget nödläge: det är så jag vill arbeta. Den som skriver till mig talar med samma person som sedan öppnar editorn.|Jag arbetar på distans, på italienska, engelska och svenska, med kunder mellan Italien och Sverige. Avtalet är alltid detsamma och står på varje sida av den här sajten: koden, kontona och domänen förblir i ditt namn, offerten görs upp innan vi börjar, och ett meddelande besvaras inom tjugofyra timmar.|Vill du se hur jag arbetar innan du skriver går demos under Arbeten att öppna och använda på riktigt, och sidan Process berättar vägen steg för steg. Vill du bara ha en åsikt är granskningen av din sajt gratis och utan förpliktelser.",
+    "chisono.cta": "Skriv till mig",
     "nav.services": "Tjänster",
     "nav.work": "Arbeten",
     "nav.blog": "Blogg",
