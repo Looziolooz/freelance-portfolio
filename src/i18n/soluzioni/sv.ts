@@ -105,6 +105,34 @@ export const solSv: Record<string, string> = {
   "sec.agricoltura.title": "För dig som brukar jorden och förädlar den.",
   "sec.agricoltura.intro":
     "En gård som buteljerar eller packar har två överlappande yrken: fältet och den färdiga produkten. Det första berättar sig självt, det andra säljs dåligt, för mellan berättelsen och ordern finns oftast ingenting alls.|Det jag bygger här utgår från förädlingen: blad med format och utbyten, en del för dem som köper pallvis, berättelsen om platsen för den som köper en enda flaska. Två olika läsare, samma företag.",
+  "sec.automotive.label": "Verkstäder och återförsäljare",
+  "sec.automotive.title": "För dig som reparerar och säljer fordon.",
+  "sec.automotive.intro":
+    "En verkstad lever på mottagningar, reservdelar och leveranstider. Offerten görs fortfarande för hand, kundens historik bor i anteckningsboken eller ett ark, och när rätt del inte finns i lagret ringer teknikern tre leverantörer för att hitta vem som har den.|Det jag bygger för fordonsbranschen börjar med digital mottagning: skador på foto, offert från integrerat katalog, godkännande via WhatsApp. Den otillgängliga delen beställer sig själv, och i slutet av månaden vet du vad varje jobb faktiskt tjänade, inte bara totalen.",
+  "sec.immobiliare.label": "Fastigheter och förvaltning",
+  "sec.immobiliare.title": "För dig som förvaltar byggnader och människor.",
+  "sec.immobiliare.intro":
+    "En mäklare publicerar en bostad på fyra portaler och det tar fyrtiofem minuter. Mandatet löper ut utan varning, visningarna spåras inte och provisionen räknas för hand.|Det jag bygger för fastigheter börjar med multiportalpublicering: en bostad inskriven en gång och publicerad överallt. Leadet kommer in i CRM med sin källa, mandatet varnar innan utgång och provisionen räknar sig själv vid avslut.",
+  "sec.edilizia.label": "Bygg och anläggning",
+  "sec.edilizia.title": "För dig som bygger och renoverar.",
+  "sec.edilizia.intro":
+    "Budgetöverskridanden dyker upp när slutmånadens fakturor kommer. Den uppdaterade säkerhetsplanen måste finnas på plats enligt lag och cirkulerar på papper. Manuella närvarolistor kostar timmar av administration varje vecka.|Det jag bygger för byggbranschen börjar med appen för byggplats: digitalt incheckning, geolokaliserade framstegsbilder, en budget i realtid som flaggar innan överskridanden blir problem.",
+  "sec.formazione.label": "Skolor och utbildning",
+  "sec.formazione.title": "För dig som lär ut och certifierar.",
+  "sec.formazione.intro":
+    "Kontoret hanterar anmälningar, betalningar och vikarier med Excel och WhatsApp. Avgifterna förfaller utan påminnelse, närvaro förs på ett ark och utskicken kommer via e-post utan läskvitto.|Det jag bygger för utbildning börjar med den elektroniska dagboken: betyg, närvaro och elevfil på ett ställe. Förfallna avgifter påminner om sig själva, utskicken har läskvitto och föräldrarna ser allt från portalen.",
+  "sec.manifattura.label": "Tillverkning och produktion",
+  "sec.manifattura.title": "För dig som tillverkar och monterar.",
+  "sec.manifattura.intro":
+    "Ordrarna kommer via e-post, e-handel, portal och telefon, vart och ett i sitt format. Lagret vet inte vad som behövs och säljarna vet inte när det skickas. Leveranstiderna förblir omätta.|Det jag bygger för tillverkning börjar med hantering av kanalövergripande order: en order från valfri källa blir samma format, passerar avdelningarna med ett status och genererar rätt dokument vid rätt tillfälle.",
+  "sec.logistica.label": "Logistik och transport",
+  "sec.logistica.title": "För dig som flyttar och lagrar varor.",
+  "sec.logistica.intro":
+    "Lagret bor i huvudet på den som kan det: plocket går ur minnet, partier söks för hand, och utgångsdatum upptäcks när något redan blivit dåligt på hyllan. Inventeringen är ett helgjobb ingen vill ha.|Det jag bygger för logistik börjar i lagret: platser med streckkod, guidat plock, FIFO- eller FEFO-rotation som systemet upprätthåller. Lagret och affärssystemet säger samma siffra igen, utan kopiera och klistra.",
+  "sec.retail.label": "Butiker och detaljhandel",
+  "sec.retail.title": "För dig som säljer och återbeställer.",
+  "sec.retail.intro":
+    "Butiken som säljer online och i lokal använder två system som inte pratar med varandra. Kassan registrerar vad som går in men inte vad som lämnar lagret. Lagersaldona uppskattas och återbeställningarna sker på känn.|Det jag bygger för detaljhandel börjar med en enhetlig handflata: försäljning i butik, e-handel och lager i samma flöde. Kvittot minskar lagret, återbeställningen går när det behövs och dagens rapport är klar när du stänger butiken.",
 
   // ══ G01 · Restaurangsystem ═════════════════════════════════════════════
   "sol.gestRistorante.title": "Restaurangsystem: matsal, kök och delivery på ett ställe",
@@ -739,4 +767,257 @@ export const solSv: Record<string, string> = {
     "Filen slutar vara en risk med förnamn: datan har ett hem, felen minskar vid källan och rapporterna gör sig själva.",
   "sol.excel.time":
     "3 till 6 veckor, beroende på arkets komplexitet och kopplingarna.",
+
+  // ══ 19 · Verkstadsbackoffice ══════════════════════════════════════════
+  "sol.officina.title": "Backoffice för verkstäder och återförsäljare",
+  "sol.officina.lede":
+    "Digitala mottagningar, reservdelsbeställning och jobbkalkyl på ett ställe. Teknikern slutar skriva för hand och ägaren slutar undra vad varje jobb faktiskt tjänade.",
+  "sol.officina.problem":
+    "Mottagningen skrivs på en kulörtpappersbok, halva gången oläslig. Kundens historik bor i anteckningsboken eller en gammal fakturamapp, och när teknikern behöver en del som inte hyllan har ringer tre leverantörer för att hitta vem som har den. I slutet av månaden känner du totalen men inte vilket jobb som tjänade och vilket som förlorade.",
+  "sol.officina.signals":
+    "Mottagningarna är handskrivna och ibland oläsliga|Sökning av reservdelar innebär att ringa tre leverantörer|Kundens historik bor i anteckningsboken eller gamla fakturor|Du känner den månatliga totalen men inte marginalen per jobb",
+  "sol.officina.build":
+    "Digital mottagning::Skador på foto, begärt arbete och offert från reservdelskatalog, allt i ett formulär som kunden signerar på telefonen.|Reservdelsbeställning::När en del inte finns i lager kollar systemet leverantörens tillgänglighet och genererar beställningen, utan telefonsamtal.|Godkännande via WhatsApp::Offerten når kunden som ett meddelande med ja/nej-knapp, och svaret hamnar tillbaka i jobbordern.|Jobbkalkyl::Arbetskraft, reservdelar och tid spårat per jobb, så i slutet av månaden vet du exakt vad varje jobb faktiskt tjänade.|Kundhistorik::Varje besök, varje reservdel och varje offert kopplad till fordonet och ägaren, synlig i två tryck.",
+  "sol.officina.excludes":
+    "Lagerhantering och reservdelsbeställning förutom jobbet som pågår|Bokföring och lön, som stannar hos din revisor",
+  "sol.officina.phases":
+    "Mottagning och katalog::1-2 veckor::Vi kartlägger mottagningsflödet, reservdelskatalogen och offertstrukturen.|Bygge::4-6 veckor::Jobbordrar, godkännandeväg och jobbkalkyl. Testas på riktiga jobb innan anteckningsboken försvinner.|Reservdelar och historik::2-3 veckor::Leverantörsintegration, reservdelsbeställning och kundhistorikvyn.",
+  "sol.officina.integra":
+    "Tecdoc för reservdelskatalog|WhatsApp Business för kundgodkännande|Ditt bokföringsprogram|Google Calendar för leveranstider|Leverantörportaler för tillgänglighet",
+  "sol.officina.faq":
+    "Kan jag fortsätta använda pappermottagningen för walk-ins?::Ja. Det digitala formuläret är den snabbare vägen, inte den enda. Handskrivna anteckningar matas in vid receptionen när det behövs.|Om en leverantör inte är ansluten?::Systemet genererar en lista att skicka via e-post eller WhatsApp. Beställningen går ändå, bara via en annan kanal.|Lönar det sig för enerverkstad?::Under tjugo jobb i månaden fungerar anteckningsboken fortfarande och jag säger det. Det lönar sig när jobben hopas upp och du börjar tappa spåret på vem som ringts om vad.",
+  "sol.officina.change":
+    "Mottagningen är läslig och kunden får den skriftligt. Reservdelsbeställningar går utan en rundringning, och i slutet av månaden vet du vad varje jobb tjänade istället för vad banken säger.",
+  "sol.officina.time":
+    "5 till 8 veckor, beroende på hur många leverantörer som behöver anslutas.",
+
+  // ══ 20 · Fastighetsförvaltning ════════════════════════════════════════
+  "sol.immobiliare.title": "Multiportalpublicering och mandatspårning för fastigheter",
+  "sol.immobiliare.lede":
+    "En bostad inskriven en gång och publicerad överallt, med leads som kommer in i CRM och mandat som varnar innan de löper ut.",
+  "sol.immobiliare.problem":
+    "Du publicerar en bostad på fyra portaler och varje tar femton minuter med sitt eget format och sin egen fotoordning. Mandatet löper ut och du får veta det när en kund ringer om det. Visningarna händer men ingen skriver vem som kom eller vad de sa, och provisionen räknas för hand vid avslut.",
+  "sol.immobiliare.signals":
+    "Publicering av en bostad på fyra portaler tar fyrtiofem minuter|Mandaten löper ut utan varning|Visningarna spåras inte och ingen minns vad kunden sa|Provisionerna räknas för hand vid avslut",
+  "sol.immobiliare.build":
+    "En inskrivning, alla portaler::Bostaden skrivs in en gång med bilder, planlösning och beskrivning, och publiceras till varje ansluten portal i rätt format för var och en.|Leadspårning::Varje förfrågan kommer in i CRM med sin källa, så du vet vilken portal faktiskt bringar kunder.|Mandatvarning::Trettio dagar innan utgång varnar systemet, med dagarna kvar och fastighetsuppgifterna framför dig.|Provisionsberäknare::Provisionen ställs in när mandatet skrivs och provisionen räknar sig själv vid avslut, utan kalkylark.|Visningslogg::Vem som besökte, när, vad de sa och vad nästa steg är. Historiken stannar hos fastigheten, inte i någons huvud.",
+  "sol.immobiliare.excludes":
+    "Professionell fotografi och virtuella rundturer|Fastighetsöverföring och juridiskt arbete vid avslut",
+  "sol.immobiliare.phases":
+    "Portalinställning och mandatstruktur::1-2 veckor::Vi ansluter de portaler du faktiskt använder och definierar mandatfälten och provisionsreglerna.|Bygge::4-5 veckor::Multiportalpublicering, leadspårning och mandatkalendern.|CRM och provisioner::2-3 veckor::Leadspipen och provisionsberäknaren, testade på riktiga objekt.",
+  "sol.immobiliare.integra":
+    "Immobiliare.it, Idealista och Casa.it|Din egen webbplats|Google Business Profile|Google Calendar för visningar|WhatsApp för kundkommunikation|Ditt bokföringsprogram",
+  "sol.immobiliare.faq":
+    "Ersätter det portalerna?::Nej, det publicerar till dem. Du betalar fortfarande portalabonnemangen men slutar skriva in samma fastighet fyra gånger.|Kan jag ha olika bilder per portal?::Ja. Basinskrivningen är en men varje portal kan ordna om eller dölja specifika bilder.|Om en portal ändrar format?::Anslutningen uppdateras, inte ditt sätt att arbeta. Det är den delen som sparar dig de fyrtiofem minuterna.",
+  "sol.immobiliare.change":
+    "En fastighet går live på varje portal på fem minuter istället för fyrtiofem. Leads kommer in redan märkta per källa, och du förlorar aldrig ett mandat till en utgång du glömde.",
+  "sol.immobiliare.time":
+    "5 till 8 veckor, beroende på hur många portaler och om CRM redan finns.",
+
+  // ══ 21 · Coworkinghantering ═══════════════════════════════════════════
+  "sol.coworking.title": "Bokning och medlemskapshantering för coworking",
+  "sol.coworking.lede":
+    "Arbetsplatser, mötesrum och medlemskap i ett system. Kalendern visar vad som är ledigt, fakturan går ut av sig själv och medlemsportalen handlar resten.",
+  "sol.coworking.problem":
+    "Platserna bokas via WhatsApp och ingen vet vem som faktiskt kommer in. Mötesrummet har ett pappersark på dörren och dubbelbokningar händer varje vecka. Fakturorna går sent för någon måste matcha närvaro mot prislistan för hand, och den nya medlemmens onboarding är tre e-postmeddelanden som kanske kommer.",
+  "sol.coworking.signals":
+    "Bokningarna av arbetsplatser kommer via WhatsApp utan central vy|Mötesrummen dubbelbokas för att lappen på dörren inte går att lita på|Fakturorna går ut sent för att någon matchar närvaron för hand|En ny medlems väg in är tre lösa mejl",
+  "sol.coworking.build":
+    "Kalender för platser och rum::Tillgänglighet per dag och timme, bokningsbar från medlemsportalen. Inga fler dubbelbokningar.|Medlemskapsplaner::Olika nivåer med olika åtkomst, var och en med sitt pris och sin faktureringscykel.|Automatisk fakturering::I slutet av cykeln genereras fakturan ur faktisk användning och går ut av sig själv.|Medlemsportal::Boka en plats, se kalendern, hantera medlemskapet. Receptionen slutar vara växeln.|Besökaregister::Gästerna checkar in med namn och värd, och värden aviseras.",
+  "sol.coworking.excludes":
+    "Hårdvara för åtkomstkontroll som läsare för brickor|Webbplatsen och marknadsföringssidan, som är ett eget projekt",
+  "sol.coworking.phases":
+    "Planer och regler::1 vecka::Medlemskapsnivåer, platser och rums kapacitet, avboknings- och faktureringsregler.|Bygge::4-5 veckor::Kalender, medlemsportal och fakturering. Testas med en liten grupp innan det öppnas för alla.|Onboarding och lansering::1-2 veckor::Medlemmens onboardingflöde och överlämningen till ditt team.",
+  "sol.coworking.integra":
+    "Stripe eller PayPal för betalningar|Google Calendar för rumsbokningar|Din inkorg|WhatsApp för aviseringar|Din webbplats, om den finns",
+  "sol.coworking.faq":
+    "Kan jag erbjuda dagsbiljetter också?::Ja. Dagsbiljetter och medlemskap lever sida vid sida, varje med sitt pris och sina åtkomstregler.|Och medlemmar som inte bokar utan bara dyker upp?::Kalendern är för planering, inte för att blockera. Inhoppare fungerar som alltid.|Hanterar det heta platser och fasta platser olika?::Ja. En fast plats är alltid reserverad för medlemmen, en heta plats är tillgänglig att boka i ordning först till kvarn.",
+  "sol.coworking.change":
+    "Platser och rum bokas på sekunder istället för i en WhatsApp-tråd. Fakturorna går i tid utan att någon tillbringar en eftermiddag med att matcha listor, och nya medlemmar vet vad de ska göra innan receptionen berättar det.",
+  "sol.coworking.time":
+    "4 till 6 veckor, beroende på hur många medlemskapsnivåer och om faktureringen behöver anslutas.",
+
+  // ══ 22 · Byggplatsapp ════════════════════════════════════════════════
+  "sol.cantieri.title": "Byggplatsapp för bygg och anläggning",
+  "sol.cantieri.lede":
+    "Digitalt incheckning, geolokaliserade bilder och budget i realtid på varje byggplats. Kontoret ser vad som händer utan att fråga.",
+  "sol.cantieri.problem":
+    "Närvarolistan är ett pappersformulär som någon fotar och skickar på fredagen, och till måndagen är halva namnen fel. Framstegsbilderna hamnar i någons mobilgalleri utan datum och utan referens till jobbet. Budgetöverskridanden dyker upp när fakturorna kommer i slutet av månaden, då de redan är ett problem.",
+  "sol.cantieri.signals":
+    "Närvarolistor är pappersformulär som fotas och skickas på fredagen|Framstegsbilderna ligger i någons mobil utan datum eller jobbreferens|Budgetöverskridanden dyker upp när slutmånadens fakturor kommer|Säkerhetsplanen cirkulerar på papper och ingen vet om den är aktuell",
+  "sol.cantieri.build":
+    "Digitalt incheckning::Stämpla in och ut från mobilen, geolokaliserat, med byggplatsen bifogad. Inget papper, ingen fotografering, ingen fredagsepost.|Framstegsbilder::Geolokaliserade och tidsstämplade, kopplade till jobbet och synliga från kontoret i realtid.|Livebudget::Estimerat mot faktiskt, uppdaterat när fakturorna kommer. Överskridanden flaggar innan de blir problem.|Närvarorapport::Arbetstimmar per anställd, per byggplats, per vecka. Exporterat för löner i rätt format.|Dokumentdelning::Säkerhetsplaner, tillstånd och ritningar på mobilen, med versionskontroll så ingen arbetar med en gammal.",
+  "sol.cantieri.excludes":
+    "Projektledning och Ganttplanering, som är separat program|Lönehantering, som stannar hos din konsult",
+  "sol.cantieri.phases":
+    "Byggplatser och regler::1 vecka::Vilka byggplatser är aktiva, vem arbetar var, närvaro- och budgetregler.|Bygge::4-5 veckor::Incheckning, bilder och budget. Testas på en plats innan det sprids.|Rapporter och dokument::1-2 veckor::Närvaroexporten och dokumentdelningsområdet.",
+  "sol.cantieri.integra":
+    "Ditt bokföringsprogram|Google Drive eller ditt dokumentlager|WhatsApp för byggplatsaviseringar|Google Calendar för deadline|Excel, om budgeten bor där just nu",
+  "sol.cantieri.faq":
+    "Fungerar det offline på byggplatsen?::Ja. Incheckning, bilder och anteckningar fungerar offline och synkroniserar när anslutningen kommer. En byggplats kan inte bero av signalen.|Kan anställda stämpla in för varandra?::Geolokaliseringskontrollerna gör det osannolikt, och systemet flaggar när det händer.|Lönar det sig för ett tvåmannaföretag?::Under fem anställda fungerar papperslistan fortfarande och jag säger det. Det lönar sig när byggplatserna multipliceras och närvaro blir ett veckovis administrativt arbete.",
+  "sol.cantieri.change":
+    "Närvaron är korrekt och når kontoret samma dag. Framstegsbilderna är arkiverade med plats och datum. Och budgetproblem dyker upp som kurvor på en skärm istället för överraskningar i en faktura.",
+  "sol.cantieri.time":
+    "4 till 6 veckor, beroende på antalet aktiva byggplatser.",
+
+  // ══ 23 · Trafikskolahantering ═════════════════════════════════════════
+  "sol.autoscuola.title": "System för trafikskolor",
+  "sol.autoscuola.lede":
+    "Teoretiska lektioner, praktiska körlektioner och provbokning på ett ställe. Eleven anmäler sig, betalar och bokar utan att kontorstelefonen ringer.",
+  "sol.autoscuola.problem":
+    "Anmälningarna kommer via telefon och skrivs i en anteckningsbok. Lektionskalendern bor i ett veckorut på väggen, och när en instruktör ringer sjuk kollapsar eftermiddagen. Eleven ringer för att fråga hur många timmar han har kvar, provdatum kommer via e-post och någon måste ringa varje erbjuder_platsen.",
+  "sol.autoscuola.signals":
+    "Anmälningarna kommer via telefon och skrivs i en anteckningsbok|Eleven ringer för att fråga hur många timmar han har kvar|Provdatum kommer via e-post och någon ringer varje elev för att erbjuda platsen|När en instruktör ringer sjuk kollapsar eftermiddagen",
+  "sol.autoscuola.build":
+    "Anmälan online::Eleven väljer kurs, fyller i uppgifterna och betalar första avbetalningen utan att ringa kontoret.|Lektionsspårning::Varje körtimme loggas per elev, per instruktör. Återstående timmar är alltid synliga.|Teorikalender::Sessioner med datum, rum och instruktör, bokningsbara från elevportalen.|Provhäntering::Provdatum kommer, tilldelas behöriga elever och aviseringen går ut automatiskt.|Instruktörskalender::Varje instruktör ser sin vecka, med byten och frånvaro hanterade i systemet istället för via telefon.",
+  "sol.autoscuola.excludes":
+    "Integrationen med Patente Camilleri för provbokningar i teori, som förblir separat|De faktiska körlektionerna, som är ditt arbete",
+  "sol.autoscuola.phases":
+    "Kurser och regler::1-2 veckor::Kurskatalogen, priserna, lektionsstrukturen och provkraven.|Bygge::5-7 veckor::Anmälan, lektionsspårning och instruktörskalendern.|Portal och aviseringar::2 veckor::Elevvyn, provaviseringarna och betalningspåminnelserna.",
+  "sol.autoscuola.integra":
+    "Stripe eller PayPal för betalningar|Google Calendar för instruktörskalendrar|WhatsApp för elevaviseringar|Ditt bokföringsprogram|E-post för provannonser",
+  "sol.autoscuola.faq":
+    "Kan eleverna boka sina egna körlektioner?::Ja, från de lediga platserna på instruktörens kalender. Kontoret slutar vara växeln för schemat.|Och avbetalningarna?::Systemet spårar vad som betalats och vad som förfaller, och skickar påminnelser innan datumet. Inga fler förföljningar via telefon.|Hanterar det olika körkortskategorier?::Ja. Varje kategori har sitt eget läroplan, sin tidsåtgång och sitt pris.",
+  "sol.autoscuola.change":
+    "Eleverna anmäler sig och betalar från mobilen. Körtimmar är alltid kända, provplatser når rätt elever automatiskt, och kontorstelefonen slutar ringa om saker som portalen redan besvarar.",
+  "sol.autoscuola.time":
+    "6 till 9 veckor, beroende på hur många kurskategorier och om betalningssystemet behöver konfigureras.",
+
+  // ══ 24 · Bostadsrättsförvaltning ══════════════════════════════════════
+  "sol.condominio.title": "Bostadsrättsförvaltning och betalningsspårning",
+  "sol.condominio.lede":
+    "Avgifter, protokoll och underhållsönskemål på ett ställe. Förvaltaren slutar ringa om betalningar och ägaren slutar ringa för att fråga när hissen ska serviceas.",
+  "sol.condominio.problem":
+    "Påminnelser om avgifter skickas med brev och kommer sent för någon skriver ut dem på torsdagen. Ägarna ringer för att fråga sina saldo och förvaltaren rekonstruerar det från en bok, och särskilda bidrag för akut reparationer går vilse mellan mötet och fakturan. Ingen vet vad som betalats förrän kvartalsavstämningen.",
+  "sol.condominio.signals":
+    "Avgiftspåminnelserna skrivs ut och skickas manuellt|Ägarna ringer för att fråga saldo och förvaltaren rekonstruerar det från en bok|Särskilda bidrag går vilse mellan mötet och fakturan|Ingen vet vad som betalats förrän kvartalsavstämningen",
+  "sol.condominio.build":
+    "Automatiska avgiftspåminnelser::Systemet skickar påminnelsen innan förfallodatumet, via e-post eller meddelande, och spårar vem som betalat.|Ägarnas portal::Varje ägare ser sitt saldo, betalningshistoriken och byggnadens utan att ringa förvaltningen.|Protokoll och beslut::Protokollen upprättas från en mall, godkännas digitalt och arkiveras med besluten och rösterna.|Underhållsönskemål::Ägarna rapporterar problem från portalen, förvaltaren tilldelar dem och statusen är synlig för alla.|Utgiftsbok::Varje utgift kategoriseras och är synlig per byggnad, per år, med saldot i realtid.",
+  "sol.condominio.excludes":
+    "Juridiskt arbete och tvister, som stannar hos förvaltarens jurist|Fysisk post till ägare som inte är nåbara digitalt, som är din uppgift",
+  "sol.condominio.phases":
+    "Byggnader och regler::1-2 veckor::Byggnaderna under förvaltning, avgiftsstrukturen och betalningsreglerna.|Bygge::5-7 veckor::Avgiftsspårning, ägarnas portal och flödet för underhållsönskemål.|Protokoll och bok::2-3 veckor::Protokollmallen och utgiftsboken.",
+  "sol.condominio.integra":
+    "SEPA för autogiro|Ditt bokföringsprogram|WhatsApp för ägaraviseringar|Google Calendar för mötesdatum|E-post för påminnelser och annonser",
+  "sol.condominio.faq":
+    "Hanterar det byggnader med olika avgiftsstrukturer?::Ja. Varje byggnad har sina regler, sin bok och sin ägarlista.|Och ägarna som fortfarande vill ha papper?::Systemet skickar digitalt som standard. Papper är möjligt för enskilda ägare, utskrivet från samma data.|Hanterar det särskilda bidrag för större arbeten?::Ja. Beslutet registeras, bidraget beräknas per lägenhet och betalningsspårningen startar.",
+  "sol.condominio.change":
+    "Ägarna betalar i tid för att påminnelsen når dem före förfallodatumet. Förvaltaren ser saldot för varje byggnad utan att öppna en bok. Och särskilda bidrag slutar gå vilse mellan mötet och fakturan.",
+  "sol.condominio.time":
+    "6 till 9 veckor, beroende på antalet byggnader och om autogiro behöver konfigureras.",
+
+  // ══ 25 · Manfaktursorderhantering ══════════════════════════════════════
+  "sol.ordini.title": "Kanalövergripande orderhantering för tillverkning",
+  "sol.ordini.lede":
+    "Ordrar från e-post, telefon, e-handel och portal blir samma format, passerar avdelningarna med ett status och genererar rätt dokument vid rätt tillfälle.",
+  "sol.ordini.problem":
+    "Ordrarna kommer via e-post, telefon, e-handel och portal, vart och ett i sitt format. Säljarna vet inte när lagret skickar, lagret vet inte vad säljarna lovade, och produktionsplanen byggs om varje morgon ur minnet. Leveranstiderna förblir omätta för att ingen ser hela vägen.",
+  "sol.ordini.signals":
+    "Ordrarna kommer i olika format från olika kanaler|Säljarna vet inte när lagret skickar|Produktionsplanen byggs om varje morgon ur minnet|Leveranstiderna förblir omätta för att ingen ser hela vägen",
+  "sol.ordini.build":
+    "En enda ingång::En order från valfri källa blir samma format, med samma fält, i samma system.|Statusflöde::Ordern går från mottagen till bekräftad, under arbete, klar och skickad, och alla ser var den är.|Automatiska dokument::Bekräftelse, följesedel och faktura genereras vid rätt tillfälle ur orderdata.|Insyn i produktionen::De som tillverkar ser vad som ska göras och när, utan morgonmötet för att bygga om schemat.|Mätta ledtider::Medeltid från order till leverans, per produkt och kanal, mätt utan att någon fyller i ett ark.",
+  "sol.ordini.excludes":
+    "Tillverkningsplanering och MRP, som är ett separat system|Lagerhantering, som är lagerlösningen",
+  "sol.ordini.phases":
+    "Kanaler och orderstruktur::1-2 veckor::Vilka kanaler bringar ordrar, vad de innehåller och vilka faser det finns.|Bygge::5-7 veckor::Orderhantering, statusflöde och dokumentgenerering.|Spårning och rapporter::2 veckor::Leveranstidsargumentering och rapporter per kanal och produkt.",
+  "sol.ordini.integra":
+    "Din e-handel (WooCommerce, Shopify)|E-post och telefon för ordermottagning|Ditt bokföringsprogram|WhatsApp för orderbekräftelser|Google Calendar för leveransåtaganden",
+  "sol.ordini.faq":
+    "Om order kommer utan strukturerade data?::Den som svarar i telefon fyller i samma formulär som e-handeln. En ingång, ett format, oavsett var det börjar.|Kan jag ha olika leveranstidsmål per produkt?::Ja. Varje produkt eller kategori kan ha sitt eget mål, och systemet flaggar när det är i riskzonen.|Ersätter det ERP?::Om du har ett som hanterar ordrar bra behövs det här kanske inte. Det lönar sig när ordrarna kommer från för många kanaler och ERP ser dem alla.",
+  "sol.ordini.change":
+    "Varje order, oavsett var den började, följer samma väg och producerar rätt dokument. Säljarna och lagret ser samma status. Och leveranstiderna slutar vara en gissning för att siffrorna faktiskt mäts.",
+  "sol.ordini.time":
+    "6 till 9 veckor, beroende på hur många kanaler som behöver anslutas.",
+
+  // ══ 26 · Lagerhantering ═══════════════════════════════════════════════
+  "sol.magazzino.title": "Lagerhantering med streckkodsplock",
+  "sol.magazzino.lede":
+    "Platser, streckkoder och rotationsregler i ett system. Plocket slutar gå ur minnet, och lagret och affärssystemet säger samma siffra.",
+  "sol.magazzino.problem":
+    "Plocket sker ur minnet eller från en utskrift, och felen upptäcks vid leveransen, hos fel kund. Partier söks för hand, utgångsdatum förblir osynliga tills något blivit dåligt på hyllan, och inventeringen blir ett helgjobb ingen vill ha. Vad lagret har och vad affärssystemet säger stämmer sällan överens.",
+  "sol.magazzino.signals":
+    "Plockfelen upptäcks när paketet redan är hos kunden|Partier söks för hand och utgångsdatum förblir osynliga|Inventeringen blir ett helgjobb|Vad lagret har och vad affärssystemet säger stämmer inte överens",
+  "sol.magazzino.build":
+    "Platser på flera nivåer::Hyllor, rader och positioner med streckkoder. Plockaren skannar och vet exakt var partiet står.|Plock med streckkod::Systemet säger var plockaren ska gå och vad som ska tas, och skannern bekräftar rätt artikel innan fel artikel hinner iväg.|FIFO- eller FEFO-rotation::Systemet upprätthåller rotationsregeln du väljer, så det äldsta partiet går först utan att någon behöver minnas det.|Lager i realtid::Varje rörelse uppdaterar räkningen omedelbart. Vad lagret har och vad systemet säger är samma siffra.|Inventering enligt schema::Räkningen löper per zon på ett rullande schema, så helgjobbet försvinner.",
+  "sol.magazzino.excludes":
+    "Gaffeltruck och hyllsystem, som du väljer med din installatör|Själva affärssystemet, som denna lösning ansluter till",
+  "sol.magazzino.phases":
+    "Layout och platser::1-2 veckor::Lagrets karta, platsstruktur och streckkodsschema.|Bygge och skanning::4-6 veckor::Platser, plockflöde och streckkodsskanning. Startas parallellt med den gamla metoden.|Rotation och rapporter::2-3 veckor::FIFO- eller FEFO-regler, inventeringsschemat och rapporten över lagerskillnader.",
+  "sol.magazzino.integra":
+    "Ditt affärssystem eller ERP|Streckkodsläsare (Zebra, Honeywell)|WooCommerce eller Shopify, om du säljer online|Ditt bokföringsprogram|Etikettskrivare för plats- och lotkoder",
+  "sol.magazzino.faq":
+    "Måste jag köpa streckkodsläsare?::För första versionen fungerar mobilens kamera. Dedikerade läsare gör det snabbare, och du lägger till dem när flödet motiverar det.|Om produkterna inte har streckkoder ännu?::Du genererar dem. Systemet skapar partikoder och platsetiketter, och lagret blir streckkodat från dag ett.|Kan jag börja med en zon och utöka?::Ja. Det är ofta rätt väg: en zon bevisar flödet, resten följer samma logik.",
+  "sol.magazzino.change":
+    "Plockaren skannar och går till rätt hylla. Utgångsdatum syns innan de blir en förlust. Och siffran på skärmen stämmer överens med siffran på hyllan.",
+  "sol.magazzino.time":
+    "5 till 9 veckor, beroende på lagrets storlek och med hur många zoner du börjar.",
+
+  // ══ 27 · Jordbruksbackoffice ══════════════════════════════════════════
+  "sol.agricolo.title": "Backoffice för jordbruk och jordbruksverksamhet",
+  "sol.agricolo.lede":
+    "Fältposter, skördspårning och försäljning på ett ställe. Den data som jordbruksverket begär redan finns där, och försäljningen till restaurangen runt hörnet är inskriven i samma system som paller säljs till grossisten.",
+  "sol.agricolo.problem":
+    "Fältinsatserna loggas i en pappersbok som ingen egentligen litar på. Skördens avkastning syns på leveransvågen men inte per fält, så den mest lönsamma grödan är en gissning. Dokumentationen för EU-stöden tar en vecka att bygga ihop från spridda papper, och direkta försäljningar loggas inte förrän revisorn frågar i slutet av året.",
+  "sol.agricolo.signals":
+    "Fältinsatserna loggas i en pappersbok|Avkastningen syns på leveransvågen, inte per fält|Dokumentationen för EU-stöden tar en vecka att bygga ihop|Direkta försäljningar loggas inte förrän revisorn frågar",
+  "sol.agricolo.build":
+    "Fältpost::Varje insats per fält, per datum: sådd, behandlingar, skörd. Den data som jordbruksverket begär är redan strukturerad.|Avkastningsspårning::Skördevikt kopplad till fält och parti, så du vet vilken mark som tjänar och vilken som kostar.|Logg för direktförsäljning::Restaurang, marknad och gårdsförsäljning inskriven i samma system, med rätt dokument genererade.|Kostnadsspårning::Insatser, bränsle och arbetskraft allokerade per fält, så den faktiska kostnaden per hektar är en rapport, inte en gissning.|Stödexport::Dokumentationen formaterad som myndigheten begär den, genererad från den data du redan har.",
+  "sol.agricolo.excludes":
+    "Odlingplanering och agronomisk rådgivning, som stannar hos din konsult|Det faktiska fältarbetet, som är ditt arbete",
+  "sol.agricolo.phases":
+    "Fält och insatser::1-2 veckor::Fältinventeringen, insatstyperna och datastrukturen.|Bygge::4-5 veckor::Fältpost, avkastningsspårning och direkta försäljningar.|Stöd och rapporter::1-2 veckor::Dokumentexporten och rapporten över kostnad per hektar.",
+  "sol.agricolo.integra":
+    "Ditt bokföringsprogram|WhatsApp för bekräftelse av direkta försäljningar|Google Calendar för insatsplaneringen|E-post för stödkorrespondensen|Excel, om avkastningsdata bor där just nu",
+  "sol.agricolo.faq":
+    "Kan jag mata in data från fältet på mobilen?::Ja. Formulären fungerar offline och synkroniserar när du får signal. Ett fält behöver inte wifi.|Hanterar det olika grödor på samma fält?::Ja. Varje insats är kopplad till fält och gröda, så rotationer och blandodlingar är båda täckta.|Lönar det sig för ett litet jordbruk?::Under fem hektar fungerar pappersboken fortfarande och jag säger det. Det lönar sig när stöddokumentationen blir en veckas arbete eller när direkta försäljningar växer förbi ett fåtal.",
+  "sol.agricolo.change":
+    "Stödfilerna samlas ihop från den data du redan matat in. Skörden berättar vilket fält som tjänar och vilket som kostar. Och direkta försäljningar loggas i det ögonblick de händer, inte i slutet av året.",
+  "sol.agricolo.time":
+    "4 till 6 veckor, beroende på hur många fält och drifftyper.",
+
+  // ══ 28 · Vingårdsförvaltning ══════════════════════════════════════════
+  "sol.cantina.title": "System för vingårder och vinproducenter",
+  "sol.cantina.lede":
+    "Årgångar, källardrift och försäljning i ett system. Flaskan som lämnar hyllan känner sitt lot, sin vingård och sin historia, och grossisten har allt innan hen frågar.",
+  "sol.cantina.problem":
+    "Källaren drivs med handskrivna journaler och minnet av den som varit där längst. Lotspårning sker när en återkallning tvingar det, inte före. Vinkartan till vinkrogen är ett annat dokument från prislistan till grossisten, och de två avviker. Direkta försäljningar på gården loggas inte förrän i slutet av kvartalet.",
+  "sol.cantina.signals":
+    "Källardriften handlar med handskrivna journaler|Lotspårning sker bara när en återkallning tvingar det|Vinkartan till vinkrogen och prislistan till grossisten avviker|Direkta försäljningar på gården loggas inte förrän i slutet av kvartalet",
+  "sol.cantina.build":
+    "Årgångs- och partispårning::Varje flaska kopplad till vingården, årgången och partiet, så en återkallning är en sökning, inte en ombyggnad.|Källararbete::Jäsning, omtappning, blandning och lagring spårat per parti med datum och anteckningar.|Enhetsprislista::Vinkrogen, grossisten och e-handeln läser från samma data, varje med sin vy.|Direktförsäljning::Gårdsförsäljning inskriven på mobilen vid försäljningsögonblicket, med rätt dokument.|Grossistområde::Reserverad katalog och prislista bakom inloggning, så köparen har allt innan det första mejlet.",
+  "sol.cantina.excludes":
+    "E-handel med betalning och leverans, som är ett eget projekt|Agronomisk rådgivning och vingårdshanterin som stannar hos din konsult",
+  "sol.cantina.phases":
+    "Årgångar och lotter::1-2 veckor::Årgångsinventariet, lotstrukturen och källardriftens typer.|Bygge::5-7 veckor::Lotspårning, källardrift och enhetsprislistan.|Grossist och försäljning::2-3 veckor::Grossistområdet och direktförsäljningen.",
+  "sol.cantina.integra":
+    "Ditt bokföringsprogram|WhatsApp för orderbekräftelser|Google Calendar för källardrift|E-post för grossistkorrespondens|Din webbplats, om den finns",
+  "sol.cantina.faq":
+    "Hanterar det olika format och etiketter?::Ja. Varje lot känner sina flaskor, etiketter och format, så samma vin i tre etiketter är tre poster från ett lot.|Kan jag spåra per vingård?::Ja. Lotet bär vingården, så du vet vilken mark som producerar vilket vin.|Lönar det sig för en liten källare?::Under tusen flaskor fungerar pappersjournalen. Det lönar sig när lotspårning blir ett krav från myndigheterna eller när direkta försäljningar växer förbi ett fåtal kunder.",
+  "sol.cantina.change":
+    "En flaska som lämnar hyllan känner var den odlades och när den butelerades. Vinkrogen och grossisten ser samma prislista. Och direkta försäljningar slutar vara ett mysterium som revisorn löser i slutet av året.",
+  "sol.cantina.time":
+    "6 till 9 veckor, beroende på antalet årgångar och format.",
+
+  // ══ 29 · Skolhantering ════════════════════════════════════════════════
+  "sol.scuola.title": "System för skolor och utbildningscentra",
+  "sol.scuola.lede":
+    "Anmälningar, närvaro, betyg och avgiftsspårning på ett ställe. Kontoret slutar barmemenera med Excel och WhatsApp, och föräldrarna ser det de behöver utan att ringa.",
+  "sol.scuola.problem":
+    "Anmälningarna kommer via telefon och e-post, var och en hanterad på sitt sätt. Närvaron förs på ett ark och vikariet hittas via en WhatsApp-kedja. Avgifterna förfaller utan påminnelse och kontoret ringer på måndagseftermiddagen om betalningar. Utskicken går via e-post utan läskvitto, så skolan vet inte vem som sett dem.",
+  "sol.scuola.signals":
+    "Anmälningarna kommer via telefon och e-post, var och en hanterad på sitt sätt|Närvaron förs på ett ark och vikarierna hittas via WhatsApp-kedja|Avgifterna förfaller utan påminnelse och kontoret ringer om betalningar|Utskicken går via e-post utan läskvitto",
+  "sol.scuola.build":
+    "Anmälan online::Föräldern fyller i formuläret, laddar upp dokumenten och betalar första avbetalningen utan att ringa kontoret.|Närvarodagbok::Digital, per klass och per dag, med en vikarielista som fyller luckan i ett tryck.|Avgiftsspårning::Förfallodatum, påminnelser och betalningsstatus syns i ett ögonkast. Förfallna avgifter påminner om sig själva.|Föräldraportal::Betyg, närvaro, utskick och avgiftsstatus, allt på ett ställe. Kontorstelefonen tystnar.|Utskick med läskvitto::Meddelandena går ut med läskvitto, och skolan ser vem som läst dem och vem som inte gjort det.",
+  "sol.scuola.excludes":
+    "E-learningplattformen för onlinekurser, som är separat program|Själva undervisningen, som är ditt arbete",
+  "sol.scuola.phases":
+    "Kurser och regler::1-2 veckor::Kurskatalogen, avgiftsstrukturen, närvaroreglerna och föräldraportalens fält.|Bygge::5-7 veckor::Anmälan, närvaro, betyg och avgiftsspårning.|Portal och aviseringar::2-3 veckor::Föräldraportalen, utskicken och avgiftspåminnelserna.",
+  "sol.scuola.integra":
+    "Stripe eller PayPal för betalningar|WhatsApp för akuta aviseringar|E-post för utskicken|Google Calendar för skolhändelser|Ditt bokföringsprogram",
+  "sol.scuola.faq":
+    "Ser föräldr bara sitt eget barns data?::Ja. Varje förälder ser sitt barns betyg, närvaro och avgifter. Ingen förälder ser en annans.|Och lärarna som inte vill använda en app?::Närvaron kan matas in av kontoret från samma system. Läraren behöver inte ändra sina vanor.|Hanterar det olika avgiftsscheman per kurs?::Ja. Varje kurs eller program har sin egen avgiftsstruktur och sin egen betalningstidplan.",
+  "sol.scuola.change":
+    "Avgifterna kommer i tid för att påminnelsen når föräldern före förfallodatumet. Utskicken har läskvitto. Och kontoret tillbringar måndagseftermiddagen med arbete som betyder något i stället för att jaga betalningar per telefon.",
+  "sol.scuola.time":
+    "6 till 9 veckor, beroende på hur många kurser och om betalningssystemet behöver konfigureras.",
 };

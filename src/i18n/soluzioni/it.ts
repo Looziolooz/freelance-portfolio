@@ -124,6 +124,34 @@ export const solIt: Record<string, string> = {
   "sec.agricoltura.title": "Per chi lavora la terra e la trasforma.",
   "sec.agricoltura.intro":
     "Un'azienda agricola che imbottiglia o confeziona ha due mestieri sovrapposti: il campo e il prodotto finito. Il primo si racconta bene, il secondo si vende male, perché tra il racconto e l'ordine di solito non c'è niente.|Quello che costruisco qui parte dalla trasformazione: le schede con formati e rese, l'area per chi compra a bancali, il racconto del posto per chi compra una bottiglia sola. Due lettori diversi, la stessa azienda.",
+  "sec.automotive.label": "Officine e concessionari",
+  "sec.automotive.title": "Per chi ripara e vende veicoli.",
+  "sec.automotive.intro":
+    "Un'officina vive su accettazioni, ricambi e tempi di consegna. Il preventivo si fa ancora a mano, lo storico del cliente vive in un quaderno o in un foglio, e quando il ricambio giusto non è a magazzino il tecnico telefona tre fornitori per trovare chi lo ha.|Quello che costruisco per l'automotive parte dall'accettazione digitale: foto dei danni, preventivo da catalogo integrato, approvazione su WhatsApp. Il ricambio fuori stock si ordina da solo, e a fine mese sai quanto ha guadagnato ogni intervento, non solo il totale.",
+  "sec.immobiliare.label": "Immobiliare e gestione patrimoniale",
+  "sec.immobiliare.title": "Per chi gestisce edifici e persone.",
+  "sec.immobiliare.intro":
+    "Un agente inserisce un immobile su quattro portali e ci mette quarantacinque minuti. Il mandato scade senza avviso, le visite non lasciano traccia e le provvigioni si calcolano a mano.|Quello che costruisco per l'immobiliare parte dalla pubblicazione multiportale: un immobile inserito una volta e pubblicato ovunque. Il lead arriva nel CRM con la sua fonte, il mandato avvisa prima della scadenza e la provvigione si calcola da sola a chiusura.",
+  "sec.edilizia.label": "Edilizia e cantieri",
+  "sec.edilizia.title": "Per chi costruisce e ristruttura.",
+  "sec.edilizia.intro":
+    "Gli sforamenti di budget emergono quando arrivano le fatture di fine mese. Il piano di sicurezza aggiornato deve essere in cantiere per legge e gira su carta. I fogli presenze manuali costano ore di segreteria ogni settimana.|Quello che costruisco per l'edilizia parte dall'app cantiere: badge digitale, foto geolocalizzate di avanzamento, budget in tempo reale che segnala gli sforamenti prima che diventino problemi.",
+  "sec.formazione.label": "Scuole e formazione",
+  "sec.formazione.title": "Per chi insegna e certifica.",
+  "sec.formazione.intro":
+    "La segreteria gestisce iscrizioni, pagamenti e supplenti con Excel e WhatsApp. Le quote scadono senza avviso, le presenze vanno su un foglio e le circolari arrivano via email senza conferma di lettura.|Quello che costruisco per la formazione parte dal registro elettronico: voti, presenze e scheda alunno in un posto solo. Le quote scadute si sollecitano da sole, le circolari hanno conferma di lettura e i genitori vedono tutto dal portale.",
+  "sec.manifattura.label": "Manifattura e produzione",
+  "sec.manifattura.title": "Per chi produce e assembla.",
+  "sec.manifattura.intro":
+    "Gli ordini arrivano via email, e-commerce, portale e telefono, ognuno con un formato diverso. Il magazzino non sa cosa serve e le vendite non sanno quando parte la merce. I tempi di consegna restano senza misura.|Quello che costruisco per la manifattura parte dalla gestione ordini multicanale: un ordine da qualsiasi fonte diventa lo stesso formato, passa tra i reparti con uno stato e genera i documenti giusti al momento giusto.",
+  "sec.logistica.label": "Logistica e trasporti",
+  "sec.logistica.title": "Per chi muove e stocca merce.",
+  "sec.logistica.intro":
+    "Il magazzino vive nella testa di chi lo conosce: il prelievo va a memoria, i lotti si cercano a mano, e le scadenze si scoprono quando qualcosa è già andato male sullo scaffale. L'inventario è un lavoro da weekend che nessuno vuole.|Quello che costruisco per la logistica parte dal magazzino: ubicazioni con barcode, picking guidato, rotazione FIFO o FEFO imposta dal sistema. Il magazzino e il gestionale tornano a dire lo stesso numero, senza copia e incolla.",
+  "sec.retail.label": "Negozi e retail",
+  "sec.retail.title": "Per chi vende e riordina.",
+  "sec.retail.intro":
+    "Il negozio che vende online e in sede usa due sistemi che non si parlano. La cassa registra quello che entra ma non quello che esce dal magazzino. Le scorte si contano a occhio e i riordini si fanno a sentimento.|Quello che costruisco per il retail parte dall'unificazione: vendita al dettaglio, e-commerce e magazzino nello stesso flusso. Lo scontrino scala la giacenza, il riordino parte quando serve e il report di fine giornata è pronto quando chiudi la serranda.",
 
   // ══ G01 · Gestionale ristorante ════════════════════════════════════════
   "sol.gestRistorante.title": "Gestionale per ristorante: sala, cucina e delivery in un posto solo",
@@ -758,4 +786,257 @@ export const solIt: Record<string, string> = {
     "Il file smette di essere un rischio con un nome proprio: i dati hanno una casa, gli errori calano all'origine e i report si fanno da soli.",
   "sol.excel.time":
     "Da 3 a 6 settimane, a seconda della complessità del foglio e dei collegamenti.",
+
+  // ══ 19 · Back office officina ═════════════════════════════════════════
+  "sol.officina.title": "Back office per officine e concessionari",
+  "sol.officina.lede":
+    "Accettazioni digitali, ordinazione ricambi e contabilità interventi in un posto solo. Il tecnico smette di scrivere a mano e il titolare smette di chiedersi quanto ha guadagnato ogni intervento.",
+  "sol.officina.problem":
+    "L'accettazione si scrive su un blocchetto carbone, mezza volta illeggibile. Lo storico del cliente vive in un quaderno o in una vecchia cartella fatture, e quando il tecnico ha bisogno di un ricambio non disponibile telefona tre fornitori per trovare chi lo ha. A fine mese sai il totale ma non quale intervento ha guadagnato e quale ha perso.",
+  "sol.officina.signals":
+    "Le accettazioni sono scritte a mano e a volte illeggibili|La ricerca ricambi significa telefonare a tre fornitori|Lo storico del cliente vive in un quaderno o nelle vecchie fatture|Sai il totale mensile ma non il margine per intervento",
+  "sol.officina.build":
+    "Accettazione digitale::Foto dei danni, lavoro richiesto e preventivo da catalogo ricambi, tutto in un modulo che il cliente firma dal telefono.|Ordinazione ricambi::Quando un ricambio non è disponibile il sistema verifica la disponibilità fornitore e genera l'ordine, senza telefonata.|Approvazione su WhatsApp::Il preventivo arriva al cliente come messaggio con pulsante si/no, e la risposta torna nella scheda lavoro.|Contabilità interventi::Mano d'opera, ricambi e tempo tracciati per intervento, così a fine mese sai esattamente cosa ha guadagnato ciascuno.|Storico cliente::Ogni visita, ogni ricambio, ogni preventivo legati al veicolo e al proprietario, visibili in due tap.",
+  "sol.officina.excludes":
+    "Gestione magazzino e giacenze ricambi oltre l'intervento in corso|Contabilità e paghe, che restano dal tuo commercialista",
+  "sol.officina.phases":
+    "Accettazione e catalogo::1-2 settimane::Mappiamo il flusso di accettazione, il catalogo ricambi e la struttura dei preventivi.|Costruzione::4-6 settimane::Schede lavoro, percorso di approvazione e contabilità interventi. Provati sugli interventi reali prima che sparisca il quaderno.|Ricambi e storico::2-3 settimane::Integrazione fornitori, ordinazione ricambi e vista storico cliente.",
+  "sol.officina.integra":
+    "Tecdoc per il catalogo ricambi|WhatsApp Business per l'approvazione cliente|Il tuo software contabile|Google Calendar per le date di consegna|Portali fornitori per la disponibilità",
+  "sol.officina.faq":
+    "Posso continuare a usare l'accettazione cartacea per i passaggi?::Sì. Il modulo digitale è la via più veloce, non l'unica. Le scritture cartacee vengono inserite dalla reception quando serve.|E se un fornitore non è connesso?::Il sistema genera un elenco da inviare via email o WhatsApp. L'ordine esce lo stesso, solo con un canale diverso.|Conviene per un'officina con un solo posto?::Sotto venti interventi al mese il quaderno funziona ancora e te lo dico. Conviene quando gli interventi si accumulano e inizi a perdere traccia di chi è stato chiamato per cosa.",
+  "sol.officina.change":
+    "L'accettazione è leggibile e il cliente la riceve per iscritto. Gli ordini ricambi escono senza giro di telefonate, e a fine mese sai quanto ha guadagnato ogni intervento invece di quello che dice solo il conto in banca.",
+  "sol.officina.time":
+    "Da 5 a 8 settimane, a seconda di quanti fornitori vanno collegati.",
+
+  // ══ 20 · Gestione immobiliare ════════════════════════════════════════
+  "sol.immobiliare.title": "Pubblicazione multiportale e tracciamento mandati per immobiliare",
+  "sol.immobiliare.lede":
+    "Un immobile inserito una volta e pubblicato ovunque, con lead che arrivano nel CRM e mandati che avvisano prima della scadenza.",
+  "sol.immobiliare.problem":
+    "Inserisci un immobile su quattro portali e ognuno richiede quindici minuti con il suo formato e l'ordine delle foto. Il mandato scade e lo scopri quando un cliente chiama per quello. Le visite succedono ma nessuno scrive chi è venuto o cosa ha detto, e la provvigione si calcola a mano a chiusura.",
+  "sol.immobiliare.signals":
+    "Inserire un immobile su quattro portali richiede quarantacinque minuti|I mandati scadono senza avviso|Le visite non lasciano traccia e nessuno ricorda cosa ha detto il cliente|Le provvigioni si calcolano a mano a chiusura",
+  "sol.immobiliare.build":
+    "Inserimento unico, tutti i portali::L'immobile viene inserito una volta con foto, planimetria e descrizione, e pubblicato su ogni portale collegato nel formato giusto per ognuno.|Tracciamento lead::Ogni richiesta arriva nel CRM con la sua fonte, così sai quale portale porta davvero clienti.|Avvisi mandato::Trenta giorni prima della scadenza il sistema ti avvisa, con i giorni rimasti e i dati dell'immobile davanti a te.|Calcolo provvigioni::La commissione viene impostata alla firma del mandato e la provvigione si calcola da sola a chiusura, senza foglio di calcolo.|Registro visite::Chi è venuto, quando, cosa ha detto e quale è il prossimo passo. Lo storico resta con l'immobile, non nella testa di qualcuno.",
+  "sol.immobiliare.excludes":
+    "Fotografia professionale e tour virtuali|Trasferimento di proprietà e lavoro legale a chiusura",
+  "sol.immobiliare.phases":
+    "Configurazione portali e struttura mandato::1-2 settimane::Collego i portali che usi davvero e definisco i campi del mandato e le regole di provvigione.|Costruzione::4-5 settimane::Pubblicazione multiportale, tracciamento lead e calendario mandati.|CRM e provvigioni::2-3 settimane::La pipeline dei lead e il calcolatore di provvigioni, provati sugli immobili reali.",
+  "sol.immobiliare.integra":
+    "Immobiliare.it, Idealista e Casa.it|Il tuo sito|Google Business Profile|Google Calendar per le visite|WhatsApp per la comunicazione con i clienti|Il tuo software contabile",
+  "sol.immobiliare.faq":
+    "Sostituisce i portali?::No, pubblica su di loro. Continui a pagare gli abbonamenti ai portali, ma smetti di reinserire lo stesso immobile quattro volte.|Posso impostare foto diverse per portale?::Sì. L'inserimento è uno, ma ogni portale può riordinare o nascondere foto specifiche.|E se un portali cambia formato?::Il connettore si aggiorna, non il tuo modo di lavorare. Quello è il pezzo che ti risparmia i quarantacinque minuti.",
+  "sol.immobiliare.change":
+    "Un immobile va online su ogni portale in cinque minuti invece di quarantacinque. I lead arrivano già etichettati per fonte, e non perdi mai un mandato a una scadenza dimenticata.",
+  "sol.immobiliare.time":
+    "Da 5 a 8 settimane, a seconda di quanti portali e se il CRM esiste già.",
+
+  // ══ 21 · Gestione coworking ══════════════════════════════════════════
+  "sol.coworking.title": "Prenotazione e gestione membership per spazi coworking",
+  "sol.coworking.lede":
+    "Postazioni, sale riunioni e membership in un sistema solo. Il calendario mostra cosa è libero, la fattura esce da sola e il portale membro fa il resto.",
+  "sol.coworking.problem":
+    "Le postazioni si prenotano via WhatsApp e nessuno sa chi arriva davvero. La sala riunioni ha un foglio sulla porta e le doppie prenotazioni succedono ogni settimana. Le fatture escono in ritardo perché qualcuno deve abbinare le presenze al listino a mano, e l'ingresso di un nuovo membro è fatto di tre email che arrivano forse.",
+  "sol.coworking.signals":
+    "Le prenotazioni postazione arrivano via WhatsApp senza vista centralizzata|La sala riunioni si prenota due volte perché fa fede un foglio sulla porta|Le fatture escono in ritardo perché qualcuno abbina le presenze a mano|L'ingresso di un nuovo membro è fatto di tre email sparse",
+  "sol.coworking.build":
+    "Calendario postazioni e sale::Disponibilità reale per giorno e ora, prenotabile dal portale membro. Niente più doppie prenotazioni.|Piani di membership::Diversi livelli con diversi accessi, ognuno con il suo prezzo e ciclo di fatturazione.|Fatturazione automatica::A fine ciclo la fattura si genera dall'uso reale e esce da sola.|Portale membro::Prenota una postazione, vedi il calendario, gestisci la membership. La reception smette di essere centralino.|Registro visitatori::Gli ospiti fanno check-in con nome e host, e l'host viene avvisato.",
+  "sol.coworking.excludes":
+    "Hardware di controllo accessi come i lettori badge|Il sito web e il sito marketing, che è un progetto a parte",
+  "sol.coworking.phases":
+    "Piani e regole::1 settimana::Livelli di membership, capacità postazioni e sale, regole cancellazione e fatturazione.|Costruzione::4-5 settimane::Calendario, portale membro e fatturazione. Provato con un piccolo gruppo prima di aprire a tutti.|Onboarding e lancio::1-2 settimane::Il percorso di onboarding membro e il passaggio al tuo team.",
+  "sol.coworking.integra":
+    "Stripe o PayPal per i pagamenti|Google Calendar per le prenotazioni sale|La tua casella di posta|WhatsApp per le notifiche|Il tuo sito, se esiste",
+  "sol.coworking.faq":
+    "Posso offrire biglietti giornalieri oltre alle membership?::Sì. Biglietti giornalieri e membership convivono, ognuno con il suo prezzo e le sue regole di accesso.|E i membri che non prenotano e arrivano così?::Il calendario è per la pianificazione, non per il blocco. Gli arrivi funzionano come sempre.|Gestisce postazioni calde e fisse in modo diverso?::Sì. Una postazione fissa è sempre riservata al membro, una calda è disponibile su prenotazione in ordine di arrivo.",
+  "sol.coworking.change":
+    "Postazioni e sale si prenotano in secondi invece di un thread WhatsApp. Le fatture escono in tempo senza che nessuno passi il pomeriggio ad abbinare fogli, e i nuovi membri sanno cosa fare prima che la reception glielo dica.",
+  "sol.coworking.time":
+    "Da 4 a 6 settimane, a seconda di quanti livelli di membership e se la fatturazione va collegata.",
+
+  // ══ 22 · App cantiere ════════════════════════════════════════════════
+  "sol.cantieri.title": "App cantiere per edilizia e imprese di costruzione",
+  "sol.cantieri.lede":
+    "Badge digitale, foto geolocalizzate e budget in tempo reale su ogni cantiere. L'ufficio vede cosa succede senza chiedere.",
+  "sol.cantieri.problem":
+    "Il foglio presenze è un modulo cartaceo che qualcuno fotografia e invia il venerdì, e entro lunedì metà dei nomi sono sbagliati. Le foto di avanzamento finiscono nella galleria del telefono di qualcuno senza data e senza riferimento al lavoro. Gli sforamenti di budget emergono quando arrivano le fatture di fine mese, momento in cui sono già un problema.",
+  "sol.cantieri.signals":
+    "I fogli presenze sono moduli cartacei fotografati e inviati il venerdì|Le foto di avanzamento stanno nel telefono di qualcuno senza data né riferimento al lavoro|Gli sforamenti di budget emergono con le fatture di fine mese|Il piano di sicurezza gira su carta e nessuno sa se è aggiornato",
+  "sol.cantieri.build":
+    "Badge digitale::Timbratura ingresso e uscita dal telefono, geolocalizzata, con il cantiere allegato. Niente carta, niente fotografie, niente email del venerdì.|Foto avanzamento::Geolocalizzate e con timestamp, allegate al lavoro e visibili dall'ufficio in tempo reale.|Budget live::Preventivato versus effettivo, aggiornato man mano che arrivano le fatture. Gli sforamenti segnalano prima che diventino problemi.|Report presenze::Ore per lavoratore, per cantiere, per settimana. Esportati per le paghe nel formato giusto.|Condivisione documenti::Piani di sicurezza, permessi e disegni sul telefono, con controllo versione così nessuno lavora con uno vecchio.",
+  "sol.cantieri.excludes":
+    "Project management e pianificazione Gantt, che è software separato|Elaborazione paghe, che resta dal tuo consulente",
+  "sol.cantieri.phases":
+    "Cantieri e regole::1 settimana::Quali cantieri sono attivi, chi lavora dove, le regole presenze e budget.|Costruzione::4-5 settimane::Badge, foto e budget. Provati su un cantiere prima di estendere.|Report e documenti::1-2 settimane::L'esportazione presenze e l'area condivisione documenti.",
+  "sol.cantieri.integra":
+    "Il tuo software contabile|Google Drive o il tuo archivio documenti|WhatsApp per avvisi cantiere|Google Calendar per le scadenze|Excel, se il budget vive lì adesso",
+  "sol.cantieri.faq":
+    "Funziona offline in cantiere?::Sì. Timbratura, foto e note funzionano offline e si sincronizzano quando torna la connessione. Un cantiere non può dipendere dal segnale.|I lavoratori possono timbrare per conto di altri?::I controlli di geolocalizzazione rendono improbabile, e il sistema lo segnala quando succede.|Conviene per un'impresa di due persone?::Sotto cinque lavoratori il foglio carta funziona ancora e te lo dico. Conviene quando i cantieri si moltiplicano e le presenze diventano un lavoro amministrativo settimanale.",
+  "sol.cantieri.change":
+    "Le presenze sono accurate e arrivano in ufficio lo stesso giorno. Le foto di avanzamento sono archiviate con luogo e data. E i problemi di budget appaiono come curve su uno schermo invece di sorprese in una fattura.",
+  "sol.cantieri.time":
+    "Da 4 a 6 settimane, a seconda del numero di cantieri attivi.",
+
+  // ══ 23 · Gestione autoscuola ═════════════════════════════════════════
+  "sol.autoscuola.title": "Gestionale per autoscuole",
+  "sol.autoscuola.lede":
+    "Lezioni teoriche, guide pratiche e prenotazioni esami in un posto solo. L'allievo si iscrive, paga e prenota senza che il telefono dell'ufficio squilli.",
+  "sol.autoscuola.problem":
+    "Le iscrizioni arrivano per telefono e vengono scritte in un quaderno. La tabella delle lezioni vive in una griglia settimanale sulla parete, e quando un istruttore si dà malato il pomeriggio salta. Gli allievi chiedono quante ore gli restano, le date d'esame arrivano via email e qualcuno deve telefonare a ogni allievo per offrire lo slot.",
+  "sol.autoscuola.signals":
+    "Le iscrizioni arrivano per telefono e vengono scritte in un quaderno|Gli allievi chiedono quante ore gli restano|Le date d'esame arrivano via email e qualcuno telefona a ogni allievo|Quando un istruttore si dà malato il pomeriggio salta",
+  "sol.autoscuola.build":
+    "Iscrizione online::L'allievo sceglie il corso, compila i dati e paga la prima rata, senza telefonare in ufficio.|Tracciamento lezioni::Ogni ora pratica è registrata per allievo, per istruttore. Le ore rimanenti sono sempre visibili.|Calendario lezioni teoriche::Sessioni con data, aula e istruttore, prenotabili dal portale allievi.|Gestione slot esame::Le date d'esame arrivano, vengono assegnate agli allievi idonei e la notifica esce automaticamente.|Calendario istruttori::Ogni istruttore vede la sua settimana, con sostituzioni e assenze gestite nel sistema invece che al telefono.",
+  "sol.autoscuola.excludes":
+    "L'integrazione Patente Camilleri per le prenotazioni esami teoria, che resta separata|Le effettive lezioni di guida, che sono il tuo lavoro",
+  "sol.autoscuola.phases":
+    "Corsi e regole::1-2 settimane::Il catalogo corsi, i prezzi, la struttura delle lezioni e i requisiti d'esame.|Costruzione::5-7 settimane::Iscrizione, tracciamento lezioni e calendario istruttori.|Portale e notifiche::2 settimane::La vista allievi, le notifiche esame e i promemoria pagamento.",
+  "sol.autoscuola.integra":
+    "Stripe o PayPal per i pagamenti|Google Calendar per i calendari istruttori|WhatsApp per le notifiche agli allievi|Il tuo software contabile|Email per gli annunci d'esame",
+  "sol.autoscuola.faq":
+    "Gli allievi possono prenotare le guide da soli?::Sì, dagli slot disponibili sul calendario dello istruttore. L'ufficio smette di essere centralino per la programmazione.|E le rate?::Il sistema traccia cosa è stato pagato e cosa è dovuto, e manda promemoria prima della data. Niente più inseguimenti al telefono.|Gestisce diverse categorie di patente?::Sì. Ogni categoria ha il suo percorso, il suo conteggio ore e il suo prezzo.",
+  "sol.autoscuola.change":
+    "Gli allievi si iscrivono e pagano dal telefono. Le ore di guida sono sempre note, gli slot esame arrivano agli allievi giusti automaticamente, e il telefono dell'ufficio smette di squillare per cose che il portale risponde già.",
+  "sol.autoscuola.time":
+    "Da 6 a 9 settimane, a seconda di quante categorie di corso e se il sistema di pagamento va configurato.",
+
+  // ══ 24 · Amministrazione condomini ════════════════════════════════════
+  "sol.condominio.title": "Amministrazione condominiale e tracciamento pagamenti",
+  "sol.condominio.lede":
+    "Quote, verbali e richieste di manutenzione in un posto solo. L'amministratore smette di chiamare per i pagamenti e il proprietario smette di chiedere quando arriva l'ascensore.",
+  "sol.condominio.problem":
+    "I promemoria delle quote vanno per lettera e arrivano in ritardo perché qualcuno li stampa il giovedì. I proprietari chiedono il saldo e l'amministratore lo ricostruisce da un registro, e i contributi speciali per riparazioni urgenti si perdono tra la riunione e la fattura. Nessuno sa cosa è stato pagato fino alla riconciliazione trimestrale.",
+  "sol.condominio.signals":
+    "I promemoria delle quote vengono stampati e spediti a mano|I proprietari chiedono il saldo e l'amministratore lo ricostruisce da un registro|I contributi speciali si perdono tra la riunione e la fattura|Nessuno sa cosa è stato pagato fino alla riconciliazione trimestrale",
+  "sol.condominio.build":
+    "Promemoria quote automatici::Il sistema invia il promemoria prima della scadenza, via email o messaggio, e traccia chi ha pagato.|Portale proprietari::Ogni proprietario vede il suo saldo, lo storico pagamenti e gli annunci dell'edificio senza telefonare in amministrazione.|Verbali e delibere::I verbali vengono redatti da un modello, approvati digitalmente e archiviati con le delibere e il conteggio voti.|Richieste di manutenzione::I proprietari segnalano problemi dal portale, l'amministratore li assegna e lo stato è visibile a tutti.|Registro spese::Ogni spesa è categorizzata e visibile per edificio, per anno, con il saldo in tempo reale.",
+  "sol.condominio.excludes":
+    "Lavoro legale e contenziosi, che restano dall'avvocato dell'amministratore|Posta cartacea ai proprietari non raggiungibili digitalmente, che resta una tua responsabilità",
+  "sol.condominio.phases":
+    "Edifici e regole::1-2 settimane::Gli edifici in gestione, la struttura delle quote e le regole di pagamento.|Costruzione::5-7 settimane::Tracciamento quote, portale proprietari e flusso richieste manutenzione.|Verbali e registro::2-3 settimane::Il modello verbali e il registro spese.",
+  "sol.condominio.integra":
+    "SEPA per i domiciliazioni|Il tuo software contabile|WhatsApp per le notifiche ai proprietari|Google Calendar per le date delle riunioni|Email per promemoria e annunci",
+  "sol.condominio.faq":
+    "Gestisce edifici con strutture di quote diverse?::Sì. Ogni edificio ha le sue regole, il suo registro e la sua lista proprietari.|E i proprietari che vogliono ancora la carta?::Il sistema invia digitalmente per impostazione predefinita. La carta resta possibile per singoli proprietari, stampata dagli stessi dati.|Gestisce contributi speciali per lavori straordinari?::Sì. La delibera viene registrata, il contributo viene calcolato per lotto e il tracciamento pagamento parte.",
+  "sol.condominio.change":
+    "I proprietari pagano in tempo perché il promemoria li raggiunge prima della scadenza. L'amministratore vede il saldo di ogni edificio senza aprire un registro. E i contributi speciali smettono di perdersi tra la sala riunioni e la posta.",
+  "sol.condominio.time":
+    "Da 6 a 9 settimane, a seconda del numero di edifici e se le domiciliazioni vanno configurate.",
+
+  // ══ 25 · Gestione ordini manifattura ══════════════════════════════════
+  "sol.ordini.title": "Gestione ordini multicanale per manifattura",
+  "sol.ordini.lede":
+    "Ordini da email, telefono, e-commerce e portale diventano lo stesso formato, passano tra i reparti con uno stato e generano i documenti giusti al momento giusto.",
+  "sol.ordini.problem":
+    "Gli ordini arrivano via email, telefono, e-commerce e portale, ognuno con un formato diverso. Le vendite non sanno quando spedisce il magazzino, il magazzino non sa cosa hanno promesso le vendite, e il piano produzione viene ricostruito ogni mattina a memoria. I tempi di consegna restano senza misura perché nessuno vede l'intero percorso.",
+  "sol.ordini.signals":
+    "Gli ordini arrivano in formati diversi da canali diversi|Le vendite non sanno quando spedisce il magazzino|Il piano produzione si ricostruisce ogni mattina a memoria|I tempi di consegna restano senza misura perché nessuno vede l'intero percorso",
+  "sol.ordini.build":
+    "Un unico ingresso::Un ordine da qualsiasi fonte diventa lo stesso formato, con gli stessi campi, nello stesso sistema.|Flusso di stato::L'ordine passa da ricevuto a confermato, in lavorazione, pronto e spedito, e tutti vedono dove è.|Documenti automatici::Conferma, DDT e fattura si generano al momento giusto dai dati dell'ordine.|Visibilità produzione::Chi produce vede cosa fare e quando, senza la riunione della mattina per ricostruire il programma.|Tracciamento dei tempi::Tempo medio da ordine a spedizione, per prodotto e per canale, misurato senza che nessuno compili un foglio.",
+  "sol.ordini.excludes":
+    "Pianificazione produzione e MRP, che è un sistema separato|Gestione magazzino, che è la soluzione magazzino",
+  "sol.ordini.phases":
+    "Canali e struttura ordini::1-2 settimane::Quali canali portano ordini, cosa contengono e quali sono le fasi.|Costruzione::5-7 settimane::Ingresso ordini, flusso di stato e generazione documenti.|Tracciamento e report::2 settimane::Misurazione tempi e report per canale e prodotto.",
+  "sol.ordini.integra":
+    "Il tuo e-commerce (WooCommerce, Shopify)|Email e telefono per ordini|Il tuo software contabile|WhatsApp per conferme ordine|Google Calendar per le date di consegna",
+  "sol.ordini.faq":
+    "E se gli ordini arrivano senza dati strutturati?::Chi risponde al telefono compila lo stesso modulo che usa l'e-commerce. Un ingresso, un formato, indipendentemente da dove parte.|Posso impostare target di tempo diversi per prodotto?::Sì. Ogni prodotto o categoria può avere il suo obiettivo, e il sistema segnala quando è a rischio.|Sostituisce l'ERP?::Se hai uno che gestisce gli ordini bene, questo potrebbe non servire. Conviene quando gli ordini arrivano da troppi canali e l'ERP non li vede tutti.",
+  "sol.ordini.change":
+    "Ogni ordine, indipendentemente da dove è partito, segue lo stesso percorso e produce i documenti giusti. Vendite e magazzino vedono lo stesso stato. E i tempi di consegna smettono di essere una stima perché i numeri sono misurati.",
+  "sol.ordini.time":
+    "Da 6 a 9 settimane, a seconda di quanti canali vanno collegati.",
+
+  // ══ 26 · Gestione magazzino ══════════════════════════════════════════
+  "sol.magazzino.title": "Gestione magazzino con picking a barcode",
+  "sol.magazzino.lede":
+    "Ubicazioni, barcode e regole di rotazione in un sistema solo. Il prelievo smette di andare a memoria, e il magazzino e il gestionale dicono lo stesso numero.",
+  "sol.magazzino.problem":
+    "Il picking si fa a memoria o da un elenco stampato, e gli errori si scoprono alla spedizione, a casa del cliente sbagliato. I lotti si cercano a mano, le scadenze restano invisibili fino a quando qualcosa va male sugli scaffali, e l'inventario diventa un lavoro da weekend che nessuno vuole. Quello che il magazzino ha e quello che dice il gestionale non coincidono quasi mai.",
+  "sol.magazzino.signals":
+    "Gli errori di prelievo si scoprono quando il pacco è già dal cliente|I lotti si cercano a mano e le scadenze restano invisibili|L'inventario diventa un lavoro da weekend|Quello che il magazzino ha e quello che dice il gestionale non coincidono",
+  "sol.magazzino.build":
+    "Ubicazioni a più livelli::Scaffali, corsie e posizioni con barcode. Il prelevatore scansiona e sa esattamente dove sta il lotto.|Picking guidato da barcode::Il sistema dice al prelevatore dove andare e cosa prendere, e lo scanner conferma il pezzo giusto prima che parta quello sbagliato.|Rotazione FIFO o FEFO::Il sistema impone la regola di rotazione che scegli, così il lotto più vecchio esce per primo senza che nessuno debba ricordarlo.|Giacenza in tempo reale::Ogni movimento aggiorna il conteggio immediatamente. Quello che il magazzino ha e quello che dice il sistema sono lo stesso numero.|Inventario programmato::Il conteggio gira per zona su un calendario rotativo, così il lavoro da weekend sparisce.",
+  "sol.magazzino.excludes":
+    "Muletti e arredi, che scegli con il tuo installatore|Il gestionale stesso, che questa soluzione collega",
+  "sol.magazzino.phases":
+    "Layout e ubicazioni::1-2 settimane::La mappa del magazzino, la struttura delle ubicazioni e lo schema barcode.|Costruzione e scansionamento::4-6 settimane::Ubicazioni, flusso picking e scansionamento barcode. Avviato in parallelo al metodo vecchio.|Rotazione e report::2-3 settimane::Regole FIFO o FEFO, programmazione inventario e report di scostamento giacenze.",
+  "sol.magazzino.integra":
+    "Il tuo gestionale o ERP|Scanner barcode (Zebra, Honeywell)|WooCommerce o Shopify, se vendi online|Il tuo software contabile|Stampanti etichette per ubicazioni e codici lotto",
+  "sol.magazzino.faq":
+    "Devo comprare scanner barcode?::Per la prima versione basta la fotocamera del telefono. Gli scanner dedicati rendono più veloce, e li aggiungi quando il flusso lo giustifica.|E se i prodotti non hanno ancora i barcode?::Li generi. Il sistema crea codici lotto e etichette ubicazioni, e il magazzino viene barcodato dal primo giorno.|Posso iniziare con una zona ed estendere?::Sì. Di solito è l'approccio giusto: una zona prova il flusso, le altre seguono sulla stessa logica.",
+  "sol.magazzino.change":
+    "Il prelevatore scansiona e va allo scaffali giusto. Le scadenze sono visibili prima che diventino una perdita. E il numero sullo schermo corrisponde al numero sugli scaffali.",
+  "sol.magazzino.time":
+    "Da 5 a 9 settimane, a seconda della dimensione del magazzino e con quante zone inizi.",
+
+  // ══ 27 · Back office agricolo ═════════════════════════════════════════
+  "sol.agricolo.title": "Back office per aziende agricole e operazioni agricole",
+  "sol.agricolo.lede":
+    "Registri di campo, tracciamento raccolto e vendite in un posto solo. I dati che l'agrumazione chiede sono già lì, e la vendita al ristorant^ vicino è inserita nello stesso sistema del banale venduto al distributore.",
+  "sol.agricolo.problem":
+    "Le operazioni di campo si registrano su un quaderno cartaceo che non soddisfa nessuno. Le rese del raccolto si conoscono dal peso alla consegna ma non per campo, così la coltura più redditizia è una supposizione. La documentazione per i contributi richiede una settimana per essere ricostruita da fogli sparsi, e le vendite dirette non vengono registrate fino a quando il commercialista chiede a fine anno.",
+  "sol.agricolo.signals":
+    "Le operazioni di campo si registrano su un quaderno cartaceo|Le rese del raccolto si conoscono dal peso alla consegna, non per campo|La documentazione contributi richiede una settimana per essere ricostruita|Le vendite dirette non vengono registrate fino a quando il commercialista chiede",
+  "sol.agricolo.build":
+    "Registro campo::Ogni operazione per campo, per data: semina, trattamenti, raccolte. I dati che l'agrumazione chiede sono già strutturati.|Tracciamento rese::Peso del raccolto legato a campo e lotto, così sai quale terra guadagna e quale costa.|Registro vendite dirette::Vendite al ristorante, al mercato e in fattoria inserite nello stesso sistema, con i documenti giusti generati.|Tracciamento spese::Input, manodopera e carburante allocati per campo, così il costo reale per ettaro è un report, non una stima.|Esportazione contributi::La documentazione formattata come la richiede l'agenzia, generata dai dati che hai già.",
+  "sol.agricolo.excludes":
+    "Pianificazione colturale e consulenza agronomica, che resta dal tuo consulente|L'effettivo lavoro di campo, che è il tuo lavoro",
+  "sol.agricolo.phases":
+    "Campi e operazioni::1-2 settimane::L'inventario campi, i tipi di operazione e la struttura dei dati.|Costruzione::4-5 settimane::Registro campo, tracciamento rese e vendite dirette.|Contributi e report::1-2 settimane::L'esportazione documenti e il report costo per ettaro.",
+  "sol.agricolo.integra":
+    "Il tuo software contabile|WhatsApp per conferme vendita diretta|Google Calendar per programmazione operazioni|Email per corrispondenza contributi|Excel, se i dati rese vivono lì adesso",
+  "sol.agricolo.faq":
+    "Posso inserire i dati dal campo col telefono?::Sì. I moduli funzionano offline e si sincronizzano quando torna la connessione. Un campo non ha bisogno del wifi.|Gestisce colture diverse sullo stesso campo?::Sì. Ogni operazione è legata al campo e alla coltura, così le rotazioni e le colture miste sono entrambe coperte.|Conviene per una piccola azienda?::Sotto cinque ettari il quaderno cartaceo funziona ancora e te lo dico. Conviene quando la documentazione contributi diventa una settimana di ricostruzione o quando le vendite dirette crescono oltre un pugno.",
+  "sol.agricolo.change":
+    "Il fascicolo contributi si assembla dai dati che hai già inserito. Il raccolto ti dice quale campo guadagna e quale costa. E le vendite dirette vengono registrate nel momento in cui succedono, non a fine anno.",
+  "sol.agricolo.time":
+    "Da 4 a 6 settimane, a seconda di quanti campi e tipi di operazione.",
+
+  // ══ 28 · Gestione cantina ════════════════════════════════════════════
+  "sol.cantina.title": "Gestionale per cantine e produttori di vino",
+  "sol.cantina.lede":
+    "Annate, operazioni di cantina e vendite in un sistema solo. La bottiglia che lascia lo scaffale conosce il suo lotto, il suo vigneto e la sua storia, e il distributore ha tutto quello che serve prima di chiedere.",
+  "sol.cantina.problem":
+    "La cantina funziona con registri cartacei e la memoria di chi ci lavora da più tempo. Il tracciamento lotti si fa quando un richiamo lo impone, non prima. La carta dei vini per l'enoteca è un documento diverso dal listino per il distributore, e i due si scostano. Le vendite dirette in fattoria non vengono registrate fino a fine trimestre.",
+  "sol.cantina.signals":
+    "Le operazioni di cantina funzionano con registri cartacei|Il tracciamento lotti avviene solo quando un richiamo lo impone|La carta dell'enoteca e il listino distributore si scostano|Le vendite dirette in fattoria non vengono registrate fino a fine trimestre",
+  "sol.cantina.build":
+    "Tracciamento annata e lotto::Ogni imbottigliamento legato al vigneto, all'annata e al lotto, così un richiamo è una ricerca, non una ricostruzione.|Operazioni di cantina::Fermentazione, travaso, assemblaggio e invecchiamento tracciati per lotto con date e note.|Listino unico::L'enoteca, il distributore e l'e-commerce leggono dagli stessi dati, ognuno con la sua vista.|Inserimento vendite dirette::Vendite in fattoria inserite dal telefono al momento della vendita, con i documenti giusti.|Area distributore::Catalogo e listino riservati dietro accesso, così il compratore ha tutto prima della prima email.",
+  "sol.cantina.excludes":
+    "E-commerce con pagamento e spedizione, che è un progetto a parte|Consulenza agronomica e gestione del vigneto, che resta dal tuo consulente",
+  "sol.cantina.phases":
+    "Annate e lotti::1-2 settimane::L'inventario annate, la struttura lotti e i tipi di operazione di cantina.|Costruzione::5-7 settimane::Tracciamento lotti, operazioni di cantina e listino unico.|Distributore e vendite::2-3 settimane::L'area distributore e l'inserimento vendite dirette.",
+  "sol.cantina.integra":
+    "Il tuo software contabile|WhatsApp per conferme ordine|Google Calendar per le operazioni di cantina|Email per corrispondenza distributori|Il tuo sito, se esiste",
+  "sol.cantina.faq":
+    "Gestisce formati ed etichette diverse?::Sì. Ogni lotto conosce le sue bottiglie, etichette e formati, così lo stesso vino in tre etichette è tre voci da un lotto.|Posso tracciare per vigneto?::Sì. Il lotto porta il vigneto, così sai quale terra produce quale vino.|Conviene per una cantina piccola?::Sotto mille bottiglie il registro cartaceo funziona. Conviene quando il tracciamento lotti diventa un requisito normativo o quando le vendite dirette crescono oltre un pugno di clienti.",
+  "sol.cantina.change":
+    "Una bottiglia che lascia lo scaffale conosce dove è stata coltivata e quando è stata imbottigliata. L'enoteca e il distributore vedono lo stesso listino. E le vendite dirette smettono di essere un mistero che il commercialista risolve a fine anno.",
+  "sol.cantina.time":
+    "Da 6 a 9 settimane, a seconda del numero di annate e formati.",
+
+  // ══ 29 · Gestione scuola ═════════════════════════════════════════════
+  "sol.scuola.title": "Gestionale per scuole e centri di formazione",
+  "sol.scuola.lede":
+    "Iscrizioni, presenze, voti e tracciamento quote in un posto solo. La segreteria smette di barcamenarsi con Excel e WhatsApp, e i genitori vedono quello che serve senza chiamare.",
+  "sol.scuola.problem":
+    "Le iscrizioni arrivano per telefono e email, ognuna gestita in modo diverso. Le presenze si segnano su un foglio e il supplente viene trovato da una catena di messaggi WhatsApp. Le quote scadono senza avviso e la segreteria passa il lunedì mattina a chiamare per i pagamenti. Le circolari escono via email senza conferma di lettura, così la scuola non sa chi le ha viste.",
+  "sol.scuola.signals":
+    "Le iscrizioni arrivano per telefono e email, ognuna gestita in modo diverso|Le presenze si segnano su un foglio e i supplenti si trovano da catena WhatsApp|Le quote scadono senza avviso e la segreteria chiama per i pagamenti|Le circolari escono via email senza conferma di lettura",
+  "sol.scuola.build":
+    "Iscrizione online::Il genitore compila il modulo, carica i documenti e paga la prima rata, senza telefonare in segreteria.|Registro presenze::Digitale, per classe e per giorno, con una lista di supplenti che riempie il vuoto in una tap.|Tracciamento quote::Date di scadenza, promemoria e stato pagamento visibili in un colpo d'occhio. Le quote scadute si sollecitano da sole.|Portale genitori::Voti, presenze, circolari e stato quote, tutto in un posto solo. Il telefono della segreteria si calma.|Distribuzione circolari::Le circolari escono con conferma di lettura, e la scuola vede chi le ha lette e chi no.",
+  "sol.scuola.excludes":
+    "La piattaforma di e-learning per corsi online, che è software separato|L'effettivo insegnamento, che è il tuo lavoro",
+  "sol.scuola.phases":
+    "Corsi e regole::1-2 settimane::Il catalogo corsi, la struttura delle quote, le regole di presenza e i campi del portale genitori.|Costruzione::5-7 settimane::Iscrizione, presenze, voti e tracciamento quote.|Portale e notifiche::2-3 settimane::Il portale genitori, la distribuzione circolari e i promemoria quote.",
+  "sol.scuola.integra":
+    "Stripe o PayPal per i pagamenti|WhatsApp per notifiche urgenti|Email per le circolari|Google Calendar per eventi scolastici|Il tuo software contabile",
+  "sol.scuola.faq":
+    "I genitori vedono solo i dati del proprio figlio?::Sì. Ogni genitore vede voti, presenze e quote del proprio figlio. Nessun genitore vede quelli degli altri.|E gli insegnanti che non vogliono usare un'app?::Le presenze possono essere inserite dalla segreteria dallo stesso sistema. L'insegnante non deve cambiare le sue abitudini.|Gestisce scadenze diverse per corso?::Sì. Ogni corso o percorso ha la sua struttura costi e la sua tempistica di pagamento.",
+  "sol.scuola.change":
+    "Le quote arrivano in tempo perché il promemoria raggiunge il genitore prima della scadenza. Le circolari hanno conferma di lettura. E la segreteria passa il lunedì mattina su lavoro che conta invece di inseguire pagamenti al telefono.",
+  "sol.scuola.time":
+    "Da 6 a 9 settimane, a seconda di quanti corsi e se il sistema di pagamento va configurato.",
 };
