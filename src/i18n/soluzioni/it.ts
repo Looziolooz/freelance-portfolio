@@ -528,4 +528,234 @@ export const solIt: Record<string, string> = {
   "sol.mercato.change":
     "Le decisioni sui prezzi e sui servizi nuovi partono da quello che c'è intorno, non da quello che si dice in giro.",
   "sol.mercato.time": "5 giorni per la prima mappa.",
+
+  // ══ G02 · Gestionale palestra ══════════════════════════════════════════
+  "sol.gestPalestra.title": "Gestionale per palestra con accessi e abbonamenti",
+  "sol.gestPalestra.lede":
+    "Abbonamenti, tornello e prenotazione dei corsi in un posto solo. Chi è in regola entra, chi è in scadenza riceve il messaggio prima di scoprirlo al tornello.",
+  "sol.gestPalestra.problem":
+    "I rinnovi passano per WhatsApp e nessuno li segna, così la scadenza la scopre il tornello, davanti al socio, all'ora di punta. La lista d'attesa del corso delle 19 vive nella testa dell'istruttore, e a fine giornata la reception conta la cassa cercando di ricordare chi ha pagato cosa.",
+  "sol.gestPalestra.signals":
+    "Le scadenze degli abbonamenti le scopri quando il socio è già davanti al tornello|La lista d'attesa dei corsi la tiene a mente l'istruttore|I rinnovi si concordano su WhatsApp e non restano scritti da nessuna parte|A fine giornata la cassa non torna mai al primo colpo",
+  "sol.gestPalestra.build":
+    "Abbonamenti e rinnovi::Listini, scadenze e rinnovi in un archivio solo. Sette giorni prima della scadenza parte il promemoria, senza che nessuno debba ricordarselo.|Controllo accessi::Il badge o l'app aprono il tornello solo a chi è in regola. Chi è scaduto lo sa prima di arrivare, non davanti a tutti.|Corsi con capienza e lista d'attesa::Il socio prenota dall'app, la capienza è quella vera della sala, e una disdetta promuove il primo in lista da sola.|Cassa e pagamenti::Contanti, carta e pagamenti ricorrenti registrati nello stesso posto, così la chiusura di giornata è una lettura, non una ricostruzione.|I numeri del mese::Incassi, presenze e occupazione dei corsi. Vedi quale orario è pieno e quale sala lavora a metà.",
+  "sol.gestPalestra.excludes":
+    "L'hardware dei tornelli, che scegli col tuo installatore: io collego quello che monti|La contabilità: il gestionale esporta verso il tuo commercialista, non lo sostituisce",
+  "sol.gestPalestra.phases":
+    "Listini e regole::1 settimana::Mettiamo per iscritto abbonamenti, listini e regole di accesso, comprese le eccezioni che oggi vivono a voce.|Accessi e prenotazioni::3-5 settimane::Tornello, app dei soci e prenotazione dei corsi. Si prova con un gruppo ristretto prima di aprirla a tutti.|Pagamenti e report::2 settimane::Rinnovi automatici, promemoria di scadenza e i report di fine mese.",
+  "sol.gestPalestra.integra":
+    "Tornelli e lettori badge (ZKTeco, Hikvision)|Stripe, Nexi e Satispay|WhatsApp Business per i promemoria|Google Calendar|Mailchimp o Brevo|La tua contabilità",
+  "sol.gestPalestra.faq":
+    "Serve anche a una palestra piccola?::Sotto il centinaio di soci spesso basta un'agenda fatta bene, e te lo dico prima. Il gestionale rende quando gli ingressi e i corsi superano quello che una persona tiene a mente.|I soci devono usare per forza l'app?::No. L'app è la via comoda, ma badge e reception continuano a funzionare per chi non la vuole.|Cosa succede ai pagamenti che falliscono?::Il sistema riprova e avvisa il socio da solo. Tu vedi la lista di chi resta indietro, invece di scoprirlo a fine trimestre.|Il tornello che ho già va bene?::Quasi sempre sì: i lettori più diffusi si collegano. Lo verifichiamo nella prima settimana, prima di scrivere una riga di codice.",
+  "sol.gestPalestra.change":
+    "Chi entra è in regola senza che nessuno controlli a vista, i rinnovi partono da soli, e a fine mese sai quali corsi riempiono la sala e quali la tengono solo occupata.",
+  "sol.gestPalestra.time":
+    "Da 6 a 9 settimane, a seconda dell'hardware in ingresso e di quante sedi hai.",
+
+  // ══ G03 · Gestionale clinica ═══════════════════════════════════════════
+  "sol.clinica.title": "Gestionale per poliambulatorio e clinica privata",
+  "sol.clinica.lede":
+    "Agenda multi-medico, cartella clinica e fatturazione che si parlano. La segreteria smette di fare da ponte tra tre programmi e un quaderno.",
+  "sol.clinica.problem":
+    "La segreteria tiene l'agenda di cinque medici su un programma, le cartelle in un armadio e le fatture in un altro programma ancora. Una doppia prenotazione si scopre quando i due pazienti sono in sala d'attesa, e il medico ricostruisce la storia clinica a memoria, visita per visita.",
+  "sol.clinica.signals":
+    "Le doppie prenotazioni si scoprono in sala d'attesa|La storia del paziente è divisa tra archivio cartaceo e memoria del medico|Le fatture si emettono a mano, una alla volta, a fine giornata|I no-show non li conta nessuno, ma i buchi in agenda si vedono",
+  "sol.clinica.build":
+    "Agenda per medico e per sala::Ogni slot conosce medico, sala e tipo di visita. Una doppia prenotazione non è più fisicamente possibile.|Cartella clinica::Anamnesi, diario, referti e consensi firmati nella stessa scheda, visibili solo a chi ha il ruolo per vederli.|Promemoria ai pazienti::Conferma alla prenotazione e promemoria prima della visita, via SMS o email. I no-show calano perché la gente si dimentica meno.|Fatturazione collegata::La visita chiusa genera la ricevuta, con l'invio al Sistema Tessera Sanitaria per le detrazioni del paziente.|Portale del paziente::Prenotazione online, referti e pagamenti da casa, così il telefono della segreteria suona di meno.",
+  "sol.clinica.excludes":
+    "Il visualizzatore radiologico e i macchinari: mi collego a quello che c'è, non lo fornisco|La parte clinica dei referti, che resta dei medici: io costruisco il contenitore, non il contenuto",
+  "sol.clinica.phases":
+    "Ruoli e percorsi::1-2 settimane::Chi vede cosa, come entra un paziente, come esce una fattura. In sanità questa mappa si scrive prima, non dopo.|Agenda e cartella::4-6 settimane::Prenotazioni, cartella e consensi. Si prova con dati finti finché il percorso non fila.|Pagamenti e portale::2-3 settimane::Fatturazione, Tessera Sanitaria e il portale con cui il paziente si arrangia da solo.",
+  "sol.clinica.integra":
+    "Sistema Tessera Sanitaria|POS e pagamenti online|SMS, email e WhatsApp per i promemoria|Firma digitale per i consensi|La tua contabilità|Google Calendar",
+  "sol.clinica.faq":
+    "I dati dei pazienti dove stanno?::Su server in Europa, cifrati, con accessi per ruolo e un registro di chi ha visto cosa. Sono dati sanitari nel senso pieno del GDPR e si trattano da tali: è il settore dove alle scorciatoie si dice di no.|Possiamo migrare le cartelle vecchie?::Quelle digitali sì, con un'importazione che proviamo insieme prima di buttare via niente. Il cartaceo si digitalizza per gradi, partendo dai pazienti attivi.|Serve la connessione per lavorare?::L'agenda e la cartella vivono online, ma il calendario del giorno resta consultabile anche se la linea cade. Nessuna visita salta per il wi-fi.|Funziona per uno studio con due medici?::Sì, ed è anzi la taglia dove rende subito: senza una segreteria dedicata, ogni automatismo è tempo clinico recuperato.",
+  "sol.clinica.change":
+    "La segreteria prenota senza paura di doppioni, il medico apre la visita con la storia davanti, e la fattura esce quando esce il paziente, non a fine serata.",
+  "sol.clinica.time":
+    "Da 8 a 12 settimane, a seconda di quanti medici e di cosa va migrato.",
+
+  // ══ G04 · Gestionale dentistico ════════════════════════════════════════
+  "sol.dentistico.title": "Gestionale per studio dentistico",
+  "sol.dentistico.lede":
+    "Odontogramma, piani di cura e rate in un programma solo. Quello che segni alla poltrona è già in segreteria, senza doppio inserimento.",
+  "sol.dentistico.problem":
+    "Alla poltrona si segna a mano, poi qualcuno reinserisce tutto in segreteria: tre quarti d'ora al giorno di doppio lavoro. Il preventivo vive su un foglio, le rate su un altro, e il richiamo dei pazienti fermi da un anno non lo fa nessuno perché non esiste una lista da cui farlo.",
+  "sol.dentistico.signals":
+    "Quello che si segna alla poltrona si reinserisce in segreteria|I preventivi accettati e le rate incassate vivono su fogli diversi|I pazienti che mancano da più di un anno non li richiama nessuno|Le radiografie stanno in un programma, la cartella in un altro",
+  "sol.dentistico.build":
+    "Odontogramma e piano di cura::Lo stato dei denti si aggiorna in due tocchi, e il piano distingue il pianificato dall'eseguito. La segreteria lo vede nello stesso momento.|Preventivi e rate::Il preventivo si presenta in più opzioni, e ogni seduta scala la sua quota. Le rate hanno una scadenza e un promemoria, non una speranza.|Recall automatico::Igiene a sei mesi, controlli annuali, pazienti fermi: le liste si costruiscono da sole e il messaggio parte da solo.|Agenda multi-poltrona::Ogni poltrona ha la sua colonna e ogni buco si vede. Riempire l'agenda smette di essere un'arte della segretaria.|Ricevute e Tessera Sanitaria::A fine visita la ricevuta è pronta e la spesa è inviata per la detrazione del paziente.",
+  "sol.dentistico.excludes":
+    "Il software radiologico: mi collego a quello che usi (DICOM), non lo sostituisco|La firma grafometrica su hardware dedicato, se non c'è già: si parte con la firma via email",
+  "sol.dentistico.phases":
+    "Listino e piani tipo::1 settimana::Prestazioni, listino e i piani di cura più frequenti, scritti come li proponi davvero.|Poltrona e segreteria::4-6 settimane::Odontogramma, agenda e preventivi. Si prova su casi finti finché il giro poltrona-segreteria non fila liscio.|Rate e richiami::2-3 settimane::Rateizzazioni, promemoria e le liste di recall che partono da sole.",
+  "sol.dentistico.integra":
+    "Radiologici via DICOM (Romexis, Sidexis)|Sistema Tessera Sanitaria|SEPA per le rate|SMS, email e WhatsApp|POS e Satispay|Google Calendar",
+  "sol.dentistico.faq":
+    "Ho già anni di cartelle in un altro programma::Si migrano: anagrafiche e piani aperti per primi, lo storico per gradi. Niente si butta, e per un periodo i due sistemi convivono.|I consensi dei minori come funzionano?::Il consenso è dei genitori e il sistema lo sa: la scheda del minore chiede la firma giusta e la conserva.|Quanto tempo perde la poltrona per imparare?::Un paio di giornate operative, se odontogramma e listino sono i tuoi e non un modello generico. È il lavoro della prima settimana.|Serve anche a un dentista da solo?::Se lavori da solo con poche decine di pazienti attivi, forse no, e te lo dico prima. Rende quando il doppio inserimento e i richiami mancati costano più del gestionale.",
+  "sol.dentistico.change":
+    "Il doppio inserimento sparisce, le rate si incassano perché hanno una scadenza, e l'agenda si riempie coi richiami invece che con la fortuna.",
+  "sol.dentistico.time":
+    "Da 8 a 12 settimane, a seconda delle poltrone e di cosa va migrato.",
+
+  // ══ G05 · Gestionale estetica ══════════════════════════════════════════
+  "sol.estetica.title": "Gestionale per centro estetico e SPA",
+  "sol.estetica.lede":
+    "Agenda per operatrice e per cabina, pacchetti che si scalano da soli e promemoria che riducono i buchi. La giornata si vede in uno schermo.",
+  "sol.estetica.problem":
+    "L'agenda dice chi è prenotata ma non in quale cabina, e la cabina con la pressoterapia è una sola. I pacchetti prepagati vivono su schede di carta, e quando una cliente contesta le sedute residue vince chi ha la voce più ferma. Le disdette arrivano un'ora prima e il buco resta.",
+  "sol.estetica.signals":
+    "Le sedute residue dei pacchetti si contestano perché stanno su schede di carta|La cabina giusta è occupata anche quando l'operatrice è libera|Le disdette dell'ultima ora lasciano buchi che nessuno riempie|I prodotti finiscono senza che nessuno se ne accorga prima",
+  "sol.estetica.build":
+    "Agenda per operatrice e cabina::Ogni prenotazione impegna una persona e una stanza. La pressoterapia non si prenota due volte.|Pacchetti prepagati::Ogni seduta scala il saldo, e la cliente lo vede anche lei. Le contestazioni finiscono perché il conto è scritto.|Prenotazione online con caparra::Chi prenota dal link in bio lascia una caparra, e le disdette tardive smettono di essere gratis.|Promemoria scalati::A tre giorni, il giorno prima e due ore prima. Chi deve disdire lo fa in tempo per farti riempire il buco.|Magazzino dei prodotti::La vendita scala la scorta e l'avviso parte prima che il prodotto finisca.",
+  "sol.estetica.excludes":
+    "L'hardware di cassa, se non c'è già: mi collego ai POS più diffusi|Le campagne di marketing: il gestionale prepara le liste, la comunicazione resta tua o del tuo social manager",
+  "sol.estetica.phases":
+    "Servizi, cabine e regole::1 settimana::Listino, durata reale dei trattamenti, quali cabine servono a cosa, e le regole di caparra e disdetta.|Agenda e pacchetti::3-4 settimane::Prenotazioni, saldi dei pacchetti e schede clienti. Si prova a centro chiuso con la squadra.|Online e promemoria::2 settimane::La prenotazione dal sito e da Instagram, le caparre e i promemoria.",
+  "sol.estetica.integra":
+    "Stripe o PayPal per le caparre|WhatsApp Business|Instagram e Google Business Profile|Fatture in Cloud|Mailchimp o Brevo|Il tuo POS",
+  "sol.estetica.faq":
+    "Le clienti prenoteranno davvero online?::Una parte sì, subito, dal link in bio. Il telefono non sparisce: cala. E ogni prenotazione online è una telefonata in meno durante un trattamento.|La caparra non farà scappare le clienti?::Le nuove la accettano più di quanto si tema, e per le storiche si può togliere. La regola la decidi tu, il sistema la applica senza discussioni.|Le note riservate delle operatrici dove stanno?::Nella scheda, visibili solo al centro, con le allergie in evidenza. Sono dati sensibili e si trattano da tali.|Serve anche con due cabine?::Se lavori da sola con un'agenda che regge, no, e te lo dico prima. Rende quando cabine, operatrici e pacchetti insieme superano quello che la carta tiene.",
+  "sol.estetica.change":
+    "La giornata si apre con un colpo d'occhio invece che con tre telefonate, i pacchetti non si discutono più, e i buchi delle disdette si riempiono perché lo sai in tempo.",
+  "sol.estetica.time":
+    "Da 5 a 8 settimane, a seconda di quante operatrici e se c'è una vendita prodotti da collegare.",
+
+  // ══ G06 · Gestionale hotel (PMS) ═══════════════════════════════════════
+  "sol.pms.title": "Gestionale per hotel e B&B (PMS)",
+  "sol.pms.lede":
+    "Camere, prenotazioni dai portali e pulizie in un sistema solo, con la scheda alloggiati che parte nei tempi. Il front desk smette di ricopiare.",
+  "sol.pms.problem":
+    "Le prenotazioni arrivano da Booking, dal telefono e dal sito, e finiscono su un planning che va aggiornato a mano su ogni canale: l'overbooking è sempre a una dimenticanza di distanza. Le pulizie si coordinano a voce, e ogni sera qualcuno ricopia i documenti degli ospiti per la questura.",
+  "sol.pms.signals":
+    "Il planning delle camere si aggiorna a mano su ogni portale|La scheda alloggiati si compila ricopiando i documenti la sera|Le pulizie si coordinano a voce e non si sa mai quali camere sono pronte|Il prezzo è lo stesso a febbraio e a Ferragosto",
+  "sol.pms.build":
+    "Planning e channel manager::Booking, Expedia e il tuo sito leggono la stessa disponibilità. Una prenotazione chiude la camera ovunque, nello stesso istante.|Prenotazione diretta dal sito::Il motore di prenotazione sul tuo dominio, senza commissione: chi ti conosce già prenota da te.|Check-in e alloggiati::Il documento si acquisisce all'arrivo e la comunicazione alla questura parte nei tempi, senza ricopiature serali.|Pulizie organizzate::Ogni piano sa quali camere fare e in che ordine, dal telefono. Le camere pronte si vedono dal front desk.|Tariffe per stagione::Prezzi per periodo e per canale, e i numeri che contano a fine giornata: occupazione e ricavo medio a camera.",
+  "sol.pms.excludes":
+    "Le serrature elettroniche, se non ci sono già: mi collego alle più diffuse, non le fornisco|I contenuti e le foto del sito: il motore di prenotazione vive dentro il sito che hai, o che facciamo come progetto a parte",
+  "sol.pms.phases":
+    "Camere, canali e tariffe::1-2 settimane::Inventario delle camere, i portali attivi e le regole tariffarie con cui lavori davvero.|Planning e portali::4-6 settimane::Il planning, il collegamento ai portali e la prenotazione diretta. Si prova in parallelo al metodo attuale.|Check-in e pulizie::2-3 settimane::Alloggiati, pulizie e i report di fine giornata.",
+  "sol.pms.integra":
+    "Booking, Expedia e Airbnb|ALLOGGIATI WEB|Pagamenti online e POS|FatturaPA e la tua contabilità|Le serrature elettroniche più diffuse|TripAdvisor e Google per le recensioni",
+  "sol.pms.faq":
+    "L'imposta di soggiorno la gestisce?::Sì, con le esenzioni del tuo comune, e a fine periodo il conteggio per il versamento è già fatto.|Cosa succede se un portale cambia qualcosa?::Il collegamento passa per i canali ufficiali dei portali, fatti per durare. Se uno cambia le regole, si aggiorna il connettore, non il tuo modo di lavorare.|Ho un B&B con sei camere, è troppo?::Può darsi, e te lo dico prima: sotto le dieci camere spesso bastano un channel manager e un planning semplice. Il sistema completo rende quando entrano in gioco pulizie, ristorante o più persone al front desk.|Le prenotazioni telefoniche dove finiscono?::Nel planning come le altre: le inserisce il front desk in trenta secondi, e chiudono la disponibilità sui portali come tutte.",
+  "sol.pms.change":
+    "L'overbooking smette di essere una paura quotidiana, la sera nessuno ricopia documenti, e il sito torna a portare prenotazioni senza commissione.",
+  "sol.pms.time":
+    "Da 8 a 12 settimane, a seconda dei portali collegati e delle dimensioni della struttura.",
+
+  // ══ G07 · Gestione turni ═══════════════════════════════════════════════
+  "sol.turni.title": "Gestione turni del personale",
+  "sol.turni.lede":
+    "Il planning si costruisce da solo dentro le regole, i cambi passano dall'app e il costo del lavoro si vede prima, non a cedolino.",
+  "sol.turni.problem":
+    "Ogni settimana qualcuno passa ore a incastrare turni su un foglio, tenendo a mente ferie, preferenze e riposi obbligatori. I cambi si negoziano su WhatsApp e non li vede nessuno, e quando qualcuno dà forfait alle sette di mattina parte il giro di telefonate.",
+  "sol.turni.signals":
+    "Il planning della settimana costa ore e va rifatto a ogni imprevisto|I cambi turno passano su WhatsApp e non restano scritti|Le undici ore di riposo tra un turno e l'altro si controllano a occhio|Il costo degli straordinari si scopre col cedolino",
+  "sol.turni.build":
+    "Planning con le regole dentro::Riposi, ore massime e vincoli del contratto sono nel motore: un turno che li viola non si riesce a salvare.|App per chi lavora::Ognuno vede i suoi turni, chiede ferie e propone cambi dal telefono. Il cambio approvato aggiorna il planning da solo.|Sostituzioni senza telefonate::Un'assenza improvvisa interroga i qualificati disponibili: il primo che accetta copre il turno.|Costo prima, non dopo::Il planning mostra quanto costerà, straordinari e festivi compresi, mentre lo componi.|Export per le paghe::A fine mese le ore vanno al consulente del lavoro nel formato che usa, senza ricopiature.",
+  "sol.turni.excludes":
+    "La rilevazione presenze hardware, se non c'è: mi collego a badge e app esistenti|Il payroll vero e proprio, che resta al consulente del lavoro",
+  "sol.turni.phases":
+    "Regole e squadre::1-2 settimane::Contratto applicato, vincoli, competenze e le regole non scritte che oggi vivono nella testa di chi pianifica.|Planning e app::3-4 settimane::Il motore dei turni e l'app. Si pianifica in parallelo col metodo attuale per un paio di cicli.|Paghe e report::1-2 settimane::L'export per il consulente e i report su assenze e straordinari.",
+  "sol.turni.integra":
+    "Zucchetti, TeamSystem e i payroll più diffusi|Badge e rilevazione presenze|Google Calendar|Teams e Slack|WhatsApp per le notifiche|Il tuo gestionale, se c'è",
+  "sol.turni.faq":
+    "E i dipendenti più restii all'app?::Il turno stampato non sparisce: l'app è la via comoda, non un obbligo. Di solito la adottano quando capiscono che serve a chiedere i cambi senza passare dal capo.|Funziona col nostro contratto?::Le regole si configurano sul contratto che applichi, comprese le maggiorazioni. È il lavoro della prima fase, fatto insieme.|E se il planning proposto non mi piace?::Lo cambi a mano: il motore propone, tu disponi. Il punto è che ogni modifica viene verificata contro le regole mentre la fai.|Sotto quante persone non serve?::Sotto le dieci, quasi mai, e te lo dico prima. Rende da quando gli incastri superano quello che una persona tiene a mente senza errori.",
+  "sol.turni.change":
+    "Il planning della settimana si chiude in minuti, i cambi lasciano traccia, e il costo del lavoro lo conosci quando puoi ancora correggerlo.",
+  "sol.turni.time":
+    "Da 5 a 8 settimane, a seconda delle sedi e del contratto applicato.",
+
+  // ══ G08 · Tracciabilità HACCP ══════════════════════════════════════════
+  "sol.haccp.title": "Tracciabilità e HACCP digitale",
+  "sol.haccp.lede":
+    "Temperature, lotti e checklist firmate dal telefono, e il fascicolo per l'ispezione pronto in un minuto invece che in una notte.",
+  "sol.haccp.problem":
+    "I registri HACCP si compilano a mano a fine turno, quando va bene: le temperature del frigo, quando va male, si ricostruiscono. All'arrivo di un'ispezione il fascicolo si assembla da raccoglitori diversi, e se un fornitore richiama un lotto la ricostruzione richiede giorni.",
+  "sol.haccp.signals":
+    "I registri delle temperature si compilano a fine turno, a memoria|I certificati dei fornitori stanno in un raccoglitore che nessuno apre|Un richiamo di lotto significherebbe giorni di ricostruzione|Le checklist di sanificazione si firmano in blocco a fine settimana",
+  "sol.haccp.build":
+    "Temperature sotto controllo::Le sonde registrano da sole, giorno e notte, e l'anomalia arriva sul telefono quando puoi ancora salvare la merce.|Registro digitale firmato::Le checklist si compilano dal telefono al momento giusto, con firma e ora. Niente più compilazioni a memoria.|Lotti tracciati::Ogni merce entra con lotto e scadenza. Un richiamo si risolve con una ricerca, non con una ricostruzione.|Documenti dei fornitori::Certificati e schede tecniche in un archivio con le scadenze in vista, non in un raccoglitore.|Fascicolo per l'ispezione::Il report di conformità si genera in un minuto, dal tablet, davanti all'ispettore.",
+  "sol.haccp.excludes":
+    "Le sonde hardware: ti indico le compatibili e collego quelle che scegli|La consulenza HACCP: il piano di autocontrollo resta del tuo consulente, io lo rendo vivo",
+  "sol.haccp.phases":
+    "Piano e punti critici::1 settimana::Il tuo piano di autocontrollo, i punti critici e le checklist reali, tradotti in digitale insieme al tuo consulente.|Registri e lotti::3-4 settimane::Temperature, checklist e tracciabilità. Si va in parallelo col cartaceo finché la squadra non si fida.|Sonde e report::1-2 settimane::Il collegamento delle sonde e i report per le ispezioni.",
+  "sol.haccp.integra":
+    "Sonde di temperatura (Testo, Comet)|Barcode e QR per i lotti|Il tuo POS, per legare vendite e lotti|Firma digitale|Portali dei fornitori|Il tuo gestionale, se c'è",
+  "sol.haccp.faq":
+    "Il mio consulente HACCP resta?::Sì, ed è voluto: il piano di autocontrollo è suo, io costruisco lo strumento che lo fa rispettare davvero. Di solito il consulente è il primo contento.|La squadra compilerà davvero le checklist?::Più di prima, perché dal telefono costa trenta secondi al momento giusto invece di venti minuti a fine turno. E quello che manca si vede subito, non all'ispezione.|Le sonde sono obbligatorie?::No: si può partire con le rilevazioni manuali digitalizzate e aggiungere le sonde dopo. Cambia la fatica, non la conformità.|Serve anche a un laboratorio piccolo?::Se produci e vendi lotti, sì, prima di quanto si pensi: è proprio il laboratorio artigianale quello che un richiamo mette in ginocchio.",
+  "sol.haccp.change":
+    "I registri si compilano quando succedono le cose, l'ispezione trova un fascicolo invece di una caccia al raccoglitore, e un richiamo diventa una ricerca di dieci secondi.",
+  "sol.haccp.time":
+    "Da 4 a 7 settimane, a seconda dei punti di controllo e delle sonde.",
+
+  // ══ S01 · CRM su misura ════════════════════════════════════════════════
+  "sol.crm.title": "CRM su misura per PMI",
+  "sol.crm.lede":
+    "I clienti, le trattative e le cose da fare in un posto solo, coi campi che servono a te. Sei campi giusti, non sessanta vuoti.",
+  "sol.crm.problem":
+    "Lo storico dei clienti vive nelle caselle email di chi li segue, e quando una persona se ne va, se ne va anche la memoria. Le trattative si seguono a sensazione, i preventivi mandati non hanno una data di richiamo, e il CRM provato l'anno scorso è morto perché chiedeva sessanta campi per salvare un contatto.",
+  "sol.crm.signals":
+    "Lo storico dei clienti vive nelle email personali di chi li segue|I preventivi inviati non hanno una data di richiamo|Il CRM provato in passato è stato abbandonato in un mese|Le scadenze dei contratti si scoprono quando il cliente ha già firmato altrove",
+  "sol.crm.build":
+    "Anagrafica coi tuoi campi::I campi che usi davvero, il controllo dei duplicati, e le email che si agganciano alla scheda da sole.|Pipeline sulle tue fasi::Le trattative avanzano sulle fasi reali del tuo modo di vendere, non su quelle di un modello americano.|Richiami che non si perdono::Ogni preventivo esce con una data di richiamo, e la mattina sai chi chiamare.|Scadenze dei contratti::Novanta giorni prima del rinnovo il sistema avvisa, con lo storico davanti.|Report commerciali::Quanto c'è in pipeline, cosa si chiude, dove si perde. Senza che nessuno compili un foglio la domenica.",
+  "sol.crm.excludes":
+    "La lista dei contatti non la invento: si parte dai tuoi dati veri, ripuliti insieme|Le campagne di marketing: il CRM prepara le liste, l'invio resta al tuo strumento di email",
+  "sol.crm.phases":
+    "I tuoi campi e le tue fasi::1 settimana::Come vendi davvero, quali campi servono e quali no. È la settimana che decide se il CRM verrà usato.|Schede e pipeline::2-4 settimane::Anagrafiche, trattative e richiami, coi tuoi dati importati. Si prova sul lavoro vero, non su dati demo.|Collegamenti::1-2 settimane::Email, calendario, il form del sito e, se c'è, il gestionale.",
+  "sol.crm.integra":
+    "Outlook e Gmail|Google Calendar|Il form del tuo sito|Fatture in Cloud o il tuo gestionale|WhatsApp Business|Mailchimp o Brevo",
+  "sol.crm.faq":
+    "Perché non un CRM famoso in abbonamento?::Se le sue fasi e i suoi campi ti somigliano, prendilo, e te lo dico volentieri. Il su misura rende quando il tuo modo di vendere non entra nei modelli, o quando l'abbonamento a utente costa più del lavoro.|Gli agenti lo useranno?::Se salvare un contatto costa dieci secondi dal telefono, sì. È il motivo per cui i campi sono sei e non sessanta.|Lo storico resta all'azienda?::Sì, ed è uno dei motivi per farlo: quando un commerciale se ne va, i clienti e la memoria restano a te.|I dati dove stanno?::Su un database tuo, in Europa, esportabile quando vuoi. Il CRM è tuo come il resto: codice, accessi e dati.",
+  "sol.crm.change":
+    "Le trattative hanno una faccia e una data, i richiami partono al momento giusto, e la memoria commerciale resta in azienda anche quando le persone cambiano.",
+  "sol.crm.time":
+    "Da 4 a 8 settimane, a seconda dei collegamenti e della pulizia dei dati di partenza.",
+
+  // ══ S02 · Dashboard KPI ════════════════════════════════════════════════
+  "sol.kpi.title": "Dashboard aziendale con i numeri che contano",
+  "sol.kpi.lede":
+    "I numeri sparsi tra gestionale, banca e fogli si ritrovano in una schermata sola, aggiornata da sola. Il lunedì si apre leggendo, non assemblando.",
+  "sol.kpi.problem":
+    "I numeri esistono, ma ognuno sta in un sistema: il fatturato nel gestionale, i costi in contabilità, le vendite online nell'e-commerce, il resto in fogli che qualcuno aggiorna quando può. Il quadro d'insieme si costruisce a mano una volta al mese, e quando è pronto racconta un mese già finito.",
+  "sol.kpi.signals":
+    "Il report mensile costa ore di copia e incolla da sistemi diversi|Il margine reale si conosce solo a bilancio|Ogni sede o canale ha i suoi numeri e i confronti non tornano|Le decisioni si prendono a sensazione perché il dato arriva tardi",
+  "sol.kpi.build":
+    "Collegamento alle fonti::Gestionale, contabilità, e-commerce e banca si leggono da soli, ogni giorno. Il copia e incolla sparisce.|I KPI concordati::Non cento grafici: i cinque-dieci numeri su cui decidi davvero, definiti insieme prima di costruire.|Confronti che parlano::Rispetto al mese scorso, all'anno scorso, alla sede accanto. Il numero da solo non dice niente, il confronto sì.|Soglie e avvisi::Quando un numero esce dal binario arriva un messaggio, senza che tu debba aprire niente.|Accessi per ruolo::La direzione vede tutto, il commerciale il suo, il consulente quello che gli serve.",
+  "sol.kpi.excludes":
+    "La pulizia di tutto lo storico sporco: si sistema il flusso da oggi in avanti, non ogni cella del passato|La contabilità analitica, che resta del commercialista: io la leggo, non la produco",
+  "sol.kpi.phases":
+    "Le decisioni e i numeri::1 settimana::Quali decisioni prendi ogni settimana e quali numeri ti servono per prenderle. Si parte dalle domande, non dai grafici.|Connettori e dashboard::2-4 settimane::I collegamenti alle fonti e la prima versione, su cui si itera coi numeri veri.|Soglie e abitudine::1 settimana::Gli avvisi, gli accessi e la messa a punto dopo le prime settimane d'uso.",
+  "sol.kpi.integra":
+    "Il tuo gestionale o ERP|Fatture in Cloud e la contabilità|WooCommerce o Shopify|La banca, via estratti od open banking|Google Analytics e Meta Ads|Fogli Google, per quello che resta manuale",
+  "sol.kpi.faq":
+    "I dati sono nostri o vostri?::Tuoi: la dashboard legge dai tuoi sistemi e vive su infrastruttura tua. Io costruisco, non custodisco.|E se una fonte non ha un collegamento?::Si parte da un export periodico o da un foglio strutturato, e si automatizza dopo. Meglio un dato semi-automatico oggi che uno perfetto mai.|Non basta Excel?::Se una persona sola aggiorna un file e il file regge, sì. La dashboard rende quando le fonti sono più di due e il tempo di assemblarle costa più della sua costruzione.|Ogni quanto si aggiorna?::Dipende dalla fonte: la banca ogni giorno, il gestionale anche ogni ora. La frequenza si decide fonte per fonte, in base a cosa serve davvero.",
+  "sol.kpi.change":
+    "Il quadro d'insieme non si costruisce più: c'è. E i problemi si vedono quando sono ancora curve, non quando sono già bilanci.",
+  "sol.kpi.time":
+    "Da 3 a 6 settimane, a seconda di quante fonti e di come si collegano.",
+
+  // ══ 18 · Automatizzare Excel ═══════════════════════════════════════════
+  "sol.excel.title": "Dal foglio Excel a un'applicazione vera",
+  "sol.excel.lede":
+    "Il foglio che regge mezza azienda diventa un'applicazione con accessi, storico e calcoli in un posto solo. Senza versioni doppie e senza file che crollano.",
+  "sol.excel.problem":
+    "C'è un file che regge mezza azienda, e tutti lo sanno. Va in crash oltre una certa mole, esiste in tre versioni su Drive, e le formule le capisce solo la persona che l'ha costruito, che prima o poi andrà in ferie. Ogni report è un pomeriggio di copia e incolla.",
+  "sol.excel.signals":
+    "Il file esiste in più versioni e nessuno sa qual è quella buona|Le formule le capisce una persona sola|Sopra una certa mole il file rallenta o crolla|Il report periodico è un pomeriggio di copia e incolla",
+  "sol.excel.build":
+    "Un dato, un posto solo::Un database al posto del file: tutti lavorano sugli stessi numeri, nello stesso momento, senza versioni.|Le tue formule, centralizzate::I calcoli che oggi vivono nelle celle diventano regole scritte una volta e uguali per tutti.|Maschere al posto delle celle::Chi inserisce compila un modulo che controlla i dati, invece di scrivere in una cella libera. Gli errori calano all'origine.|Accessi e storico::Ognuno vede e tocca il suo, e ogni modifica lascia traccia: chi, cosa, quando.|Report in un clic::Quello che oggi è un pomeriggio di copia e incolla diventa un pulsante, o parte da solo a calendario.",
+  "sol.excel.excludes":
+    "Excel non sparisce: per le analisi personali resta, e l'export verso il foglio è sempre possibile|I processi che nel foglio non sono mai passati: si automatizza quello che il file fa davvero",
+  "sol.excel.phases":
+    "Anatomia del foglio::1 settimana::Smontiamo il file insieme a chi lo usa: cosa calcola, chi lo tocca, dove fa male. Le regole non scritte sono la parte preziosa.|Costruzione::2-4 settimane::L'applicazione prende forma coi tuoi dati veri, e il foglio resta in parallelo finché non ti fidi.|Collegamenti::1 settimana::Gestionale, contabilità o e-commerce, perché i dati entrino da soli invece che a mano.",
+  "sol.excel.integra":
+    "Il tuo gestionale o ERP|Fatture in Cloud|WooCommerce o Shopify|Google Workspace e Microsoft 365|Email, Slack o Teams per le notifiche|La banca, dove serve",
+  "sol.excel.faq":
+    "Perdiamo la flessibilità di Excel?::Un po', ed è il punto: la libertà di scrivere ovunque è anche la libertà di sbagliare ovunque. Dove serve manovra, l'export c'è sempre.|Quanto ci mette la squadra ad abituarsi?::Meno di quanto pensi, perché l'applicazione nasce dalla logica del loro foglio, non da un gestionale calato dall'alto.|E se il foglio cambia spesso?::Allora la prima settimana serve a capire cosa è stabile e cosa no. La parte stabile si irrigidisce, quella viva resta configurabile.|Vale anche per un foglio piccolo?::No, e te lo dico subito: un file che una persona aggiorna in dieci minuti al giorno sta benissimo com'è. Vale quando il file è diventato un collo di bottiglia condiviso.",
+  "sol.excel.change":
+    "Il file smette di essere un rischio con un nome proprio: i dati hanno una casa, gli errori calano all'origine e i report si fanno da soli.",
+  "sol.excel.time":
+    "Da 3 a 6 settimane, a seconda della complessità del foglio e dei collegamenti.",
 };

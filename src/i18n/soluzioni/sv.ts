@@ -509,4 +509,234 @@ export const solSv: Record<string, string> = {
   "sol.mercato.change":
     "Besluten om priser och nya tjänster utgår från det som faktiskt finns runt omkring, inte från det som sägs.",
   "sol.mercato.time": "5 dagar för den första kartan.",
+
+  // ══ G02 · Gymsystem ════════════════════════════════════════════════════
+  "sol.gestPalestra.title": "Gymsystem med passerkontroll och medlemskap",
+  "sol.gestPalestra.lede":
+    "Medlemskap, spärr och passbokning på ett ställe. Den som är i ordning går in, den vars kort snart löper ut får meddelandet innan spärren säger det.",
+  "sol.gestPalestra.problem":
+    "Förnyelser sker via WhatsApp och ingen skriver ner dem, så utgånget medlemskap upptäcks av spärren, framför medlemmen, mitt i rusningen. Väntelistan till klockan 19-passet bor i instruktörens huvud, och vid stängning räknar receptionen kassan och försöker minnas vem som betalat vad.",
+  "sol.gestPalestra.signals":
+    "Utgångna medlemskap upptäcks när medlemmen redan står vid spärren|Passens väntelista finns i instruktörens huvud|Förnyelser görs upp på WhatsApp och skrivs aldrig ner|Kassan stämmer aldrig på första försöket vid dagens slut",
+  "sol.gestPalestra.build":
+    "Medlemskap och förnyelser::Prislistor, utgångsdatum och förnyelser i ett enda arkiv. Sju dagar före utgång går påminnelsen ut, utan att någon behöver komma ihåg det.|Passerkontroll::Brickan eller appen öppnar spärren bara för den som är i ordning. Den vars kort gått ut vet det innan ankomst, inte inför alla.|Pass med kapacitet och väntelista::Medlemmen bokar i appen, kapaciteten är salens verkliga, och en avbokning flyttar upp den första i kön av sig själv.|Kassa och betalningar::Kontanter, kort och återkommande betalningar registrerade på samma ställe, så att dagsavslutet är en avläsning, inte en rekonstruktion.|Månadens siffror::Intäkter, närvaro och passbeläggning. Du ser vilken tid som är full och vilken sal som jobbar på halvfart.",
+  "sol.gestPalestra.excludes":
+    "Spärrhårdvaran, som du väljer med din installatör: jag kopplar in det du monterar|Bokföringen: systemet exporterar till din redovisningskonsult, det ersätter den inte",
+  "sol.gestPalestra.phases":
+    "Prislistor och regler::1 vecka::Vi skriver ner medlemskap, prislistor och passerregler, inklusive undantagen som i dag lever muntligt.|Passage och bokningar::3-5 veckor::Spärr, medlemsapp och passbokning. Provas med en liten grupp innan den öppnas för alla.|Betalningar och rapporter::2 veckor::Automatiska förnyelser, påminnelser och månadsrapporterna.",
+  "sol.gestPalestra.integra":
+    "Spärrar och brickläsare (ZKTeco, Hikvision)|Stripe, Nexi och Satispay|WhatsApp Business för påminnelser|Google Calendar|Mailchimp eller Brevo|Din bokföring",
+  "sol.gestPalestra.faq":
+    "Lönar det sig för ett litet gym?::Under hundra medlemmar räcker ofta en välskött kalender, och det säger jag i förväg. Systemet lönar sig när inpasseringar och pass överstiger vad en person håller i huvudet.|Måste medlemmarna använda appen?::Nej. Appen är den bekväma vägen, men bricka och reception fortsätter att fungera för den som inte vill.|Vad händer med misslyckade betalningar?::Systemet försöker igen och meddelar medlemmen självt. Du ser listan över dem som halkar efter, i stället för att upptäcka det i kvartalsslutet.|Fungerar spärren jag redan har?::Nästan alltid ja: de vanligaste läsarna går att koppla. Vi kollar det första veckan, innan en rad kod skrivs.",
+  "sol.gestPalestra.change":
+    "Den som går in är i ordning utan att någon kollar med blicken, förnyelserna startar av sig själva, och vid månadens slut vet du vilka pass som fyller salen och vilka som bara håller den upptagen.",
+  "sol.gestPalestra.time":
+    "6 till 9 veckor, beroende på befintlig hårdvara och antal anläggningar.",
+
+  // ══ G03 · Kliniksystem ═════════════════════════════════════════════════
+  "sol.clinica.title": "System för privatklinik och läkarmottagning",
+  "sol.clinica.lede":
+    "Flerläkarkalender, journal och fakturering som pratar med varandra. Receptionen slutar vara bryggan mellan tre program och ett anteckningsblock.",
+  "sol.clinica.problem":
+    "Receptionen håller fem läkares kalendrar i ett program, journalerna i ett skåp och fakturorna i ännu ett program. En dubbelbokning upptäcks när båda patienterna sitter i väntrummet, och läkaren rekonstruerar sjukdomshistorien ur minnet, besök för besök.",
+  "sol.clinica.signals":
+    "Dubbelbokningar upptäcks i väntrummet|Patientens historia är delad mellan pappersarkiv och läkarens minne|Fakturor ställs ut för hand, en i taget, vid dagens slut|Ingen räknar uteblivna besök, men hålen i kalendern syns",
+  "sol.clinica.build":
+    "Kalender per läkare och rum::Varje tid känner till läkare, rum och besökstyp. En dubbelbokning är inte längre fysiskt möjlig.|Journal::Anamnes, dagbok, svar och signerade samtycken i samma akt, synliga bara för den vars roll tillåter det.|Påminnelser till patienter::Bekräftelse vid bokning och påminnelse före besöket, via SMS eller e-post. Uteblivna besök minskar för att folk glömmer mindre.|Kopplad fakturering::Ett avslutat besök genererar kvittot, med inskickning till det italienska hälsokortssystemet för patientens avdrag.|Patientportal::Bokning, svar och betalning hemifrån, så att receptionens telefon ringer mindre.",
+  "sol.clinica.excludes":
+    "Röntgenvisaren och maskinerna: jag kopplar mig till det som finns, jag levererar det inte|Det kliniska innehållet i utlåtandena, som förblir läkarnas: jag bygger behållaren, inte innehållet",
+  "sol.clinica.phases":
+    "Roller och flöden::1-2 veckor::Vem ser vad, hur en patient kommer in, hur en faktura går ut. I vården skrivs den kartan först, inte efteråt.|Kalender och journal::4-6 veckor::Bokningar, journal och samtycken. Provas med låtsasdata tills flödet löper.|Betalningar och portal::2-3 veckor::Fakturering, hälsokortssystemet och portalen där patienten klarar sig själv.",
+  "sol.clinica.integra":
+    "Det italienska hälsokortssystemet (Tessera Sanitaria)|Kortterminal och onlinebetalningar|SMS, e-post och WhatsApp för påminnelser|Digital signatur för samtycken|Din bokföring|Google Calendar",
+  "sol.clinica.faq":
+    "Var lagras patientdata?::På servrar i Europa, krypterade, med rollstyrd åtkomst och en logg över vem som sett vad. Det är hälsodata i GDPR:s fulla mening och behandlas därefter: det här är sektorn där genvägar får ett nej.|Kan vi migrera gamla journaler?::De digitala ja, med en import vi provar tillsammans innan något kastas. Papper digitaliseras stegvis, med aktiva patienter först.|Behövs uppkoppling för att jobba?::Kalendern och journalen bor online, men dagens schema förblir läsbart även om linjen faller. Inget besök går förlorat på grund av wifi.|Fungerar det för en mottagning med två läkare?::Ja, och det är faktiskt storleken där det lönar sig direkt: utan egen reception är varje automatisering återvunnen kliniktid.",
+  "sol.clinica.change":
+    "Receptionen bokar utan rädsla för dubbletter, läkaren öppnar besöket med historien framför sig, och fakturan går ut när patienten går, inte på kvällen.",
+  "sol.clinica.time":
+    "8 till 12 veckor, beroende på antal läkare och vad som ska migreras.",
+
+  // ══ G04 · Tandläkarsystem ══════════════════════════════════════════════
+  "sol.dentistico.title": "System för tandläkarpraktik",
+  "sol.dentistico.lede":
+    "Tandkarta, behandlingsplaner och delbetalningar i ett program. Det du noterar vid stolen finns redan i receptionen, utan dubbelregistrering.",
+  "sol.dentistico.problem":
+    "Vid stolen antecknas för hand, sedan matar någon in allt igen i receptionen: tre kvart om dagen av dubbelarbete. Offerten bor på ett papper, delbetalningarna på ett annat, och ingen återkallar patienterna som varit borta ett år, för det finns ingen lista att göra det från.",
+  "sol.dentistico.signals":
+    "Det som antecknas vid stolen matas in igen i receptionen|Godkända offerter och inkasserade delbetalningar bor på olika papper|Ingen återkallar patienter som varit borta över ett år|Röntgenbilderna bor i ett program, journalen i ett annat",
+  "sol.dentistico.build":
+    "Tandkarta och behandlingsplan::Tändernas status uppdateras med två tryck, och planen skiljer planerat från utfört. Receptionen ser det i samma ögonblick.|Offerter och delbetalningar::Offerten presenteras i flera alternativ, och varje besök drar sin andel. Delbetalningar har förfallodag och påminnelse, inte en förhoppning.|Automatisk återkallelse::Hygien var sjätte månad, årskontroller, vilande patienter: listorna bygger sig själva och meddelandet går ut av sig självt.|Kalender för flera stolar::Varje stol har sin kolumn och varje lucka syns. Att fylla kalendern slutar vara receptionistens konstform.|Kvitton och hälsokortssystemet::Vid besökets slut är kvittot klart och utgiften inskickad för patientens avdrag.",
+  "sol.dentistico.excludes":
+    "Röntgenprogrammet: jag kopplar mig till det du använder (DICOM), jag ersätter det inte|Signaturplatta, om den inte redan finns: vi börjar med signatur via e-post",
+  "sol.dentistico.phases":
+    "Prislista och typplaner::1 vecka::Behandlingar, prislista och de vanligaste vårdplanerna, skrivna som du faktiskt föreslår dem.|Stol och reception::4-6 veckor::Tandkarta, kalender och offerter. Provas på låtsasfall tills rundan stol-reception löper.|Delbetalningar och återkallelser::2-3 veckor::Betalningsplaner, påminnelser och återkallelselistorna som går ut av sig själva.",
+  "sol.dentistico.integra":
+    "Röntgen via DICOM (Romexis, Sidexis)|Det italienska hälsokortssystemet|SEPA för delbetalningar|SMS, e-post och WhatsApp|Kortterminal och Satispay|Google Calendar",
+  "sol.dentistico.faq":
+    "Jag har år av journaler i ett annat program::De migreras: grunddata och öppna planer först, historiken stegvis. Inget kastas, och under en period lever de två systemen sida vid sida.|Hur fungerar samtycken för minderåriga?::Samtycket är föräldrarnas och systemet vet det: den minderårigas akt ber om rätt signatur och sparar den.|Hur mycket stoltid kostar inlärningen?::Ett par arbetsdagar, om tandkarta och prislista är dina och inte en generisk mall. Det är första veckans jobb.|Lönar det sig för en ensam tandläkare?::Jobbar du ensam med några tiotal aktiva patienter, kanske inte, och det säger jag i förväg. Det lönar sig när dubbelregistrering och missade återkallelser kostar mer än systemet.",
+  "sol.dentistico.change":
+    "Dubbelregistreringen försvinner, delbetalningarna kommer in för att de har förfallodag, och kalendern fylls med återkallelser i stället för tur.",
+  "sol.dentistico.time":
+    "8 till 12 veckor, beroende på antal stolar och vad som ska migreras.",
+
+  // ══ G05 · Skönhetssalong ═══════════════════════════════════════════════
+  "sol.estetica.title": "System för skönhetscenter och spa",
+  "sol.estetica.lede":
+    "Kalender per terapeut och per rum, klippkort som räknar ner sig själva och påminnelser som krymper luckorna. Hela dagen ryms i en skärm.",
+  "sol.estetica.problem":
+    "Kalendern säger vem som är bokad men inte i vilket rum, och rummet med pressoterapin finns bara ett. Förbetalda paket bor på papperskort, och när en kund ifrågasätter sina kvarvarande behandlingar vinner den med stadigast röst. Avbokningarna kommer en timme innan och luckan består.",
+  "sol.estetica.signals":
+    "Paketens kvarvarande behandlingar ifrågasätts för att de bor på papperskort|Rätt rum är upptaget även när terapeuten är ledig|Sena avbokningar lämnar luckor som ingen fyller|Produkterna tar slut utan att någon märker det i förväg",
+  "sol.estetica.build":
+    "Kalender per terapeut och rum::Varje bokning tar en person och ett rum i anspråk. Pressoterapin kan inte bokas två gånger.|Förbetalda paket::Varje behandling dras från saldot, och kunden ser det också. Tvisterna tar slut för att räkningen är skriven.|Onlinebokning med handpenning::Den som bokar från länken i bion lämnar en handpenning, och sena avbokningar slutar vara gratis.|Stegade påminnelser::Tre dagar innan, dagen innan och två timmar innan. Den som måste avboka gör det i tid för att du ska fylla luckan.|Produktlager::Försäljningen drar från lagret och varningen går innan produkten tar slut.",
+  "sol.estetica.excludes":
+    "Kassahårdvaran, om den inte redan finns: jag kopplar mig till de vanligaste kortterminalerna|Marknadsföringskampanjerna: systemet förbereder listorna, kommunikationen förblir din eller din social managers",
+  "sol.estetica.phases":
+    "Tjänster, rum och regler::1 vecka::Prislista, behandlingarnas verkliga längd, vilka rum som tjänar vad, och reglerna för handpenning och avbokning.|Kalender och paket::3-4 veckor::Bokningar, paketsaldon och kundkort. Provas med teamet när centret är stängt.|Online och påminnelser::2 veckor::Bokningen från sajten och Instagram, handpenningarna och påminnelserna.",
+  "sol.estetica.integra":
+    "Stripe eller PayPal för handpenning|WhatsApp Business|Instagram och Google Business Profile|Fatture in Cloud|Mailchimp eller Brevo|Din kortterminal",
+  "sol.estetica.faq":
+    "Kommer kunderna verkligen boka online?::En del ja, direkt, från länken i bion. Telefonen försvinner inte: den lugnar sig. Och varje onlinebokning är ett samtal mindre mitt i en behandling.|Skrämmer inte handpenningen bort kunder?::Nya kunder accepterar den mer än man fruktar, och för stamkunder kan den stängas av. Regeln bestämmer du, systemet tillämpar den utan diskussioner.|Var bor terapeuternas privata anteckningar?::I kundkortet, synliga bara för centret, med allergierna i blickfånget. Det är känsliga uppgifter och de behandlas därefter.|Lönar det sig med två rum?::Jobbar du ensam och kalendern håller, nej, och det säger jag i förväg. Det lönar sig när rum, terapeuter och paket tillsammans överstiger vad papperet klarar.",
+  "sol.estetica.change":
+    "Dagen öppnas med en överblick i stället för tre telefonsamtal, paketen diskuteras inte längre, och avbokningsluckorna fylls för att du vet i tid.",
+  "sol.estetica.time":
+    "5 till 8 veckor, beroende på antal terapeuter och om det finns produktförsäljning att koppla.",
+
+  // ══ G06 · Hotellsystem (PMS) ═══════════════════════════════════════════
+  "sol.pms.title": "System för hotell och B&B (PMS)",
+  "sol.pms.lede":
+    "Rum, portalbokningar och städning i ett system, med gästregistreringen inlämnad i tid. Receptionen slutar skriva av.",
+  "sol.pms.problem":
+    "Bokningarna kommer från Booking, telefonen och sajten, och hamnar på en planering som måste uppdateras för hand i varje kanal: överbokningen är alltid en glömska bort. Städningen samordnas muntligt, och varje kväll skriver någon av gästernas dokument för polisregistret.",
+  "sol.pms.signals":
+    "Rumsplaneringen uppdateras för hand i varje portal|Gästregistreringen fylls i genom att skriva av dokument på kvällen|Städningen sköts muntligt och ingen vet vilka rum som är klara|Priset är detsamma i februari och mitt i augusti",
+  "sol.pms.build":
+    "Planering och channel manager::Booking, Expedia och din egen sajt läser samma tillgänglighet. En bokning stänger rummet överallt, i samma ögonblick.|Direktbokning från sajten::Bokningsmotorn på din egen domän, utan provision: den som redan känner dig bokar hos dig.|Incheckning och gästregister::Dokumentet fångas vid ankomst och anmälan till polisen går ut i tid, utan kvällsavskrifter.|Städning::Varje våning vet vilka rum som ska göras och i vilken ordning, från en telefon. Klara rum syns från receptionen.|Säsongspriser::Priser per period och kanal, och siffrorna som räknas vid dagens slut: beläggning och snittintäkt per rum.",
+  "sol.pms.excludes":
+    "Elektroniska lås, om de inte redan finns: jag kopplar mig till de vanligaste, jag levererar dem inte|Sajtens innehåll och foton: bokningsmotorn bor i sajten du har, eller i en vi bygger som eget projekt",
+  "sol.pms.phases":
+    "Rum, kanaler och priser::1-2 veckor::Rumsinventeringen, de aktiva portalerna och prisreglerna du faktiskt jobbar med.|Planering och portaler::4-6 veckor::Planeringen, portalkopplingarna och direktbokningen. Körs parallellt med nuvarande metod.|Incheckning och städning::2-3 veckor::Gästregister, städning och dagsrapporterna.",
+  "sol.pms.integra":
+    "Booking, Expedia och Airbnb|Polisens gästregister (ALLOGGIATI WEB)|Onlinebetalningar och kortterminal|Elektronisk fakturering och din bokföring|De vanligaste elektroniska låsen|TripAdvisor och Google för recensioner",
+  "sol.pms.faq":
+    "Hanterar det turistskatten?::Ja, med din kommuns undantag, och vid periodens slut är beräkningen för inbetalningen redan gjord.|Vad händer om en portal ändrar något?::Kopplingen går via portalernas officiella kanaler, byggda för att hålla. Ändrar en portal reglerna uppdateras kopplingen, inte ditt sätt att jobba.|Jag driver ett B&B med sex rum, är det för mycket?::Kanske, och det säger jag i förväg: under tio rum räcker ofta en channel manager och en enkel planering. Hela systemet lönar sig när städning, restaurang eller flera i receptionen kommer in i bilden.|Var hamnar telefonbokningarna?::I planeringen som alla andra: receptionen lägger in dem på trettio sekunder, och de stänger tillgängligheten i portalerna som alla andra.",
+  "sol.pms.change":
+    "Överbokningen slutar vara en daglig rädsla, ingen skriver av dokument på kvällen, och sajten börjar åter ge provisionsfria bokningar.",
+  "sol.pms.time":
+    "8 till 12 veckor, beroende på kopplade portaler och anläggningens storlek.",
+
+  // ══ G07 · Schemaläggning ═══════════════════════════════════════════════
+  "sol.turni.title": "Schemaläggning för personal",
+  "sol.turni.lede":
+    "Schemat bygger sig självt inom reglerna, byten går via appen och personalkostnaden syns innan, inte på lönebeskedet.",
+  "sol.turni.problem":
+    "Varje vecka lägger någon timmar på att pussla ihop pass på ett ark, med semestrar, önskemål och obligatorisk vila i huvudet. Byten förhandlas på WhatsApp där ingen ser dem, och när någon lämnar återbud klockan sju på morgonen börjar telefonrundan.",
+  "sol.turni.signals":
+    "Veckans schema kostar timmar och görs om vid varje överraskning|Passbyten sker på WhatsApp och skrivs aldrig ner|De elva timmarnas vila mellan pass kontrolleras på ögonmått|Övertidskostnaden upptäcks på lönebeskedet",
+  "sol.turni.build":
+    "Schema med reglerna inbyggda::Vila, maxtimmar och avtalets villkor bor i motorn: ett pass som bryter mot dem går inte att spara.|App för personalen::Var och en ser sina pass, söker ledighet och föreslår byten från telefonen. Ett godkänt byte uppdaterar schemat självt.|Ersättare utan telefonrundor::En plötslig frånvaro frågar de kvalificerade som är tillgängliga: den första som accepterar tar passet.|Kostnad före, inte efter::Schemat visar vad det kommer att kosta, övertid och helger inräknade, medan du lägger det.|Export till lön::Vid månadens slut går timmarna till lönekonsulten i formatet den använder, utan avskrifter.",
+  "sol.turni.excludes":
+    "Stämpelhårdvara, om den saknas: jag kopplar mig till befintliga brickor och appar|Själva lönekörningen, som förblir lönekonsultens",
+  "sol.turni.phases":
+    "Regler och team::1-2 veckor::Tillämpat avtal, villkor, kompetenser och de oskrivna regler som i dag bor i planerarens huvud.|Schema och app::3-4 veckor::Schemamotorn och appen. Läggs parallellt med nuvarande metod i ett par cykler.|Lön och rapporter::1-2 veckor::Exporten till konsulten och rapporterna om frånvaro och övertid.",
+  "sol.turni.integra":
+    "Zucchetti, TeamSystem och de vanliga lönesystemen|Brickor och tidsregistrering|Google Calendar|Teams och Slack|WhatsApp för notiser|Ditt affärssystem, om det finns",
+  "sol.turni.faq":
+    "Och personal som ogillar appar?::Det utskrivna schemat försvinner inte: appen är den bekväma vägen, inte ett tvång. De brukar ta till sig den när de inser att den låter dem be om byten utan att gå via chefen.|Fungerar det med vårt avtal?::Reglerna ställs in efter avtalet ni tillämpar, tillägg inräknade. Det är första fasens jobb, gjort tillsammans.|Och om jag inte gillar det föreslagna schemat?::Du ändrar det för hand: motorn föreslår, du bestämmer. Poängen är att varje ändring kontrolleras mot reglerna medan du gör den.|Under hur många personer är det meningslöst?::Under tio, nästan alltid, och det säger jag i förväg. Det lönar sig från den stund pusslet överstiger vad en person klarar felfritt i huvudet.",
+  "sol.turni.change":
+    "Veckans schema stängs på minuter, byten lämnar spår, och personalkostnaden känner du till medan den ännu går att rätta.",
+  "sol.turni.time":
+    "5 till 8 veckor, beroende på antal arbetsställen och tillämpat avtal.",
+
+  // ══ G08 · HACCP-spårbarhet ═════════════════════════════════════════════
+  "sol.haccp.title": "Digital HACCP och spårbarhet",
+  "sol.haccp.lede":
+    "Temperaturer, partier och signerade checklistor från telefonen, och inspektionsakten klar på en minut i stället för en natt.",
+  "sol.haccp.problem":
+    "HACCP-registren fylls i för hand vid skiftets slut, en bra dag: kylens temperaturer, en dålig dag, rekonstrueras. När en inspektion kommer sätts akten ihop från spridda pärmar, och om en leverantör återkallar ett parti tar rekonstruktionen dagar.",
+  "sol.haccp.signals":
+    "Temperaturregistren fylls i vid skiftets slut, ur minnet|Leverantörernas intyg ligger i en pärm ingen öppnar|En återkallelse av ett parti skulle betyda dagar av rekonstruktion|Saneringschecklistorna signeras i klump i veckans slut",
+  "sol.haccp.build":
+    "Temperaturer under uppsikt::Givarna registrerar själva, dag och natt, och avvikelsen når din telefon medan varorna ännu går att rädda.|Ett signerat digitalt register::Checklistorna fylls i från telefonen i rätt ögonblick, med signatur och klockslag. Inget mer ifyllande ur minnet.|Spårade partier::Varje leverans kommer in med parti och utgångsdatum. En återkallelse löses med en sökning, inte en rekonstruktion.|Leverantörernas dokument::Intyg och produktblad i ett arkiv med utgångsdatumen i sikte, inte i en pärm.|Inspektionsakten::Efterlevnadsrapporten genereras på en minut, från surfplattan, framför inspektören.",
+  "sol.haccp.excludes":
+    "Givarhårdvaran: jag pekar ut de kompatibla och kopplar in dem du väljer|HACCP-rådgivningen: egenkontrollplanen förblir din konsults, jag gör den levande",
+  "sol.haccp.phases":
+    "Plan och kritiska punkter::1 vecka::Din egenkontrollplan, de kritiska punkterna och de verkliga checklistorna, översatta till digitalt tillsammans med din konsult.|Register och partier::3-4 veckor::Temperaturer, checklistor och spårbarhet. Körs parallellt med papperet tills teamet litar på det.|Givare och rapporter::1-2 veckor::Inkopplingen av givarna och inspektionsrapporterna.",
+  "sol.haccp.integra":
+    "Temperaturgivare (Testo, Comet)|Streckkoder och QR för partier|Din kassa, för att koppla försäljning till partier|Digital signatur|Leverantörsportaler|Ditt affärssystem, om det finns",
+  "sol.haccp.faq":
+    "Blir min HACCP-konsult kvar?::Ja, och det är meningen: egenkontrollplanen är dens, jag bygger verktyget som får den att faktiskt följas. Konsulten brukar vara den första att bli nöjd.|Kommer teamet verkligen fylla i checklistorna?::Mer än förut, för från telefonen kostar det trettio sekunder i rätt ögonblick i stället för tjugo minuter vid skiftets slut. Och det som saknas syns direkt, inte vid inspektionen.|Är givarna obligatoriska?::Nej: man kan börja med digitaliserade manuella avläsningar och lägga till givare senare. Det ändrar mödan, inte efterlevnaden.|Lönar det sig för ett litet hantverksföretag?::Producerar och säljer du partier, ja, tidigare än man tror: det är just det lilla hantverket som en återkallelse sätter på knä.",
+  "sol.haccp.change":
+    "Registren fylls i när sakerna händer, inspektionen möter en akt i stället för en pärmjakt, och en återkallelse blir en sökning på tio sekunder.",
+  "sol.haccp.time":
+    "4 till 7 veckor, beroende på kontrollpunkter och givare.",
+
+  // ══ S01 · Skräddarsytt CRM ═════════════════════════════════════════════
+  "sol.crm.title": "Skräddarsytt CRM för mindre företag",
+  "sol.crm.lede":
+    "Kunderna, affärerna och uppföljningarna på ett ställe, med fälten som tjänar dig. Sex rätta fält, inte sextio tomma.",
+  "sol.crm.problem":
+    "Kundhistoriken bor i inkorgarna hos dem som sköter kunderna, och när en person slutar, slutar minnet också. Affärerna följs på känsla, skickade offerter har inget uppföljningsdatum, och CRM-systemet som provades i fjol dog för att det krävde sextio fält för att spara en kontakt.",
+  "sol.crm.signals":
+    "Kundhistoriken bor i personliga inkorgar hos dem som sköter kunderna|Skickade offerter har inget uppföljningsdatum|CRM-systemet som provats tidigare övergavs inom en månad|Avtalens utgångsdatum upptäcks när kunden redan skrivit på någon annanstans",
+  "sol.crm.build":
+    "Register med dina fält::Fälten du faktiskt använder, dubblettkontroll, och e-post som fäster sig vid rätt kort av sig själv.|Pipeline på dina steg::Affärerna rör sig längs de verkliga stegen i ditt sätt att sälja, inte en amerikansk malls.|Uppföljningar som inte tappas::Varje offert går ut med ett uppföljningsdatum, och på morgonen vet du vem du ska ringa.|Avtalens utgångsdatum::Nittio dagar före förnyelsen varnar systemet, med historiken framför dig.|Säljrapporter::Vad som ligger i pipeline, vad som stängs, var det tappas. Utan att någon fyller i ett ark på söndagen.",
+  "sol.crm.excludes":
+    "Kontaktlistan hittar jag inte på: vi utgår från dina riktiga data, rensade tillsammans|Marknadsföringskampanjerna: CRM-systemet förbereder listorna, utskicket förblir ditt e-postverktygs",
+  "sol.crm.phases":
+    "Dina fält och dina steg::1 vecka::Hur du faktiskt säljer, vilka fält som behövs och vilka inte. Det är veckan som avgör om CRM-systemet kommer att användas.|Kort och pipeline::2-4 veckor::Register, affärer och uppföljningar, med dina data importerade. Provas på riktigt arbete, inte demodata.|Kopplingar::1-2 veckor::E-post, kalender, sajtens formulär och, om det finns, affärssystemet.",
+  "sol.crm.integra":
+    "Outlook och Gmail|Google Calendar|Din sajts formulär|Fatture in Cloud eller ditt affärssystem|WhatsApp Business|Mailchimp eller Brevo",
+  "sol.crm.faq":
+    "Varför inte ett känt abonnemangs-CRM?::Om dess steg och fält liknar dina, ta det, och det säger jag gärna. Skräddarsytt lönar sig när ditt sätt att sälja inte ryms i mallarna, eller när abonnemanget per användare kostar mer än bygget.|Kommer säljarna använda det?::Om det kostar tio sekunder från telefonen att spara en kontakt, ja. Det är därför fälten är sex och inte sextio.|Stannar historiken hos företaget?::Ja, och det är ett av skälen att göra detta: när en säljare slutar stannar kunderna och minnet hos dig.|Var bor datan?::I en databas som är din, i Europa, exporterbar när du vill. CRM-systemet är ditt som allt annat: kod, åtkomst och data.",
+  "sol.crm.change":
+    "Affärerna har ett ansikte och ett datum, uppföljningarna går ut i rätt ögonblick, och säljminnet stannar i företaget även när människorna byts.",
+  "sol.crm.time":
+    "4 till 8 veckor, beroende på kopplingarna och hur rena startdata är.",
+
+  // ══ S02 · KPI-dashboard ════════════════════════════════════════════════
+  "sol.kpi.title": "En dashboard med siffrorna som räknas",
+  "sol.kpi.lede":
+    "Siffrorna utspridda mellan affärssystem, bank och kalkylark möts i en enda skärm som uppdaterar sig själv. Måndagen öppnas med läsning, inte hopsättning.",
+  "sol.kpi.problem":
+    "Siffrorna finns, men var och en bor i sitt system: omsättningen i affärssystemet, kostnaderna i bokföringen, näthandeln i e-handeln, resten i ark som någon uppdaterar när den hinner. Helhetsbilden byggs för hand en gång i månaden, och när den är klar beskriver den en månad som redan gått.",
+  "sol.kpi.signals":
+    "Månadsrapporten kostar timmar av klipp och klistra från olika system|Den verkliga marginalen känner man bara vid bokslutet|Varje enhet eller kanal har sina siffror och jämförelserna stämmer aldrig|Besluten tas på känsla för att siffran kommer sent",
+  "sol.kpi.build":
+    "Kopplade källor::Affärssystem, bokföring, e-handel och bank läses av sig själva, varje dag. Klipp och klistra försvinner.|De överenskomna nyckeltalen::Inte hundra diagram: de fem-tio siffror du faktiskt beslutar på, definierade tillsammans innan bygget.|Jämförelser som talar::Mot förra månaden, förra året, enheten bredvid. Siffran ensam säger inget, jämförelsen gör det.|Trösklar och larm::När en siffra lämnar sitt spår kommer ett meddelande, utan att du öppnar något.|Rollstyrd åtkomst::Ledningen ser allt, säljaren sitt, konsulten det den behöver.",
+  "sol.kpi.excludes":
+    "Rensning av all smutsig historik: flödet fixas från i dag och framåt, inte varje cell i det förflutna|Den analytiska redovisningen, som förblir revisorns: jag läser den, jag producerar den inte",
+  "sol.kpi.phases":
+    "Besluten och siffrorna::1 vecka::Vilka beslut du tar varje vecka och vilka siffror du behöver för att ta dem. Vi utgår från frågorna, inte diagrammen.|Kopplingar och dashboard::2-4 veckor::Kopplingarna till källorna och den första versionen, som itereras med riktiga siffror.|Trösklar och vana::1 vecka::Larmen, åtkomsten och finjusteringen efter de första veckornas användning.",
+  "sol.kpi.integra":
+    "Ditt affärssystem eller ERP|Fatture in Cloud och bokföringen|WooCommerce eller Shopify|Banken, via utdrag eller open banking|Google Analytics och Meta Ads|Google Kalkylark, för det som förblir manuellt",
+  "sol.kpi.faq":
+    "Är datan vår eller er?::Din: dashboarden läser från dina system och bor på din infrastruktur. Jag bygger, jag förvarar inte.|Och om en källa saknar koppling?::Vi börjar med en periodisk export eller ett strukturerat ark, och automatiserar senare. Hellre en halvautomatisk siffra i dag än en perfekt aldrig.|Räcker inte Excel?::Om en person uppdaterar en fil och filen håller, jo. Dashboarden lönar sig när källorna är fler än två och hopsättningen kostar mer än bygget.|Hur färsk är den?::Det beror på källan: banken dagligen, affärssystemet till och med varje timme. Frekvensen bestäms källa för källa, efter vad som faktiskt behövs.",
+  "sol.kpi.change":
+    "Helhetsbilden byggs inte längre: den finns. Och problemen syns medan de ännu är kurvor, inte när de redan är bokslut.",
+  "sol.kpi.time":
+    "3 till 6 veckor, beroende på antal källor och hur de kopplas.",
+
+  // ══ 18 · Från Excel till applikation ═══════════════════════════════════
+  "sol.excel.title": "Från Excel-arket till en riktig applikation",
+  "sol.excel.lede":
+    "Arket som bär halva företaget blir en applikation med behörigheter, historik och beräkningarna på ett ställe. Utan dubbla versioner och utan filer som kraschar.",
+  "sol.excel.problem":
+    "Det finns en fil som bär halva företaget, och alla vet det. Den kraschar över en viss storlek, finns i tre versioner på Drive, och formlerna förstår bara personen som byggde den, som förr eller senare tar semester. Varje rapport är en eftermiddag av klipp och klistra.",
+  "sol.excel.signals":
+    "Filen finns i flera versioner och ingen vet vilken som är den rätta|Formlerna förstår bara en person|Över en viss storlek blir filen seg eller kraschar|Den återkommande rapporten är en eftermiddag av klipp och klistra",
+  "sol.excel.build":
+    "En siffra, ett ställe::En databas i stället för filen: alla jobbar med samma siffror, samtidigt, utan versioner.|Dina formler, centraliserade::Beräkningarna som i dag bor i celler blir regler skrivna en gång och lika för alla.|Formulär i stället för celler::Den som matar in fyller ett formulär som kontrollerar datan, i stället för att skriva i en fri cell. Felen minskar vid källan.|Behörigheter och historik::Var och en ser och rör sitt, och varje ändring lämnar spår: vem, vad, när.|Rapporter med ett klick::Det som i dag är en eftermiddag av klipp och klistra blir en knapp, eller går av sig självt enligt schema.",
+  "sol.excel.excludes":
+    "Excel försvinner inte: för personliga analyser finns det kvar, och exporten till ark är alltid möjlig|Processer som aldrig gått genom arket: vi automatiserar det filen faktiskt gör",
+  "sol.excel.phases":
+    "Arkets anatomi::1 vecka::Vi plockar isär filen med dem som använder den: vad den räknar, vem som rör den, var det gör ont. De oskrivna reglerna är den värdefulla delen.|Bygge::2-4 veckor::Applikationen tar form med dina riktiga data, och arket lever parallellt tills du litar på den.|Kopplingar::1 vecka::Affärssystem, bokföring eller e-handel, så att datan kommer in av sig själv i stället för för hand.",
+  "sol.excel.integra":
+    "Ditt affärssystem eller ERP|Fatture in Cloud|WooCommerce eller Shopify|Google Workspace och Microsoft 365|E-post, Slack eller Teams för notiser|Banken, där det behövs",
+  "sol.excel.faq":
+    "Förlorar vi Excels flexibilitet?::En del, och det är poängen: friheten att skriva var som helst är också friheten att fela var som helst. Där manöverutrymme behövs finns exporten alltid.|Hur lång tid tar det för teamet att vänja sig?::Kortare än man tror, för applikationen föds ur logiken i deras eget ark, inte ur ett system nedtryckt uppifrån.|Och om arket ändras ofta?::Då tjänar första veckan till att skilja det stabila från det rörliga. Den stabila delen härdas, den levande förblir konfigurerbar.|Lönar det sig för ett litet ark?::Nej, och det säger jag direkt: en fil som en person uppdaterar på tio minuter om dagen mår utmärkt som den är. Det lönar sig när filen blivit en delad flaskhals.",
+  "sol.excel.change":
+    "Filen slutar vara en risk med förnamn: datan har ett hem, felen minskar vid källan och rapporterna gör sig själva.",
+  "sol.excel.time":
+    "3 till 6 veckor, beroende på arkets komplexitet och kopplingarna.",
 };

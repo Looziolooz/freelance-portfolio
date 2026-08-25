@@ -509,4 +509,234 @@ export const solEn: Record<string, string> = {
   "sol.mercato.change":
     "Decisions about prices and new services start from what is actually around you, not from what gets said.",
   "sol.mercato.time": "5 days for the first map.",
+
+  // ══ G02 · Gym management ═══════════════════════════════════════════════
+  "sol.gestPalestra.title": "Gym management system with access control and memberships",
+  "sol.gestPalestra.lede":
+    "Memberships, turnstile and class bookings in one place. Whoever is in good standing walks in; whoever is about to expire gets the message before the turnstile tells them.",
+  "sol.gestPalestra.problem":
+    "Renewals happen over WhatsApp and nobody writes them down, so the expiry gets discovered by the turnstile, in front of the member, at peak hour. The waiting list for the 7pm class lives in the instructor's head, and at closing time the front desk counts the till trying to remember who paid for what.",
+  "sol.gestPalestra.signals":
+    "You find out about expired memberships when the member is already at the turnstile|The class waiting list is kept in the instructor's head|Renewals are agreed on WhatsApp and never written down|The till never adds up on the first try at the end of the day",
+  "sol.gestPalestra.build":
+    "Memberships and renewals::Price lists, expiry dates and renewals in a single archive. Seven days before expiry the reminder goes out, with nobody having to remember it.|Access control::The badge or the app opens the turnstile only for members in good standing. Whoever has expired knows before arriving, not in front of everyone.|Classes with capacity and waiting list::Members book from the app, the capacity is the room's real one, and a cancellation promotes the first in line by itself.|Till and payments::Cash, card and recurring payments recorded in the same place, so closing the day is a reading, not a reconstruction.|The month's numbers::Revenue, attendance and class occupancy. You see which time slot is full and which room works at half steam.",
+  "sol.gestPalestra.excludes":
+    "The turnstile hardware, which you choose with your installer: I connect what you mount|The accounting: the system exports to your accountant, it does not replace them",
+  "sol.gestPalestra.phases":
+    "Price lists and rules::1 week::We write down memberships, price lists and access rules, including the exceptions that today live by word of mouth.|Access and bookings::3-5 weeks::Turnstile, member app and class bookings. Tried with a small group before opening to everyone.|Payments and reports::2 weeks::Automatic renewals, expiry reminders and the end-of-month reports.",
+  "sol.gestPalestra.integra":
+    "Turnstiles and badge readers (ZKTeco, Hikvision)|Stripe, Nexi and Satispay|WhatsApp Business for reminders|Google Calendar|Mailchimp or Brevo|Your accounting software",
+  "sol.gestPalestra.faq":
+    "Is it worth it for a small gym?::Under a hundred members a well-kept diary is often enough, and I will tell you so upfront. The system pays off when entries and classes exceed what one person can hold in their head.|Do members have to use the app?::No. The app is the convenient route, but badge and front desk keep working for whoever does not want it.|What happens to failed payments?::The system retries and notifies the member on its own. You see the list of who is falling behind, instead of finding out at the end of the quarter.|Will my existing turnstile work?::Almost always yes: the most common readers connect. We verify it in the first week, before writing a line of code.",
+  "sol.gestPalestra.change":
+    "Whoever walks in is in good standing without anyone checking by sight, renewals start on their own, and at the end of the month you know which classes fill the room and which merely keep it busy.",
+  "sol.gestPalestra.time":
+    "6 to 9 weeks, depending on the existing hardware and how many locations you have.",
+
+  // ══ G03 · Clinic management ════════════════════════════════════════════
+  "sol.clinica.title": "Management system for private clinics and medical practices",
+  "sol.clinica.lede":
+    "Multi-doctor diary, medical records and invoicing that talk to each other. The front office stops being the bridge between three programs and a notebook.",
+  "sol.clinica.problem":
+    "The front office keeps five doctors' diaries in one program, the records in a cabinet and the invoices in yet another program. A double booking gets discovered when both patients are in the waiting room, and the doctor reconstructs the clinical history from memory, visit by visit.",
+  "sol.clinica.signals":
+    "Double bookings get discovered in the waiting room|The patient's history is split between a paper archive and the doctor's memory|Invoices are issued by hand, one at a time, at the end of the day|Nobody counts the no-shows, but the holes in the diary are visible",
+  "sol.clinica.build":
+    "Diary by doctor and by room::Every slot knows its doctor, room and visit type. A double booking is no longer physically possible.|Medical records::History, notes, results and signed consents in the same file, visible only to those whose role allows it.|Patient reminders::Confirmation at booking and a reminder before the visit, by SMS or email. No-shows drop because people forget less.|Connected invoicing::A closed visit generates the receipt, with the submission to the national health card system for the patient's tax deductions.|Patient portal::Online booking, results and payments from home, so the front office phone rings less.",
+  "sol.clinica.excludes":
+    "The radiology viewer and the machines: I connect to what is there, I do not supply it|The clinical content of the reports, which stays with the doctors: I build the container, not the content",
+  "sol.clinica.phases":
+    "Roles and pathways::1-2 weeks::Who sees what, how a patient comes in, how an invoice goes out. In healthcare this map is written first, not after.|Diary and records::4-6 weeks::Bookings, records and consents. Tested with dummy data until the pathway runs smooth.|Payments and portal::2-3 weeks::Invoicing, the health card system and the portal where patients help themselves.",
+  "sol.clinica.integra":
+    "The national health card system (Tessera Sanitaria)|POS and online payments|SMS, email and WhatsApp for reminders|Digital signature for consents|Your accounting software|Google Calendar",
+  "sol.clinica.faq":
+    "Where does patient data live?::On servers in Europe, encrypted, with role-based access and a log of who saw what. This is health data in the full GDPR sense and it is treated as such: this is the sector where shortcuts get a no.|Can we migrate the old records?::The digital ones yes, with an import we test together before discarding anything. Paper gets digitised gradually, starting with active patients.|Do we need a connection to work?::The diary and records live online, but the day's calendar stays readable even if the line drops. No visit is lost to the wi-fi.|Does it work for a practice with two doctors?::Yes, and that is in fact the size where it pays off immediately: without a dedicated front office, every automation is clinical time recovered.",
+  "sol.clinica.change":
+    "The front office books without fearing duplicates, the doctor opens the visit with the history in front of them, and the invoice goes out when the patient does, not at the end of the evening.",
+  "sol.clinica.time":
+    "8 to 12 weeks, depending on how many doctors and what needs migrating.",
+
+  // ══ G04 · Dental practice ══════════════════════════════════════════════
+  "sol.dentistico.title": "Management system for dental practices",
+  "sol.dentistico.lede":
+    "Dental chart, treatment plans and instalments in one program. What you note at the chair is already at the front desk, with no double entry.",
+  "sol.dentistico.problem":
+    "Notes are taken by hand at the chair, then someone re-enters everything at the front desk: three quarters of an hour a day of double work. The estimate lives on one sheet, the instalments on another, and nobody recalls the patients who have been away for a year, because there is no list to recall them from.",
+  "sol.dentistico.signals":
+    "What gets noted at the chair gets re-entered at the front desk|Accepted estimates and collected instalments live on different sheets|Nobody recalls the patients who have been away for over a year|X-rays live in one program, the records in another",
+  "sol.dentistico.build":
+    "Dental chart and treatment plan::The state of the teeth updates in two taps, and the plan tells planned from done. The front desk sees it in the same moment.|Estimates and instalments::The estimate is presented in several options, and each session deducts its share. Instalments have a due date and a reminder, not a hope.|Automatic recall::Six-month hygiene, yearly check-ups, inactive patients: the lists build themselves and the message goes out on its own.|Multi-chair diary::Every chair has its column and every gap is visible. Filling the diary stops being the receptionist's art form.|Receipts and the health card system::At the end of the visit the receipt is ready and the expense is submitted for the patient's tax deduction.",
+  "sol.dentistico.excludes":
+    "The radiology software: I connect to what you use (DICOM), I do not replace it|Signature-pad hardware, if it is not already there: we start with signature by email",
+  "sol.dentistico.phases":
+    "Price list and standard plans::1 week::Treatments, price list and the most frequent care plans, written the way you actually propose them.|Chair and front desk::4-6 weeks::Dental chart, diary and estimates. Tried on dummy cases until the chair-to-desk loop runs smooth.|Instalments and recalls::2-3 weeks::Payment plans, reminders and the recall lists that go out on their own.",
+  "sol.dentistico.integra":
+    "Radiology via DICOM (Romexis, Sidexis)|The national health card system|SEPA for instalments|SMS, email and WhatsApp|POS and Satispay|Google Calendar",
+  "sol.dentistico.faq":
+    "I have years of records in another program::They migrate: master data and open plans first, the history gradually. Nothing is thrown away, and for a while the two systems coexist.|How do consents for minors work?::The consent belongs to the parents and the system knows it: a minor's file asks for the right signature and keeps it.|How much chair time does learning cost?::A couple of working days, if the chart and price list are yours and not a generic template. That is the first week's job.|Is it worth it for a solo dentist?::Working alone with a few dozen active patients, maybe not, and I will tell you so upfront. It pays off when double entry and missed recalls cost more than the system.",
+  "sol.dentistico.change":
+    "Double entry disappears, instalments get collected because they have a due date, and the diary fills up with recalls instead of luck.",
+  "sol.dentistico.time":
+    "8 to 12 weeks, depending on the chairs and what needs migrating.",
+
+  // ══ G05 · Beauty salon management ══════════════════════════════════════
+  "sol.estetica.title": "Management system for beauty centres and spas",
+  "sol.estetica.lede":
+    "A diary per therapist and per cabin, packages that deduct themselves and reminders that shrink the gaps. The whole day fits in one screen.",
+  "sol.estetica.problem":
+    "The diary says who is booked but not in which cabin, and there is only one cabin with the pressotherapy machine. Prepaid packages live on paper cards, and when a client disputes her remaining sessions, the firmer voice wins. Cancellations arrive an hour before and the gap stays.",
+  "sol.estetica.signals":
+    "Remaining package sessions get disputed because they live on paper cards|The right cabin is busy even when the therapist is free|Last-minute cancellations leave gaps nobody fills|Products run out before anyone notices",
+  "sol.estetica.build":
+    "Diary by therapist and cabin::Every booking claims a person and a room. The pressotherapy cabin cannot be booked twice.|Prepaid packages::Each session deducts from the balance, and the client sees it too. Disputes end because the count is written down.|Online booking with deposit::Whoever books from the link in bio leaves a deposit, and late cancellations stop being free.|Staggered reminders::Three days ahead, the day before and two hours before. Whoever must cancel does it in time for you to fill the gap.|Product stock::A sale deducts from stock and the alert fires before the product runs out.",
+  "sol.estetica.excludes":
+    "The till hardware, if it is not already there: I connect to the most common POS systems|Marketing campaigns: the system prepares the lists, the communication stays with you or your social manager",
+  "sol.estetica.phases":
+    "Services, cabins and rules::1 week::Price list, the real duration of treatments, which cabins serve what, and the deposit and cancellation rules.|Diary and packages::3-4 weeks::Bookings, package balances and client files. Tried with the team while the centre is closed.|Online and reminders::2 weeks::Booking from the site and Instagram, the deposits and the reminders.",
+  "sol.estetica.integra":
+    "Stripe or PayPal for deposits|WhatsApp Business|Instagram and Google Business Profile|Fatture in Cloud|Mailchimp or Brevo|Your POS",
+  "sol.estetica.faq":
+    "Will clients really book online?::A part of them yes, immediately, from the link in bio. The phone does not disappear: it quiets down. And every online booking is one less call during a treatment.|Won't the deposit scare clients away?::New clients accept it more than feared, and for regulars it can be switched off. You decide the rule, the system applies it without arguments.|Where do the therapists' private notes live?::In the client file, visible only to the centre, with allergies highlighted. This is sensitive data and it is treated as such.|Is it worth it with two cabins?::If you work alone and your diary holds, no, and I will tell you so upfront. It pays off when cabins, therapists and packages together exceed what paper can hold.",
+  "sol.estetica.change":
+    "The day opens with one glance instead of three phone calls, packages are no longer argued over, and cancellation gaps get filled because you know in time.",
+  "sol.estetica.time":
+    "5 to 8 weeks, depending on how many therapists and whether there is a product retail side to connect.",
+
+  // ══ G06 · Hotel management (PMS) ═══════════════════════════════════════
+  "sol.pms.title": "Management system for hotels and B&Bs (PMS)",
+  "sol.pms.lede":
+    "Rooms, portal bookings and housekeeping in one system, with the guest registration filed on time. The front desk stops copying things over.",
+  "sol.pms.problem":
+    "Bookings come from Booking.com, the phone and the website, and land on a planning board that has to be updated by hand on every channel: overbooking is always one oversight away. Housekeeping is coordinated by voice, and every evening someone copies guests' documents over for the police registry.",
+  "sol.pms.signals":
+    "The room planning is updated by hand on every portal|The guest registration is filled in by copying documents in the evening|Housekeeping runs by voice and nobody knows which rooms are ready|The price is the same in February and in mid August",
+  "sol.pms.build":
+    "Planning and channel manager::Booking, Expedia and your own site read the same availability. One booking closes the room everywhere, in the same instant.|Direct booking from your site::The booking engine on your own domain, commission-free: whoever already knows you books with you.|Check-in and guest registry::The document is captured on arrival and the police notification goes out on time, with no evening copying.|Housekeeping::Every floor knows which rooms to do and in what order, from a phone. Ready rooms are visible from the front desk.|Seasonal rates::Prices per period and per channel, and the numbers that matter at day's end: occupancy and average revenue per room.",
+  "sol.pms.excludes":
+    "Electronic locks, if they are not already there: I connect to the most common ones, I do not supply them|The website content and photos: the booking engine lives inside the site you have, or one we build as a separate project",
+  "sol.pms.phases":
+    "Rooms, channels and rates::1-2 weeks::The room inventory, the active portals and the rate rules you actually work with.|Planning and portals::4-6 weeks::The planning board, the portal connections and direct booking. Run in parallel with the current method.|Check-in and housekeeping::2-3 weeks::Guest registry, housekeeping and the end-of-day reports.",
+  "sol.pms.integra":
+    "Booking, Expedia and Airbnb|The police guest registry (ALLOGGIATI WEB)|Online payments and POS|Electronic invoicing and your accounting|The most common electronic locks|TripAdvisor and Google for reviews",
+  "sol.pms.faq":
+    "Does it handle the tourist tax?::Yes, with your municipality's exemptions, and at the end of the period the count for the payment is already done.|What if a portal changes something?::The connection goes through the portals' official channels, which are built to last. If one changes the rules, the connector gets updated, not your way of working.|I run a six-room B&B, is this too much?::It may be, and I will tell you so upfront: under ten rooms a channel manager and a simple planning board are often enough. The full system pays off when housekeeping, a restaurant or several people at the desk come into play.|Where do phone bookings go?::Into the planning like all the others: the front desk enters them in thirty seconds, and they close availability on the portals like any other.",
+  "sol.pms.change":
+    "Overbooking stops being a daily fear, nobody copies documents in the evening, and the website goes back to bringing commission-free bookings.",
+  "sol.pms.time":
+    "8 to 12 weeks, depending on the connected portals and the size of the property.",
+
+  // ══ G07 · Staff scheduling ═════════════════════════════════════════════
+  "sol.turni.title": "Staff shift scheduling",
+  "sol.turni.lede":
+    "The rota builds itself inside the rules, swaps go through the app, and the labour cost shows up before, not on the payslip.",
+  "sol.turni.problem":
+    "Every week someone spends hours fitting shifts together on a sheet, holding holidays, preferences and mandatory rest in their head. Swaps get negotiated on WhatsApp where nobody sees them, and when someone calls in sick at seven in the morning the phone round begins.",
+  "sol.turni.signals":
+    "The week's rota costs hours and gets redone at every surprise|Shift swaps happen on WhatsApp and are never written down|The eleven hours of rest between shifts are checked by eye|The cost of overtime shows up on the payslip",
+  "sol.turni.build":
+    "A rota with the rules inside::Rest periods, maximum hours and contract constraints live in the engine: a shift that violates them cannot be saved.|An app for the staff::Everyone sees their shifts, requests leave and proposes swaps from their phone. An approved swap updates the rota by itself.|Substitutions without phone rounds::A sudden absence queries the qualified people available: the first to accept covers the shift.|Cost before, not after::The rota shows what it will cost, overtime and holidays included, while you compose it.|Payroll export::At month's end the hours go to the payroll consultant in the format they use, with no copying over.",
+  "sol.turni.excludes":
+    "Time-clock hardware, if there is none: I connect to existing badges and apps|The payroll itself, which stays with the payroll consultant",
+  "sol.turni.phases":
+    "Rules and teams::1-2 weeks::The applied contract, constraints, skills, and the unwritten rules that today live in the planner's head.|Rota and app::3-4 weeks::The scheduling engine and the app. Planned in parallel with the current method for a couple of cycles.|Payroll and reports::1-2 weeks::The export for the consultant and the reports on absences and overtime.",
+  "sol.turni.integra":
+    "Zucchetti, TeamSystem and the common payroll systems|Badges and time tracking|Google Calendar|Teams and Slack|WhatsApp for notifications|Your ERP, if there is one",
+  "sol.turni.faq":
+    "What about staff reluctant to use apps?::The printed rota does not disappear: the app is the convenient route, not an obligation. They usually adopt it once they realise it lets them request swaps without going through the boss.|Does it work with our contract?::The rules are configured on the contract you apply, surcharges included. That is the first phase's work, done together.|What if I don't like the proposed rota?::You change it by hand: the engine proposes, you dispose. The point is that every change is checked against the rules as you make it.|Below how many people is it pointless?::Below ten, almost always, and I will tell you so upfront. It pays off from the moment the puzzle exceeds what one person can hold error-free in their head.",
+  "sol.turni.change":
+    "The week's rota closes in minutes, swaps leave a trace, and you know the labour cost while you can still correct it.",
+  "sol.turni.time":
+    "5 to 8 weeks, depending on the sites and the applied contract.",
+
+  // ══ G08 · HACCP traceability ═══════════════════════════════════════════
+  "sol.haccp.title": "Digital HACCP and traceability",
+  "sol.haccp.lede":
+    "Temperatures, batches and signed checklists from a phone, and the inspection file ready in a minute instead of a night.",
+  "sol.haccp.problem":
+    "HACCP registers get filled in by hand at the end of the shift, on a good day: fridge temperatures, on a bad one, get reconstructed. When an inspection arrives, the file is assembled from scattered binders, and if a supplier recalls a batch the reconstruction takes days.",
+  "sol.haccp.signals":
+    "Temperature registers get filled in at the end of the shift, from memory|Supplier certificates sit in a binder nobody opens|A batch recall would mean days of reconstruction|Sanitation checklists get signed in bulk at the end of the week",
+  "sol.haccp.build":
+    "Temperatures under watch::The probes record on their own, day and night, and the anomaly reaches your phone while the goods can still be saved.|A signed digital register::Checklists are filled in from the phone at the right moment, with signature and time. No more filling in from memory.|Tracked batches::Every delivery comes in with batch and expiry. A recall becomes a search, not a reconstruction.|Supplier documents::Certificates and data sheets in an archive with the expiry dates in sight, not in a binder.|The inspection file::The compliance report generates in a minute, from a tablet, in front of the inspector.",
+  "sol.haccp.excludes":
+    "The probe hardware: I point you to the compatible ones and connect the ones you choose|The HACCP consultancy: the self-control plan stays with your consultant, I make it live",
+  "sol.haccp.phases":
+    "Plan and critical points::1 week::Your self-control plan, the critical points and the real checklists, translated into digital together with your consultant.|Registers and batches::3-4 weeks::Temperatures, checklists and traceability. Run in parallel with paper until the team trusts it.|Probes and reports::1-2 weeks::Connecting the probes and the inspection reports.",
+  "sol.haccp.integra":
+    "Temperature probes (Testo, Comet)|Barcodes and QR for batches|Your POS, to tie sales to batches|Digital signature|Supplier portals|Your management system, if there is one",
+  "sol.haccp.faq":
+    "Does my HACCP consultant stay?::Yes, by design: the self-control plan is theirs, I build the tool that makes it actually get followed. The consultant is usually the first to be pleased.|Will the team really fill in the checklists?::More than before, because from a phone it costs thirty seconds at the right moment instead of twenty minutes at the end of the shift. And whatever is missing shows up immediately, not at the inspection.|Are the probes mandatory?::No: you can start with digitised manual readings and add probes later. It changes the effort, not the compliance.|Is it worth it for a small workshop?::If you produce and sell batches, yes, sooner than you would think: it is precisely the artisan workshop that a recall brings to its knees.",
+  "sol.haccp.change":
+    "Registers get filled in when things happen, the inspection finds a file instead of a binder hunt, and a recall becomes a ten-second search.",
+  "sol.haccp.time":
+    "4 to 7 weeks, depending on the control points and the probes.",
+
+  // ══ S01 · Custom CRM ═══════════════════════════════════════════════════
+  "sol.crm.title": "Custom CRM for small businesses",
+  "sol.crm.lede":
+    "Clients, deals and follow-ups in one place, with the fields that serve you. Six right fields, not sixty empty ones.",
+  "sol.crm.problem":
+    "The client history lives in the inboxes of whoever handles them, and when a person leaves, the memory leaves too. Deals are tracked by feel, sent quotes have no follow-up date, and the CRM tried last year died because it demanded sixty fields to save a contact.",
+  "sol.crm.signals":
+    "The client history lives in the personal inboxes of whoever handles them|Sent quotes have no follow-up date|The CRM tried in the past was abandoned within a month|Contract expiry dates surface when the client has already signed elsewhere",
+  "sol.crm.build":
+    "Records with your fields::The fields you actually use, duplicate control, and emails that attach themselves to the right record.|A pipeline on your stages::Deals move along the real stages of how you sell, not those of an American template.|Follow-ups that don't get lost::Every quote leaves with a follow-up date, and in the morning you know who to call.|Contract expiry dates::Ninety days before renewal the system warns you, with the history in front of you.|Sales reports::What is in the pipeline, what is closing, where deals are lost. Without anyone filling in a sheet on a Sunday.",
+  "sol.crm.excludes":
+    "I do not invent the contact list: we start from your real data, cleaned up together|Marketing campaigns: the CRM prepares the lists, the sending stays with your email tool",
+  "sol.crm.phases":
+    "Your fields and your stages::1 week::How you actually sell, which fields matter and which do not. This is the week that decides whether the CRM will be used.|Records and pipeline::2-4 weeks::Master data, deals and follow-ups, with your data imported. Tried on real work, not on demo data.|Connections::1-2 weeks::Email, calendar, your site's form and, if there is one, your management system.",
+  "sol.crm.integra":
+    "Outlook and Gmail|Google Calendar|Your website's form|Fatture in Cloud or your management system|WhatsApp Business|Mailchimp or Brevo",
+  "sol.crm.faq":
+    "Why not a famous subscription CRM?::If its stages and fields resemble yours, take it, and I will say so gladly. Custom pays off when your way of selling does not fit the templates, or when the per-seat subscription costs more than the build.|Will the sales people use it?::If saving a contact costs ten seconds from a phone, yes. That is why the fields are six and not sixty.|Does the history stay with the company?::Yes, and it is one of the reasons to do this: when a salesperson leaves, the clients and the memory stay with you.|Where does the data live?::In a database of yours, in Europe, exportable whenever you want. The CRM is yours like everything else: code, access and data.",
+  "sol.crm.change":
+    "Deals have a face and a date, follow-ups go out at the right moment, and the commercial memory stays in the company even when people change.",
+  "sol.crm.time":
+    "4 to 8 weeks, depending on the connections and how clean the starting data is.",
+
+  // ══ S02 · KPI dashboard ════════════════════════════════════════════════
+  "sol.kpi.title": "A business dashboard with the numbers that matter",
+  "sol.kpi.lede":
+    "The numbers scattered across management software, bank and spreadsheets meet in a single screen that updates itself. Monday opens with reading, not assembling.",
+  "sol.kpi.problem":
+    "The numbers exist, but each lives in its own system: revenue in the management software, costs in accounting, online sales in the e-commerce, the rest in sheets someone updates when they can. The overall picture gets built by hand once a month, and by the time it is ready it describes a month already gone.",
+  "sol.kpi.signals":
+    "The monthly report costs hours of copy and paste from different systems|The real margin is only known at year-end|Every site or channel has its own numbers and the comparisons never match|Decisions are made by feel because the data arrives late",
+  "sol.kpi.build":
+    "Connected sources::Management software, accounting, e-commerce and bank are read automatically, every day. The copy and paste disappears.|The agreed KPIs::Not a hundred charts: the five to ten numbers you actually decide on, defined together before building.|Comparisons that speak::Against last month, last year, the site next door. A number alone says nothing, the comparison does.|Thresholds and alerts::When a number leaves its lane a message arrives, without you opening anything.|Role-based access::Management sees everything, sales see their own, the consultant sees what they need.",
+  "sol.kpi.excludes":
+    "Cleaning all the dirty history: the flow is fixed from today onward, not every cell of the past|Analytical accounting, which stays with the accountant: I read it, I do not produce it",
+  "sol.kpi.phases":
+    "The decisions and the numbers::1 week::Which decisions you make every week and which numbers you need to make them. We start from the questions, not the charts.|Connectors and dashboard::2-4 weeks::The connections to the sources and the first version, iterated on with real numbers.|Thresholds and habit::1 week::The alerts, the access rights and the tuning after the first weeks of use.",
+  "sol.kpi.integra":
+    "Your management software or ERP|Fatture in Cloud and your accounting|WooCommerce or Shopify|The bank, via statements or open banking|Google Analytics and Meta Ads|Google Sheets, for what stays manual",
+  "sol.kpi.faq":
+    "Is the data ours or yours?::Yours: the dashboard reads from your systems and lives on your infrastructure. I build, I do not hold.|What if a source has no connector?::We start from a periodic export or a structured sheet, and automate later. Better a semi-automatic number today than a perfect one never.|Isn't Excel enough?::If one person updates one file and the file holds, yes. The dashboard pays off when the sources are more than two and assembling them costs more than building this.|How fresh is it?::It depends on the source: the bank daily, the management software even hourly. The frequency is decided source by source, based on what is actually needed.",
+  "sol.kpi.change":
+    "The overall picture is no longer built: it is there. And problems show up while they are still curves, not when they are already balance sheets.",
+  "sol.kpi.time":
+    "3 to 6 weeks, depending on how many sources and how they connect.",
+
+  // ══ 18 · From Excel to an application ══════════════════════════════════
+  "sol.excel.title": "From the Excel sheet to a real application",
+  "sol.excel.lede":
+    "The sheet holding up half the company becomes an application with access rights, history and the calculations in one place. No duplicate versions, no crashing files.",
+  "sol.excel.problem":
+    "There is a file holding up half the company, and everyone knows it. It crashes past a certain size, exists in three versions on Drive, and only the person who built it understands the formulas, and sooner or later they will go on holiday. Every report is an afternoon of copy and paste.",
+  "sol.excel.signals":
+    "The file exists in several versions and nobody knows which is the good one|Only one person understands the formulas|Past a certain size the file slows down or crashes|The periodic report is an afternoon of copy and paste",
+  "sol.excel.build":
+    "One number, one place::A database instead of the file: everyone works on the same numbers, at the same time, with no versions.|Your formulas, centralised::The calculations that today live in cells become rules written once and equal for everyone.|Forms instead of cells::Whoever enters data fills a form that validates it, instead of typing into a free cell. Errors drop at the source.|Access and history::Everyone sees and touches their own part, and every change leaves a trace: who, what, when.|One-click reports::What today is an afternoon of copy and paste becomes a button, or runs by itself on a schedule.",
+  "sol.excel.excludes":
+    "Excel does not disappear: it stays for personal analysis, and export to a sheet is always possible|Processes that never went through the sheet: we automate what the file actually does",
+  "sol.excel.phases":
+    "Anatomy of the sheet::1 week::We take the file apart with the people who use it: what it calculates, who touches it, where it hurts. The unwritten rules are the precious part.|Build::2-4 weeks::The application takes shape with your real data, and the sheet stays in parallel until you trust it.|Connections::1 week::Management software, accounting or e-commerce, so the data comes in on its own instead of by hand.",
+  "sol.excel.integra":
+    "Your management software or ERP|Fatture in Cloud|WooCommerce or Shopify|Google Workspace and Microsoft 365|Email, Slack or Teams for notifications|The bank, where needed",
+  "sol.excel.faq":
+    "Do we lose Excel's flexibility?::Some of it, and that is the point: the freedom to type anywhere is also the freedom to make mistakes anywhere. Where room to manoeuvre is needed, the export is always there.|How long until the team adjusts?::Less than you would think, because the application is born from the logic of their own sheet, not from a system imposed from above.|What if the sheet changes often?::Then the first week serves to tell what is stable from what is not. The stable part gets hardened, the living part stays configurable.|Is it worth it for a small sheet?::No, and I will say so immediately: a file one person updates in ten minutes a day is perfectly fine as it is. It is worth it when the file has become a shared bottleneck.",
+  "sol.excel.change":
+    "The file stops being a risk with a first name: the data has a home, errors drop at the source and the reports make themselves.",
+  "sol.excel.time":
+    "3 to 6 weeks, depending on the sheet's complexity and the connections.",
 };
