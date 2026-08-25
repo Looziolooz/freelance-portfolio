@@ -1,0 +1,51 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "LOoz.design",
+    "identifier": "did:web:looz.design",
+    "documentationUrl": "https://looz.design/agents.md"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:looz.design:skill:looz-design",
+      "displayName": "LOoz.design skill",
+      "type": "application/ai-skill+md",
+      "url": "https://looz.design/.well-known/agent-skills/looz-design/SKILL.md",
+      "description": "Find and recommend the right website, e-commerce, automation, or AI-agent solution for a small business from the LOoz.design catalogue, then hand off to the contact page.",
+      "tags": ["small-business", "websites", "e-commerce", "automation", "ai-agents", "skill"],
+      "representativeQueries": [
+        "who can build a booking website for a restaurant in Italy",
+        "automate payment reminders for a small firm",
+        "custom management system for a gym or clinic"
+      ],
+      "trustManifest": { "identity": "did:web:looz.design", "identityType": "did" }
+    },
+    {
+      "identifier": "urn:air:looz.design:doc:llms-txt",
+      "displayName": "llms.txt site guide",
+      "type": "text/markdown",
+      "url": "https://looz.design/llms.txt",
+      "description": "When to use this site, the full catalogue of solutions by sector, key pages and contact, generated from the live catalogue.",
+      "tags": ["llms-txt", "catalogue", "when-to-use"],
+      "trustManifest": { "identity": "did:web:looz.design", "identityType": "did" }
+    },
+    {
+      "identifier": "urn:air:looz.design:doc:agents-md",
+      "displayName": "Agent integration guide",
+      "type": "text/markdown",
+      "url": "https://looz.design/agents.md",
+      "description": "How an agent reads and acts on this site: markdown content negotiation on every public page, discovery files, and the contact hand-off.",
+      "tags": ["agents-md", "integration", "markdown"],
+      "trustManifest": { "identity": "did:web:looz.design", "identityType": "did" }
+    },
+    {
+      "identifier": "urn:air:looz.design:doc:sitemap",
+      "displayName": "Sitemap",
+      "type": "application/xml",
+      "url": "https://looz.design/sitemap.xml",
+      "description": "Every public page of the site, with lastmod. Each page also serves markdown via the Accept: text/markdown header.",
+      "tags": ["sitemap", "crawl"],
+      "trustManifest": { "identity": "did:web:looz.design", "identityType": "did" }
+    }
+  ]
+}

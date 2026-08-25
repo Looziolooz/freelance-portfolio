@@ -272,8 +272,10 @@ export function renderAgentMarkdown(path: string): string | null {
   if (p === "/work") return mdWork();
   if (p === "/processo") return mdProcesso();
   if (p === "/prezzi") return mdPrezzi();
-  if (p === "/contatti") return mdContatti();
-  if (p === "/chi-sono") return mdChiSono();
+  // Alias inglesi: /about e /contact sono rewrite delle pagine italiane
+  // (next.config), quindi anche il gemello markdown deve rispondere li'.
+  if (p === "/contatti" || p === "/contact") return mdContatti();
+  if (p === "/chi-sono" || p === "/about") return mdChiSono();
   return null;
 }
 

@@ -8,6 +8,9 @@ import { dict } from "@/i18n";
 export const metadata: Metadata = {
   title: "Chi sono",
   description: dict.it["chisono.body"]?.split("|")[0].slice(0, 300),
+  // Esplicito perche' /about e' un rewrite di questa pagina: il canonical
+  // di default "./" si auto-riferirebbe e creerebbe un duplicato.
+  alternates: { canonical: "/chi-sono" },
 };
 
 const JSON_LD = {

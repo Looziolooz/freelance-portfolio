@@ -1,0 +1,16 @@
+{
+  "@context": ["https://www.w3.org/ns/did/v1"],
+  "id": "did:web:looz.design",
+  "service": [
+    {
+      "id": "did:web:looz.design#ai-catalog",
+      "type": "AgenticResourceDiscovery",
+      "serviceEndpoint": "https://looz.design/.well-known/ai-catalog.json"
+    },
+    {
+      "id": "did:web:looz.design#website",
+      "type": "LinkedDomains",
+      "serviceEndpoint": "https://looz.design"
+    }
+  ]
+}

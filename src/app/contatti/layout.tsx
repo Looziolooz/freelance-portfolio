@@ -5,6 +5,8 @@ export const metadata: Metadata = {
   title: "Contatti",
   description:
     "Richiedi l'audit gratuito del tuo sito, scrivi due righe sul progetto o prenota una chiamata di 30 minuti. Risposta entro 24 ore, in italiano, inglese o svedese.",
+  // Esplicito perche' /contact e' un rewrite di questa pagina (vedi next.config).
+  alternates: { canonical: "/contatti" },
 };
 
 const JSON_LD = {

@@ -127,17 +127,27 @@ const JSON_LD = {
         // The free audit keeps its price of zero. Free is not a quote, it is the
         // whole lead magnet, and stripping "free" off something that is free
         // would be the opposite of the change being asked for.
+        // I servizi sono nodi Service di primo livello del @graph (piu' sotto):
+        // gli scanner di schema contano i tipi top-level, e un Service annidato
+        // dentro un Offer per loro non esiste (check "schema-type-breadth").
         itemListElement: [
-          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Siti web ed e-commerce", description: "Siti e negozi online su misura, veloci e fatti per trasformare i visitatori in clienti." } },
-          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Visibilità online (SEO)", description: "SEO, struttura e presenza pensate per i motori di ricerca e per chi cerca te." } },
-          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Contenuti social", description: "Contenuti per i social semplici e a costo zero, per restare presente e riconoscibile." } },
-          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Automazioni", description: "I processi ripetitivi li fa la macchina: email, fatture, report. Meno errori, più tempo." } },
-          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Dati dal web", description: "Dati dal web raccolti e trasformati in informazioni utili per le decisioni di marketing." } },
-          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@type": "Service", name: "Agenti AI", description: "Agenti su misura per email e appuntamenti, fatturazione, scrittura mail e riassunti dei clienti." } },
-          { "@type": "Offer", price: "0", priceCurrency: "EUR", itemOffered: { "@type": "Service", name: "Audit gratuito del sito", description: "Tre cose concrete da migliorare subito per ottenere più clienti. Risposta entro 24 ore." } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@id": `${SITE_URL}/#service-siti` } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@id": `${SITE_URL}/#service-visibilita` } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@id": `${SITE_URL}/#service-social` } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@id": `${SITE_URL}/#service-automazioni` } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@id": `${SITE_URL}/#service-dati` } },
+          { "@type": "Offer", url: `${SITE_URL}/prezzi`, itemOffered: { "@id": `${SITE_URL}/#service-agenti` } },
+          { "@type": "Offer", price: "0", priceCurrency: "EUR", itemOffered: { "@id": `${SITE_URL}/#service-audit` } },
         ],
       },
     },
+    { "@type": "Service", "@id": `${SITE_URL}/#service-siti`, name: "Siti web ed e-commerce", description: "Siti e negozi online su misura, veloci e fatti per trasformare i visitatori in clienti.", provider: { "@id": `${SITE_URL}/#org` }, url: `${SITE_URL}/servizi/siti-web` },
+    { "@type": "Service", "@id": `${SITE_URL}/#service-visibilita`, name: "Visibilità online (SEO)", description: "SEO, struttura e presenza pensate per i motori di ricerca e per chi cerca te.", provider: { "@id": `${SITE_URL}/#org` }, url: `${SITE_URL}/servizi/visibilita` },
+    { "@type": "Service", "@id": `${SITE_URL}/#service-social`, name: "Contenuti social", description: "Contenuti per i social semplici e a costo zero, per restare presente e riconoscibile.", provider: { "@id": `${SITE_URL}/#org` }, url: `${SITE_URL}/soluzioni/contenuti-social` },
+    { "@type": "Service", "@id": `${SITE_URL}/#service-automazioni`, name: "Automazioni", description: "I processi ripetitivi li fa la macchina: email, fatture, report. Meno errori, più tempo.", provider: { "@id": `${SITE_URL}/#org` }, url: `${SITE_URL}/servizi/automazioni-ai` },
+    { "@type": "Service", "@id": `${SITE_URL}/#service-dati`, name: "Dati dal web", description: "Dati dal web raccolti e trasformati in informazioni utili per le decisioni di marketing.", provider: { "@id": `${SITE_URL}/#org` }, url: `${SITE_URL}/soluzioni/mappa-mercato-locale` },
+    { "@type": "Service", "@id": `${SITE_URL}/#service-agenti`, name: "Agenti AI", description: "Agenti su misura per email e appuntamenti, fatturazione, scrittura mail e riassunti dei clienti.", provider: { "@id": `${SITE_URL}/#org` }, url: `${SITE_URL}/servizi/automazioni-ai` },
+    { "@type": "Service", "@id": `${SITE_URL}/#service-audit`, name: "Audit gratuito del sito", description: "Tre cose concrete da migliorare subito per ottenere più clienti. Risposta entro 24 ore.", provider: { "@id": `${SITE_URL}/#org` }, url: `${SITE_URL}/contatti` },
     {
       "@type": "Person",
       "@id": `${SITE_URL}/#lorenzo`,

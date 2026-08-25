@@ -27,12 +27,20 @@ const nextConfig: NextConfig = {
       { source: "/servizi/automazioni", destination: "/servizi/automazioni-ai", permanent: true },
       { source: "/servizi/agenti-ai", destination: "/servizi/automazioni-ai", permanent: true },
       { source: "/servizi/claude-cowork", destination: "/servizi/automazioni-ai", permanent: true },
-      // Anchor di fiducia con lo slug inglese: gli agenti (e le persone che
-      // tirano a indovinare) provano /about e /contact. Le pagine vere hanno
-      // lo slug italiano, come il resto del sito.
-      { source: "/about", destination: "/chi-sono", permanent: true },
-      { source: "/contact", destination: "/contatti", permanent: true },
       { source: "/chi-siamo", destination: "/chi-sono", permanent: true },
+    ];
+  },
+
+  // Anchor di fiducia con lo slug inglese: gli agenti (e le persone che tirano
+  // a indovinare) provano /about e /contact. Erano redirect 308, ma gli scanner
+  // di agent-readiness non li seguono e bocciavano le ancore come assenti:
+  // ora servono la pagina vera in 200. Il canonical esplicito nelle pagine
+  // (chi-sono/layout, contatti/layout) evita il contenuto duplicato — il
+  // canonical di default "./" del root layout sarebbe auto-riferito e sbagliato.
+  async rewrites() {
+    return [
+      { source: "/about", destination: "/chi-sono" },
+      { source: "/contact", destination: "/contatti" },
     ];
   },
 
@@ -46,6 +54,13 @@ const nextConfig: NextConfig = {
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
           { key: "X-Frame-Options", value: "DENY" },
+          // RFC 8288: dice agli agenti dove sono sitemap e guide macchina prima
+          // ancora che parsino una pagina (check "link-headers-discovery").
+          {
+            key: "Link",
+            value:
+              '</sitemap.xml>; rel="sitemap", </llms.txt>; rel="alternate"; type="text/markdown", </agents.md>; rel="alternate"; type="text/markdown"',
+          },
         ],
       },
     ];
