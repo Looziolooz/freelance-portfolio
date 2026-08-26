@@ -55,7 +55,18 @@ function footer(): string {
 }
 
 function head(title: string, path: string): string {
+  // Il frontmatter da' agli agenti titolo, canonical e freschezza senza fargli
+  // leggere il corpo (check "markdown frontmatter metadata"). La data e' quella
+  // della risposta: la rotta /agent-md e' force-dynamic, quindi e' sempre oggi.
+  const safe = title.replace(/"/g, "'");
   return [
+    "---",
+    `title: "${safe}"`,
+    `description: "Versione markdown di ${SITE_URL}${path} — LOoz.design, studio freelance di una persona: siti su misura, automazioni e agenti AI per piccole imprese."`,
+    `canonical: ${SITE_URL}${path}`,
+    `last-updated: ${new Date().toISOString().slice(0, 10)}`,
+    "---",
+    "",
     `# ${title}`,
     "",
     `> LOoz.design, studio freelance di una persona: siti su misura, automazioni e agenti AI per piccole imprese. Questa è la versione markdown di ${SITE_URL}${path} (contenuto in italiano; il sito esiste anche in inglese e svedese).`,
@@ -271,7 +282,9 @@ export function renderAgentMarkdown(path: string): string | null {
   if (p.startsWith("/servizi/")) return mdServizio(p.slice("/servizi/".length));
   if (p === "/work") return mdWork();
   if (p === "/processo") return mdProcesso();
-  if (p === "/prezzi") return mdPrezzi();
+  // /pricing e' l'indirizzo che gli scanner provano per il pricing.md: la
+  // pagina spiega COME si decide il prezzo — le cifre, per scelta, non ci sono.
+  if (p === "/prezzi" || p === "/pricing") return mdPrezzi();
   // Alias inglesi: /about e /contact sono rewrite delle pagine italiane
   // (next.config), quindi anche il gemello markdown deve rispondere li'.
   if (p === "/contatti" || p === "/contact") return mdContatti();

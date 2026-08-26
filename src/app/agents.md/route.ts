@@ -9,7 +9,14 @@ import { LIVE_SECTORS, SOLUTIONS } from "@/lib/solutions";
 export const dynamic = "force-static";
 
 function build(): string {
-  return `# LOoz.design — Agent Integration Guide
+  return `---
+title: "LOoz.design — Agent Integration Guide"
+description: "How an agent reads and acts on looz.design: markdown content negotiation, discovery files, and the contact hand-off."
+canonical: ${SITE_URL}/agents.md
+last-updated: ${new Date().toISOString().slice(0, 10)}
+---
+
+# LOoz.design — Agent Integration Guide
 
 LOoz.design is the studio of one person, Lorenzo Dastoli ("Looz"): custom
 websites and e-commerce, process automation, and tailored AI agents for small

@@ -1,6 +1,25 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { prefersMarkdown } from "@/lib/agent-md";
 
+// Solo crawler dichiaratamente AI: leggono per rispondere o addestrare, e il
+// gemello markdown e' per loro la forma migliore della stessa pagina. Googlebot
+// classico, Bingbot e gli unfurler (og:image) restano fuori apposta.
+const AI_BOT_UA =
+  /GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|Claude-User|Claude-SearchBot|PerplexityBot|Perplexity-User|Google-Extended|Applebot-Extended|DeepSeekBot|ora-agent/i;
+
+// Le superfici che HANNO un gemello markdown, a livello di prefisso. Va tenuta
+// allineata al dispatch di renderAgentMarkdown (agent-md.ts): non si importa
+// quella funzione qui perche' trascinerebbe l'intero dizionario i18n nel
+// bundle edge del middleware. Uno slug inesistente sotto questi prefissi da'
+// 404 markdown, coerente con il 404 HTML della stessa rotta.
+const TWIN_EXACT = new Set([
+  "/", "/soluzioni", "/work", "/processo", "/prezzi", "/pricing",
+  "/contatti", "/contact", "/chi-sono", "/about",
+]);
+function hasTwin(p: string): boolean {
+  return TWIN_EXACT.has(p) || p.startsWith("/soluzioni/") || p.startsWith("/servizi/");
+}
+
 // Due lavori, in ordine:
 //
 // 1. Cancello dell'area /admin (Basic Auth, fail-closed). Gira sull'edge PRIMA
@@ -34,14 +53,37 @@ export function middleware(req: NextRequest) {
     return adminGate(req);
   }
 
+  // Suffisso .md come URL di ripiego (/index.md, /prezzi.md, /pricing.md):
+  // stessa risposta della negoziazione, per gli agenti che non mandano header.
+  // /agents.md e' una rotta vera e resta fuori.
+  if (req.method === "GET" && pathname.endsWith(".md") && pathname !== "/agents.md") {
+    const url = req.nextUrl.clone();
+    const base = pathname.slice(0, -3);
+    url.pathname = "/agent-md" + (base === "/index" || base === "" ? "" : base);
+    return NextResponse.rewrite(url);
+  }
+
   // Asset con estensione (llms.txt, sitemap.xml, immagini): mai negoziati.
   if (pathname.includes(".")) {
     return NextResponse.next();
   }
 
-  if (req.method === "GET" && prefersMarkdown(req.headers.get("accept"))) {
+  // Tre vie verso il gemello markdown, dalla piu' esplicita alla piu' implicita:
+  // l'header Accept (acceptmarkdown.com), ?mode=agent per chi lavora solo a URL,
+  // e lo user-agent dei soli crawler AI dichiarati. Le due vie implicite valgono
+  // SOLO dove il gemello esiste (hasTwin): un bot che striscia /work/<slug> o
+  // /agents deve ricevere l'HTML vero, non un 404 markdown per una pagina che
+  // esiste. Chi CHIEDE markdown con l'header, invece, riceve il 404 markdown
+  // con la mappa: e' la risposta giusta a una domanda esplicita.
+  // Googlebot classico e gli unfurler social non sono nella lista dei bot,
+  // quindi indicizzazione e anteprime restano sull'HTML.
+  const isAiBot = AI_BOT_UA.test(req.headers.get("user-agent") ?? "");
+  const wantsAgentView = req.nextUrl.searchParams.get("mode") === "agent";
+  const implicit = (wantsAgentView || isAiBot) && hasTwin(pathname);
+  if (req.method === "GET" && (prefersMarkdown(req.headers.get("accept")) || implicit)) {
     const url = req.nextUrl.clone();
     url.pathname = "/agent-md" + (pathname === "/" ? "" : pathname);
+    url.searchParams.delete("mode");
     return NextResponse.rewrite(url);
   }
 

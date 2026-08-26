@@ -34,7 +34,9 @@ describe("il gemello markdown di ogni rotta", () => {
     for (const r of markdownRoutes()) {
       const md = renderAgentMarkdown(r);
       expect(md, r).toBeTruthy();
-      expect(md!.startsWith("# "), r).toBe(true);
+      // Frontmatter in testa (metadati per gli agenti), poi il documento vero.
+      expect(md!.startsWith("---\n"), r).toBe(true);
+      expect(md!, r).toContain("\n# ");
       expect(md!.length, r).toBeGreaterThan(400);
     }
   });

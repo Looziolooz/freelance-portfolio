@@ -51,5 +51,16 @@ describe("i file di discovery per gli agenti", () => {
   it("serve il gemello markdown anche sugli alias inglesi", () => {
     expect(renderAgentMarkdown("/about")).toContain("Lorenzo Dastoli");
     expect(renderAgentMarkdown("/contact")).toBeTruthy();
+    expect(renderAgentMarkdown("/pricing")).toBeTruthy();
+  });
+
+  it("apre ogni gemello con un blocco frontmatter completo", () => {
+    const md = renderAgentMarkdown("/chi-sono")!;
+    expect(md.startsWith("---\n")).toBe(true);
+    for (const campo of ["title:", "description:", "canonical: https://", "last-updated: "]) {
+      expect(md, campo).toContain(campo);
+    }
+    // Il corpo resta un documento vero: H1 subito dopo il frontmatter.
+    expect(md.split("---\n")[2]?.trimStart().startsWith("# ")).toBe(true);
   });
 });
