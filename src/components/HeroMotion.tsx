@@ -454,6 +454,21 @@ export default function HeroMotion() {
     let alive = true;
     let cancelIdle: (() => void) | undefined;
 
+    // Guardia LCP. Chrome finalizza il Largest Contentful Paint al primo
+    // scroll o input; finche' quel momento non arriva, questo layer NON deve
+    // dipingere: armato in idle a pagina ferma, il suo primo paint misura
+    // ~6% piu' del poster (148.932px contro 139.840px sul viewport moto g) e
+    // diventa lui l'LCP, al momento dell'arming — 12s su un telefono lento
+    // (Lighthouse mobile: LCP 12,1s, punteggio 0). Lo sweep e' comunque
+    // scritto per vivere nel transito della card, quindi partire dal primo
+    // scroll reale non cambia cio' che il visitatore vede muoversi.
+    let scrolled = window.scrollY > 0;
+    const onFirstScroll = () => {
+      scrolled = true;
+      window.removeEventListener("scroll", onFirstScroll);
+    };
+    if (!scrolled) window.addEventListener("scroll", onFirstScroll, { passive: true });
+
     const arm = () => {
       if (!alive) return;
       reveal.style.backgroundImage = `url("${REVEAL}")`;
@@ -463,6 +478,7 @@ export default function HeroMotion() {
       section.dataset.reveal = "scroll";
 
       revealDriveRef.current = (p) => {
+        if (!scrolled) return;
         const w = media.clientWidth;
         const h = media.clientHeight;
         // The stacked card is short and wide, so the desktop 260px circle would
@@ -512,6 +528,7 @@ export default function HeroMotion() {
       alive = false;
       io.disconnect();
       cancelIdle?.();
+      window.removeEventListener("scroll", onFirstScroll);
       revealDriveRef.current = null;
       delete section.dataset.reveal;
     };
