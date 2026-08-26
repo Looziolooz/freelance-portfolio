@@ -38,7 +38,6 @@ const POSTER = "/hero-motion/clouds-poster.jpg";
 // against 605,339, radius 239 either way). That alignment is what lets the
 // reveal sit under `object-fit: cover` and register exactly.
 const REVEAL = "/hero-motion/cyborg-reveal.jpg";
-const SPOTLIGHT_R = 260;   // px, as specified
 const CURSOR_EASE = 0.1;   // per frame, toward the raw pointer
 
 // Extraction budget for the canvas path: 20 × 768×432 RGBA ≈ 20–25 MB of
@@ -58,10 +57,6 @@ export default function HeroMotion() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const revealRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  // Installed by the touch-reveal effect once (and only if) it has decided the
-  // 105KB cyborg frame is affordable on this connection. Null everywhere else,
-  // so the stacked paint pays one null check a frame and nothing more.
-  const revealDriveRef = useRef<((p: number) => void) | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -244,7 +239,6 @@ export default function HeroMotion() {
           // Touch builds drive the spotlight from this same progress — see the
           // reveal effect below. Deliberately NOT a second rAF loop: the ref is
           // null until (and unless) that effect decides the reveal is affordable.
-          revealDriveRef.current?.(p);
         };
 
     // ── the loop: raw progress → lerp → render ────────────────────────────
@@ -413,126 +407,15 @@ export default function HeroMotion() {
     };
   }, []);
 
-  // ── The same reveal on touch, driven by SCROLL instead of a finger ────────
+  // ── Spotlight touch: RIMOSSO (2026-08-26, richiesta del committente) ──────
   //
-  // The desktop effect above bails on coarse pointers, and a finger-follow
-  // version would not fix either reason it bails: the finger sits exactly on
-  // top of the thing being revealed, and tracking touchmove on the hero means
-  // wrestling the page scroll. So the touch build does not move the spotlight
-  // with the touch at all — it sweeps across the portrait as the card transits
-  // the viewport, off the progress the stacked paint already computes. No
-  // second rAF loop, no listener on the scroll path, no scroll hijack.
-  //
-  // The 105KB frame is the whole cost, and it is spent only when all of this
-  // holds:
-  //   - Save-Data is off and the connection reports 4g. A hero easter egg is
-  //     not worth 105KB on a metered phone.
-  //   - the hero is actually on screen (IntersectionObserver, so a visitor who
-  //     lands deep-linked further down the page never pays for it).
-  //   - the browser is idle, so it queues behind the poster (LCP) and the clip.
-  // If any of those fails the ref stays null and the layer stays display:none.
-  useEffect(() => {
-    const section = sectionRef.current;
-    const media = mediaRef.current;
-    const reveal = revealRef.current;
-    if (!section || !media || !reveal) return;
-    // The pointer version owns fine pointers; this one is the touch build only.
-    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    // Only the stacked path calls revealDrive. A touch laptop wide enough for
-    // the sticky scrub would otherwise arm the layer, composite it, and never
-    // move it. Read back off the flag the first effect just set rather than
-    // re-testing the width, so there is one definition of the threshold.
-    if (section.dataset.mode !== "poster") return;
-
-    const conn = (navigator as Navigator & {
-      connection?: { saveData?: boolean; effectiveType?: string };
-    }).connection;
-    if (conn?.saveData) return;
-    if (conn?.effectiveType && conn.effectiveType !== "4g") return;
-
-    let alive = true;
-    let cancelIdle: (() => void) | undefined;
-
-    // Guardia LCP. Chrome finalizza il Largest Contentful Paint al primo
-    // scroll o input; finche' quel momento non arriva, questo layer NON deve
-    // dipingere: armato in idle a pagina ferma, il suo primo paint misura
-    // ~6% piu' del poster (148.932px contro 139.840px sul viewport moto g) e
-    // diventa lui l'LCP, al momento dell'arming — 12s su un telefono lento
-    // (Lighthouse mobile: LCP 12,1s, punteggio 0). Lo sweep e' comunque
-    // scritto per vivere nel transito della card, quindi partire dal primo
-    // scroll reale non cambia cio' che il visitatore vede muoversi.
-    let scrolled = window.scrollY > 0;
-    const onFirstScroll = () => {
-      scrolled = true;
-      window.removeEventListener("scroll", onFirstScroll);
-    };
-    if (!scrolled) window.addEventListener("scroll", onFirstScroll, { passive: true });
-
-    const arm = () => {
-      if (!alive) return;
-      reveal.style.backgroundImage = `url("${REVEAL}")`;
-      // CSS holds this layer at display:none under (pointer: coarse); the flag
-      // is the opt-in that turns it back on, so a device that never reaches
-      // here never composites an extra full-card layer either.
-      section.dataset.reveal = "scroll";
-
-      revealDriveRef.current = (p) => {
-        if (!scrolled) return;
-        const w = media.clientWidth;
-        const h = media.clientHeight;
-        // The stacked card is short and wide, so the desktop 260px circle would
-        // cover most of it and read as a haze instead of a spotlight.
-        const r = Math.max(90, Math.min(SPOTLIGHT_R, Math.round(Math.min(w, h) * 0.55)));
-        // Left to right across the portrait, crossing the face rather than the
-        // empty side: the ochre disc sits at ~0.47 of the frame.
-        const x = (0.24 + 0.52 * p) * w;
-        // A shallow arc, not a ruler line — a flat horizontal sweep reads as a
-        // UI wipe, the curve reads as something looking around.
-        const y = (0.44 + 0.07 * Math.sin(p * Math.PI)) * h;
-        // Up through the middle of the transit, out at both ends, so the cyborg
-        // is never left frozen half-revealed at the edge of the screen.
-        const on = Math.max(0, Math.min(1, Math.sin(p * Math.PI) * 1.7 - 0.1));
-        reveal.style.setProperty("--sr", `${r}px`);
-        reveal.style.setProperty("--mx", `${x.toFixed(1)}px`);
-        reveal.style.setProperty("--my", `${y.toFixed(1)}px`);
-        reveal.style.setProperty("--on", on.toFixed(3));
-      };
-    };
-
-    // Fetch first, arm second: flipping the flag before the bytes are in would
-    // show the mask sweeping over an empty layer for the length of the fetch.
-    const install = () => {
-      const img = new Image();
-      img.decoding = "async";
-      img.onload = arm;
-      img.src = REVEAL;
-    };
-
-    // Only once the hero is on screen, and only when the main thread is free.
-    const io = new IntersectionObserver((entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      const ric = window.requestIdleCallback;
-      if (ric) {
-        const id = ric(install, { timeout: 3000 });
-        cancelIdle = () => window.cancelIdleCallback?.(id);
-      } else {
-        const id = window.setTimeout(install, 1200);
-        cancelIdle = () => window.clearTimeout(id);
-      }
-    });
-    io.observe(media);
-
-    return () => {
-      alive = false;
-      io.disconnect();
-      cancelIdle?.();
-      window.removeEventListener("scroll", onFirstScroll);
-      revealDriveRef.current = null;
-      delete section.dataset.reveal;
-    };
-  }, []);
+  // La versione scroll-driven sovrapponeva il frame del cyborg al ritratto
+  // durante il transito della card, e sul telefono leggeva come una doppia
+  // immagine difettosa, non come un easter egg. Il faro vive solo desktop,
+  // dove segue il puntatore (effetto sopra). Bonus: il telefono non scarica
+  // piu' i 105KB del frame, e il layer resta display:none su (pointer:coarse).
+  // revealDriveRef resta nullo sul percorso stacked: la chiamata nel paint e'
+  // gia' opzionale.
 
   return (
     <section ref={sectionRef} id="top" className="hero-motion" aria-label="LO.oz">
