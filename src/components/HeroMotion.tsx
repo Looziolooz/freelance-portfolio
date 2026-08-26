@@ -542,10 +542,20 @@ export default function HeroMotion() {
       <link rel="preload" as="image" href={POSTER} fetchPriority="high" />
       <div className="hm-stage">
         <div ref={mediaRef} className="hm-media">
+          {/* Il poster e' un <img> VERO sotto al video, e il video non ha piu'
+              l'attributo poster. Pixel identici, ma l'LCP cambia natura: su un
+              poster di <video> la simulazione lantern di Lighthouse non sa
+              agganciare la risorsa e stima il caso pessimo (osservato 2,6s,
+              simulato 11,8s, punteggio 0); su un <img> la modella giusta. Il
+              video, senza frame ne' poster, e' trasparente finche' lo scrub
+              non carica il clip, e sotto c'e' la stessa immagine. */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- niente next/image:
+              il file e' gia' ottimizzato a mano e l'LCP non deve passare dal proxy */}
+          <img src={POSTER} alt="" aria-hidden="true" className="hm-poster" fetchPriority="high" decoding="async" />
           {/* preload="metadata": the 311KB clip is NOT eagerly downloaded, so the
               poster (not a late video frame) is the LCP. The scroll-scrub loads the
               body on demand. */}
-          <video ref={videoRef} className="hm-video" poster={POSTER} muted playsInline preload="metadata" aria-hidden="true" />
+          <video ref={videoRef} className="hm-video" muted playsInline preload="metadata" aria-hidden="true" />
           {/* Takes over from the video once its frames are decoded (desktop). */}
           <canvas ref={canvasRef} className="hm-canvas" aria-hidden="true" />
           {/* Above the footage, masked to a spotlight. No background-image until
