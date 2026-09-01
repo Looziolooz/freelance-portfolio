@@ -48,6 +48,16 @@ export const CATEGORIES: ProjectCategory[] = ["website", "saas", "automazione", 
 
 export const PROJECTS: Project[] = [
   {
+    id: "35",
+    key: "helios",
+    slug: "helios",
+    demo: "https://helios-snowy-beta.vercel.app/",
+    image: "/projects/helios.png",
+    featured: true,
+    swatch: "#FFB43D",
+    category: "website",
+  },
+  {
     id: "34",
     key: "mercato",
     slug: "mappa-mercato",

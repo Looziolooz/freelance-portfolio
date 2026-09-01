@@ -84,6 +84,54 @@ export type BrandKit = {
 const SANS = "var(--font-ui), system-ui, sans-serif";
 
 export const BRAND_KITS: Record<string, BrandKit> = {
+  // Campionato dalla build viva: il fondo e' la notte (#04090C), non un grigio
+  // scuro, e l'ambra e' l'unico colore caldo. E' la tesi del prodotto messa in
+  // palette: l'impianto lavora anche quando il sole non c'e'.
+  helios: {
+    slug: "helios",
+    name: "Helios",
+    monogram: "H",
+    tagline: "Bollette a zero, giorno e notte.",
+    domain: "helios.it",
+    shape: "circle",
+    motif: "sun",
+    display: 'Outfit, "Century Gothic", system-ui, sans-serif',
+    body: SANS,
+    tracking: "-0.01em",
+    paper: "#04090C",
+    ink: "#E6F0EA",
+    primary: "#FFB43D",
+    accent: "#3DDC91",
+    story: {
+      it: "Helios installa fotovoltaico con accumulo e vende una cosa sola: la bolletta che smette di arrivare. Non parla di ambiente, parla di anni di rientro, e mette il calcolo in mano a chi legge invece di tenerlo in agenzia.",
+      en: "Helios installs solar with battery storage and sells one thing: the bill that stops arriving. It does not talk about the environment, it talks about payback years, and it hands the calculation to the reader instead of keeping it in the office.",
+      sv: "Helios installerar solceller med batterilager och säljer en enda sak: räkningen som slutar komma. Den talar inte om miljön, den talar om återbetalningstid, och lämnar kalkylen till läsaren i stället för att behålla den på kontoret.",
+    },
+    voice: {
+      it: "Da preventivo, non da brochure: numeri con accanto la loro fonte, e un no detto chiaro quando l'impianto non conviene.",
+      en: "Quote-like, not brochure-like: numbers with their source beside them, and a plain no when the system does not pay off.",
+      sv: "Som en offert, inte en broschyr: siffror med sin källa bredvid, och ett tydligt nej när anläggningen inte lönar sig.",
+    },
+    principles: {
+      it: ["La notte è il fondo, non un tema scuro", "Ogni numero dichiara da dove viene", "L'ambra solo dove si agisce", "Il verde solo per il risparmio"],
+      en: ["Night is the ground, not a dark theme", "Every number declares where it comes from", "Amber only where you act", "Green only for the saving"],
+      sv: ["Natten är botten, inte ett mörkt tema", "Varje siffra redovisar sitt ursprung", "Bärnsten bara där man agerar", "Grönt bara för besparingen"],
+    },
+    usage: {
+      it: ["Preventivo e scheda impianto", "Furgone e divise dei montatori", "Cartello di cantiere sul tetto"],
+      en: ["Quote and system data sheet", "Van and installers' workwear", "Site sign on the roof"],
+      sv: ["Offert och anläggningsblad", "Skåpbil och montörernas arbetskläder", "Byggskylt på taket"],
+    },
+    merch: ["polo", "hoodie", "cap", "notebook", "bottle"],
+    palette: [
+      { name: "Sole", hex: "#FFB43D", role: "primary", on: "#100C02" },
+      { name: "Notte", hex: "#04090C", role: "paper", on: "#E6F0EA" },
+      { name: "Risparmio", hex: "#3DDC91", role: "accent", on: "#04090C" },
+      { name: "Salvia", hex: "#8BA398", role: "secondary", on: "#04090C" },
+      { name: "Luce", hex: "#E6F0EA", role: "ink", on: "#04090C" },
+    ],
+  },
+
   aliva: {
     slug: "aliva",
     name: "Aliva",
