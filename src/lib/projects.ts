@@ -48,6 +48,16 @@ export const CATEGORIES: ProjectCategory[] = ["website", "saas", "automazione", 
 
 export const PROJECTS: Project[] = [
   {
+    id: "36",
+    key: "meridia",
+    slug: "meridia",
+    demo: "https://real-estate-chi-puce.vercel.app/",
+    image: "/projects/meridia.png",
+    featured: true,
+    swatch: "#0C1A2B",
+    category: "website",
+  },
+  {
     id: "35",
     key: "helios",
     slug: "helios",

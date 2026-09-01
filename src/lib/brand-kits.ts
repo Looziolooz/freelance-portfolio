@@ -84,6 +84,55 @@ export type BrandKit = {
 const SANS = "var(--font-ui), system-ui, sans-serif";
 
 export const BRAND_KITS: Record<string, BrandKit> = {
+  // Campionato dalla build viva: blu notte come carta, rosso mattone come unico
+  // colore caldo. L'identita' e' quella di un atlante, non di un'agenzia: ogni
+  // casa e' una tavola numerata, e i dati (sole di gennaio, metri dall'acqua)
+  // sono trattati come misure d'osservatorio.
+  meridia: {
+    slug: "meridia",
+    name: "Meridia",
+    monogram: "M",
+    tagline: "La casa che guarda il sole d'inverno.",
+    domain: "meridia.co",
+    shape: "square",
+    motif: "sun",
+    display: '"EB Garamond", Garamond, Georgia, "Times New Roman", serif',
+    body: SANS,
+    tracking: "0.24em",
+    paper: "#0C1A2B",
+    ink: "#E7E2D6",
+    primary: "#C8452F",
+    accent: "#C2CAD4",
+    story: {
+      it: "Meridia tiene un catalogo di nove case in luoghi caldi, scelte in quattro anni per chi vive dove d'inverno il sole non c'è. Il catalogo è corto per scelta: quello che conta è ciò che è stato scartato.",
+      en: "Meridia keeps a catalogue of nine houses in warm places, chosen over four years for people who live where the winter sun does not come. The catalogue is short on purpose: what matters is what was left out.",
+      sv: "Meridia för en katalog med nio hus på varma platser, utvalda under fyra år för dem som bor där vintersolen uteblir. Katalogen är kort med avsikt: det som räknas är det som valts bort.",
+    },
+    voice: {
+      it: "Da atlante, non da annuncio: coordinate, ore di luce e distanze, con un no detto chiaro quando la casa non vale il volo.",
+      en: "Atlas-like, not listing-like: coordinates, hours of light and distances, with a plain no when the house is not worth the flight.",
+      sv: "Som en atlas, inte en annons: koordinater, ljustimmar och avstånd, med ett tydligt nej när huset inte är värt resan.",
+    },
+    principles: {
+      it: ["Ogni casa è una tavola numerata", "Le misure prima delle fotografie", "Il rosso solo per una parola per pagina", "Nove voci, mai una decima"],
+      en: ["Every house is a numbered plate", "Measurements before photographs", "The red for one word per page", "Nine entries, never a tenth"],
+      sv: ["Varje hus är en numrerad plansch", "Mått före fotografier", "Rött för ett ord per sida", "Nio poster, aldrig en tionde"],
+    },
+    usage: {
+      it: ["Tavole del catalogo stampato", "Cartellina per la visita", "Lettera di presentazione della casa"],
+      en: ["Plates of the printed catalogue", "Viewing folder", "Letter introducing the house"],
+      sv: ["Planscher i den tryckta katalogen", "Visningsmapp", "Presentationsbrev för huset"],
+    },
+    merch: ["notebook", "tote", "badge", "lanyard"],
+    palette: [
+      { name: "Notte", hex: "#0C1A2B", role: "paper", on: "#E7E2D6" },
+      { name: "Mattone", hex: "#C8452F", role: "primary", on: "#F2EEE4" },
+      { name: "Carta", hex: "#E7E2D6", role: "ink", on: "#0C1A2B" },
+      { name: "Bruma", hex: "#C2CAD4", role: "accent", on: "#0C1A2B" },
+      { name: "Ardesia", hex: "#8B99A8", role: "secondary", on: "#0C1A2B" },
+    ],
+  },
+
   // Campionato dalla build viva: il fondo e' la notte (#04090C), non un grigio
   // scuro, e l'ambra e' l'unico colore caldo. E' la tesi del prodotto messa in
   // palette: l'impianto lavora anche quando il sole non c'e'.
