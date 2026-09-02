@@ -63,3 +63,36 @@ describe("buildAgentContext", () => {
     expect(findMany).toHaveBeenCalledTimes(2);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// The solutions layer. /soluzioni is the site's long-tail traffic surface and
+// the one page type that answers "I run X, what would you build me?" — but it
+// lives in a static catalogue, not in the Content table, so the assistant could
+// not see a single one of its entries. These lock the layer in.
+// ─────────────────────────────────────────────────────────────────────────────
+describe("solutions catalogue layer", () => {
+  it("surfaces matching solutions with their path", async () => {
+    findMany.mockResolvedValue([]);
+    const block = await buildAgentContext("IT", "ho un ristorante, cosa mi costruisci?");
+    expect(block).toContain("## Solutions (catalogue)");
+    expect(block).toMatch(/\(\/soluzioni\/[a-z0-9-]+\)/);
+  });
+
+  it("stays quiet without a query, so the whole catalogue never floods a prompt", async () => {
+    findMany.mockResolvedValue([]);
+    const block = await buildAgentContext("IT");
+    expect(block).not.toContain("## Solutions (catalogue)");
+  });
+
+  it("answers in the visitor's language", async () => {
+    findMany.mockResolvedValue([]);
+    const sv = await buildAgentContext("SV", "jag driver en restaurang, vad kan du bygga?");
+    expect(sv).toContain("## Solutions (catalogue)");
+  });
+
+  it("keeps the whole block inside the prompt budget", async () => {
+    findMany.mockResolvedValue([]);
+    const block = await buildAgentContext("IT", "gestionale prenotazioni ristorante ecommerce sito");
+    expect(block.length).toBeLessThanOrEqual(9000 + 20);
+  });
+});

@@ -6,13 +6,22 @@ import {
   renderKnowledge,
   retrieveKnowledge,
 } from "@/lib/agent-knowledge";
+import { SOLUTIONS } from "@/lib/solutions";
+import { dict } from "@/i18n";
 
 // Builds the knowledge block injected into an agent's system prompt. Two layers:
 //   1. A curated, multilingual knowledge base (src/lib/agent-knowledge) about
 //      Lorenzo's projects, services, engagements, tools, pricing, bio and FAQ —
 //      retrieved per user message (always-on core facts + query-relevant entries),
 //      so the prompt stays small and on-topic ("RAG memory", no embeddings).
-//   2. The live published Content catalog (articles & guides) from the DB,
+//   2. The published solutions catalogue (src/lib/solutions) projected to
+//      title + lede, ranked against the message. This is the surface built to
+//      answer the highest-intent question a visitor asks ("I run a driving
+//      school, what exactly would you build me?"), and it was previously
+//      invisible to the assistant even though llms.txt and agents.md list it.
+//      Sourced from the catalogue itself, so publishing a solution reaches the
+//      assistant without a second edit here.
+//   3. The live published Content catalog (articles & guides) from the DB,
 //      projected to title + description only — NEVER body — so tier-gated paid
 //      bodies are not paraphrased back to anonymous chat users. Rows are cached
 //      per-language with a short TTL; retrieval/rendering happens per request.
@@ -34,6 +43,7 @@ const TTL_MS = 5 * 60 * 1000;
 const MAX_CHARS = 9000;
 const MAX_KB = 8; // query-relevant KB entries to pull in
 const MAX_CATALOG = 10; // live article/guide rows to list
+const MAX_SOLUTIONS = 6; // catalogue entries to surface per message
 const cache = new Map<Lang, CacheEntry>();
 
 /** Drop the cache (call from content write paths so edits propagate at once). */
@@ -63,6 +73,36 @@ export function formatContext(rows: ContextRow[]): string {
   let block = sections.join("\n\n");
   if (block.length > MAX_CHARS) block = block.slice(0, MAX_CHARS) + "\n…[truncated]";
   return block;
+}
+
+/**
+ * Top solutions for the message, as a bounded markdown list with their paths so
+ * the assistant can send the visitor to the actual page. Uses the same lexical
+ * ranker as the rest of the retrieval, on title + lede only.
+ */
+function solutionsBlock(lang: Lang, query?: string): string {
+  const t = dict[lang.toLowerCase() as keyof typeof dict];
+  if (!t) return "";
+
+  const rows = SOLUTIONS.map((sol) => ({
+    slug: sol.slug,
+    title: t[`sol.${sol.key}.title`] ?? "",
+    lede: t[`sol.${sol.key}.lede`] ?? "",
+  })).filter((r) => r.title);
+
+  if (rows.length === 0) return "";
+
+  // Without a query this would dump the whole catalogue into every prompt, so
+  // the unfocused case stays quiet and lets the KB carry the answer.
+  if (!query) return "";
+
+  const picked = rankByQuery(query, rows, (r) => `${r.title} ${r.lede}`, MAX_SOLUTIONS);
+  if (picked.length === 0) return "";
+
+  return (
+    "## Solutions (catalogue)\n" +
+    picked.map((r) => `- ${r.title} (/soluzioni/${r.slug}): ${r.lede}`).join("\n")
+  );
 }
 
 /** Fetch (and cache) the published, body-free Content rows for a language. */
@@ -99,7 +139,9 @@ export async function buildAgentContext(lang: Lang, query?: string): Promise<str
     : articles.slice(0, MAX_CATALOG);
   const catalogBlock = formatContext(picked);
 
-  let block = [kbBlock, catalogBlock].filter(Boolean).join("\n\n");
+  let block = [kbBlock, solutionsBlock(lang, query), catalogBlock]
+    .filter(Boolean)
+    .join("\n\n");
   if (block.length > MAX_CHARS) block = block.slice(0, MAX_CHARS) + "\n…[truncated]";
   return block;
 }

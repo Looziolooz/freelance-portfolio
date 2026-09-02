@@ -7,6 +7,7 @@ import {
   rankByQuery,
   renderKnowledge,
 } from "@/lib/agent-knowledge";
+import { PROJECTS } from "@/lib/projects";
 
 describe("knowledge base shape", () => {
   it("has entries, all trilingual and non-empty", () => {
@@ -97,4 +98,48 @@ describe("renderKnowledge", () => {
     expect(block).toContain("## Contact & how to start");
     expect(block).toContain("hello@looz.design");
   });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Coverage guard. The assistant serves projects ONLY from this KB — the live DB
+// catalog deliberately drops category "projects" (see agent-context.ts) — so a
+// case that ships on the site without a KB entry is invisible to the assistant.
+// That silently happened to 12 of 28 cases, including every automation demo.
+// ─────────────────────────────────────────────────────────────────────────────
+describe("KB covers the whole site portfolio", () => {
+  it("has an entry for every project shipped on the site", () => {
+    const kbIds = new Set(KNOWLEDGE.map((e) => e.id));
+    const missing = PROJECTS.filter((p) => !kbIds.has(`project-${p.slug}`)).map((p) => p.slug);
+    expect(missing).toEqual([]);
+  });
+
+  it("keeps every live demo URL reachable from the assistant's answer", () => {
+    const withDemo = PROJECTS.filter((p) => p.demo);
+    for (const p of withDemo) {
+      const entry = KNOWLEDGE.find((e) => e.id === `project-${p.slug}`);
+      if (!entry) continue;
+      expect(entry.text.IT).toContain(p.demo as string);
+    }
+  });
+});
+
+describe("retrieves the cases that were previously invisible", () => {
+  const cases: Array<[string, "IT" | "EN" | "SV", string]> = [
+    ["mi serve un sito per il fotovoltaico con calcolatore", "IT", "project-helios"],
+    ["cerco un catalogo immobiliare con filtri", "IT", "project-meridia"],
+    ["potete automatizzare i solleciti delle fatture scadute?", "IT", "project-solleciti-pagamento"],
+    ["vorrei un assistente whatsapp per i clienti", "IT", "project-assistente-whatsapp"],
+    ["automazione per le risposte email in gmail", "IT", "project-risposte-email"],
+    ["chi sono i miei concorrenti in zona?", "IT", "project-mappa-mercato"],
+    ["can you audit my site visibility and structured data?", "EN", "project-audit-visibilita"],
+    ["I need social content generated for several channels", "EN", "project-contenuti-social"],
+    ["har ni gjort en webbplats for ett bageri?", "SV", "project-nordbageriet"],
+  ];
+
+  for (const [query, lang, expected] of cases) {
+    it(`"${query}" → ${expected}`, () => {
+      const ids = retrieveKnowledge(query, lang).map((e) => e.id);
+      expect(ids).toContain(expected);
+    });
+  }
 });
