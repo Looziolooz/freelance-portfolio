@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { it } from "@/i18n/langs/it";
-import type { Lang } from "@/i18n";
+import { resolveLang, type Lang } from "@/i18n";
 
 interface LangCtx {
   lang: Lang;
@@ -46,12 +46,28 @@ export default function LangProvider({ children }: { children: React.ReactNode }
     // Only an EXPLICIT user choice switches language. No navigator.language
     // auto-detect: Googlebot renders with an en-US locale, and auto-switching
     // made it index English copy on pages that declare lang="it" (SEO audit).
-    const saved = localStorage.getItem("lang") as Lang | null;
-    if (saved && ["it", "en", "sv"].includes(saved)) {
-      activate(saved);
-    }
+    //
+    // ?lang= in the URL wins over the saved choice, so a shared link carries
+    // its own language (looz.design/?lang=sv). See resolveLang in @/i18n for
+    // why that stays compatible with the no-auto-detect rule. The canonical is
+    // `alternates.canonical: "./"`, which drops the query, so ?lang= URLs
+    // cannot be indexed as duplicates of the real pages.
+    const picked = resolveLang(
+      new URLSearchParams(window.location.search).get("lang"),
+      localStorage.getItem("lang"),
+    );
+    if (!picked) return;
+    if (picked.persist) localStorage.setItem("lang", picked.lang);
+    activate(picked.lang);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // <html lang> is server-rendered as "it" and nothing used to correct it, so a
+  // visitor reading the English or Swedish copy was served a document still
+  // declaring Italian. Screen readers pick pronunciation from this attribute.
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const setLang = (l: Lang) => {
     localStorage.setItem("lang", l);
