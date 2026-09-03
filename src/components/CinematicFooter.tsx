@@ -109,6 +109,29 @@ const CSS = `
 /* La riga legale in fondo. La misura sta qui e non nello stile in linea proprio
    perche' sul telefono deve poter salire: 11px in mano non si leggono, e uno
    stile scritto in linea non lo corregge nessun foglio. */
+/* Chrome Android non rimpicciolisce 100vh per la barra degli indirizzi: 100vh e'
+   l'altezza CON la barra gia' ritirata, quindi il fondo di un blocco alto 100vh
+   resta sotto la piega finche' la barra e' su. Su un Redmi sono 96-150px, cioe'
+   esattamente la riga legale e la firma. svh e' l'altezza della finestra mentre
+   la barra si vede: cosi' il footer ci entra sempre. */
+@supports (height: 100svh) {
+  .cine-foot, .cine-foot-black { height: 100svh; }
+}
+
+/* Su schermo stretto o basso il contenuto non ci sta comunque in una schermata
+   sola (a 320px sforava di 99px, e la tenda lo tagliava in silenzio). Li' il
+   footer smette di essere una tenda a misura fissa e cresce quanto gli serve.
+   La rivelazione a tendina resta sui formati dove il contenuto ci sta davvero. */
+@media (max-width: 480px), (max-height: 700px) {
+  .cine-foot { height: auto !important; min-height: 100svh; }
+  .cine-foot-black {
+    position: relative !important;
+    height: auto !important;
+    min-height: 100svh;
+    overflow: visible !important;
+  }
+}
+
 .cine-bottombar { padding: 0 24px 28px; }
 .cine-legal { font-size: 11px; }
 @media (max-width: 900px), (pointer: coarse) {
@@ -193,12 +216,16 @@ export default function CinematicFooter() {
           }}
           aria-label="LO.oz"
         >
-          {/* Giant background wordmark */}
+          {/* Giant background wordmark. The bleed below the edge is measured in
+              `em`, not vh: at -4vh the crop was a fixed ~35px while the mark
+              itself shrinks from 270px on desktop to 75px on a phone, so the
+              same bleed hid 13% of it on a laptop and 45% on a phone. In em it
+              is a constant share of the letterform at every width. */}
           <div
             ref={giantRef}
             className="cine-giant"
             aria-hidden
-            style={{ position: "absolute", left: "50%", bottom: "-4vh", transform: "translateX(-50%)", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}
+            style={{ position: "absolute", left: "50%", bottom: "-0.1em", transform: "translateX(-50%)", whiteSpace: "nowrap", zIndex: 0, pointerEvents: "none", userSelect: "none" }}
           >
             {/* Outlined letters, ochre dot. The earlier note here said a dot
                 would read as a blob, and that was true of the NAV treatment,

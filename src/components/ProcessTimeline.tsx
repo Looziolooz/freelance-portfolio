@@ -549,6 +549,16 @@ export default function ProcessTimeline({ entries }: { entries: TimelineEntry[] 
             transition: none;
           }
         }
+
+        /* La riga dt/dd stava su una sola riga con un dt fisso a 132px che non
+           poteva stringersi. Sommato all'indentazione della timeline, al dd
+           restava troppo poco e l'ultima parola finiva tagliata dal ritaglio
+           orizzontale della pagina (7px oltre il bordo a 360px). Impilati,
+           tutti e due prendono la colonna intera. */
+        @media (max-width: 480px) {
+          .ptl-meta__row { flex-direction: column; gap: 4px; align-items: flex-start; }
+          .ptl-meta dt { width: auto; }
+        }
       `}</style>
     </div>
   );
